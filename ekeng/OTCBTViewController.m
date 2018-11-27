@@ -225,57 +225,176 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     _lineChart.showYGridLines = YES;
     //设置网格线颜色
     _lineChart.yGridLinesColor = [UIColor grayColor];
+    //设置是否显示图例
+    _lineChart.hasLegend = YES;
+    //设置图例样式
+    _lineChart.legendStyle = PNLegendItemStyleSerial;
+    //设置图例位置
+//    _lineChart.legendPosition = PNLegendPositionLeft;
+   
+    // 显示位置
+    _lineChart.legendPosition = PNLegendPositionTop;
+    // 获得图例 当横向排布不下另起一行
+    UIView *legend = [_lineChart getLegendWithMaxWidth:100];
+    legend.frame = CGRectMake(100, 300, legend.bounds.size.width, legend.bounds.size.height);
+    [self.view addSubview:legend];
+
     
     
-    
-    
-    //设置X轴标签
-    NSArray *xLabels = @[@"07-04",@"07-05",@"07-06",@"07-07",@"07-08",@"07-09",@"07-10"];
-    [self.lineChart setXLabels:xLabels];
-    
-    //设置Y轴数据
-    //曲线数据
-    PNLineChartData *data1 = [PNLineChartData new];
-    //数据点颜色
-    data1.color = PNGreen;
-    //数据点格式
-    data1.inflexionPointStyle = PNLineChartPointStyleCircle;
-    
-    //设置数据标注名称
-    data1.dataTitle = @"周收入";
-    NSArray *dataArray1 = @[@4,@8,@7,@4,@9,@6,@5];
-    data1.itemCount = dataArray1.count;
-    data1.getData = ^(NSUInteger index){
-        CGFloat yValue = [dataArray1[index] floatValue];
-        return [ PNLineChartDataItem dataItemWithY:yValue];
-    };
-    
-    
-    
-    
-    
-    
-    //设置Y轴数据
-    //曲线数据
-    PNLineChartData *data2 = [PNLineChartData new];
-    //数据点颜色
-    data1.color = PNBlue;
-    //数据点格式
-    data1.inflexionPointStyle = PNLineChartPointStyleCircle;
-    
-    //设置数据标注名称
-    data1.dataTitle = @"周收入";
-    NSArray *dataArray2 = @[@1,@9,@6,@3,@8,@7,@4];
-    data2.itemCount = dataArray2.count;
-    data2.getData = ^(NSUInteger index){
-        CGFloat yValue = [dataArray2[index] floatValue];
-        return [ PNLineChartDataItem dataItemWithY:yValue];
-    };
-    _lineChart.chartData = @[data1,data2];
-    [_lineChart strokeChart];
-    return _lineChart;
+    [self refreshChartData];
+     return _lineChart;
 }
 
+-(void)refreshChartData{
+    //血氧 血压数据分开解析
+    NSDictionary *params = @{
+                             @"userid" : _userid,
+                             @"devicetype" : _deviceType,
+                             @"count" :@"7"
+                             };
+
+      
+        [[PCNetworkManager defaultManager] sendRequestMethod:(HTTPMethodGET) serverUrl:@"http://healthapi.ekeng.com.cn" apiPath:@"/api/HItemRecord/getIosRecord" parameters:params progress:nil success:^(BOOL isSuccess, id  _Nullable responseObject) {
+            NSLog(@"get success:%@",responseObject);
+            //        NSLog(@"response code:%@",[responseObject objectForKey:@"ReturnCode"]);
+            //        NSLog(@"response msg2:%@",[[responseObject objectForKey:@"ReturnMessage"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+            //设置X轴标签
+            NSMutableArray *xLabels = [[NSMutableArray alloc] init];
+            
+            if([_deviceType isEqualToString:@"0"]){
+                //设置血糖数据折线
+                //曲线数据
+                PNLineChartData *gludata = [PNLineChartData new];
+                //数据点颜色
+                gludata.color = PNRed;
+                //数据点格式
+                gludata.inflexionPointStyle = PNLineChartPointStyleCircle;
+                
+                //设置数据标注名称
+                gludata.dataTitle = @"周收入";
+                NSMutableArray *gludataArray = [[NSMutableArray alloc] init];
+                //        NSArray *highdataArray = @[@1,@9,@6,@3,@8,@7,@4];
+                NSArray * GLUdata =[responseObject objectForKey:@"gludata"];
+                if([GLUdata count]>0){
+                    for(NSDictionary *obj in GLUdata)
+                    {
+                        [gludataArray addObject:[obj objectForKey:@"value"]];
+                        [xLabels addObject:[obj objectForKey:@"CreateTime"]];
+                        
+                    }
+                    gludata.itemCount = gludataArray.count;
+                    gludata.getData = ^(NSUInteger index){
+                        CGFloat yValue = [gludataArray[index] floatValue];
+                        return [ PNLineChartDataItem dataItemWithY:yValue];
+                    };
+                    _lineChart.chartData = @[gludata];
+                }
+                
+            }else if([_deviceType isEqualToString:@"1"]){
+                //设置高压数据折线
+                //曲线数据
+                PNLineChartData *highdata = [PNLineChartData new];
+                //数据点颜色
+                highdata.color = PNRed;
+                //数据点格式
+                highdata.inflexionPointStyle = PNLineChartPointStyleCircle;
+                
+                //设置数据标注名称
+                highdata.dataTitle = @"高压";
+                NSMutableArray *highdataArray = [[NSMutableArray alloc] init];
+                //        NSArray *highdataArray = @[@1,@9,@6,@3,@8,@7,@4];
+                NSArray * BPHighdata =[responseObject objectForKey:@"BPHighdata"];
+                 if([BPHighdata count]>0){
+                    for(NSDictionary *obj in BPHighdata)
+                    {
+                        [highdataArray addObject:[obj objectForKey:@"value"]];
+                        [xLabels addObject:[obj objectForKey:@"CreateTime"]];
+                        
+                    }
+                    highdata.itemCount = highdataArray.count;
+                    highdata.getData = ^(NSUInteger index){
+                        CGFloat yValue = [highdataArray[index] floatValue];
+                        return [ PNLineChartDataItem dataItemWithY:yValue];
+                    };
+                }
+                
+                
+                
+                
+                //设置低压数据折线
+                //曲线数据
+                PNLineChartData *lowdata = [PNLineChartData new];
+                //数据点颜色
+                lowdata.color = PNGreen;
+                //数据点格式
+                lowdata.inflexionPointStyle = PNLineChartPointStyleCircle;
+                
+                //设置数据标注名称
+                lowdata.dataTitle = @"低压";
+                NSMutableArray *lowdataArray = [[NSMutableArray alloc] init];
+                //        NSArray *highdataArray = @[@1,@9,@6,@3,@8,@7,@4];
+                
+                
+                NSArray * BPLowdata =[responseObject objectForKey:@"BPLowdata"];
+                if([BPLowdata count]>0){
+                    for(NSDictionary *obj in BPLowdata)
+                    {
+                        [lowdataArray addObject:[obj objectForKey:@"value"]];
+                    }
+                    lowdata.itemCount = lowdataArray.count;
+                    lowdata.getData = ^(NSUInteger index){
+                        CGFloat yValue = [lowdataArray[index] floatValue];
+                        return [ PNLineChartDataItem dataItemWithY:yValue];
+                    };
+                }
+                
+                
+                //设置心率数据折线
+                //曲线数据
+                PNLineChartData *prdata = [PNLineChartData new];
+                //数据点颜色
+                prdata.color = PNFreshGreen;
+                //数据点格式
+                prdata.inflexionPointStyle = PNLineChartPointStyleCircle;
+                
+                //设置数据标注名称
+                prdata.dataTitle = @"心率";
+                NSMutableArray *prdataArray = [[NSMutableArray alloc] init];
+                //        NSArray *highdataArray = @[@1,@9,@6,@3,@8,@7,@4];
+                
+                
+                NSArray * BPPRdata =[responseObject objectForKey:@"BPPRdata"];
+                if([BPPRdata count]>0){
+                    for(NSDictionary *obj in BPPRdata)
+                    {
+                        [prdataArray addObject:[obj objectForKey:@"value"]];
+                    }
+                    prdata.itemCount = prdataArray.count;
+                    prdata.getData = ^(NSUInteger index){
+                        CGFloat yValue = [prdataArray[index] floatValue];
+                        return [ PNLineChartDataItem dataItemWithY:yValue];
+                    };
+                }
+                
+                _lineChart.chartData = @[highdata,lowdata,prdata];
+            }
+            
+            
+            
+            [self.lineChart setXLabels:xLabels];
+            
+            
+            [_lineChart strokeChart];
+            
+        } failure:^(NSString * _Nullable errorMessage) {
+            NSLog(@"post failure:%@",errorMessage);
+        }];
+   
+    
+    
+    
+    
+}
 - (void)buttonAction:(UIButton *)button
 {
     if (button.tag == 102) { // 关闭
