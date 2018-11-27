@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>收货地址管理 </title>
+    <link rel="stylesheet" type="text/css" href="../css/lib/huimin.css" />
+<link rel="stylesheet" href="../css/head.css">
+    
+    <style type="text/css">
+        [v-cloak]{ display: none; }
+a{
+text-decoration:none;
+}
+.address span{ float: left; width: 25%; color: #666; text-align: left; font-size: 1.5rem; height: 35px; line-height: 35px;}
+.address li{ padding: 0.5rem 0; overflow: hidden; border-bottom: 1px solid #ddd;}
+.add-input{ float: left; width: 65%; background: transparent; border: 0;  height: 35px; line-height: 35px;}
+.add-select{float: left; width: 65%;  border:0; height: 35px; display: block;}
+.order-tit{ font-weight: normal; padding:0 3%; line-height: 3.5rem; color: #909090; border-bottom: 1px solid #ddd;}
+.order-name{padding:0.5rem 1%; position: relative; }
+.order-add{ font-size:1.4rem; color: #909090;}
+.order-tele{ color: #424242;}
+.order-name .am-icon-angle-right{ position: absolute; right: 1rem; top:35%;}
+.order-name a{ display: block;}
+.address-list{ margin: 20px 3%; color: #666; padding-bottom: 20px;}
+.address-list li{ border-radius: 5px; border:1px solid #ddd; padding: 10px 0px; margin-bottom: 20px;}
+.address-list .curr{ border: 1px solid #cc6916;}
+.address-list li p{ padding: 2px 20px;}
+.order-add1{ font-size:0.9rem; color: #bbb;}
+.order-add2{ font-size:0.1rem; color: #bbb;}
+.address-list hr{ margin: 10px 0;}
+.address-cz{ overflow: hidden; padding:0 10px; color: #bbb;}
+.address-cz a{ color: #bbb;}
+.address-cz label{ color: #bbb;float: left; margin: 0;font-size: 0.8rem;}
+.address-cz a{ float: left; width: 33%; text-align: right; font-size: 0.8rem;}
+.address{margin:10px; background:#FFFFFF; padding:10px; line-height:1.8em;}
+.address h1{font-size:16px;}
+        
+      
+        body {
+            margin: 0;
+            background: #fff;
+            font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", FontAwesome, sans-serif;
+
+            color: #333;
+        }
+
+        p {
+            display: block;
+            font-weight: 200;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="hui-primary-red">
+<div id="hui-back-noclick" class="back-white">
+</div>	
+<div class="mui-title titlewhite">我的收货地址</div>
+<div class="menu-title" onclick="clicked('AddressAdd.html','AddressAdd.html','zoom-fade-out','增加地址')";><font color="#FFFFF">增加</font></div>
+</header>
+	
+	
+	
+	
+<div style="height: 59px;"></div>
+<div id="app">
+<ul class="address-list" style="width: 90%;margin-left: -22px;">
+    <li class="curr"  v-for="(Item,index) in ItemList" v-cloak>
+        <p>收货人：{{Item.receiver}}&nbsp;&nbsp;{{Item.phone}}</p>
+        <p class="order-add1">收货地址：{{Item.province}}{{Item.city}}{{Item.area}}{{Item.address}}</p>
+        <hr />
+        <div class="address-cz">
+            <label class="am-radio am-warning"  @click="SetDefault(Item.addressid)">
+                <input type="radio" name="chkDefault" :checked="Item.defaultbs==1"> 设为默认
+            </label>
+            <a href="#"><img src="../img/editbj.png" width="18" />&nbsp;编辑</a>
+            <a @click="PostDel(Item.addressid)">删除</a>
+        </div>
+    </li>
+</ul>
+</div>
+
+<script src="../js/base.js"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/hui.js" type="text/javascript"></script>
+
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+			
+<script type="text/javascript">
+
+
+
+var domainUrl = GetMallApiDomain();		
+var objuser=null;
+var username =null;
+var shopbm =null;
+var UserRole=null;
+
+function plusReady() { 
+
+
+objuser = JSON.parse(plus.storage.getItem("user"));
+username = objuser.UserName;
+shopbm = objuser.shopbm;
+UserRole = objuser.UserRole;
+
+vum.GetAddressList(username,vum.pageSize,vum.pageIndex,vum.filedOrder);
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}
+
+    vum=new Vue({
+        el: '#app',
+        data: function(){
+            return {
+                UserName:username,
+                pageIndex:1,
+                pageSize:20,
+                filedOrder:'id',
+                ItemList: []
+
+            }
+
+        },
+
+        mounted: function () {
+
+            this.$nextTick(function () {
+
+                
+
+            })
+
+        },
+
+        methods: {
+            GetAddressList: function(user_name, pageSize,pageIndex,filedOrder) {
+						var that = this;
+						that.axiosGetLoadding();
+						axios.get(domainUrl + 'api/Order/getAddressList', {
+								params: {
+									user_name: user_name,
+									pageSize: pageSize,
+									pageIndex: pageIndex,
+									filedOrder: filedOrder,
+								}
+							})
+							.then(function(response) {
+								var jsonx = eval(response.data.RecordList);
+								that.ItemList = [];
+								each(jsonx, function(i, j) {
+
+									that.ItemList.push({
+										number: (i + 1),
+										addressid: j.addressid,
+										receiver: j.receiver,
+										province: j.province,
+										city: j.city,
+										area: j.area,
+										address: j.address,
+										phone: j.phone,
+										poscode: j.poscode,
+										defaultbs: j.defaultbs
+									});
+
+								});
+
+							})
+							.catch(function(response) {
+								console.log(response);
+
+							});
+					},
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+
+
+
+            PostDel: function (addressId) {
+                this.SendDel(addressId)
+            },
+            SendDel: function (addressId) {
+                	var that = this;
+					axios.post(domainUrl + 'api/Order/PostAddressDel', Qs.stringify({
+							AddressId: addressId
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								hui.upToast('删除成功');
+								setTimeout(function() {
+
+										that.GetAddressList(username,that.pageSize,that.pageIndex,that.filedOrder);
+
+								}, 800);
+
+							} else {
+								hui.upToast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+            },
+
+
+            SetDefault: function (addressId) {
+                this.SendSet(addressId,username)
+            },
+            SendSet: function (addressId,user_name) {
+                var that = this;
+					axios.post(domainUrl + 'api/Order/PostAddressSetDefault', Qs.stringify({
+							user_name: user_name,
+							AddressId: addressId
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								hui.upToast('设置成功');
+								setTimeout(function() {
+
+										that.GetAddressList(username,that.pageSize,that.pageIndex,that.filedOrder);
+
+								}, 800);
+
+							} else {
+								hui.upToast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+            },
+
+
+
+        }
+    })
+
+
+</script>
+</body>
+</html>

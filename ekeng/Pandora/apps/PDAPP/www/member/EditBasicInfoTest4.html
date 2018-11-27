@@ -1,0 +1,1032 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>我的问卷</title>
+
+<link rel="stylesheet" href="../css/lib/mui.min.css" type="text/css">
+
+    
+
+
+    <style type="text/css">  	
+    	 [v-cloak]{ display: none; }
+    </style>
+    
+</head>
+<body>
+    
+ <header class="mui-bar mui-bar-nav hBg">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:closeview();"></a>
+	<h1 class="mui-title ht">我的问卷调查-行为习惯</h1>
+</header>   
+
+
+    <div class="mui-content">
+          <ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="background-color: #FDF6F6;">
+					问卷档案编号:<span id="qbh"></span>
+
+				</li>
+			</ul>
+
+
+			<div class="mui-card" style="margin-top:25px;">
+				<form class="mui-input-group">
+				 <ul class="mui-table-view">
+				 <li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">1.目前吸烟 </span> 
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>经常</label>
+						<input name="PartThreeItem1" type="radio" value="1" onclick="showpart1('1');">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>从不</label>
+						<input name="PartThreeItem1" type="radio" value="2" onclick="showpart1('2');">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>已戒</label>
+						<input name="PartThreeItem1" type="radio" value="3" onclick="showpart1('3');">
+					</div>
+                
+                <div id="show2"  style="display:none;">
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">	
+				<span style="color:#007AFF;font-weight:blod;">2.每天大概吸烟几支 </span> 
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>1—5</label>
+						<input name="PartThreeItem2" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>6—10</label>
+						<input name="PartThreeItem2" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>11—20</label>
+						<input name="PartThreeItem2" type="radio" value="3">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>＞2O</label>
+						<input name="PartThreeItem2" type="radio" value="4">
+					</div>
+
+                </div>
+
+                <div id="show3"  style="display:none;">
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">3.多大年龄开始吸烟 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				<div class="mui-numbox" data-numbox-min='10' data-numbox-max='50' style="margin-left:12px;margin-top:3px;width: 150px;height: 40px;">
+					<button class="mui-btn-numbox-minus" type="button">-</button>
+					<input id="PartThreeItem3" class="mui-input-numbox" type="number" value="20"/>
+					<button class="mui-btn-numbox-plus" type="button">+</button>
+				</div>
+                </div>
+
+               <div id="show4"  style="display:none;">
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">4.吸烟多少年 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				<div class="mui-numbox" data-numbox-min='1' data-numbox-max='70' style="margin-left:12px;margin-top:3px;width: 150px;height: 40px;">
+					<button class="mui-btn-numbox-minus" type="button">-</button>
+					<input id="PartThreeItem4" class="mui-input-numbox" type="number" value="20"/>
+					<button class="mui-btn-numbox-plus" type="button">+</button>
+				</div>
+               </div>
+
+
+                <div id="show5"  style="display:none;">
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">5.戒烟前一年大概每天吸烟几支 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>1—5</label>
+						<input name="PartThreeItem5" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>6—10</label>
+						<input name="PartThreeItem5" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>11—20</label>
+						<input name="PartThreeItem5" type="radio" value="3">
+					</div>
+                   <div class="mui-input-row mui-radio mui-left">
+						<label>＞2O</label>
+						<input name="PartThreeItem5" type="radio" value="4">
+					</div>
+                </div>
+
+                <div id="show6"  style="display:none;">
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">6.和你一起生活的家人或一起工作的同事是否经常有人吸烟  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>是</label>
+						<input name="PartThreeItem6" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>否</label>
+						<input name="PartThreeItem6" type="radio" value="2">
+					</div>
+                </div>
+       
+             <div id="show7"  style="display:none;">
+             <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">7.你每周与吸烟的人共处一室大概几天 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				<div class="mui-numbox" data-numbox-min='0' data-numbox-max='7' style="margin-left:12px;margin-top:3px;width: 150px;height: 40px;">
+					<button class="mui-btn-numbox-minus" type="button">-</button>
+					<input id="PartThreeItem7" class="mui-input-numbox" type="number" value="5"/>
+					<button class="mui-btn-numbox-plus" type="button">+</button>
+				</div>
+             </div>
+
+              
+              <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">8.目前饮酒  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>经常 </label>
+						<input name="PartThreeItem8" type="radio" value="1" onclick="showpart2('1');">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>从不</label>
+						<input name="PartThreeItem8" type="radio" value="2" onclick="showpart2('2');">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>已戒</label>
+						<input name="PartThreeItem8" type="radio" value="3" onclick="showpart2('3');">
+					</div>
+
+
+                 <div id="show9"  style="display:none;">
+                 <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">9.每天大概饮酒多少毫升  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				   	<div class="mui-input-row mui-radio mui-left">
+						<label>＜50</label>
+						<input name="PartThreeItem9" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>50—100</label>
+						<input name="PartThreeItem9" type="radio" value="2">
+					</div>
+                      <div class="mui-input-row mui-radio mui-left">
+						<label>100—200</label>
+						<input name="PartThreeItem9" type="radio" value="3">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>＞200</label>
+						<input name="PartThreeItem9" type="radio" value="4">
+					</div>
+
+                </div>
+                
+                <div id="show10"  style="display:none;">
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">10.主要饮酒种类</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>葡萄酒</label>
+						<input name="PartThreeItem10" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>白酒</label>
+						<input name="PartThreeItem10" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>啤酒</label>
+						<input name="PartThreeItem10" type="radio" value="3">
+					</div>
+                </div>
+              
+              
+            <div id="show11"  style="display:none;">
+             <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">11.多大年龄开始饮酒 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				<div class="mui-numbox" data-numbox-min='10' data-numbox-max='50' style="margin-left:12px;margin-top:3px;width: 150px;height: 40px;">
+					<button class="mui-btn-numbox-minus" type="button">-</button>
+					<input id="PartThreeItem11" class="mui-input-numbox" type="number" value="20"/>
+					<button class="mui-btn-numbox-plus" type="button">+</button>
+				</div>
+               </div>
+  
+  
+                <div id="show12"  style="display:none;">
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">12.饮酒多少年</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				<div class="mui-numbox" data-numbox-min='1' data-numbox-max='70' style="margin-left:12px;margin-top:3px;width: 150px;height: 40px;">
+					<button class="mui-btn-numbox-minus" type="button">-</button>
+					<input id="PartThreeItem12" class="mui-input-numbox" type="number" value="20"/>
+					<button class="mui-btn-numbox-plus" type="button">+</button>
+				</div>
+                </div>
+
+                <div id="show13"  style="display:none;">
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">13.戒酒前一年大概每天饮酒多少毫升</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>＜50</label>
+						<input name="PartThreeItem13" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>50—100</label>
+						<input name="PartThreeItem13" type="radio" value="2">
+					</div>
+                      <div class="mui-input-row mui-radio mui-left">
+						<label>100—200</label>
+						<input name="PartThreeItem13" type="radio" value="3">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>＞200</label>
+						<input name="PartThreeItem13" type="radio" value="4">
+					</div>
+                </div>
+
+
+                 <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">14.睡眠质量</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>较好</label>
+						<input name="PartThreeItem14" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>一般</label>
+						<input name="PartThreeItem14" type="radio" value="2">
+					</div>
+                      <div class="mui-input-row mui-radio mui-left">
+						<label>不佳</label>
+						<input name="PartThreeItem14" type="radio" value="3">
+					</div>
+
+
+                 <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">15.通常早上起床时间</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>5-6</label>
+						<input name="PartThreeItem15" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>6-7</label>
+						<input name="PartThreeItem15" type="radio" value="2">
+					</div>
+                      <div class="mui-input-row mui-radio mui-left">
+						<label>7-8</label>
+						<input name="PartThreeItem15" type="radio" value="3">
+					</div>
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">16.通常晚上睡觉时间</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>9-10</label>
+						<input name="PartThreeItem16" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>10-11</label>
+						<input name="PartThreeItem16" type="radio" value="2">
+					</div>
+                      <div class="mui-input-row mui-radio mui-left">
+						<label>11-12</label>
+						<input name="PartThreeItem16" type="radio" value="3">
+					</div>
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">17.午休习惯</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>有</label>
+						<input name="PartThreeItem17" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>无</label>
+						<input name="PartThreeItem17" type="radio" value="2">
+					</div>
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">18.熬夜</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>偶尔</label>
+						<input name="PartThreeItem18" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>经常</label>
+						<input name="PartThreeItem18" type="radio" value="2">
+					</div>
+
+
+
+
+				</form>
+			</div>
+
+            
+            
+
+
+            <div class="mui-content-padded">
+				<ul class="mui-pager">
+					<li class="mui-previous">
+						
+							<button type="button" id="saveOne" class="mui-btn mui-btn-danger mui-btn-block">答题完成并保存</button>
+						
+					</li>
+					
+				</ul>
+			</div>
+
+  </div>
+
+
+</body>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js" type="text/javascript"></script>
+
+ <script type="text/javascript">
+ 
+var domainUrl = GetMvcApiDomain();
+
+var username=null;  
+var questionBh=null;
+function plusReady() { 
+	
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+questionBh=_self.questionBh;
+
+if(questionBh==null || questionBh==''){
+	plus.webview.currentWebview().close();
+}
+
+$("#qbh").append(questionBh);
+GetQuestionInfo(questionBh);
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+             
+       
+
+             $("#saveOne").click(function () {
+                 var msg1 = "您的问卷行为习惯成功保存,查看我的问卷记录!";
+                 var url1 = "BasicInfoTestList.html";
+                 questionOne(msg1, url1, username, questionBh);
+             })
+
+
+
+
+function showpart2(x){
+ if (x=='1')
+ {
+	$("#show9").show();
+	$("#show10").show();
+	$("#show11").show();
+	$("#show12").show();
+	$("#show13").show();
+
+ }
+ 
+  if (x=='2')
+ {
+	$("#show9").hide();
+	$("#show10").hide();
+	$("#show11").hide();
+	$("#show12").hide();
+	$("#show13").hide();
+ 
+ }
+ 
+   if (x=='3')
+ {
+	$("#show9").hide();
+	$("#show10").show();
+	$("#show11").show();
+	$("#show12").show();
+	$("#show13").show();
+	
+ }
+ 
+ 
+ 
+}
+
+
+function showpart1(x){
+ if (x=='1')
+ {
+	$("#show2").show();
+	$("#show3").show();
+	$("#show4").show();
+	$("#show5").hide();
+	$("#show6").hide();
+	$("#show7").hide();
+ }
+ 
+  if (x=='2')
+ {
+	$("#show6").show();
+	$("#show7").show();
+	$("#show2").hide();
+	$("#show3").hide();
+	$("#show4").hide();
+    $("#show5").hide();
+	}
+ 
+   if (x=='3')
+ {
+	$("#show2").hide();
+    $("#show3").show();
+	$("#show4").show();
+	$("#show6").show();
+	$("#show5").show();
+	$("#show7").show();
+  
+	}
+ 
+ 
+ 
+}
+
+
+
+function GetQuestionInfo(questionBh) {
+
+   	      $.ajax({
+            url: domainUrl + "api/TestBasicInfo/getInfoByNum",
+            type: 'get',
+            dataType: "json",
+            data: {TestNum:questionBh},
+            success: function (data) {
+            	
+
+            if (data.partThreeItem1 == '1') {
+                $("input:radio[name='PartThreeItem1']").eq(0).attr("checked", true);
+                showpart1('1');
+            }
+            if (data.partThreeItem1 == '2') {
+                $("input:radio[name='PartThreeItem1']").eq(1).attr("checked", true);
+                showpart1('2');
+            }
+            if (data.partThreeItem1 == '3') {
+                $("input:radio[name='PartThreeItem1']").eq(2).attr("checked", true);
+                showpart1('3');
+            }
+
+            
+            if (data.partThreeItem2 == '1') {
+                $("input:radio[name='PartThreeItem2']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem2 == '2') {
+                $("input:radio[name='PartThreeItem2']").eq(1).attr("checked", true);
+            }
+            if (data.partThreeItem2 == '3') {
+                $("input:radio[name='PartThreeItem2']").eq(2).attr("checked", true);
+            }
+            if (data.partThreeItem2 == '4') {
+                $("input:radio[name='PartThreeItem2']").eq(3).attr("checked", true);
+            }
+
+
+            document.getElementById("PartThreeItem3").value=data.partThreeItem3; 
+
+            document.getElementById("PartThreeItem4").value=data.partThreeItem4;
+
+            if (data.partThreeItem5 == '1') {
+                $("input:radio[name='PartThreeItem5']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem5 == '2') {
+                $("input:radio[name='PartThreeItem5']").eq(1).attr("checked", true);
+            }
+            if (data.partThreeItem5 == '3') {
+                $("input:radio[name='PartThreeItem5']").eq(2).attr("checked", true);
+            }
+            if (data.partThreeItem5 == '4') {
+                $("input:radio[name='PartThreeItem5']").eq(3).attr("checked", true);
+            }
+
+            if (data.partThreeItem6 == '1') {
+                $("input:radio[name='PartThreeItem6']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem6 == '2') {
+                $("input:radio[name='PartThreeItem6']").eq(1).attr("checked", true);
+            }
+
+            document.getElementById("PartThreeItem7").value=data.partThreeItem7;
+            
+            if (data.partThreeItem8 == '1') {
+                $("input:radio[name='PartThreeItem8']").eq(0).attr("checked", true);
+                showpart2('1');
+            }
+            if (data.partThreeItem8 == '2') {
+                $("input:radio[name='PartThreeItem8']").eq(1).attr("checked", true);
+                showpart2('2');
+            }
+            if (data.partThreeItem8 == '3') {
+                $("input:radio[name='PartThreeItem8']").eq(2).attr("checked", true);
+                showpart2('3');
+            }
+            
+            if (data.partThreeItem9 == '1') {
+                $("input:radio[name='PartThreeItem9']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem9 == '2') {
+                $("input:radio[name='PartThreeItem9']").eq(1).attr("checked", true);
+            }
+            if (data.partThreeItem9 == '3') {
+                $("input:radio[name='PartThreeItem9']").eq(2).attr("checked", true);
+            }
+            if (data.partThreeItem9 == '4') {
+                $("input:radio[name='PartThreeItem9']").eq(3).attr("checked", true);
+            }            
+            
+            if (data.partThreeItem10 == '1') {
+                $("input:radio[name='PartThreeItem10']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem10 == '2') {
+                $("input:radio[name='PartThreeItem10']").eq(1).attr("checked", true);
+            }
+            if (data.partThreeItem10 == '3') {
+                $("input:radio[name='PartThreeItem10']").eq(2).attr("checked", true);
+            }
+            
+            document.getElementById("PartThreeItem11").value=data.partThreeItem11;
+            
+            document.getElementById("PartThreeItem12").value=data.partThreeItem12;
+            
+            if (data.partThreeItem13 == '1') {
+                $("input:radio[name='PartThreeItem13']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem13 == '2') {
+                $("input:radio[name='PartThreeItem13']").eq(1).attr("checked", true);
+            }
+            if (data.partThreeItem13 == '3') {
+                $("input:radio[name='PartThreeItem13']").eq(2).attr("checked", true);
+            }
+            if (data.partThreeItem13 == '4') {
+                $("input:radio[name='PartThreeItem13']").eq(3).attr("checked", true);
+            }  
+            
+            
+            if (data.partThreeItem14 == '1') {
+                $("input:radio[name='PartThreeItem14']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem14 == '2') {
+                $("input:radio[name='PartThreeItem14']").eq(1).attr("checked", true);
+            }
+            if (data.partThreeItem14 == '3') {
+                $("input:radio[name='PartThreeItem14']").eq(2).attr("checked", true);
+            }
+            
+
+            if (data.partThreeItem15 == '1') {
+                $("input:radio[name='PartThreeItem15']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem15 == '2') {
+                $("input:radio[name='PartThreeItem15']").eq(1).attr("checked", true);
+            }
+            if (data.partThreeItem15 == '3') {
+                $("input:radio[name='PartThreeItem15']").eq(2).attr("checked", true);
+            }
+            
+            
+            if (data.partThreeItem16 == '1') {
+                $("input:radio[name='PartThreeItem16']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem16 == '2') {
+                $("input:radio[name='PartThreeItem16']").eq(1).attr("checked", true);
+            }
+            if (data.partThreeItem16 == '3') {
+                $("input:radio[name='PartThreeItem16']").eq(2).attr("checked", true);
+            }
+
+
+            if (data.partThreeItem17 == '1') {
+                $("input:radio[name='PartThreeItem17']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem17 == '2') {
+                $("input:radio[name='PartThreeItem17']").eq(1).attr("checked", true);
+            }
+
+            if (data.partThreeItem18 == '1') {
+                $("input:radio[name='PartThreeItem18']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem18 == '2') {
+                $("input:radio[name='PartThreeItem18']").eq(1).attr("checked", true);
+            }
+            
+        },
+        error: function () {
+        mui.toast("网络错误，请稍后再试");
+        }
+        })
+
+
+ }
+
+
+
+         function questionOne(msg, tourl, uname, questionBh) {
+             var PartThreeItem2="";
+             var PartThreeItem3="";
+             var PartThreeItem4="";
+             var PartThreeItem5="";
+             var PartThreeItem6="";
+             var PartThreeItem7="";
+             
+             var PartThreeItem9="";
+             var PartThreeItem10="";
+             var PartThreeItem11="";
+             var PartThreeItem12="";
+             var PartThreeItem13="";
+             
+             var PartThreeItem1 = $('input:radio[name=PartThreeItem1]:checked').val();
+             if (PartThreeItem1 == null || PartThreeItem1 =='') {
+                 mui.toast('请选择目前吸烟', '健康问卷', function () {
+                 });
+                 return false;
+             }
+             else{
+             	
+              if (PartThreeItem1=='1'){	
+              	
+                PartThreeItem2 = $('input:radio[name=PartThreeItem2]:checked').val();
+               if (PartThreeItem2 == null) {
+                 mui.toast('请选择每天大概吸烟几支', '健康问卷', function () {
+                 });
+                 return false;
+                }
+               
+                PartThreeItem3 = document.getElementById("PartThreeItem3").value;
+               if (PartThreeItem3 == null) {
+                 mui.toast('请选择多大年龄开始吸烟', '健康问卷', function () {
+                 });
+                 return false;
+                } 
+                
+                PartThreeItem4 = document.getElementById("PartThreeItem4").value;
+               if (PartThreeItem4 == null) {
+                 mui.toast('请选择吸烟多少年', '健康问卷', function () {
+                 });
+                 return false;
+               }               
+              }
+              
+                if (PartThreeItem1=='2'){	
+              	
+                PartThreeItem6 = $('input:radio[name=PartThreeItem6]:checked').val();
+               if (PartThreeItem6 == null) {
+                 mui.toast('请选择和你家人或同事是否经常有人吸烟', '健康问卷', function () {
+                 });
+                 return false;
+                }
+               
+                 PartThreeItem7 = document.getElementById("PartThreeItem7").value;
+                 if (PartThreeItem7 == null || PartThreeItem7=='') {
+                 mui.toast('请选择你每周与吸烟的人共处一室大概几天', '健康问卷', function () {
+                 });
+                 return false;
+                } 
+             
+              }
+              
+                if (PartThreeItem1=='3'){	
+              	
+                PartThreeItem3 = document.getElementById("PartThreeItem3").value;
+                if (PartThreeItem3 == null) {
+                 mui.toast('请选择多大年龄开始吸烟', '健康问卷', function () {
+                 });
+                 return false;
+                } 
+                
+                PartThreeItem4 = document.getElementById("PartThreeItem4").value;
+                if (PartThreeItem4 == null) {
+                 mui.toast('请选择吸烟多少年', '健康问卷', function () {
+                 });
+                 return false;
+                }  
+                
+                PartThreeItem5 = $('input:radio[name=PartThreeItem5]:checked').val();
+                if (PartThreeItem5 == null) {
+                 mui.toast('请选择戒烟前一年大概每天吸烟几支', '健康问卷', function () {
+                 });
+                 return false;
+                } 
+                
+                PartThreeItem6 = $('input:radio[name=PartThreeItem6]:checked').val();
+               if (PartThreeItem6 == null) {
+                 mui.toast('请选择和你家人或同事是否经常有人吸烟', '健康问卷', function () {
+                 });
+                 return false;
+                }
+               
+                PartThreeItem7 = document.getElementById("PartThreeItem7").value;
+               if (PartThreeItem7 == null) {
+                 mui.toast('请选择你每周与吸烟的人共处一室大概几天', '健康问卷', function () {
+                 });
+                 return false;
+                } 
+             
+              }            
+              
+             	
+             }
+
+
+             var PartThreeItem8 = $('input:radio[name=PartThreeItem8]:checked').val();
+             if (PartThreeItem8 == null || PartThreeItem8 =='') {
+                 mui.toast('请选择目前饮酒', '健康问卷', function () {
+                 });
+                 return false;
+             }else{
+             	
+             	if (PartThreeItem8=='1'){	
+              	
+                 PartThreeItem9 = $('input:radio[name=PartThreeItem9]:checked').val();
+                 if (PartThreeItem9 == null) {
+                 mui.toast('请选择每天大概饮酒多少毫升', '健康问卷', function () {
+                 });
+                 return false;
+                 }
+               
+                 PartThreeItem10 = $('input:radio[name=PartThreeItem10]:checked').val();
+                 if (PartThreeItem10 == null) {
+                 mui.toast('请选择主要饮酒种类', '健康问卷', function () {
+                 });
+                 return false;
+                 }
+                
+                 PartThreeItem11 = document.getElementById("PartThreeItem11").value;
+                 if (PartThreeItem11 == null) {
+                 mui.toast('请选择多大年龄开始饮酒', '健康问卷', function () {
+                 });
+                 return false;
+                 }
+                 
+                 PartThreeItem12 = document.getElementById("PartThreeItem12").value;
+                 if (PartThreeItem12 == null) {
+                 mui.toast('请选择饮酒多少年', '健康问卷', function () {
+                 });
+                 return false;
+                 }
+
+              }
+             	
+            if (PartThreeItem8=='3'){	
+              	
+               
+                 PartThreeItem10 = $('input:radio[name=PartThreeItem10]:checked').val();
+                 if (PartThreeItem10 == null) {
+                 mui.toast('请选择主要饮酒种类', '健康问卷', function () {
+                 });
+                 return false;
+                 }
+                
+                 PartThreeItem11 = document.getElementById("PartThreeItem11").value;
+                 if (PartThreeItem11 == null) {
+                 mui.toast('请选择多大年龄开始饮酒', '健康问卷', function () {
+                 });
+                 return false;
+                 }
+                 
+                 PartThreeItem12 = document.getElementById("PartThreeItem12").value;
+                 if (PartThreeItem12 == null) {
+                 mui.toast('请选择饮酒多少年', '健康问卷', function () {
+                 });
+                 return false;
+                 }
+                 
+                 PartThreeItem13 = document.getElementById("PartThreeItem13").value;
+                 if (PartThreeItem13 == null) {
+                 mui.toast('请选择戒酒前一年大概每天饮酒多少毫升', '健康问卷', function () {
+                 });
+                 return false;
+                 }
+                 
+
+              }    	
+             	
+         }
+             
+             
+             
+             
+             
+             var PartThreeItem14 = $('input:radio[name=PartThreeItem14]:checked').val();
+             if (PartThreeItem14 == null) {
+                 mui.toast('请选择睡眠质量', '健康问卷', function () {
+                 });
+                 return false;
+             }
+
+             var PartThreeItem15 = $('input:radio[name=PartThreeItem15]:checked').val();
+             if (PartThreeItem15 == null) {
+                 mui.toast('请选择早上起床时间', '健康问卷', function () {
+                 });
+                 return false;
+             }
+
+
+             var PartThreeItem16 = $('input:radio[name=PartThreeItem16]:checked').val();
+             if (PartThreeItem16 == null) {
+                 mui.toast('请选择晚上睡觉时间 ', '健康问卷', function () {
+                 });
+                 return false;
+             }
+
+             var PartThreeItem17 = $('input:radio[name=PartThreeItem17]:checked').val();
+             if (PartThreeItem17 == null) {
+                 mui.toast('请选择午休习惯', '健康问卷', function () {
+                 });
+                 return false;
+             }
+
+             var PartThreeItem18 = $('input:radio[name=PartThreeItem18]:checked').val();
+             if (PartThreeItem18 == null) {
+                 mui.toast('请选择熬夜', '健康问卷', function () {
+                 });
+                 return false;
+             }
+
+
+
+
+
+
+
+var jsonData = {
+            "TestNum":questionBh,
+            "UserName":uname,
+            "partThreeItem1":PartThreeItem1,
+            "partThreeItem2":PartThreeItem2,
+            "partThreeItem3":PartThreeItem3,
+            "partThreeItem4":PartThreeItem4,
+            "partThreeItem5":PartThreeItem5,
+            "partThreeItem6":PartThreeItem6,
+            "partThreeItem7":PartThreeItem7,
+            "partThreeItem8":PartThreeItem8,
+            "partThreeItem9":PartThreeItem9,
+            "partThreeItem10":PartThreeItem10,
+            "partThreeItem11":PartThreeItem11,
+            "partThreeItem12":PartThreeItem12,
+            "partThreeItem13":PartThreeItem13,
+            "partThreeItem14":PartThreeItem14,
+            "partThreeItem15":PartThreeItem15,
+            "partThreeItem16":PartThreeItem16,
+            "partThreeItem17":PartThreeItem17,
+            "partThreeItem18":PartThreeItem18
+           }
+            
+            
+             $.ajax({
+             	url: domainUrl + "api/TestBasicInfo/PostPartThreeAddToJson",
+                type: 'post',
+                dataType: "json",
+                data:jsonData,
+                success: function (data) {
+                mui.toast('保存成功');
+                        
+                plus.webview.currentWebview().close();
+
+ 
+                  },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+
+
+
+ }  
+
+  
+</script>
+
+
+</html>

@@ -1,0 +1,592 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>个人中心</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/lib/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/lib/huimin.css">
+		<link rel="stylesheet" type="text/css" href="../css/lib/CSSRESET.css">
+		<link rel="stylesheet" type="text/css" href="../css/common2.css">
+		<link rel="stylesheet" type="text/css" href="../css/person2.css">
+    
+        <script src="../js/lib/jquery-2.1.3.min.js"></script>
+<style>
+	[v-cloak]{ display: none; }
+
+</style>
+<script>
+			$(function() {
+
+				//我的订单收展效果
+				$("#i_order").on("click", function() {
+					if(!$(this).hasClass("active")) {
+						$(this).addClass("active");
+						$(".order_main").slideDown();
+					} else {
+						$(this).removeClass("active");
+						$(".order_main").slideUp();
+					}
+				});
+
+				//我的钱包收展效果
+				$("#i_wallet").on("click", function() {
+					if(!$(this).hasClass("active")) {
+						$(this).addClass("active");
+						$(".wallet_main").slideDown();
+					} else {
+						$(this).removeClass("active");
+						$(".wallet_main").slideUp();
+					}
+				});
+
+			});
+		</script>
+	</head>
+
+	<body>
+	<div class="_container clear" id="person">
+
+			<div class="profile">
+				<div @click="goPerson">
+					<img :src='HeadPic' alt="" v-cloak/>
+				</div>
+				<div v-cloak>
+					<h5>{{NickName}}&nbsp;&nbsp;<span v-if="UserPowerName!=''">{{UserPowerName}}</span></h5>
+					<h6>{{UserName}}</h6>
+					<p><span v-if="LevelName!=''">{{LevelName}}</span><span v-for="(Item,index) in RoleNameArr" v-cloak style="padding-left: 2px;margin-left: 2px;" @click="ExUserPower(Item.RolePower,Item.RoleName);">{{Item.RoleName}}</span></p>
+
+					<!--<a href="javascript:;" class="a_s_setting"></a>-->
+					<!--<a @click="GoImChat" class="a_s_msg"></a>-->
+				</div>
+			</div>
+			<!-- profile -->
+			<article class="wrapper">
+				<div class="main">
+					<div class="sec funcs">
+						<ul class="ul_funcs clearfix">
+							<li>
+								<a @click="PowerCardActive(1);">
+									<span><img src="../img/index_func_1.png" alt=""></span>
+									<p>健康数据</p>
+								</a>
+							</li>
+
+							<li>
+								<a @click="PowerCardActive(2);">
+									<span><img src="../img/index_func_2.png" alt=""></span>
+									<p>病例上传</p>
+								</a>
+							</li>
+
+							<li>
+								<a @click="PowerCardActive(3);">
+									<span><img src="../img/index_func_3.png" alt=""></span>
+									<p>我要监测</p>
+								</a>
+							</li>
+
+							<li>
+								<a href="javascript:clickedNoHead('MyCardBox.html','MyCardBox.html','slide-in-left','我的权益');">
+									<span><img src="../img/index_func_4.png" alt=""></span>
+									<p>我的权益</p>
+								</a>
+							</li>
+							<!-- group -->
+
+							<li>
+								<a href="javascript:clicked('TestMenu.html','TestMenu.html','zoom-fade-out','健康评测');">
+									<span><img src="../img/index_func_5.png" alt=""></span>
+									<p>健康自评</p>
+								</a>
+							</li>
+
+							<li>
+								<a @click="PowerCardActive(4);">
+									<span><img src="../img/index_func_6.png" alt=""></span>
+									<p>健康评估</p>
+								</a>
+							</li>
+
+							<li>
+								<a @click="PowerCardActive(5);">
+									<span><img src="../img/index_func_7.png" alt=""></span>
+									<p>健康方案</p>
+								</a>
+							</li>
+
+							<!--<li>
+								<a href="javascript:clicked('PlanIndex.html','PlanIndex.html','zoom-fade-out','健康日志');">
+									<span><img src="../img/index_func_8.png" alt=""></span>
+									<p>健康日志</p>
+								</a>
+							</li>-->
+							<li>
+								<a href="javascript:clickedNoHead('BodyFatData.html','BodyFatData.html','zoom-fade-out');">
+									<span><img src="../img/index_func_8.png" alt=""></span>
+									<p>体脂监测</p>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!-- funcs -->
+
+					<!--<div class="sec order">
+                    <h3>
+                        <span>我的订单 <em>[重要安全提示]</em></span>
+                        <i class="active" id="i_order"></i>
+                    </h3>
+                    
+                    <div class="order_main">
+                        <ul class="ul_order">
+                            <li><a href="javascript:location.href='../mall/OrderList.html?tab=1';">待付款</a></li>
+                            <li><a href="javascript:location.href='../mall/OrderList.html?tab=2';">待发货<i>2</i></a></li>
+                            <li><a href="javascript:location.href='../mall/OrderList.html?tab=3';">待收货</a></li>
+                            <li><a href="javascript:location.href='../mall/OrderList.html?tab=4';">评价</a></li>
+                        </ul>
+                    </div>
+                </div>-->
+					<!-- order -->
+
+					<div class="sec wallet" id="wallet">
+						<h3>
+                        <span>我的钱包</span>
+                        <i class="active" id="i_wallet"></i>
+                    </h3>
+
+						<div class="wallet_main">
+							<ul class="ul_wallet">
+								<li>
+									<a href="javascript:;">
+										<span>{{UserAmount}}</span>
+										<p>PV</p>
+									</a>
+								</li>
+
+								<li>
+									<a href="javascript:clicked('MyPointsRecord.html','MyPointsRecord.html','zoom-fade-out','我的积分纪录');">
+										<span>{{UserPoint}}</span>
+										<p>积分</p>
+									</a>
+								</li>
+
+								<li>
+									<a href="javascript:;">
+										<span class="violet">{{UserAmount}}</span>
+										<p>PA币</p>
+									</a>
+								</li>
+
+								<li>
+									<a @click="goCardBox">
+										<span><img src="../img/icon_$.png" alt="" /></span>
+										<p>卡包</p>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- ul_wallet -->
+
+					<!--<div class="sec binding">
+                    <a href="javascript:;">
+                        <span>设备绑定<s>2</s></span>
+                        <i></i>
+                    </a>
+                </div>-->
+					<!-- binding -->
+
+					<!--<div class="sec binding">
+                    <a href="javascript:location.href='PersonMenuX.html?menux=1';" v-if="IsShowA==1">
+                        <span style="background: url(../img/12_04.png) no-repeat left center /1.6rem auto;">客户管理</span>
+                        <i></i>
+                    </a>
+                    <a href="javascript:location.href='PersonMenuX.html?menux=2';" v-if="IsShowB==1">
+                        <span style="background: url(../img/s6.png) no-repeat left center /1.6rem auto;">合伙人管理</span>
+                        <i></i>
+                    </a>
+                    <a href="javascript:location.href='PersonMenuX.html?menux=4';" v-if="IsShowC==1">
+                        <span style="background: url(../img/13_05.png) no-repeat left center /1.6rem auto;">客户健康管理</span>
+                        <i></i>
+                    </a>
+                    <a href="javascript:location.href='PersonMenuX.html?menux=3';" v-if="IsShowD==1">
+                        <span style="background: url(../img/icon3.png) no-repeat left center /1.6rem auto;">店务管理</span>
+                        <i></i>
+                    </a>
+                </div>-->
+
+					<!--<div class="sec binding">
+                    <a href="javascript:location.href='PersonMenuY.html';">
+                        <span style="background: url(../img/s5.png) no-repeat left center /1.6rem auto;">个人资料</span>
+                        <i></i>
+                    </a>
+                    
+                </div>  -->
+
+					<!--<div class="sec binding">
+                    <a href="javascript:location.href='MyRecommendList.html';">
+                        <span style="background: url(../img/s5.png) no-repeat left center /1.6rem auto;">分享记录</span>
+                        <i></i>
+                    </a>
+                    
+                </div>  -->
+
+					<!--<div class="sec binding">
+                    <a href="javascript:location.href='../Mall/AddressList.html';">
+                        <span style="background: url(../img/s5.png) no-repeat left center /1.6rem auto;">收货地址</span>
+                        <i></i>
+                    </a>
+                    
+                </div>  -->
+
+					<div class="sec binding">
+						<a @click="logout">
+							<span style="background: url(../img/icon_clock.png) no-repeat left center /1.6rem auto;">退出登陆</span>
+							<i></i>
+						</a>
+
+					</div>
+					<!-- menus -->
+
+					<!--<div class="sec menus">
+                    <ul class="ul_menus">
+
+                       
+                        <li>
+                            <h4>
+                                <img src="../img/s5.png" alt="" />
+                                <p>个人信息</p>
+                            </h4>
+                            
+                            <div>
+                                <p> <a href="javascript:location.href='EditPerInfo.html';">资料修改</a></p>
+                                <p><a @click="telAuth();">手机认证</a></p>
+                                <p><a href="javascript:location.href='Wx_Bind_GetCode.html';">绑定微信资料</a></p>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </div>-->
+
+				</div>
+			</article>
+			<!-- wrapper End -->
+
+		</div>
+	</body>
+	<script src="../js/lib/mui.min.js"></script>
+	<script src="../js/public.js" type="text/javascript"></script>
+	<script src="../js/index.js"></script>
+	<script src="../js/base.js" type="text/javascript"></script>
+	<script src="../js/public.js" type="text/javascript"></script>
+	<script src="../js/lib/hui.js" type="text/javascript"></script>
+	<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+	<script>
+		
+		
+var httpUrl = GetHttpApi();
+		var domainUrl = GetMvcApiDomain();
+		var mallDomainUrl = GetMallApiDomain();
+
+		var UserName = '';
+		var NickName = '';
+		var HeadPic = '';
+		var UserRole = '';
+		var UserRoleName = '';
+		var userbs = '';
+		var PowerProperty = '';
+		var telStats = '';
+
+		var MasterName = '';
+		var UserPower = '';
+		var UserPowerName = '';
+
+		function muiInit() {
+			mui.init();
+		}
+
+		function plusReady() {
+
+			var objuser = JSON.parse(plus.storage.getItem("user"));
+			UserName = objuser.UserName;
+			NickName = objuser.NickName;
+			HeadPic = objuser.HeadPic;
+			UserRole = objuser.UserRole;
+			UserRoleName = objuser.UserRoleName;
+			userbs = objuser.userbs;
+			PowerProperty = objuser.PowerProperty;
+			telStats = objuser.telStats;
+
+			MasterName = plus.storage.getItem("MasterName");
+			UserPower = plus.storage.getItem("UserPower");
+			UserPowerName = plus.storage.getItem("UserPowerName");
+
+			vum.UserName = UserName;
+			vum.NickName = NickName;
+			vum.HeadPic = HeadPic;
+			vum.UserRoleName = UserRoleName;
+			vum.UserRole = UserRole;
+			vum.userbs = userbs;
+			vum.UserPower = UserPower;
+			vum.UserPowerName = UserPowerName;
+			vum.PowerProperty = PowerProperty;
+			vum.MasterName = MasterName;
+
+			vum.getUserHead();
+			vum.UserRoleInfo();
+			vum.PowerMenuShow();
+			vum.getUserAccount(UserName);
+
+			plus.key.removeEventListener("backbutton", onback);
+
+		}
+		
+		function isPlusReady() {
+
+			if(window.plus && plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_WIFI) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+
+		}
+
+
+muiInit();
+isPlusReady();
+
+var vum = new Vue({
+    el: '#person',
+    data: function(){
+    	return {
+    	UserName: '',
+							NickName: '',
+							HeadPic: '',
+							UserPoint: 0,
+							UserAmount: 0,
+							UserPV: 0,
+							UserRoleName: '',
+							UserRole: '',
+							userbs: 0,
+							UserPower: 0,
+							UserPowerName: '',
+							PowerProperty: '',
+							LevelName: '',
+							CardPowerActive: 0,
+							MasterName: '',
+							RoleNameArr: [],
+							MemberList: [],
+							MasterList: [],
+							IsShowA: 0,
+							IsShowB: 0,
+							IsShowC: 0,
+							IsShowD: 0
+       
+     }
+    },
+    
+   mounted: function () {
+
+        this.$nextTick(function () {
+           
+
+
+
+            
+            
+
+    })
+
+    },
+
+    methods: {
+    	
+    	getUserHead: function() {
+					var myHead = this.HeadPic;
+
+					if(myHead == '' || myHead == null) {
+						this.HeadPic = '../img/_icon_self.png';
+					} else if(myHead.substr(myHead.length - 1, 1) == '0') {
+						this.HeadPic = '../img/_icon_self.png';
+					}
+
+		},
+    	
+        UserRoleInfo: function() {
+							var roleArr = UserRoleName.split(',');
+							var powerArr = UserRole.split(',');
+							this.RoleNameArr = [];
+							for(var i = 0; i < roleArr.length; i++) {
+								if(roleArr[i] != '会员') {
+									this.RoleNameArr.push({
+										number: (i + 1),
+										RolePower: powerArr[i],
+										RoleName: roleArr[i]
+									});
+								}
+							}
+
+							if(this.userbs == '6') {
+								this.LevelName = '金牌合伙人';
+							}
+							if(this.userbs == '7') {
+								this.LevelName = '钻石合伙人';
+							}
+
+						},
+        
+        ExUserPower: function(UserPower, UserPowerName) {
+
+							this.UserPower = UserPower;
+							this.UserPowerName = UserPowerName;
+							localStorage.setItem('UserPower', UserPower);
+							localStorage.setItem('UserPowerName', UserPowerName);
+							this.PowerMenuShow();
+
+						},
+						
+        PowerMenuShow: function() {
+
+							this.IsShowA = 0;
+							this.IsShowB = 0;
+							this.IsShowC = 0;
+							this.IsShowD = 0;
+
+							if(this.userbs == '6' || this.userbs == '7' || this.UserPower >= 1) {
+								this.IsShowA = 1;
+							}
+
+							if(this.UserPower == 2 || this.UserPower == 3 || this.UserPower == 8 || this.UserPower == 9 || this.UserPower == 10) {
+								this.IsShowB = 1;
+							}
+
+							if(this.UserPower == 1 || this.UserPower == 4) {
+								this.IsShowC = 1;
+							}
+
+							if(this.UserPower == 2 || this.UserPower == 3 || this.UserPower == 9 || this.UserPower == 10) {
+								this.IsShowD = 1;
+							}
+
+						},
+        
+        getUserAccount: function(UserName) {
+							var that = this;
+							$.ajax({
+								url: mallDomainUrl + "api/Member/getUserAccount",
+								type: 'get',
+								dataType: "json",
+								data: {
+									UserName: UserName
+								},
+								beforeSend: function() {
+									hui.loading('数据加载中');
+								},
+								success: function(data) {
+									if(data.code == '200') {
+										that.UserPoint = data.points;
+										that.UserAmount = data.amount;
+										that.CardPowerActive = data.cardPower;
+										plus.storage.setItem('CardPowerActive', data.cardPower);
+									}
+								},
+								error: function() {
+									hui.closeLoading();
+									hui.toast("网络错误，请稍后再试");
+								},
+								complete: function(data, textStatus) {
+									hui.closeLoading();
+								}
+							})
+
+						},
+						
+						
+						PowerCardActive: function(goid) {
+							if(this.CardPowerActive == 0) {
+
+								hui.confirm('您没有权限,需要激活服务卡？', ['取消', '确定'], function() {
+									clicked('../mall/MyPowerCardCount.html', 'MyPowerCardCount.html', 'slide-in-left', '健康服务卡');
+								});
+
+							} else {
+								if(goid == 1) {
+									clicked('MemberDataIndex.html', 'MemberDataIndex.html', 'slide-in-left', '健康数据');
+								}
+								if(goid == 2) {
+									clicked('UploadCaseFiles.html', 'UploadCaseFiles.html', 'slide-in-left', '病历上传')
+								}
+								if(goid == 3) {
+									clicked('DeviceList.html', 'DeviceList.html', 'slide-in-left', '监测设备绑定');
+								}
+								if(goid == 4) {
+									clicked('MyReportIndex.html', 'MyReportIndex.html', 'zoom-fade-out', '健康评估报告');
+								}
+								if(goid == 5) {
+									clicked('MyProjectRecord.html', 'MyProjectRecord.html', 'zoom-fade-out', '健康方案');
+								}
+							}
+						},
+
+        
+        goBodyData:function(){
+            clickedNoHead('BodyFatData.html','BodyFatData.html','slide-in-left','体脂秤监测日志');
+        },
+
+
+        goCardBox:function(){
+            clicked('../mall/MyPowerCardCount.html','MyPowerCardCount.html','slide-in-right','我的卡包');
+        },
+
+        goPerson:function(){
+            clicked('PersonInfo.html','PersonInfo.html','slide-in-right','我的资料');
+        },
+
+goPower: function(menux) {
+							var headTxt = "";
+							switch(menux) {
+
+								case 1:
+									headTxt = "客户管理";
+									break;
+								case 2:
+									headTxt = "合伙人管理";
+									break;
+								case 3:
+									headTxt = "店务管理";
+									break;
+								case 4:
+									headTxt = "客户健康管理";
+									break;
+							}
+							var parm = {
+								"menux": menux
+							}
+							clickedParm('PersonMenuX.html', 'PersonMenuX.html', 'slide-in-right', parm, headTxt);
+						},
+
+        logout:function(){
+            plus.storage.removeItem('user');
+             plus.runtime.quit();
+        },         
+        
+
+    }
+
+});
+
+function onback(){
+	return;
+} 
+
+
+
+
+
+	</script>
+
+</html>

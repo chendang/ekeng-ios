@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/lib/mui.min.css">
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/ProductList.css" />
+
+		<script src="../js/base.js"></script>
+	<title>产品列表</title>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+			
+.mui-table-view.mui-grid-view .mui-table-view-cell {
+    text-align: left;
+    vertical-align:inherit;
+}
+
+.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-object {
+    height: 145px !important;
+}
+			/*.mui-scroll-wrapper {
+				height: 40px;
+				width: auto;
+				right: 10px;
+			}*/
+			
+			ul {margin: 0; padding: 0;}
+			
+
+
+			
+			#app {
+				
+				top: 0px;
+				bottom: 0px;
+				width: 100%;
+			}
+			
+			#wrapper {
+                position: absolute;
+				top: 6px;
+				bottom: 2px;
+				width: 100%;
+				/*height: 450px;*/
+			}
+			
+			/*#scroller {
+				margin: 0;
+				padding: 0;
+				
+			}*/
+			
+			.nav-out {
+				position: fixed;
+
+			}
+			
+			.nav-con {
+				top: 90px;
+				bottom: 53px;
+			}
+			
+			.jroll-infinite-tip {
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+			}
+			
+			.jroll-vue-infinite {
+				height: 100%;
+			}
+		</style>
+</head>
+<body>
+
+
+
+<div class="mui-content" id="app">
+
+
+		<!--<div style="padding:0 10px; margin-top:45px"class="">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+				<a class="mui-control-item mui-active" href="#item1">上衣</a>
+				<a class="mui-control-item" href="#item2">裙子</a>
+				<a class="mui-control-item" href="#item3">裤子</a>
+				<a class="mui-control-item" href="#item3">短袖</a>
+				<a class="mui-control-item" href="#item3">长袖</a>
+				<a class="mui-control-item" href="#item3">长袖</a>
+				<a class="mui-control-item" href="#item3">长袖</a>
+			</div>
+		</div>-->
+		
+		<!--<div class="nav-out" style="margin-top:45px">
+				<div class="hot-pro-nav">
+					
+					<div class="mui-scroll-wrapper">
+
+						<ul class="mui-scroll clearfix">
+							<li>
+								<a class="active" href="javascript:void(0)">全部</a>
+							</li>
+							<li v-for="(Item,index) in ClassList" v-cloak>
+								<a href="javascript:void(0)">{{Item.ClassName}}</a>
+							</li>
+
+						</ul>
+					</div>
+
+				</div>
+			</div>-->
+		
+
+			<div id="wrapper">
+			<jroll-infinite class="jroll-vue-infinite">
+			<div class="mui-control-content mui-active">
+				<ul class="mui-table-view mui-grid-view">
+					<li class="mui-table-view-cell mui-media mui-col-xs-6" v-for="(Item,index) in ItemList" v-cloak >
+						<a v-on:click="goProductDetail(Item.ProductId)">
+							<img class="mui-media-object" :src="Item.img_url">
+							<div class="mui-media-body">{{Item.ProductTitle}}</div>
+							<div class="goods_info"> <span class="price_info">￥{{Item.sell_price}}</span> <!--<span class="fav_num">2889人购买</span> --></div>
+						</a>
+					</li>
+
+
+				</ul>
+			</div>
+			
+
+			</div>
+			</jroll-infinite>
+	
+
+	
+	
+			<script src="../js/lib/mui.min.js"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+		<script src="../js/lib/jroll.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-vue-infinite.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-pulldown.js" type="text/javascript"></script>
+	
+
+	
+	
+	<script>
+
+
+	
+
+
+			var strWhere=" 1=1";
+			var filedOrder='id';
+			var domainUrl = GetMallApiDomain();
+			var ImageUrl=GetMallImage();
+            var classId=null;
+
+
+			function muiPready() {
+
+				mui.init({
+					swipeBack: true, //启用右滑关闭功能
+				});
+				mui('.mui-scroll-wrapper').scroll({
+					deceleration: 0.0005, //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+					scrollY: false, //是否竖向滚动
+					scrollX: true, //是否横向滚动
+					startX: 0, //初始化时滚动至x
+					startY: 0, //初始化时滚动至y
+					bounce: true, //是否启用回弹
+					bounceTime: 500, //回弹动画时间
+					scrollTime: 500,
+					directionLockThreshold: 5,
+					indicators: false
+				});
+
+			}
+
+
+function plusReady() { 
+HeadShow();		
+
+
+var _self = plus.webview.currentWebview();
+classId=_self.ClassId;
+if(classId==null || classId=='' || classId==''){
+	
+						hui.upToast("获取产品类别参数错误,请返回重新选择");
+					setTimeout(function() {
+						plus.webview.currentWebview().close();
+					}, 800);
+
+					return false;
+	
+	
+}
+
+						muiPready();
+
+						vum.GetClassList(0, 2);
+vum.GetJrollProductList();
+back();
+
+
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 		
+
+
+			
+
+
+
+
+
+			var vum
+			var infOptions = {
+
+				bottomed: function(complete) {
+
+
+                    	this.$parent.GetJrollProductList();
+
+	
+                    
+				},
+				updated: function() {
+					console.log('current page is ' + this.page)
+				}
+
+			}
+
+
+			vum = new Vue({
+				el: '#app',
+				components: {
+					'jroll-infinite': JRoll.VueInfinite(infOptions, {
+						scrollBarY: true
+					})
+				},
+				data: {
+					ItemData: [],
+					ItemList: [],
+					ClassList: []
+				},
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+
+					})
+
+				},
+				methods: {
+
+                    GetJrollProductList: function() {
+					var that = this;
+					//that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/Product/getProductList', {
+							params: {
+								category_id:classId,
+								pageIndex: that.$children[0].page+1,
+								strWhere: strWhere,
+								filedOrder: filedOrder
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.ItemData = [];
+							each(jsonx, function(i, j) {
+								that.ItemData.push({
+									number: (i + 1),
+									bid: j.bid,
+									ProductId: j.ProductId,
+									ProductTitle: cutstr(j.ProductTitle, 30),
+									ProductRemark: cutstr(j.ProductRemark, 30),
+									img_url: ImageUrl+j.img_url,
+									sell_price: j.sell_price,
+									point: j.point,
+								});
+
+
+							});
+
+							if(typeof complete === 'function') {
+								that.ItemList = that.ItemData;
+								hat.$children[0].complete();
+							} else {
+								that.ItemList = that.ItemList.concat(that.ItemData);
+							}
+							
+							that.pageCount = response.data.PageCount;
+							that.$children[0].total = response.data.PageCount;
+							if (response.data.PageCount==0){
+								that.$children[0].total =1;
+							}
+							else{
+								that.$children[0].total = response.data.PageCount;
+							}
+							that.$children[0].success();
+
+
+						})
+						.catch(function(response) {
+							console.log(response);
+			
+						});
+				},
+					GetClassList: function(parent_id, channel_id) {
+						var that = this;
+						that.axiosGetLoadding();
+						axios.get(domainUrl + 'api/Product/getProductClassAndChild', {
+								params: {
+									p_id: parent_id,
+									c_id: channel_id,
+								}
+							})
+							.then(function(response) {
+								var jsonx = eval(response.data.RecordList);
+								that.ClassList = [];
+								each(jsonx, function(i, j) {
+
+									that.ClassList.push({
+										number: (i + 1),
+										ClassId: j.ClassId,
+										ClassName: j.ClassName,
+										img_url: ImageUrl+j.img_url
+									});
+
+								});
+
+							})
+							.catch(function(response) {
+								console.log(response);
+
+							});
+					},
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+					
+					goProductDetail: function(ProductId) {
+                       var parm = {
+						"ProductId": ProductId
+					   }
+					    clickedParm('ProductDetail.html', 'ProductDetail.html', 'slide-in-right', parm, '产品详情');
+
+					},
+					
+
+				}
+
+			})
+		</script>
+	
+	
+</div>
+
+
+
+
+</body>
+</html>

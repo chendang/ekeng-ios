@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>案例分享</title>
+	<link rel="stylesheet" type="text/css" href="../css/ui.css">
+			<link rel="stylesheet" type="text/css" href="../css/lib/CSSRESET.css">
+		<link rel="stylesheet" type="text/css" href="../css/common2.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" href="../css/lib/huimin.css">
+    <script src="../js/base.js"></script>
+    <style>
+[v-cloak] {
+	display: none;
+}
+
+.aui-s-content p{
+	position: absolute;
+	float: left;
+	width: 95%;
+	text-align: left;
+	padding: 4px 12px;
+	
+}
+.news {
+    background: #fff;
+    margin-bottom: 1rem; 
+    box-shadow: 0 0px 0px #aaa;
+}
+
+.ul_news li {
+    width: 100%;
+    padding: 0.6rem 0;
+    border-top: 0px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+    box-sizing: border-box;
+    display: -webkit-box;
+    margin-bottom: 0.6rem;
+    background: #fff;
+}
+
+
+#app {
+				position: absolute;
+				top: 100px;
+                bottom: 2px;
+				width: 100%;
+			}
+
+			
+			#scroller {
+				margin: 0;
+				padding: 0;
+			}
+			
+
+			
+			.jroll-infinite-tip {
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+			}
+			
+			.jroll-vue-infinite {
+				height: 100%;
+			}
+
+
+</style>
+</head>
+<body>
+
+	<div class="aui-page" id="bodyinfo" style="margin-top: 0px;">
+		
+
+
+<div class="aui-btn-search">
+			<div class="aui-btn-lists">
+				<div class="aui-btn-input"><input type="text" placeholder="高血压..." v-model="KeyTxt"></div>
+				<button class="aui-btn-button" @click="GetSearchData">搜索</button>
+			</div>
+		</div>
+
+			<!-- 导航切换 begin -->
+
+				<div class="aui-tab t-line">
+					<ul class="aui-b-border">
+						<li class="aui-hit r-line" @click="showx(0)">最新案例</li>
+						<li class="r-line" @click="showx(1)">我的收藏</li>
+						<li class="r-line" @click="showx(2)">百问百答</li>
+					</ul>
+				</div>	 
+			
+			<div class="aui-news-content" id="app">
+			<jroll-infinite class="jroll-vue-infinite">	
+	                <div class="news">
+						<ul class="ul_news" v-cloak>
+							<li v-for="(Item,index) in ItemList" @click="ShowNewsContent(Item.NewsId)">
+								<div><img :src="Item.NewsPic" alt="" /></div>
+								<div>
+									<h4>{{Item.NewsTitle}}</h4>
+									<p>
+										<a @click.stop="SetPostLike(Item)">{{Item.LikeCount}}赞同</a>·
+										<a href="javascript:;">{{Item.CommentCount}}评论</a>·
+										<a href="javascript:;">{{Item.pubtime}}</a>
+									</p>
+								</div>
+							</li>
+
+						</ul>
+                   </div>
+			
+			 </jroll-infinite>
+		</div>
+
+
+					
+					
+					
+				
+
+			<!-- 导航切换 end -->
+
+	</div>
+	<script src="../js/lib/jquery-2.1.3.min.js"></script>
+			<script src="../js/lib/hui.js" type="text/javascript"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+		<script src="../js/lib/jroll.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-vue-infinite.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-pulldown.js" type="text/javascript"></script>
+		<script>
+
+
+			
+			var domainUrl = GetMvcApiDomain();
+
+
+var username = null;
+			var strWhere="";
+			var filedOrder='id';
+
+			function plusReady() {
+				HeadShow();
+				back();
+
+
+				var objuser = JSON.parse(plus.storage.getItem('user'));
+				username = objuser.UserName;
+
+
+				
+
+			}
+
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
+// vue实例
+			var vum
+			var infOptions = {
+
+				bottomed: function(complete) {
+                    if (this.$parent.showtime==0)
+                    {
+                    	this.$parent.classId=24;
+                    	this.$parent.GetJrollItemList();
+                    }
+                    if (this.$parent.showtime==1)
+                    {
+                    	this.$parent.classId=24;
+                    	this.$parent.GetJrollFavoriteList();
+                    }
+                    if (this.$parent.showtime==2)
+                    {
+                    	this.$parent.classId=26;
+                    	this.$parent.GetJrollItemList();
+                    }	
+                    
+				},
+				updated: function() {
+					console.log('current page is ' + this.page)
+				}
+
+			}
+
+
+
+
+    			
+			
+			vum = new Vue({
+				el: '#bodyinfo',
+				components: {
+					'jroll-infinite': JRoll.VueInfinite(infOptions, {
+						scrollBarY: true
+					})
+				},
+				data: {
+					pageIndex:0,
+					pageSize:20,
+					classId:24,
+					isLike:0,
+					showtime:0,
+					KeyTxt: "",
+					ItemData: [],
+					ItemList: []
+				},
+				mounted: function() {
+
+					this.$nextTick(function() {
+                     that = this;
+						setTimeout(function() {
+							
+							that.GetJrollItemList();
+						}, 800);
+
+
+					})
+
+				},
+				
+
+				
+				methods: {
+                    GetJrollItemList: function() {
+					var that = this;
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/News/getNewsListPage', {
+							params: {
+								pageIndex: that.$children[0].page+1,
+								pageSize: that.pageSize,
+								KeySearch: that.KeyTxt,
+								classId:that.classId,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.ItemData = [];
+							each(jsonx, function(i, j) {
+                                var pubtime=getDateDiff(getDateTimeStamp(j.create_date));
+								that.ItemData.push({
+									number: (i + 1),
+									NewsId: j.Id,
+									NewsTitle: cutstr(j.title, 25),
+									content: cutstr(j.content, 35),
+									NewsPic: j.img_src,
+									pubtime:pubtime,
+									CommentCount: j.CommentCount,
+									LikeCount:j.LikeCount,
+									FollowCount:j.FollowCount,
+								});
+
+
+							});
+
+							if(typeof complete === 'function') {
+								that.ItemList = that.ItemData;
+								hat.$children[0].complete();
+							} else {
+								that.ItemList = that.ItemList.concat(that.ItemData);
+							}
+							
+							that.pageCount = response.data.PageCount;
+							that.$children[0].total = response.data.PageCount;
+							if (response.data.PageCount==0){
+								that.$children[0].total =1;
+							}
+							else{
+								that.$children[0].total = response.data.PageCount;
+							}
+							that.$children[0].success();
+
+
+						})
+						.catch(function(response) {
+							console.log(response);
+			
+						});
+				},
+
+                GetJrollFavoriteList: function() {
+					var that = this;
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/News/getNewsClassFavorite', {
+							params: {
+								pageIndex: that.$children[0].page+1,
+								pageSize: that.pageSize,
+								KeySearch: that.KeyTxt,
+								classId:that.classId,
+								UserName:username,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.ItemData = [];
+							each(jsonx, function(i, j) {
+                                var pubtime=getDateDiff(getDateTimeStamp(j.create_date));
+								that.ItemData.push({
+									number: (i + 1),
+									NewsId: j.Id,
+									NewsTitle: cutstr(j.title, 25),
+									content: cutstr(j.content, 35),
+									NewsPic: j.img_src,
+									pubtime:pubtime,
+									CommentCount: j.CommentCount,
+									LikeCount:j.LikeCount,
+									FollowCount:j.FollowCount,
+								});
+
+
+							});
+
+							if(typeof complete === 'function') {
+								that.ItemList = that.ItemData;
+								hat.$children[0].complete();
+							} else {
+								that.ItemList = that.ItemList.concat(that.ItemData);
+							}
+							
+							that.pageCount = response.data.PageCount;
+							that.$children[0].total = response.data.PageCount;
+							if (response.data.PageCount==0){
+								that.$children[0].total =1;
+							}
+							else{
+								that.$children[0].total = response.data.PageCount;
+							}
+							that.$children[0].success();
+
+
+						})
+						.catch(function(response) {
+							console.log(response);
+			
+						});
+				},
+
+
+
+				
+				
+					GetSearchData: function() {
+						this.$children[0].scrollTop();
+						this.pageIndex = 1;
+						this.ItemList = [];
+						this.ItemData = [];
+						this.$children[0].page=1;
+						
+					if (this.showtime==0)
+                    {
+                    	this.classId=24;
+                    	this.GetJrollItemList();
+                    }
+                    if (this.showtime==1)
+                    {
+                    	this.classId=24;
+                    	this.GetJrollFavoriteList();
+                    }
+                    if (this.showtime==2)
+                    {
+                    	this.classId=26;
+                    	this.GetJrollItemList();
+                    }
+
+					},
+                    showx: function(x){
+                    	this.$children[0].scrollTop();
+						this.pageIndex = 1;
+						this.ItemList = [];
+						this.ItemData = [];
+						this.$children[0].page=0;
+						if (x==0){
+						this.showtime=0;
+						this.classId=24;
+						this.GetJrollItemList();
+						}
+						if (x==1){
+						this.showtime=1;
+						this.classId=24;
+						this.GetJrollFavoriteList();
+						}
+						if (x==2){
+						this.showtime=2;
+						this.classId=26;
+						this.GetJrollItemList();
+						}
+                    },
+					ShowNewsContent: function(id) {
+					var parm = {
+						"NewsId": id
+					}
+					clickedParm('ArticleContent.html', 'ArticleContent.html', 'slide-in-right', parm, '查看详情');	
+
+				    },
+					SetPostLike: function(item) {
+						var that = this;
+
+						axios.post(domainUrl + 'api/News/PostNewsSetLike', Qs.stringify({
+								UserName: username,
+								NewsId: item.NewsId
+							}))
+
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.toast(response.data.msg);
+									item.LikeCount++;
+
+								} else {
+									hui.toast(response.data.msg);
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+				
+					
+
+				}
+
+			})
+			
+
+
+		</script>
+		
+		
+		
+		
+	<script type="text/javascript">
+		$(function(){
+			$('.aui-tab ul li').click(function(){
+				$(this).addClass('aui-hit').siblings().removeClass('aui-hit');
+				$('.aui-panes>div:eq('+$(this).index()+')').show().siblings().hide();
+			})
+		})
+	</script>
+
+</body>
+</html>

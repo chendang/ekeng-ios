@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<title>个人健康管理--环境管理</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link type="text/css" href="../css/style.css" rel="stylesheet" />
+    <style type="text/css">
+        /*body { background: #f08519; }*/
+
+         [v-cloak]{ display: none; }
+
+
+    </style>
+</head>
+<body>
+
+
+<div class="assess_name assess_hjgl">
+	<h2><img src="../img/13_11.png" alt="" />环境管理</h2>
+	<i class="icon icon_circle icon_circle_07"></i>
+</div>
+<div class="assess_line10"></div>
+<!--当前栏目名end-->
+<!--环境管理内容start-->
+<div class="assess_content assess_hjgl" id="EnvironmentData" v-cloak>
+	<p>自然环境被破坏越发严重，也越来越威胁着渺小的人类。保护环境，远离污染，营造安全健康的家园，从自己做起。</p>
+	<p>
+		<img src="../img/13_07-01.png" alt="" />
+		水 ：{{ EnvironmentItem1 }}
+	</p>
+	<p>
+		<img src="../img/13_07-02.png" alt="" />
+		空气：{{ EnvironmentItem2 }}
+	</p>
+	<p>
+		<img src="../img/13_07-03.png" alt="" />
+		阳光：{{ EnvironmentItem3 }}
+	</p>
+	<p>
+		<img src="../img/13_07-04.png" alt="" />
+		生存的氛围：{{ EnvironmentItem4 }}
+	</p>
+</div>
+<!--环境管理内容end-->
+
+
+<!--底部end-->
+</body>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+<script>
+
+var domainUrl = GetMvcApiDomain();
+ 
+var username=null;  
+var ReportNum=null;
+function plusReady() { 
+HeadShow();			
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+ReportNum=_self.ReportNum;
+
+if(ReportNum==null || ReportNum==''){
+	plus.webview.currentWebview().close();
+}
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+      var vum = new Vue({
+          el: '#EnvironmentData',
+          data: function() {
+          	return {
+              ReportNum:ReportNum,
+              EnvironmentItem1: '--',
+              EnvironmentItem2: '--',
+              EnvironmentItem3: '--',
+              EnvironmentItem4: '--'
+           }
+          },
+          
+          mounted: function () {
+
+                   this.$nextTick(function () {
+
+                     var self=this;
+                     setTimeout(function(){
+                     self.getEnvironmentData();
+                     }, 150);
+                 })
+
+          },
+
+          methods: {
+              getEnvironmentData: function () {
+                  $.ajax({
+                      url: domainUrl + "api/PerReport/getLookPerReportItemData",
+                      type: 'get',
+                      dataType: "json",
+                      data: { UserName: username,ReportNum:ReportNum },
+                      success: function (data) {
+                          vum.EnvironmentItem1 = data.PartFourteenEnvironmentItem1;
+                          vum.EnvironmentItem2 = data.PartFourteenEnvironmentItem2;
+                          vum.EnvironmentItem3 = data.PartFourteenEnvironmentItem3;
+                          vum.EnvironmentItem4 = data.PartFourteenEnvironmentItem4;
+                      },
+                      error: function () {
+                          plus.nativeUI.toast("网络错误，请稍后再试");
+                      }
+                  })
+              }
+
+
+          }
+
+
+
+      });
+
+</script>
+
+
+</html>

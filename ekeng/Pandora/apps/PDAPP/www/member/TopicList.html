@@ -1,0 +1,443 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<link type="text/css" href="../css/lib/huimin.css" rel="stylesheet" />
+<link type="text/css" href="../css/style.css" rel="stylesheet" />
+<link href="../css/Topic.css" rel="stylesheet" />
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<title>E康云</title>
+    <style type="text/css">
+    	 [v-cloak]{ display: none; }
+        .hBg{background:#E92F2F;top: 0px; !important;}
+        .hBg a {color: #E92F2F;}
+        .ht {color: #F0EFEF;font-weight: 800;}
+        body { background: #fff; }
+
+        
+    </style>
+</head>
+
+<body>
+
+<div class="my_concern_type my_concern_type03 clearfix hBg">
+  <a href="javascript:clicked('TopicFollowBox.html','TopicFollowBox.html','zoom-fade-out','我关注的话题');" class="on"><i><font>23</font><br/>我的关注</i></a>
+  <a href="javascript:clicked('TopicMyReplyList.html','TopicMyReplyList.html','zoom-fade-out','我的话题回复');" class="on"><i><font>05</font><br/>我的回答</i><em>3</em></a>
+  <a href="javascript:clicked('TopicMyAskList.html','TopicMyAskList.html','zoom-fade-out','我的提问');" class="on"><i><font>23</font><br/>我的提问</i></a>
+</div>
+<!--健康话题start-->
+<div class="p_plan">
+  <ul class="p_plan_title">
+    <a href="javascript:void(0)" id="show01"><i class="ico_p_01">提问</i></a>
+    <a href="javascript:clicked('TopicToReplyList.html','TopicToReplyList.html','zoom-fade-out','问题回复');"><i class="ico_p_02">回答</i></a>
+<!--    <a href="javascript:void(0)" id="show03"><i class="ico_p_03">写帖子</i></a>-->
+  </ul>
+  <ul class="p_plan_list01" id="TopicList">
+ 
+    
+   
+
+  </ul>
+</div>  
+<!--健康话题end-->
+
+<!--撰写提问start-->
+<div class="add_note disable" id="box01">
+  <ul class="title">
+    <li class="m_cell_hd"><img src="../img/12_10.png" alt="" /></li>
+    <li class="m_cell_hd m_cell_primary"><h2>撰写提问</h2></li>
+    <li class="m_cell_ft" id="topicPost"><img src="../img/12_05.png" alt=""/></li>
+  </ul>
+   <form method="POST" enctype="multipart/form-data"> 
+  <ul class="add_notice_text">
+  	<input type="text" value="" placeholder="请输入标题" id="topicTitle"/>
+  	<input type="text" value="" placeholder="话题" id='selTopicPicker'/>
+  	<input type="hidden" id="inTopicClass">
+   <div class="publish-article-content">
+    	<input type="hidden" id="target">
+			<div class="article-content" id="content">
+			</div>
+
+	</div>	
+
+	<div>
+		<div style="margin-top:42px;">
+		 <a href="#" title=""><img src="../img/12_07.png" alt="" /></a>
+         <a href="#" title=""><img src="../img/12_08.png" alt="" /></a>
+      </div>
+       <div style="margin-top:-38px;margin-left:90px;">
+       <a href="#" title=""><img src="../img/12_09.png" alt="" /></a>
+       <input class="input-file" id="imageUpload" type="file" name="fileInput" capture="camera" accept="image/*" style="position:absolute;left:0;opacity:0;width:100%;">
+       </div>
+    </div>
+    
+  </ul> 
+  </form>
+</div>
+<!--撰写提问end-->
+
+
+<!--撰写回答start-->
+<div class="add_note disable" id="box02">
+  <ul class="title">
+    <li class="m_cell_hd"><img src="../img/12_10.png" alt="" /></li>
+    <li class="m_cell_hd m_cell_primary"><h2>撰写回答</h2></li>
+    <li class="m_cell_ft"><a href="javascript:void(0)"><img src="../img/12_05.png" alt="" /></a></li>
+  </ul>
+  <ul class="add_notice_text">
+    <textarea placeholder="写回答..." class="text"></textarea>
+    <div>
+      <a href="#" title=""><img src="../img/12_07.png" alt="" /></a>
+      <a href="#" title=""><img src="../img/12_08.png" alt="" /></a>
+      <a href="#" title=""><img src="../img/12_09.png" alt="" /></a>
+    </div>
+  </ul> 
+</div>
+<!--撰写回答end-->
+
+<!--撰写帖子start-->
+<div class="add_note disable" id="box03">
+  <ul class="title">
+    <li class="m_cell_hd"><img src="../img/12_06.png" alt="" /></li>
+    <li class="m_cell_hd m_cell_primary"><h2>撰写帖子</h2></li>
+    <li class="m_cell_ft"><a href="javascript:void(0)"><img src="../img/12_05.png" alt="" /></a></li>
+  </ul>
+  <ul class="add_notice_text">
+    <input type="text" value="" placeholder="请输入标题" />
+    <textarea placeholder="写回答..." class="text text01"></textarea>
+    <div>
+      <a href="#" title=""><img src="../img/12_07.png" alt="" /></a>
+      <a href="#" title=""><img src="../img/12_08.png" alt="" /></a>
+      <a href="#" title=""><img src="../img/12_09.png" alt="" /></a>
+    </div>
+  </ul> 
+</div>
+<!--撰写帖子end-->
+
+
+
+
+<!--底部end-->
+</body>
+<script src="../js/index.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js" type="text/javascript"></script>
+<script src="../js/lib/hui.js" type="text/javascript"></script>
+<script src="../js/lib/hui-picker.js" type="text/javascript"></script>
+<script src="../js/artEditor.js"></script>
+<script src="../js/showEdit.js"></script>
+
+<script type="text/javascript">
+
+
+
+var domainUrl = GetMvcApiDomain();
+
+var username=null;  
+function plusReady() { 
+//HeadShow();	
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+
+
+getTopicList('20'); 
+plus.key.removeEventListener("backbutton",onback);
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+ 
+
+
+	
+
+
+
+document.getElementById("topicPost").addEventListener('tap',function(){	
+	
+	var title=$('#topicTitle').val();
+	var topicClass=$('#selTopicPicker').val();
+	var inTopicClass=document.getElementById("inTopicClass").value;
+	var detail=$('#target').val();
+	
+	if(title==''){
+		plus.nativeUI.toast('请输入标题');
+		$('#title').focus();
+      	return false;
+	}
+	if(topicClass=='' || topicClass=='话题'){
+		plus.nativeUI.toast('请选择话题');
+		$('#selTopicPicker').focus();
+      	return false;
+	}
+	if(detail==''){
+		plus.nativeUI.toast('请输入内容');
+      	return false;
+	}
+	
+
+
+topicPost(username,title,inTopicClass,detail); 
+
+ $("#box01").slideUp();
+ 
+getTopicList('20');
+
+});
+
+
+
+var pickerTopic = new huiPicker('#selTopicPicker', function(){
+document.getElementById("selTopicPicker").value=pickerTopic.getText(0);
+document.getElementById("inTopicClass").value=pickerTopic.getVal(0);
+});
+pickerTopic.level = 1;
+var TopicClass = new Array();
+
+TopicClass.push({value:'1', text:'高血压'},{value:'2', text:'高血糖'},{value:'3', text:'高血脂'},{value:'4', text:'脂肪肝'},{value:'5', text:'减重'},{value:'6', text:'细胞平衡'},{value:'7', text:'8S管理'});
+
+pickerTopic.bindData(0, TopicClass);
+ 	
+
+
+
+function topicPost(username,title,tclass,detail) {
+	          $.ajax({
+             	url: domainUrl + "api/Topic/GetTopicPostSave",
+                type: 'get',
+                dataType: "json",
+                async:false,
+                data: {UserName:username,Title:title,TClass:tclass,Detail:detail},
+                success: function (data) {
+                	if (data.code=="200"){
+                     plus.nativeUI.toast("提交成功");
+
+                	}
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                }
+            })
+
+
+
+ }
+
+
+  function getTopicList(topcount) {
+	
+	          $.ajax({
+             	url: domainUrl + "api/Topic/getTopicList",
+                type: 'get',
+                dataType: "json",
+                data: {topcount:topcount},
+                 beforeSend:function()
+                {
+                    hui.h5Loading(false, '加载中...',{round:2, padding:'20px', textalign:'right'});
+                },
+                success: function (data) {
+                var inner = '';
+                $.each(data, function (i, j) {
+                inner += '<li>';
+                inner += '<div class="p_con01">';
+                if (String(j.headpic).length==0 || j.headpic==''){
+                inner += '<ul class="m_cell_hd"><img src="../img/myhead.png"></ul>';	
+                }
+                else{
+                inner += '<ul class="m_cell_hd"><img src="' + j.headpic + '"></ul>';
+                }
+                inner += '<ul class="m_cell_hd m_cell_primary"><p>话题:'+j.classname+'</p></ul>';
+                inner += '<ul class="m_cell_ft">';
+                inner += '<li>';
+                inner += '<img src="../img/12_01.jpg" alt=""/>';
+                inner += '</li>';
+                inner += '</ul>';
+                inner += '<div>';
+                inner += '<a href="#" title="">屏蔽问题</a>';
+                inner += '<a href="#" title="">分享</a>';
+                inner += '</div>';
+                inner += '</div>';
+                inner += '<div class="p_con02" onclick="showTopicContent(' + j.Id + ');">';
+                inner += '<a href="#" title="">';
+                inner += '<h4>' + j.title + '</h4>';
+                inner += '<p>' + j.content + '...[详细]</p>';
+                inner += '</a>';
+                inner += '</div>';
+                inner += '<p>'+j.LikeCount+' <span onclick="SetLikePost('+username+','+j.Id+');">赞同</span>·'+j.CommentCount+'<span onclick="GoUrlComment('+j.Id+');">评论</span>·<span onclick="SetFollowPost('+username+','+j.Id+');">关注问题</span></p>';
+                inner += '</li>';
+                });
+                $("#TopicList").html(inner);    
+               },
+                error: function () {
+                	hui.h5Loading(true);
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                },
+                complete: function(data, textStatus)
+                {
+                    hui.h5Loading(true);
+                }
+            })
+	          
+
+
+ }
+ 
+ 
+ document.getElementById("show01").addEventListener('tap',function(){	
+$("#box01").slideDown();
+}); 
+ 
+// document.getElementById("show02").addEventListener('tap',function(){	
+//$("#box02").slideDown();
+//}); 
+
+// document.getElementById("show03").addEventListener('tap',function(){	
+// $("#box03").slideDown();
+//}); 
+
+mui("#box01").on('tap', '.m_cell_hd img', function (event) {
+ $("#box01").slideUp();
+});
+
+//mui("#box02").on('tap', '.m_cell_hd img', function (event) {
+// $("#box02").slideUp();
+//});
+
+//mui("#box03").on('tap', '.m_cell_hd img', function (event) {
+// $("#box03").slideUp();
+//});
+
+mui(".p_plan_list01").on('tap', '.p_con01 li img', function (event) {
+  $(this).parents(".p_con01").find("div").slideToggle();
+});
+
+
+
+
+
+
+function SetFollowPost(username,topicId) {
+	     var res=getIsFollowSet(username,topicId);
+	     if (res=='0'){
+	          $.ajax({
+             	url: domainUrl + "api/Topic/GetTopicSetFollow",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,TopicId:topicId},
+                success: function (data) {
+                	if (data.code=="200"){
+                     plus.nativeUI.toast("关注成功");
+                	}
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                }
+           })
+	    }else{
+	    	plus.nativeUI.toast("已关注");
+	    }
+ }
+
+
+function getIsFollowSet(username,topicId) {
+	          var res=0;
+	          $.ajax({
+             	url: domainUrl + "api/Topic/getIsSetFollow",
+                type: 'get',
+                dataType: "json",
+                async:false,
+                data: {UserName:username,TopicId:topicId},
+                success: function (data) {
+                	if (data.code=="200"){
+                		if(data.isHave>="1"){
+                			res='1';
+                		}
+                	}
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                }
+            })
+
+ 	return res;
+
+ }
+
+
+
+
+function SetLikePost(username,topicId) {
+	     var res=getIsLikeSet(username,topicId);
+	     if (res=='0'){
+	          $.ajax({
+             	url: domainUrl + "api/Topic/GetTopicSetLike",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,TopicId:topicId},
+                success: function (data) {
+                	if (data.code=="200"){
+                     plus.nativeUI.toast("点赞");
+                     getTopicList('50');
+                	}
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                }
+           })
+	    }else{
+	    	plus.nativeUI.toast("已点赞");
+	    }
+ }
+
+function getIsLikeSet(username,topicId) {
+	          var res=0;
+	          $.ajax({
+             	url: domainUrl + "api/Topic/getTopicIsSetLike",
+                type: 'get',
+                dataType: "json",
+                async:false,
+                data: {UserName:username,TopicId:topicId},
+                success: function (data) {
+                	if (data.code=="200"){
+                		if(data.isHave>="1"){
+                			res='1';
+                		}
+                	}
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                 }
+            })
+
+ 	return res;
+
+ }
+
+
+function showTopicContent(TopicId){
+	var parm = {"TopicId" : TopicId}
+    clickedParm('TopicContent.html','TopicContent.html','slide-in-right',parm,'健康话题');
+
+}; 
+
+
+function GoUrlComment(TopicId){
+ 
+	var parm = {"TopicId" : TopicId}
+    clickedParm('TopicComment.html','TopicComment.html','slide-in-right',parm,'话题评论');
+ 
+}; 
+
+function onback(){
+	return;
+} 
+
+ </script>
+</html>

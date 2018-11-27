@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<title>个人健康管理--健康学院</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link type="text/css" href="../css/style.css" rel="stylesheet" />
+</head>
+<body>
+
+
+<div class="assess_name assess_jkxy">
+	<h2><img src="../img/13_12.png" alt="" />哈福健康管理商学院</h2>
+	<i class="icon icon_circle icon_circle_08"></i>
+</div>
+<div class="assess_line10"></div>
+<!--当前栏目名end-->
+<!--健康学院start-->
+<div class="assess_content assess_jkxy">
+	<p class="assess_lead">勿以恶小而从之，勿以善小而不为，摒弃伪科学，学习真养生，这里有丰富多彩的医学健康盛宴！</p>
+	<p>多看与健康有关的书籍节目，如《 细胞平衡修复法 》、《 体重管理的真相 》、CCTV 10 《 健康之路 》，多参加健康讲座，多与专属健康管理师交流。</p>
+	<p><img class="assess_jkxy_rw" src="../img/13_08-01.png" alt="" /></p>
+	<div>
+		<p>出生于中医世家</p>
+		<p><em>5</em>年同济医科大学医疗系求学经历</p>
+		<p><em>7</em>年中国医学科学院北京天坛医院和北京<br>神经外科研究所从医经验</p>
+		<p><em>4</em>年海外生物医学与化学领域深造，获得博士学位</p>
+		<p><em>13</em>年中国健康管理实践探索</p>
+		<p class="assess_lead">现在邱博士和您一起管理健康<br>让健康与您时刻相伴！</p>
+	</div>
+</div>
+
+<!--底部end-->
+</body>
+<script src="../js/base.js" type="text/javascript"></script>
+<script>
+
+ 
+var username=null;  
+var ReportNum=null;
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+ReportNum=_self.ReportNum;
+
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+</script>
+</html>

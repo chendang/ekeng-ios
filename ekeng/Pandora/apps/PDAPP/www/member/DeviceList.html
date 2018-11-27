@@ -1,0 +1,298 @@
+<!doctype html>
+<html>
+<head>
+<title>智能设备</title>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" >
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link rel="stylesheet" type="text/css" href="../css/lib/CSSRESET.css">
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/DeviceList.css">
+
+<style>
+	[v-cloak]{ display: none; }
+	.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+	}
+</style>
+</head>
+<body>
+    <div class="_container">
+
+        <article class="wrapper">
+            <div class="main">
+
+                <div class="sec">
+                    <h2><span>监测设备连接</span></h2>
+
+                    <ul class="ul_product clearfix">
+                        <li onclick="pluginShow('0')">
+                            <a>
+                                <img src="../img/product_pic_1.jpg" alt="" />
+                                <h4><em>血糖分析仪</em><i>监测血糖指数</i></h4>
+                            </a>
+                        </li>
+
+                        <li onclick="pluginShow('1')">
+                            <a>
+                                <img src="../img/product_pic_2.jpg" alt="" />
+                                <h4><em>血压计</em><i>监测血压</i></h4>
+                            </a>
+                        </li>
+                        
+                        <!--<li onclick="BindDeviceBluOtc('2')">
+                            <a>
+                                <img src="../img/product_pic_3.jpg" alt="" />
+                                <h4><em>体温计</em><i>监测体温</i></h4>
+                            </a>
+                        </li>-->
+                        <!--<li onclick="BindDeviceBluOtc('3')">
+                            <a>
+                                <img src="../img/product_pic_4.jpg" alt="" />
+                                <h4><em>血氧仪</em><i>监测血氧</i></h4>
+                            </a>
+                        </li>-->
+                        <!--<li onclick="BindDeviceBluOtc('5')">
+                            <a>
+                                <img src="../img/product_pic_5.jpg" alt="" />
+                                <h4><em>体重仪</em><i>监测体重</i></h4>
+                            </a>
+                        </li>-->
+                        <li onclick="pluginShow('9')">
+                            <a>
+                                <img src="../img/product_pic_9.png" alt="" />
+                                <h4><em>体脂称</em><i>监测体脂</i></h4>
+                            </a>
+                        </li>
+                        <li onclick="pluginShow('10')">
+                            <a>
+                                <img src="../img/product_pic_10.png" alt="" height="140"/>
+                                <h4><em>空气净化器</em><i>智能环保</i></h4>
+                            </a>
+                        </li>
+                        <!--<li onclick="BindDeviceBluOtc('6')">
+                            <a>
+                                <img src="../img/product_pic_6.jpg" alt="" />
+                                <h4><em>尿酸仪</em><i>监测尿酸</i></h4>
+                            </a>
+                        </li>-->
+                        <!--<li onclick="BindDeviceBluOtc('4')">
+                            <a>
+                                <img src="../img/product_pic_6.jpg" alt="" />
+                                <h4><em>血脂仪</em><i>监测血脂</i></h4>
+                            </a>
+                        </li>-->
+                    </ul>
+                </div>
+
+                <!--<div class="sec">
+                    <h2><span>其它智能设备</span></h2>
+
+                    <ul class="ul_product clearfix">
+                        <li>
+                            <a href="javascript:clickedNoHead('StepIndex.html','StepIndex.html','slide-in-left');">
+                                <img src="../img/product_pic_7.jpg" alt="" />
+                                <h4><em>乐心手环</em><i>记步监测睡眠</i></h4>
+                            </a>
+                        </li>
+
+                        <li onclick="BindDeviceWiFiLx('0')">
+                            <a>
+                                <img src="../img/product_pic_8.jpg" alt="" />
+                                <h4><em>乐心血压计i5/i5s</em><i>监测血压</i></h4>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>-->
+
+            </div>
+        </article>
+        <!-- wrapper End -->
+    </div>
+</body>
+<script src="../js/lib/mui.min.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script>
+	
+	
+
+
+var username=null;  
+
+function plusReady() { 
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+//HeadShow();
+
+BindDeviceReady();
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+	
+	
+		
+function BindDeviceReady(){
+// 声明的JS“扩展插件别名”
+    var _BARCODE = 'plugintest',
+        B = window.plus.bridge;
+        var plugintest =
+        {
+            // 声明异步返回方法
+            PluginTestFunction : function (Argus1, Argus2, Argus3, Argus4, successCallback, errorCallback )
+            {
+                var success = typeof successCallback !== 'function' ? null : function(args)
+                {
+                    successCallback(args);
+                },
+                fail = typeof errorCallback !== 'function' ? null : function(code)
+                {
+                    errorCallback(code);
+                };
+                callbackID = B.callbackId(success, fail);
+                // 通知Native层plugintest扩展插件运行”PluginTestFunction”方法
+                return B.exec(_BARCODE, "PluginTestFunction", [callbackID, Argus1, Argus2, Argus3, Argus4]);
+            },
+            PluginTestFunctionArrayArgu : function (Argus, successCallback, errorCallback )
+            {
+                var success = typeof successCallback !== 'function' ? null : function(args)
+                {
+                    successCallback(args);
+                },
+                fail = typeof errorCallback !== 'function' ? null : function(code)
+                {
+                    errorCallback(code);
+                };
+                callbackID = B.callbackId(success, fail);
+                return B.exec(_BARCODE, "PluginTestFunctionArrayArgu", [callbackID, Argus]);
+            },
+            // 声明同步返回方法
+            PluginTestFunctionSync : function (Argus1, Argus2, Argus3, Argus4)
+            {
+                // 通知Native层plugintest扩展插件运行“PluginTestFunctionSync”方法并同步返回结果
+                return B.execSync(_BARCODE, "PluginTestFunctionSync", [Argus1, Argus2, Argus3, Argus4]);
+            },
+            PluginTestFunctionSyncArrayArgu : function (Argus)
+            {
+                return B.execSync(_BARCODE, "PluginTestFunctionSyncArrayArgu", [Argus]);
+            }
+        };
+    window.plus.plugintest = plugintest;
+};
+
+
+function BindDeviceBluOtc(Tval){
+//    // NewViewController为应用内创建的原生的ViewController类名,所调用页面的内容需要在原生代码中完成
+    var newVCobj = plus.ios.newObject("OTCBTViewController");
+    var UIApplicationClass = plus.ios.importClass("UIApplication");
+    var UIAppObj = UIApplicationClass.sharedApplication();
+    var del = plus.ios.invoke(UIAppObj,"delegate");
+    // 如果当前应用delegate对象包含UIWindow对象并且变量名命名为“window”可以这么写，
+    // 否则需要根据实际代码情况修改
+    // 应用的delegate对象也可以添加一个返回UIViewController的方法
+    var appWindowObj = plus.ios.invoke(del,"window");
+    var appRootController = plus.ios.invoke(appWindowObj,"rootViewController");
+    newVCobj.userid= "xxxxxxxxxxx";
+    plus.ios.invoke(appRootController,"presentViewController:animated:completion:",newVCobj,"YES",null);
+    
+    
+    
+    
+    //plus.closeWaiting();
+}
+
+
+function BindDeviceBluLx(Tval){
+	
+	showPrompt();
+}
+
+function pluginShow( type) {
+    
+			plus.nativeUI.showWaiting("正在连接设备...请稍等!");
+			plus.plugintest.PluginTestFunction(type,username,
+				function(res){
+					if(res == "0"){
+                                              
+						//plus.nativeUI.toast("设备连接成功.",{duration:"long"});
+						 plus.nativeUI.closeWaiting();
+					}
+					
+				},
+				function(result){
+					alert("fail:"+result);
+					plus.nativeUI.closeWaiting();
+				});
+                plus.nativeUI.closeWaiting();
+}
+
+function pluginGetString(sn)
+        {
+        	plus.nativeUI.showWaiting("正在连接设备...请稍等!");
+        	var res=plus.plugintest.PluginTestFunctionSync(sn,username);
+        	//返回几种情况 0 成功同步到云端 1 根据SN 未获取到Mac 2  未找到设备 3 未同步到云端 4、未开通蓝牙 5、蓝牙设备不支持4.0
+        	plus.nativeUI.toast("返回结果："+res,{duration:"long"});
+        	if(res == "0"){
+        		plus.nativeUI.toast("成功同步到云端!",{duration:"long"});
+        		 plus.nativeUI.closeWaiting();
+				clicked('StepIndex.html',true);
+        	}
+        	if(res == "1"){
+        		plus.nativeUI.toast("根据SN 未获取到Mac!",{duration:"long"});
+        		plus.nativeUI.closeWaiting();
+        	}
+        	if(res == "2"){
+        		plus.nativeUI.toast("未找到设备!",{duration:"long"});
+        		 plus.nativeUI.closeWaiting();
+        	}
+        	if(res == "3"){
+        		plus.nativeUI.toast("数据未同步到云端!",{duration:"long"});
+        		 plus.nativeUI.closeWaiting();
+        	}
+        	if(res == "4"){
+        		//未开通蓝牙跳转到系统开通蓝牙界面
+        		plus.nativeUI.toast("未开通蓝牙!",{duration:"long"});
+        		 plus.nativeUI.closeWaiting();
+
+        	}
+        	if(res == "5"){
+				plus.nativeUI.alert("蓝牙设备不支持4.0");
+				plus.nativeUI.closeWaiting();
+        	}
+			if(res == "-1"){
+				plus.nativeUI.alert("未找到设备!");
+				plus.nativeUI.closeWaiting();
+			}
+        }
+
+		function showPrompt(){
+			var bts=["现在连接","暂不连接"];
+			plus.nativeUI.prompt("请输入设备序列号(SN)",function(e){
+			var i=e.index;
+			if(i=="0"){
+				   //确定
+				    if(e.value == ""){
+				       plus.nativeUI.toast("序列号输入格式不正确",{duration:"long"});
+				    }else{
+				    	//e.value="0301570101062540";
+				    	pluginShow(e.value);
+				    }
+
+				}else{
+				  //取消
+				  clicked('StepIndex.html','StepIndex.html','slide-in-right');
+				}
+				outLine( "按\""+((i>=0)?bts[e.index]:"返回")+"\"关闭："+e.value );
+			},"","请输入序列号",bts);
+		}
+		</script>
+
+</html>

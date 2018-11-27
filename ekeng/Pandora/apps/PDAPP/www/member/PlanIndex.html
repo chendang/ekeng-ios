@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<title>E康云</title>
+<link href="../css/style.css" type="text/css" rel="stylesheet"/>
+
+    <style type="text/css">
+    	
+    	 [v-cloak]{ display: none; }
+    </style>
+   
+
+
+
+</head>
+
+<body>
+
+
+    <!--健康计划start-->
+    <div class="p_plan mt15" style="margin-top: 0px;">
+      <ul class="p_plan-list">
+        <!--<li onclick="clicked('MyPlanSet.html','MyPlanSet.html','zoom-fade-out','设置管理计划')">
+          <a title="">
+            <div class="m_cell_hd"><img src="../img/5-14.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>添加管理计划</h4>
+            </div>
+          </a>
+        </li>-->
+        <li onclick="clickedNoHead('MedPlanTake.html','MedPlanTake.html','slide-in-left')">
+          	<div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-01.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>营养素服用</h4>
+              <p>今天的营养素还没有完成</p>
+            </div>
+            <div class="m_cell_ft">
+              <i>去完成</i>
+            </div>
+            </div>
+
+        </li>
+        <li onclick="clickedNoHead('MonitorSet.html','MonitorSet.html','slide-in-right','监测计划')">
+          <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-02.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4>监测计划</h4>
+              <p>查看最近的监测计划</p>
+            </div>
+            <div class="m_cell_ft">
+              <i>去查看</i>
+            </div>
+          </div>
+        </li>
+        <li>
+        <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-03.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary"  onclick="clickedNoHead('FoodMyTwitter.html','FoodMyTwitter.html','slide-in-right','膳食管理')">           	 
+              <h4>膳食管理</h4>
+              <p>今天还没有记录吃了些什么</p>
+            </div>
+            <div class="m_cell_ft"  onclick="clicked('DaysFoodRecord.html','DaysFoodRecord.html','slide-in-left','膳食管理')">
+              <i>去记录</i>
+            </div>
+         </div>
+        </li>
+        <li onclick="clickedNoHead('SportIndex.html','SportIndex.html','slide-in-left','运动计划')">
+           <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-04.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>运动计划</h4>
+              <p>今天还没有运动</p>
+            </div>
+            <div class="m_cell_ft">
+              <i>去运动</i>
+            </div>
+          </div>
+        </li>
+        <li onclick="clicked('FeelingIndex.html','FeelingIndex.html','slide-in-left','心情管理')">
+          <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-05.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>心情管理</h4>
+              <p>今天还没有记录心情</p>
+            </div>
+            <div class="m_cell_ft">
+              <i>去记录</i>
+            </div>
+           </div>
+        </li>
+                <li>
+         <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-06.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary" onclick="clickedNoHead('WeightIndex.html','WeightIndex.html','slide-in-left','体重日志')">
+              <h4>体重日志</h4>
+              <p>看看最近体重管理的怎么样</p>
+            </div>
+            <div class="m_cell_ft" onclick="clicked('DaysWeightRecord.html','DaysWeightRecord.html','slide-in-left','记录体重日志')">
+              <i>去记录</i>
+            </div>
+         </div>
+        </li>
+        <!--<li onclick="clickedNoHead('SleepIndex.html','SleepIndex.html','slide-in-left','睡眠管理')">
+         <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-06.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>睡眠管理</h4>
+              <p>看看最近睡眠怎么样</p>
+            </div>
+            <div class="m_cell_ft">
+              <i>去查看</i>
+            </div>
+         </div>
+        </li>
+        <li onclick="clickedNoHead('DayRecordSum.html','DayRecordSum.html','slide-in-left','健康日志管理')">
+           <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-07.png" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>健康日志管理</h4>
+              <p>今天还没有记录健康日志</p>
+            </div>
+            <div class="m_cell_ft">
+              <i>去查看</i>
+            </div>
+           </div>
+        </li>-->
+      </ul>
+    </div>
+
+
+
+
+<!--底部end-->
+
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+
+<script>
+
+var domainUrl = GetMvcApiDomain();
+ 
+var username=null;  
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+    
+
+</script>
+
+
+
+</body>
+</html>

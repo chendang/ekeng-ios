@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="white" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<link type="text/css" href="../css/step.css" rel="stylesheet" >
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<title>手环</title>
+</head>
+<body>
+<div class="web_header web_jb">
+	<div class="web_head">
+		<a class="web_h_n1" href="javascript:CloseCurrentView();"></a>
+		<a class="web_h_n2" href=""></a>
+		<!--<span class="web_h_n3"></span>-->
+		<h3>历史记录</h3>
+	</div>
+	<div class="web_head_t">
+		<div class="head_chart">
+			<div class="chart">
+				<div class="chart_left_bar bar01">
+					<span class="sps01"><span>20K</span><i class="i01"></i></span>
+					<span class="sps01"><span>5K</span><i class="i01"></i></span>
+				</div>
+                <div class="chart_center_tut">
+                	<div class="chart_tut_div">
+                    	<div class="tut_div00" style="height:20%;" id="FourData"></div>
+                    </div>
+                	<div class="chart_tut_div">
+                    	<div class="tut_div00" style="height:95%;" id="ThreeData"></div>
+                    </div>
+                	<div class="chart_tut_div">
+                    	<div class="tut_div00" style="height:65%;" id="TwoData"></div>
+                    </div>
+                	<div class="chart_tut_div on">
+                    	<div class="tut_div00" style="height:35%;" id="OneData"></div>
+                    </div>
+                </div>
+			</div>
+			<div class="chart_date1 clearfix">
+            <span id="dayBeforeHis">12/31</span>
+            <span>前天</span>
+            <span>昨天</span>
+            <span class="on">今天</span>
+            
+			</div>
+		</div>
+	</div>
+</div>
+<div class="web_container">
+	<div class="web_con_box01">
+		<span class="con_box01_t2">实时步数</span>
+		<div class="con_box01_t2list">
+			<span class="sp11" id="walkSteps">0</span>
+            <div class="con_box01_t2list_d">步</div>
+		</div>
+	</div>
+    <div class="con_box01_t3list clearfix">
+    	<ul>
+        <li><span class="sp01">距离</span><span class="sp02" id="distance">0公里</span></li>
+    	<li><span class="sp01">消耗</span><span class="sp02" id="calories">0大卡</span></li>
+        </ul>
+    </div>
+
+</div>
+<script>
+$(".chart_date1 span").click(function(){
+	$(this).addClass("on").siblings().removeClass("on");
+	$(".chart_center_tut .chart_tut_div").find($(".tut_div00")).css("opacity","0.5");
+	$(".chart_center_tut .chart_tut_div").eq($(this).index()).find($(".tut_div00")).css("opacity","1");
+	
+})
+</script>
+</body>
+
+
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+
+
+var username=null;  
+var domainUrl = GetMvcApiDomain();
+var theDate = dateConvert(getNowFormatDate()); 
+function plusReady() { 
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+
+getStepNow(username,theDate);
+setInterval("getStepNow(username,theDate)", 30*1000);  
+
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+
+document.getElementById("dayBeforeHis").innerHTML=dateConvert(GetDateStr(-3)).substr(4,2)+"/"+dateConvert(GetDateStr(-3)).substr(6,2);
+
+
+var day1=dateConvert(GetDateStr(0));
+var day2=dateConvert(GetDateStr(-1));
+var day3=dateConvert(GetDateStr(-2));
+var day4=dateConvert(GetDateStr(-3));
+
+getStepNow(username,theDate);
+setInterval("getStepNow(username,theDate)", 30*1000); 
+
+getStepRecord(username,day1,'1');
+getStepRecord(username,day2,'2');
+getStepRecord(username,day3,'3');
+getStepRecord(username,day4,'4');
+
+  function getStepNow(username,thedate) {
+  
+	          	$.ajax({
+             	url: domainUrl + "api/IotLx/getStepData",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,theDate:thedate},
+                success: function (data) {
+                	if (data.code=="200"){
+                    document.getElementById("walkSteps").innerHTML=data.walkSteps;
+                    document.getElementById("calories").innerHTML=data.calories+"大卡";
+                    document.getElementById("distance").innerHTML=Number(data.distance)/1000+"公里";
+                	}else{
+                	plus.nativeUI.toast("读取数据错误，请稍后再试");
+                	return;
+                    }
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                 }
+            })
+	                  
+
+ }
+
+
+         
+ function getStepRecord(username,thedate,show) {
+  
+	          	$.ajax({
+             	url: domainUrl + "api/IotLx/getStepData",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,theDate:thedate},
+                success: function (data) {
+                	if (data.code=="200"){
+                	if (show=='1'){
+                    document.getElementById("OneData").style.height= toPercent(Number(data.walkSteps)/20000);
+                    }
+                    if (show=='2'){
+                    document.getElementById("TwoData").style.height= toPercent(Number(data.walkSteps)/20000);
+                    }
+                    if (show=='3'){
+                    document.getElementById("ThreeData").style.height= toPercent(Number(data.walkSteps)/20000);
+                    }
+                    if (show=='4'){
+                    document.getElementById("FourData").style.height= toPercent(Number(data.walkSteps)/20000);
+                    }
+                    
+                	}else{
+                	plus.nativeUI.toast("读取数据错误，请稍后再试");
+                	return;
+                    }
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                 }
+            })
+	                  
+
+ }
+ 
+ 
+function toPercent(data){
+    var strData = parseFloat(data)*100;
+    var ret = strData.toString()+"%";
+    return ret;
+}
+ 
+</script>
+
+</html>

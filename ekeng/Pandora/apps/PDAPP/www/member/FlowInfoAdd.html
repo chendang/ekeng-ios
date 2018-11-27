@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>客户信息摘要</title>
+    <link rel="stylesheet" href="../css/lib/huimin.css"/>
+    <link rel="stylesheet" href="../css/lib/ydui.css"/>
+    <style>
+
+        [v-cloak]{ display: none; }
+        body
+        {
+            background-color:white;
+        }
+
+        .cell-textarea {
+            width: 100%;
+            border: none;
+            display: block;
+            height: 3rem;
+            padding: .2rem 0;
+        }
+
+        .word {
+            color: #333;
+            font-size: 0.3rem;
+            margin-top: -95px;
+        }
+        
+        .desc
+        {
+          word-wrap:break-word;
+         }
+        
+      
+    </style>
+</head>
+
+<body>
+
+<div id="bodyinfo" style="margin-top:18px;">
+
+
+<div class="hui-center-title" style="margin-top:2px;"><h1>客户基本调查表</h1></div>
+
+    <div class="m-cell demo-small-pitch" style="margin-top: 12px;">
+        <div class="cell-item">
+            <div class="cell-left">编号：</div>
+            <div class="cell-right"><input type="text" class="cell-input" v-model="ToUser" readonly/></div>
+        </div>
+
+        <div class="cell-item">
+            <div class="cell-left">姓名：</div>
+            <div class="cell-right"><input type="text" class="cell-input" v-model="ReallyName"/></div>
+        </div>
+        
+        <div class="cell-item">
+            <div class="cell-left">电话：</div>
+            <div class="cell-right"><input type="text" class="cell-input" v-model="Telphone"/></div>
+        </div>
+
+        <div class="cell-item">
+            <div class="cell-left">年龄：</div>
+            <div class="cell-right"><input type="text" class="cell-input" v-model="Age"/></div>
+        </div>
+
+        <div class="cell-item">
+            <div class="cell-left">性别：</div>
+            <label class="cell-right cell-arrow">
+                <select class="cell-select" v-model="Sex">
+                    <option v-for="option in SexOptions" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                </select>
+            </label>
+       </div>
+
+        <div class="cell-item">
+            <div class="cell-left">出生年月：</div>
+            <div class="cell-right"><input class="cell-input" type="date" value="2016-07-19" placeholder="请输入出生年月" v-model="Birthday"/></div>
+        </div>
+
+        <div class="cell-item">
+            <div class="cell-left">职业：</div>
+            <div class="cell-right"><input type="text" class="cell-input" v-model="Job"/></div>
+        </div>
+
+        <div class="cell-item">
+            <div class="cell-left">婚姻状况：</div>
+            <label class="cell-right cell-arrow">
+                <select class="cell-select" v-model="Marital">
+                    <option v-for="option in MaritalOptions" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                </select>
+            </label>
+       </div>
+
+
+        <div class="cell-item">
+            <div class="cell-left">家庭情况：</div>
+            <div class="cell-right"><input type="text" placeholder="填写家庭成员" class="cell-input" v-model="Family"/></div>
+        </div>
+        
+        <div class="cell-item">
+            <div class="cell-left">是否有情人：</div>
+            <label class="cell-right cell-arrow">
+                <select class="cell-select" v-model="IsLover">
+                    <option v-for="option in LoverOptions" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                </select>
+            </label>
+       </div>
+       
+       
+        <div class="cell-item">
+            <div class="cell-left">老公/老婆是否有情人：</div>
+            <label class="cell-right cell-arrow">
+                <select class="cell-select" v-model="IsMalesLover">
+                    <option v-for="option in MalesLoverOptions" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                </select>
+            </label>
+       </div>
+
+        <div class="cell-item">
+            <div class="cell-left">住宅级别：</div>
+            <label class="cell-right cell-arrow">
+                <select class="cell-select" v-model="House">
+                    <option v-for="option in HouseOptions" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                </select>
+            </label>
+       </div>
+
+        <div class="cell-item">
+            <div class="cell-left">私家车：</div>
+            <div class="cell-right"><input type="text" placeholder="填写汽车品牌" class="cell-input" v-model="Car"/></div>
+        </div>
+
+        <div class="cell-item">
+            <div class="cell-left">拥有资产：</div>
+            <div class="cell-right"><input type="text" placeholder="填写房产,经济说明" class="cell-input" v-model="Asset"/></div>
+        </div>
+
+        <div class="cell-item">
+            <div class="cell-left">经济支配权：</div>
+            <label class="cell-right cell-arrow">
+                <select class="cell-select" v-model="Control">
+                    <option v-for="option in ControlOptions" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                </select>
+            </label>
+       </div>
+ 
+         <div class="cell-item">
+            <div class="cell-left">性格爱好：</div>
+            <div class="cell-right"><input type="text" placeholder="" class="cell-input" v-model="Interest"/></div>
+        </div>
+ 
+          <div class="cell-item">
+            <div class="cell-left">在店年限：</div>
+            <div class="cell-right"><input type="text" placeholder="" class="cell-input" v-model="HowLong"/></div>
+        </div>
+ 
+           <div class="cell-item">
+            <div class="cell-left">平时在店消费：</div>
+            <div class="cell-right"><input type="text" placeholder="消费金额说明" class="cell-input" v-model="Amount"/></div>
+        </div>
+ 
+        <div class="cell-item">
+            <div class="cell-left">对店忠诚度：</div>
+            <label class="cell-right cell-arrow">
+                <select class="cell-select" v-model="Loyalty">
+                    <option v-for="option in LoyaltyOptions" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                </select>
+            </label>
+       </div>
+
+        <div class="cell-item">
+            <div class="cell-left">铺垫项目：</div>
+            <div class="cell-right"><input type="text" placeholder="现阶段正准备推荐项目" class="cell-input" v-model="BeddingItem"/></div>
+        </div>
+        <div class="cell-item">
+            <div class="cell-left">铺垫程度：</div>
+            <div class="cell-right"><input type="text" placeholder="程度及现状说明" class="cell-input" v-model="BeddingDegree"/></div>
+        </div>
+        <div class="cell-item">
+            <div class="cell-left">顾客身体状况：</div>
+            <div class="cell-right"><input type="text" placeholder="现阶段身体状况" class="cell-input" v-model="BodyStatus"/></div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <div style="padding:10px 20px;">
+        <button type="button" class="hui-button hui-button-large" style="margin-top:2px;" id="MarketSend" @click="MarketSend">更新数据</button>
+    </div>
+
+
+
+<div class="hui-wrap">
+	<div class="hui-center-title" style="margin-top:15px;"><h1>摘要信息列表</h1></div>
+	<div class="hui-news-list">
+		<ul>
+			<li style="margin-top: 8px;" v-for="(Item,index) in FlowList" v-cloak>
+				
+					<div class="hui-news-list-titile" style="width: 95%;align-items: center;">
+						<p class="desc" style="margin-left: 15px;">({{index+1}}),{{Item.FlowDesc}}</p>
+					</div>
+					<div class="hui-news-list-info" style="margin-left: 65px;padding:10px 20px;">{{Item.AuthorName}} | {{Item.CreateTime}}</div>
+				<hr style="height:1px;border:none;border-top:1px dashed #000066;width: 90%;margin-left: 10px;" />
+			</li>
+			
+			
+		</ul>
+	</div>
+</div>
+
+<div class="hui-center-title" style="margin-top:2px;"><h1>填写摘要信息</h1></div>
+
+    <div class="m-cell demo-small-pitch" style="margin-top: 12px;">
+        <div class="cell-item">
+            <div class="cell-left">客户编号：</div>
+            <div class="cell-right"><input type="text" class="cell-input" v-model="ToUser" readonly/></div>
+        </div>
+
+        <div class="cell-item">
+            <div class="cell-left">选择信息类别：</div>
+            <label class="cell-right cell-arrow">
+                <select class="cell-select" v-model="FClass">
+                    <option v-for="option in classOptions" v-bind:value="option.value">
+                        {{ option.text }}
+                    </option>
+                </select>
+                </select>
+            </label>
+        </div>
+
+
+        <div class="cell-item">
+            <div class="cell-left word">备注说明：</div>
+            <div class="cell-right"><textarea class="cell-textarea" placeholder="请输入关于该客户的要点" v-model="FlowInfo"></textarea></div>
+        </div>
+
+    </div>
+
+
+
+
+    <div style="padding:10px 20px;">
+        <button type="button" class="hui-button hui-button-large" style="margin-top:2px;" id="PostSend" @click="PostSend">反馈提交</button>
+    </div>
+
+
+
+
+</div>
+
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/lib/hui.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+
+<script src="../js/lib/ydui.js"></script>
+<script src="../js/lib/ydui.flexible.js"></script>
+<script>
+
+
+
+
+var domainUrl = GetMvcApiDomain();
+
+var username=null;  
+var UserRole=null;
+var ToUser=null;
+
+function plusReady() { 
+HeadShow();	
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+UserRole = objuser.UserRole;
+
+var _self = plus.webview.currentWebview();
+
+ToUser=_self.ToUser;
+if(ToUser==null || ToUser==''){
+	plus.webview.currentWebview().close();
+}
+
+
+vum.ToUser=ToUser;
+vum.getLookInfo(ToUser);
+vum.getFlowList(ToUser,50);
+vum.GetClassOption(UserRole);
+ 
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+
+
+
+    vum=new Vue({
+        el: '#bodyinfo',
+        data: function(){
+            return {
+                UserName: username,
+                ToUser: ToUser,
+                ReallyName:'',
+                Telphone:'',
+                Age:'',
+                Sex:'1',
+                SexOptions: [  
+                { text: '男', value: '1' },  
+                { text: '女', value: '2' } 
+                ], 
+                Birthday: "1960-01-01",
+                Job:'',
+                Marital:'1',
+                MaritalOptions: [  
+                { text: '已婚', value: '1' },  
+                { text: '未婚', value: '2' } 
+                ],
+                Family:'',
+                IsLover:'1',
+                LoverOptions: [  
+                { text: '无', value: '1' },  
+                { text: '有', value: '2' } 
+                ],
+                IsMalesLover:'1',
+                MalesLoverOptions: [  
+                { text: '无', value: '1' },  
+                { text: '有', value: '2' } 
+                ],
+                House:'2',
+                HouseOptions: [  
+                { text: '低', value: '1' },  
+                { text: '中', value: '2' },
+                { text: '高', value: '3' }
+                ], 
+                Car:'',
+                Asset:'',
+                Control:'',
+                ControlOptions: [  
+                { text: '自主支配', value: '1' },  
+                { text: '其它成员支配', value: '2' }
+                ],  
+                Interest:'',
+                HowLong:'',
+                Amount:'',
+                Loyalty:'1',
+                LoyaltyOptions: [  
+                { text: '低', value: '1' },  
+                { text: '中', value: '2' },
+                { text: '高', value: '3' }
+                ], 
+                BeddingItem:'',
+                BeddingDegree:'',
+                BodyStatus:'',
+                FClass:'',
+                FlowInfo: '',
+                classOptions:[],
+                FlowList:[]
+            }
+        },
+
+        mounted: function () {
+
+            this.$nextTick(function () {
+
+            })
+
+        },
+
+        methods: {
+        
+            getLookInfo: function (UserName) {
+            var that = this;
+            $.ajax({
+                url: domainUrl + "api/WorkFlow/getLookInfo",
+                type: 'get',
+                dataType: "json",
+                data: { UserName: UserName },
+                success: function (data) {
+                    that.ReallyName = data.ReallyName;
+                    that.Telphone = data.Telphone;
+                    that.Age = jsGetAge(data.Birthday);
+                    that.Sex = data.Sex;
+                    that.Birthday = data.Birthday;
+                    
+                    that.Job = data.Job;
+                    that.Marital = data.MaritalStatus;
+                    that.Family = data.Family;
+                    that.IsLover = data.IsLover;
+                    that.IsMalesLover = data.IsMalesLover;
+                    that.House = data.House;
+                    that.Car = data.Car;
+                    that.Asset = data.Asset;
+                    that.Control = data.Control;
+                    that.Interest = data.Interest;
+                    that.HowLong = data.HowLong;
+                    that.Amount = data.Amount;
+                    that.Loyalty = data.Loyalty;
+                    that.BeddingItem = data.BeddingItem;
+                    that.BeddingDegree = data.BeddingDegree;
+                    that.BodyStatus = data.BodyStatus;
+                    that.CreateTime = data.CreateTime;
+
+                },
+                error: function () {
+                    hui.toast("网络错误，请稍后再试");
+                }
+            })
+           },
+        
+        
+         getFlowList: function (UserName,topcount){
+       	     var that = this;
+	          $.ajax({
+             	url: domainUrl + "api/WorkFlow/getFlowInfoList",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,topcount:topcount},
+                beforeSend:function()
+                {
+                    hui.loading('数据加载中');
+                },
+                success: function (data) {
+                	that.FlowList=[];
+                  $.each(data, function (i, j) {
+                   
+                    that.FlowList.push({ number: (i + 1), Id: j.Id,Author: j.Author,AuthorName: j.AuthorName,FlowDesc: j.FlowDesc,CreateTime: j.CreateTime });
+                  }); 
+                },
+                error: function () {
+                    hui.closeLoading();
+                   hui.toast("网络错误，请稍后再试");
+                },
+                complete: function(data, textStatus)
+                {
+                    hui.closeLoading();
+                }
+              })
+
+           },
+
+            GetClassOption: function (UserRole) {
+                var that = this;
+                $.ajax({
+                    url: domainUrl + "api/WorkFlow/getFlowInfoClass",
+                    type: 'get',
+                    dataType: "json",
+                    data: {RoleLevel:UserRole},
+                    success: function (data) {
+                        that.classOptions = [];
+                        $.each(data, function (i, j) {
+                            var o = {"text": j.className, "value":j.Id};
+                            that.classOptions.push(o);
+                            if (i==0){
+                                that.FClass=j.Id;
+                            }
+                        });
+
+                    },
+                    error: function () {
+                        hui.toast('网络错误，请稍后再试!');
+                    }
+
+                });
+            },
+
+            PostSend: function () {
+
+               
+                if (this.FClass == "" || this.FClass == null) {
+                    hui.upToast('请选择信息类别!');
+                    return false;
+                }
+                if (this.FlowInfo == "" || this.FlowInfo == null) {
+                    hui.upToast('说明信息!');
+                    return false;
+                }
+
+
+                this.SendSave(this.ToUser,this.FClass, this.FlowInfo,username)
+            },
+            SendSave: function (ToUser,FlowClass,FlowInfo,Author) {
+                var that = this;
+
+                var jsonData = {
+                    "UserName":ToUser,
+                    "FlowClass":FlowClass,
+                    "FlowDesc":FlowInfo,
+                    "Author":Author
+
+                }
+
+                $.ajax({
+                    url: domainUrl + "api/WorkFlow/FlowInfoAdd",
+                    type: 'post',
+                    dataType: "json",
+                    data: jsonData,
+                    beforeSend:function()
+                    {
+                        if(hui('#PostSend').buttonIsLoading()){return false;}
+                        hui('#PostSend').loadingButton('正在提交...');
+
+                    },
+                    success: function (data) {
+
+                        if(data.code=='200'){
+                            hui.toast("信息提交成功!");
+                            that.getFlowList(ToUser,50);
+
+
+                        }
+                        else{
+                            hui.upToast(data.msg);
+                            return false;
+                        }
+
+
+
+
+                    },
+                    error: function () {
+                        hui.toast("网络错误，请稍后再试");
+                    },
+                    complete: function(data, textStatus)
+                    {
+                        hui('#PostSend').resetLoadingButton();
+                    }
+
+                });
+            },
+            MarketSend: function () {
+
+                if (this.ReallyName == "" || this.ReallyName == null) {
+                    hui.upToast('请填写姓名!');
+                    return false;
+                }
+
+                this.LookSave(this.ToUser,this.ReallyName,this.Telphone,this.Age,this.Sex,this.Birthday,this.Job,this.Marital,this.Family,this.IsLover,this.IsMalesLover,this.House,this.Car,this.Asset,this.Control,this.Interest,this.HowLong,this.Amount,this.Loyalty,this.BeddingItem,this.BeddingDegree,this.BodyStatus,username);
+            },
+            LookSave: function (ToUser,ReallyName,Telphone,Age,Sex,Birthday,Job,Marital,Family,IsLover,IsMalesLover,House,Car,Asset,Control,Interest,HowLong,Amount,Loyalty,BeddingItem,BeddingDegree,BodyStatus,Author) {
+                var that = this;
+
+                var jsonData = {
+                    "UserName":ToUser,
+                    "ReallyName":ReallyName,
+                    "Telphone":Telphone,
+                    "Age":Age,
+                    "Sex":Sex,
+                    "Birthday":Birthday,
+                    "Job":Job,
+                    "MaritalStatus":Marital,
+                    "Family":Family,
+                    "IsLover":IsLover,
+                    "IsMalesLover":IsMalesLover,
+                    "House":House,
+                    "Car":Car,
+                    "Asset":Asset,
+                    "Control":Control,
+                    "Interest":Interest,
+                    "HowLong":HowLong,
+                    "Amount":Amount,
+                    "Loyalty":Loyalty,
+                    "BeddingItem":BeddingItem,
+                    "BeddingDegree":BeddingDegree,
+                    "BodyStatus":BodyStatus,
+                    "Author":Author
+
+                }
+
+                $.ajax({
+                    url: domainUrl + "api/WorkFlow/LookInfoAdd",
+                    type: 'post',
+                    dataType: "json",
+                    data: jsonData,
+                    beforeSend:function()
+                    {
+                        if(hui('#MarketSend').buttonIsLoading()){return false;}
+                        hui('#MarketSend').loadingButton('正在提交...');
+
+                    },
+                    success: function (data) {
+
+                        if(data.code=='200'){
+                            hui.toast("信息提交成功!");
+                            that.getFlowList(ToUser,50);
+
+
+                        }
+                        else{
+                            hui.upToast(data.msg);
+                            return false;
+                        }
+
+
+
+
+                    },
+                    error: function () {
+                        hui.toast("网络错误，请稍后再试");
+                    },
+                    complete: function(data, textStatus)
+                    {
+                        hui('#MarketSend').resetLoadingButton();
+                    }
+
+                });
+            }
+
+
+
+
+        }
+    })
+</script>
+</body>
+</html>

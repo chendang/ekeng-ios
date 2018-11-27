@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		<title>客户管理</title>
+		<link href="../css/lib/mui.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+			html,
+			body {
+				height: 100%;
+			}
+			
+			body {
+				font: 12px/1 'Roboto', sans-serif;
+				color: #555;
+				background-color: #fff;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			.cf:before,
+			.cf:after {
+				content: ' ';
+				display: table;
+			}
+			
+			.cf:after {
+				clear: both;
+			}
+			
+			.title {
+				padding: 50px 0;
+				font: 24px 'Open Sans', sans-serif;
+				text-align: center;
+			}
+			
+			.inner {
+				max-width: 820px;
+				margin: 0 auto;
+			}
+			
+			.breadcrumbs {
+				border-top: 1px solid #ddd;
+				border-bottom: 1px solid #ddd;
+				background-color: #f5f5f5;
+			}
+			
+			/*.breadcrumbs ul {
+				border-left: 1px solid #ddd;
+				border-right: 1px solid #ddd;
+			}*/
+			
+			.breadcrumbs li {
+				float: left;
+				width: 25%;
+			}
+			
+			.breadcrumbs a {
+				position: relative;
+				display: block;
+				padding: 25px;
+				padding-right: 0 !important;
+				/* important overrides media queries */
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+				color: #aaa;
+				cursor: pointer;
+			}
+			
+			.breadcrumbs a:hover {
+				background: #eee;
+			}
+			
+			.breadcrumbs a.active {
+				color: #777;
+				background-color: #fafafa;
+			}
+			
+			.breadcrumbs a span:first-child {
+				display: inline-block;
+				width: 40px;
+				height: 22px;
+				padding: 2px;
+				margin-right: 5px;
+				border: 2px solid #aaa;
+				border-radius: 15%;
+				background-color: #fff;
+			}
+			
+			.breadcrumbs a.active span:first-child {
+				color: #fff;
+				border-color: #777;
+				background-color: #777;
+			}
+			
+			.breadcrumbs a:before,
+			.breadcrumbs a:after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 100%;
+				z-index: 1;
+				display: block;
+				width: 0;
+				height: 0;
+				border-top: 32px solid transparent;
+				border-bottom: 32px solid transparent;
+				border-left: 16px solid transparent;
+			}
+			
+			/*.breadcrumbs a:before {
+				margin-left: 1px;
+				border-left-color: #d5d5d5;
+			}*/
+			
+			.breadcrumbs a:after {
+				border-left-color: #f5f5f5;
+			}
+			
+			.breadcrumbs a:hover:after {
+				border-left-color: #eee;
+			}
+			
+			.breadcrumbs a.active:after {
+				border-left-color: #fafafa;
+			}
+			
+			.breadcrumbs li:last-child a:before,
+			.breadcrumbs li:last-child a:after {
+				display: none;
+			}
+			
+			@media (max-width: 720px) {
+				.breadcrumbs a {
+					padding: 15px;
+				}
+				.breadcrumbs a:before,
+				.breadcrumbs a:after {
+					border-top-width: 26px;
+					border-bottom-width: 26px;
+					border-left-width: 13px;
+				}
+			}
+			
+			@media (max-width: 620px) {
+				.breadcrumbs a {
+					padding: 10px;
+					font-size: 12px;
+				}
+				.breadcrumbs a:before,
+				.breadcrumbs a:after {
+					border-top-width: 22px;
+					border-bottom-width: 22px;
+					border-left-width: 11px;
+				}
+			}
+			
+			@media (max-width: 520px) {
+				.breadcrumbs a {
+					padding: 5px;
+				}
+				.breadcrumbs a:before,
+				.breadcrumbs a:after {
+					border-top-width: 16px;
+					border-bottom-width: 16px;
+					border-left-width: 8px;
+				}
+				.breadcrumbs li a span:first-child {
+					display: block;
+					margin: 0 auto;
+				}
+				.breadcrumbs li a span:last-child {
+					display: none;
+				}
+			}
+			
+			#hui-header-sreach {
+				width: 75%;
+				height: 32px;
+				padding: 0px !important;
+				line-height: 32px;
+				position: absolute;
+				z-index: 21;
+				left: 45px;
+				top: 6px;
+			}
+			
+			#hui-header-sreach input {
+				width: 80%;
+				height: 32px !important;
+				line-height: 32px !important;
+				margin: 0px !important;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
+				border-radius: 5px;
+				border: 0;
+				background: #EFF3F6;
+				font-size: 14px;
+				text-indent: 30px;
+			}
+			
+			#hui-header-sreach::after {
+				font-family: "hui-font";
+				content: '\e714';
+				display: block;
+				position: absolute;
+				z-index: 22;
+				width: 28px height:32px;
+				left: 5px;
+				top: 0;
+			}
+			
+			#hui-hot-sreach {
+				background: #FFFFFF;
+				padding: 10px;
+			}
+			
+			#hui-hot-sreach-title {
+				line-height: 38px;
+				font-size: 16px;
+				font-weight: 700;
+			}
+			
+			#hui-hot-sreach-keys {
+				margin-top: 8px;
+			}
+			
+			#hui-hot-sreach-keys a {
+				display: block;
+				border-radius: 5px;
+				float: left;
+				margin: 0 8px 8px 0px;
+				padding: 6px 10px;
+				line-height: 20px;
+				font-size: 13px;
+				background: #EFF3F6;
+			}
+			
+			.btn {
+				width: 15%;
+				height: 32px;
+				padding: 0px !important;
+				line-height: 32px;
+				position: absolute;
+				z-index: 21;
+				left: 85%;
+				top: 0px;
+			}
+			
+			#app {
+				position: absolute;
+				top: 0px;
+				bottom: 0;
+				width: 100%;
+			}
+			
+			#wrapper {
+				position: absolute;
+				top: 44px;
+				bottom: 0px;
+				width: 100%;
+			}
+			
+			#scroller {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.item {
+				height: 60px;
+				line-height: 60px;
+				border-bottom: 1px solid #ddd;
+				text-indent: 1em;
+				background: #fff;
+			}
+			
+			.jroll-infinite-tip {
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+			}
+			
+			.jroll-vue-infinite {
+				height: 100%;
+			}
+			
+						.mui-card-header{
+				height: 24px;
+				line-height:20px;
+				top:20%;
+				margin-left: 5px;
+			}
+			.mui-card-link{
+				float: right;
+				margin-right: 5px;
+			}
+			
+						.mui-card-footer{
+				height: 24px;
+				line-height:24px;
+			}
+			
+		</style>
+
+	</head>
+
+	<body>
+
+		<div id="app">
+			<div id="hui-header-sreach">
+				<input type="search" v-model="UsersNameKey" placeholder="请输入会员编号查询" /><button type="button" class="hui-button hui-fl btn" @click="GetSearchData">搜索</button>
+			</div>
+			<jroll-infinite class="jroll-vue-infinite">
+				<div style="margin-top: 52px;">
+				<div class="mui-card" v-for="(Item,index) in ItemList" v-cloak style="margin-top: 12px;">
+					<div class="mui-card-header">{{Item.userbm}}({{Item.ReallyName}})
+						<a class="mui-card-link" @click="GoFlow(Item.userbm)">
+							<font color="#dc143c"> 信息摘要✎</font>
+						</a>
+					</div>
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner">
+							<div class='breadcrumbs'>
+								<div class='inner'>
+									<ul class='cf'>
+										<li>
+											<a v-bind:class="{ 'active': step1 }" @click="GoEdit(Item.userbm)"><span>资料</span><span></span></a>
+										</li>
+										<li>
+											<a v-bind:class="{ 'active': step2 }" @click="GoTest(Item.userbm)"><span>问卷</span><span></span></a>
+										</li>
+										<li>
+											<a v-bind:class="{ 'active': step3 }" @click="GoData(Item.userbm)"><span>监测</span><span></span></a>
+										</li>
+										<li>
+											<a v-bind:class="{ 'active': step4 }" @click="GoCase(Item.userbm)"><span>病历</span><span></span></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="mui-card-footer">
+						<a class="mui-card-link">注册时间：{{Item.CreateTime}}</a>
+					</div>
+				</div>
+				</div>
+			</jroll-infinite>
+		</div>
+        <script src="../js/base.js" type="text/javascript"></script>
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+        <script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+		<script src="../js/lib/jroll.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-vue-infinite.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-pulldown.js" type="text/javascript"></script>
+
+		<script>
+
+
+			var domainUrl = GetMvcApiDomain();
+			
+
+function plusReady(){
+HeadShow();	
+back();
+
+
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+
+
+
+    initData(objuser.UserName, objuser.shopbm, objuser.UserName)
+
+
+
+}
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}
+function initData(UserName, shopbm, RoleUser) {
+			// vue实例
+			var vum
+			var infOptions = {
+				pulldown: {},
+				bottomed: function(complete) {
+					var that = this;
+					axios.get(domainUrl + 'api/MemberOperate/getShopWorkMemberList', {
+							params: {
+								pageIndex: that.page+1,
+								pageSize: that.$parent.pageSize,
+								LoginUser: that.$parent.UserName,
+								BindUserName: that.$parent.shopbm,
+								KeySearch: that.$parent.UsersNameKey,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.$parent.ItemData = [];
+							each(jsonx, function(i, j) {
+
+								that.$parent.ItemData.push({
+									number: (i + 1),
+									bid: j.bid,
+									userbm: j.UserName,
+									ReallyName: cutstr(j.ReallyName, 7),
+									CreateTime: j.CreateTime,
+									Step1: j.Step1,
+									Step2: j.Step2,
+									Step3: j.Step3,
+									Step4: j.Step4
+								});
+								if(j.Step1 == "True") {
+									that.step1 = true;
+								} else {
+									that.step1 = false;
+								}
+								if(j.Step2 == "True") {
+									that.step2 = true;
+								} else {
+									that.step2 = false;
+								}
+								if(j.Step3 == "True") {
+									that.step3 = true;
+								} else {
+									that.step3 = false;
+								}
+								if(j.Step4 == "True") {
+									that.step4 = true;
+								} else {
+									that.step4 = false;
+								}
+
+							});
+
+							if(typeof complete === 'function') {
+								that.$parent.ItemList = that.$parent.ItemData;
+								complete();
+							} else {
+								that.$parent.ItemList = that.$parent.ItemList.concat(that.$parent.ItemData);
+							}
+
+							that.$parent.pageCount = response.data.PageCount;
+							that.total = response.data.PageCount;
+							if (response.data.PageCount==0){
+								that.total =1;
+							}
+							else{
+								that.total = response.data.PageCount;
+							}
+							that.success();
+
+						})
+						.catch(function(response) {
+							console.log(response);
+							that.error();
+						});
+				},
+				updated: function() {
+					console.log('current page is ' + this.page)
+				}
+
+			}
+
+			vum = new Vue({
+				el: '#app',
+				components: {
+					'jroll-infinite': JRoll.VueInfinite(infOptions, {
+						scrollBarY: true
+					})
+				},
+				data: {
+					UserName: UserName,
+					shopbm: shopbm,
+					pageIndex:0,
+					pageSize:20,
+					step1: false,
+					step2: false,
+					step3: false,
+					step4: false,
+					UsersNameKey: "",
+					ItemData: [],
+					ItemList: []
+				},
+
+				methods: {
+
+					GetSearchData: function() {
+						this.$children[0].scrollTop();
+						this.pageIndex = 1;
+						this.ItemList = [];
+						this.ItemData = [];
+						this.$children[0].page=1;
+						console.log(this.$children[0].total);
+ 
+						//this.$children[0].success();
+	
+						this.GetItemList(this.UserName, this.shopbm, this.pageIndex,this.pageSize, this.UsersNameKey);
+					},
+					
+					GetItemList: function(username,shopbm,pageIndex,pageSize,KeySearch) {
+					var that = this;
+					axios.get(domainUrl + 'api/MemberOperate/getShopWorkMemberList', {
+							params: {
+								pageIndex: pageIndex,
+								pageSize: pageSize,
+								LoginUser: username,
+								BindUserName: shopbm,
+								KeySearch: KeySearch,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.ItemData = [];
+							each(jsonx, function(i, j) {
+
+								that.ItemData.push({
+									number: (i + 1),
+									bid: j.bid,
+									userbm: j.UserName,
+									ReallyName: cutstr(j.ReallyName, 7),
+									CreateTime: j.CreateTime,
+									Step1: j.Step1,
+									Step2: j.Step2,
+									Step3: j.Step3,
+									Step4: j.Step4
+								});
+								if(j.Step1 == "True") {
+									that.step1 = true;
+								} else {
+									that.step1 = false;
+								}
+								if(j.Step2 == "True") {
+									that.step2 = true;
+								} else {
+									that.step2 = false;
+								}
+								if(j.Step3 == "True") {
+									that.step3 = true;
+								} else {
+									that.step3 = false;
+								}
+								if(j.Step4 == "True") {
+									that.step4 = true;
+								} else {
+									that.step4 = false;
+								}
+
+							});
+
+				
+								that.ItemList = that.ItemData;
+
+
+		
+							that.pageCount = response.data.PageCount;
+							that.$children[0].total = response.data.PageCount;
+							if(that.$children[0].total<=1) {
+								that.$children[0].tip="";
+							}
+		
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+				},
+					
+					GoEdit: function(UserName) {
+						 var parm = {"ToUser" : UserName}
+                         clickedParm('EditPerInfo.html','EditPerInfo.html','slide-in-right',parm,'客户资料管理');
+					},
+
+					GoTest: function(UserName) {
+						 var parm = {"UserName" : UserName}
+                         clickedParm('BasicInfoTestList.html','BasicInfoTestList.html','slide-in-right',parm,'客户问卷');
+
+					},
+
+					GoData: function(UserName) {
+						var parm = {"UserName" : UserName}
+                         clickedParm('MemberDataIndex.html','MemberDataIndex.html','slide-in-right',parm,'客户健康数据');
+					},
+
+					GoCase: function(UserName) {
+						var parm = {"UserName" : UserName}
+                         clickedParm('ToFileList.html','ToFileList.html','slide-in-right',parm,'客户病历');
+		
+					},
+
+					
+					GoFlow: function(ToUser) {
+						var parm = {"ToUser" : ToUser}
+                         clickedParm('FlowInfoAdd.html','FlowInfoAdd.html','slide-in-right',parm,'客户摘要记录');
+
+					}
+
+				}
+
+			})
+			
+}
+		</script>
+	</body>
+
+</html>

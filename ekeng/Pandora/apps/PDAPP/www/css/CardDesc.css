@@ -1,0 +1,54 @@
+/* CSS Document */
+.cm_h3{ height:3.0rem; line-height:3.0rem; background:#e8edf0; text-indent:3%; color:#555; font-size:1.4rem;}
+
+.header{ height:2.4rem; line-height:2.4rem; padding:1.0rem 0; font-size:1.5rem; background:#393a3e; color:#fff;}
+.header p{ width:68%;  padding-left:4%; margin:0 auto; white-space:nowrap;text-overflow:ellipsis;overflow:hidden; border-left:1px solid #000;}
+.header a.a_close{ width:4.0rem; height:4.0rem; position:absolute; left:0; top:0.2rem; background:url(../img/icon_close.png) no-repeat center center/1.6rem auto;}
+.header a.a_list{ width:4.0rem; height:4.0rem; position:absolute; right:0; top:0.2rem; background:url(../img/icon_list.png) no-repeat center center/auto 1.6rem;}
+.header .ul_nav{ width:240px; top:4.4rem; position:absolute; right:0; display:none;}
+.header .ul_nav li:hover a{ background:#222;}
+.header .ul_nav li>a{ width:100%; height:40px; line-height:40px; text-indent:20px; font-size:16px; background:#393a3e; color:#fff; display:block;
+-webkit-transition:background 0.2s; transition:background 0.2s; white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
+.header .ul_nav li>a.active{ border-bottom:2px solid #3593f5; color:#3593f5;}
+
+.app{ padding:0 3%;}
+.app h3{ line-height:4.2rem; font-size:1.8rem; color:#3492f4;}
+.app h3 a{ font-size:1.4rem; float:right; color:#3492f4;}
+.app>a{ width:48%; height:2.6rem; line-height:2.6rem; text-align:center; display:inline-block; border:2px solid #3492f4; border-radius:0.6rem; font-size:1.5rem;}
+.app>a:nth-of-type(1){ float:left; color:#3492f4;}
+.app>a:nth-of-type(2){ float:right; background:#3492f4; color:#fff;}
+
+.ad{ background:linear-gradient(to right,#3593f5,#65bbee); text-align:center; margin-top:1.4rem; padding:2.0rem 0; color:#fff;}
+.ad h3{ font-size:2.6rem;}
+.ad h4{ font-size:1.4rem;}
+.ad p{ font-size:1.8rem; margin-top:1.4rem;}
+
+.article{ padding:0 3% 0.8rem;}
+.article h3{ font-size:2.1rem; color:#565656; padding:0.6rem 0;}
+.article h4{ font-size:1.2rem; color:#a0a0a0;}
+.article h4 a{ color:#3492f4;}
+.article p{ text-align:right; margin:1.6rem 0;}
+.article p a{ font-size:1.4rem; color:#7c7c7c;}
+.article .a_comment{ display:inline-block; padding-left:1.8rem; color:#7c7c7c; font-size:1.4rem; background:url(../img/icon_comment.png) no-repeat left center/auto 1.5rem;}
+
+.ul_relate li{ padding:1rem 3%; border-bottom:1px solid #ececec;}
+.ul_relate h4{ font-size:1.4rem; color:#3291f3}
+.ul_relate h4 a{ color:#3291f3;}
+.ul_relate p{ font-size:1.2rem; color:#bbb; margin-top:0.4rem;}
+.ul_relate p a{ color:#bbb;}
+
+.msg_main{ /*height:25rem;*/ overflow:hidden; padding:0 3%; position:relative;}
+.msg_main h3{ height:3.4rem; line-height:3.4rem; font-size:1.4rem; color:#222; margin:1.2rem 0;}
+.msg_main h3 img{ width:3.4rem; vertical-align:middle;}
+.msg_main p{ font-size:1.4rem; line-height:2.6rem; color:#222; text-align:justify;}
+.more{ width:100%; height:13rem; position:absolute; bottom:0; 
+background:linear-gradient(to bottom,rgba(255,255,255,0.4),rgba(255,255,255,0.8) 60%,rgba(255,255,255,1) 80%);}
+.span_more{ width:30%; font-size:1.4rem; color:#3291f3; text-align:center; position:absolute; bottom:0rem; left:30%; 
+ padding:0.6rem 0 1.6rem; background:url(../img/icon_down.png) no-repeat center 2.8rem/auto 0.8rem; cursor:pointer;}
+.msg_func{ display:-webkit-box; padding:1rem 0;}
+.msg_func a{ line-height:2.0rem; display:block; -webkit-box-flex:1; font-size:1.3rem; text-align:center;}
+.msg_func a img{ height:1.3rem; vertical-align:middle; margin-right:0.6rem;}
+
+
+
+ 

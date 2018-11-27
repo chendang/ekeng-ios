@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<title>E康云</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<link href="../css/lib/huimin.css" type="text/css" rel="stylesheet"/>
+<link href="../css/style.css" type="text/css" rel="stylesheet"/>
+
+
+    <style type="text/css">
+         [v-cloak]{ display: none; }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!--分类end-->
+    <!--健康计划start-->
+    <div class="p_plan mt15" id="ReportItem" style="margin-top:20px;">
+
+      <ul class="p_plan-list">
+
+        <li v-for="ReportRecord in ReportList" v-cloak>
+          <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-07.jpg" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>健康报告({{ ReportRecord.ReportDate }}) </h4>
+              <p>{{ ReportRecord.ReportState }}</p>
+            </div>
+            <div class="m_cell_ft" v-on:click="LookReport(ReportRecord.ReportNum)">
+              <i>查阅</i>
+            </div>
+          <div>
+        </li>
+
+        <li style="display:none;" id="nomsg">
+          <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-07.jpg" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>您没有健康报告生成记录</h4>
+              
+            </div>
+
+          <div>
+        </li>
+      </ul>
+    </div>
+    <!--健康计划end-->
+
+    
+   
+    
+ 
+
+
+<!--底部end-->
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/lib/hui.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+ var domainUrl = GetMvcApiDomain();
+
+var username=null;  
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+      
+
+var vum = new Vue({
+    el: '#ReportItem',
+    data: function() {
+    return {
+        ArrItem: {
+            ReportNum: '',
+            ReportDate: '',
+            ReportState: ''
+        },
+        ReportList: []
+     }
+    },
+    
+    mounted: function () {
+
+                   this.$nextTick(function () {
+
+                     var self=this;
+                     setTimeout(function(){
+                     self.getMyReportList();
+                     }, 150);
+                 })
+
+    },
+
+    methods: {
+             getMyReportList: function () {
+                 $.ajax({
+                     url: domainUrl + "api/PerReport/getMyReportList",
+                     type: 'get',
+                     dataType: "json",
+                     data: { UserName: username },
+                     beforeSend:function()
+                     {
+                      hui.h5Loading(false, '加载中...',{round:2, padding:'20px', textalign:'right'});
+                     },
+                     success: function (data) {
+                     	if (data.length==0){
+                     		$("#nomsg").show();
+                     	}else{
+                       $.each(data, function (i, j) {
+                       	
+                       	 this.ArrItem = { ReportNum: j.ReportNum, ReportDate: j.CreateTime, ReportState: j.PassState}
+                         vum.ReportList.push(this.ArrItem);
+
+                       });
+                      }
+                     },
+                    error: function () {
+                     hui.h5Loading(true);
+                     plus.nativeUI.toast("网络错误，请稍后再试");
+                    },
+                     complete: function(data, textStatus)
+                     {
+                    hui.h5Loading(true);
+                    }
+                 })
+             },
+             
+             LookReport:function(ReportNum){
+             var parm = {"ReportNum" : ReportNum}
+             clickedParm('MyReportMenu.html','MyReportMenu.html','slide-in-right',parm,'个人健康评估报告');
+             }
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

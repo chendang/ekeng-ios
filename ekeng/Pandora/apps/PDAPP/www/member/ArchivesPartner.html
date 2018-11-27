@@ -1,0 +1,891 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/lib/weui.css" />
+		<link rel="stylesheet" href="../css/lib/weui2.css" />
+		
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+
+	</head>
+
+
+	<body ontouchstart style="background-color: #f8f8f8;">
+		<div id="bodyinfo">
+			<div class="weui_cells_title"><h3>合伙人{{UserName}}({{ReallyName}})的档案资料</h3></div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入姓名" v-model="ReallyName" />
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">性别</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="Sex">
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">年龄</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" type="number" pattern="[0-9]*" v-model="Age" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">单位</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入工作单位" v-model="WorkUnit" />
+					</div>
+				</div>
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">职务</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入职务" v-model="JobTitle" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">住址</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入住址" v-model="Address" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">邮箱</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入邮箱" v-model="Email" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">微信号</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入微信号" v-model="WeChatId" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">身份证号</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入身份证号" v-model="PersonId" />
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">合伙人类型</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="PartnerClass">
+							<option value="1">普通合伙人</option>
+							<option value="2">特别合伙人</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label for="" class="weui_label">审批日期</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="date" value="" v-model="PendDate" />
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">开户银行</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="BankName">
+							<option value="中国工商银行">中国工商银行</option>
+							<option value="中国农业银行">中国农业银行</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_warn">
+					<div class="weui_cell_hd"><label for="" class="weui_label">卡号</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="number" pattern="[0-9]*" value="weui input error" placeholder="请输入卡号" v-model="BankAccount" />
+					</div>
+					<div class="weui_cell_ft">
+						<i class="weui_icon_warn"></i>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="page-bd">
+
+				<div class="weui_cells_title">健康状况</div>
+
+				<div class="weui_cells weui_cells_checkbox">
+					<div class="weui-form-preview-ft">
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="高血压" checked="checked" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>高血压</p>
+                </div>
+
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="高血脂" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>高血脂</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="动脉硬化" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>动脉硬化</p>
+                </div>
+            </label>
+
+					</div>
+					<div class="weui-form-preview-ft">
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="脑出血" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>脑出血</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="低血压" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>低血压</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="心动过速" v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>心动过速</p>
+                </div>
+            </label>
+
+					</div>
+					
+					
+			<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="心动过缓" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>心动过缓</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="冠心病" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>冠心病</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="头晕头痛" v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>头晕头痛</p>
+                </div>
+            </label>
+
+					</div>			
+					
+					
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="痛风" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>痛风</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="失眠多梦" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>失眠多梦</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="早搏" v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>早搏</p>
+                </div>
+            </label>
+
+					</div>					
+					
+
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="虚汗" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>虚汗</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="中风后遗症" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>中风后遗症</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="肝炎" v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>肝炎</p>
+                </div>
+            </label>
+
+					</div>	
+
+
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="胆结石" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>胆结石</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="胆囊炎" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>胆囊炎</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="糖尿病" v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>糖尿病</p>
+                </div>
+            </label>
+
+					</div>	
+
+
+
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="胆结石" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>胆结石</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="便秘" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>便秘</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="易疲劳" v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>易疲劳</p>
+                </div>
+            </label>
+
+					</div>
+
+
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="易感冒" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>易感冒</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="鼻炎" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>鼻炎</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="支气管炎" v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>支气管炎</p>
+                </div>
+            </label>
+
+					</div>
+
+
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="哮喘" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>哮喘</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="前列腺炎增生肥大" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>前列腺炎增生肥大</p>
+                </div>
+            </label>
+
+
+					</div>
+
+
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="耳鸣" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>耳鸣</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="风湿关节炎" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>风湿关节炎</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="类风湿" v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>类风湿</p>
+                </div>
+            </label>
+
+					</div>
+
+
+
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="四肢麻木" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>四肢麻木</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="颈椎病" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>颈椎病</p>
+                </div>
+            </label>
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="腰椎病 " v-model="chkHealthItem"> 
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>腰椎病 </p>
+                </div>
+            </label>
+
+					</div>
+
+
+
+				<div class="weui-form-preview-ft">
+			<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="肩周炎" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>肩周炎</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="肾囊肿" v-model="chkHealthItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>肾囊肿</p>
+                </div>
+            </label>
+
+
+					</div>
+
+
+					
+				</div>
+
+			</div>
+
+			<div class="weui_cells_title">其它健康状况</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea1" class="weui_textarea" placeholder="请输入文本" rows="4" v-model="HealthDesc"></textarea>
+						<div class="weui_textarea_counter"><span id='count1'>0</span>/<span id='count_max1'>200</span></div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="weui_cells_title">消费记录</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea2" class="weui_textarea" placeholder="请输入文本" rows="4" v-model="ShoppingRecord"></textarea>
+						<div class="weui_textarea_counter"><span id='count2'>0</span>/<span id='count_max2'>200</span></div>
+					</div>
+				</div>
+			</div>
+    <div style="padding:10px 20px;">
+        <button type="button" class="hui-button hui-button-large hui-danger" style="margin-top:15px;" id="PostSend" @click="PostSend">档案提交</button>
+    </div>
+		</div>
+        <script src="../js/base.js"></script>
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+		<script>
+			$(function() {
+				var max1 = $('#count_max1').text();
+				$('#textarea1').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count1').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				
+				var max2 = $('#count_max2').text();
+				$('#textarea2').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count2').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+			})
+		</script>
+
+		<script>
+			
+
+
+			var domainUrl = GetMvcApiDomain();
+
+
+
+function plusReady(){
+HeadShow();	
+back();
+var _self = plus.webview.currentWebview();
+var username=_self.ToUser;
+if(username==null || username=='' || username==undefined){
+	plus.nativeUI.toast("参数错误，请返回重新选择");
+		setTimeout(function() {
+			plus.webview.currentWebview().close();
+		}, 1000);
+	
+}
+else{
+
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+	
+    
+    vum.UserName=username;
+    vum.RoleUser = objuser.UserName;
+    vum.getRegInfo(username);
+
+
+}
+
+
+
+
+
+}
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 				
+
+
+
+			var vum=new Vue({
+				el: '#bodyinfo',
+				data: function() {
+					return {
+						UserName: '',
+						RoleUser: '',
+						chkHealthItem: [],
+						chkItemSend:"",
+						ReallyName: "",
+						Sex: "1",
+						Age: "",
+						WorkUnit: "",
+						WorkAddress: "",
+						JobTitle: "",
+						Address: "",
+						Email: "",
+						WeChatId: "",
+						PersonId: "",
+						PartnerClass: 1,
+						PendDate: "",
+						BankName: "中国农业银行",
+						BankAccount: "",
+						HealthDesc:"",
+						ShoppingRecord:""
+					}
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+						
+
+					})
+
+				},
+
+				methods: {
+
+					getRegInfo: function(UserName) {
+
+						var that = this;
+
+						axios.get(domainUrl + 'api/MemberOperate/getUserArchives', {
+								params: {
+									UserName: UserName
+								}
+							})
+							.then(function(response) {
+								if(response.data.code == '200') {
+									that.ReallyName = response.data.ReallyName;
+									that.Sex = response.data.Sex;
+									that.Age = jsGetAge(response.data.Birthday);
+									that.Address=response.data.Address;
+									that.Email=response.data.Email;
+									that.PersonId=response.data.PersonId;
+									
+									that.WorkUnit=response.data.WorkUnit;
+									that.WorkAddress=response.data.WorkAddress;
+									that.JobTitle=response.data.JobTitle;
+									that.WeChatId=response.data.WeChatId;
+									that.PartnerClass=response.data.RoleClass;
+									that.PendDate=response.data.RolePendDate;
+									that.BankName=response.data.BankName;
+									that.BankAccount=response.data.BankAccount;
+									that.HealthDesc=response.data.HealthDesc;
+									that.ShoppingRecord=response.data.ShoppingRecord;
+									
+									var HealthItemStrs=response.data.HealthCondition.split(";");
+									for (i=0;i<HealthItemStrs.length;i++ ) 
+                                    { 
+                                      that.chkHealthItem[i]=HealthItemStrs[i]; //分割后的字符输出 
+                                    } 
+									
+
+								} else {
+									hui.toast("获取合伙人资料失败");
+									return false;
+								}
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+					
+					
+                 setChkHealthItem:function(){
+                var arr=this.chkHealthItem;
+                var DataItem = "";
+                for (var i = 0; i < arr.length; i++) {
+                    var obj = arr[i];
+                    if (DataItem == "" || DataItem == null) {
+                        DataItem = obj;
+                    } else {
+                        DataItem = DataItem + ";" + obj;
+                    }
+                }
+                this.chkItemSend=DataItem;
+
+                 },
+
+					PostSend: function() {
+
+						if(this.ReallyName == "" || this.ReallyName == null) {
+							hui.upToast('请输入姓名!');
+							return false;
+						}
+						if(this.Sex == "" || this.Sex == null) {
+							hui.upToast('请选择性性别!');
+							return false;
+						}
+
+						if(this.Age == "" || this.Age == null || this.Age == "2017") {
+							hui.upToast('请输入年龄!');
+							return false;
+						}
+
+						if(Number(this.Age) <= 2 || Number(this.Age) > 110) {
+							hui.upToast('请输入正确的年龄!');
+							return false;
+						}
+
+                        var Mobile=this.UserName;
+                        var Nationality="";
+                        var NativePlace="";
+                        var BloodType="";
+                        var Education="";
+                        var MaritalStatus="";
+                        var MaritalStatus="";
+                        var Interest="";
+                        var WorkMood="";
+                        var SleepBedTime="";
+                        var SleepLength="";
+                        var FoodOptions="";
+                        var SportOptions="";
+                        var SportStyle="";
+                        var PartlHistory="";
+                        var FamilyHistory="";
+                        var MedicalHistory="";
+                        var AllergicHistory="";
+                        var MenstrualHistory="";
+                        var ChildbearingHistory="";
+                        var ShoppingRecord="";
+                        var RoleLevel=6;
+                        var CreateUser=this.RoleUser;
+                        var PendUser=this.RoleUser;
+                        
+                        this.setChkHealthItem();
+                        
+						this.SendSave(this.UserName, this.ReallyName, this.Sex, this.Age, this.Address, this.Email, this.PersonId, Mobile,Nationality, NativePlace, BloodType, Education, MaritalStatus, this.WorkUnit, this.WorkAddress, this.JobTitle, this.Income, this.WeChatId, this.BankName,this.ReallyName, this.BankAccount,Interest,WorkMood,SleepBedTime,SleepLength,FoodOptions,SportOptions,SportStyle,this.chkItemSend,this.HealthDesc,PartlHistory,FamilyHistory,MedicalHistory,AllergicHistory,MenstrualHistory,ChildbearingHistory,this.ShoppingRecord,RoleLevel,this.PartnerClass,this.PendDate,CreateUser,PendUser)
+					},
+					SendSave: function(UserName, ReallyName, Sex, Age, Address, Email, PersonId, Mobile,Nationality, NativePlace, BloodType, Education, MaritalStatus, WorkUnit, WorkAddress, JobTitle, Income, WeChatId, BankName,BankUser,BankAccount,Interest,WorkMood,SleepBedTime,SleepLength,FoodOptions,SportOptions,SportStyle,HealthCondition,HealthDesc,PartlHistory,FamilyHistory,MedicalHistory,AllergicHistory,MenstrualHistory,ChildbearingHistory,ShoppingRecord,RoleLevel,RoleClass,RolePendDate,CreateUser,PendUser) {
+						var that = this;
+						that.addInterceptors();
+
+						axios.post(domainUrl + 'api/MemberOperate/PostMemberArchives', Qs.stringify({
+								UserName: UserName,
+								ReallyName: ReallyName,
+								Sex: Sex,
+								Age: Age,
+								Address: Address,
+								Email: Email,
+								PersonId: PersonId,
+								Mobile: Mobile,
+								Nationality: Nationality,
+								NativePlace: NativePlace,
+								BloodType: BloodType,
+								Education: Education,
+								MaritalStatus: MaritalStatus,
+								WorkUnit: WorkUnit,
+								WorkAddress: WorkAddress,
+								JobTitle: JobTitle,
+								WeChatId: WeChatId,
+								BankName: BankName,
+								BankUser: BankUser,
+								BankAccount: BankAccount,
+								Interest: Interest,
+								WorkMood: WorkMood,
+								SleepBedTime: SleepBedTime,
+								SleepLength: SleepLength,
+								FoodOptions: FoodOptions,
+								SportOptions: SportOptions,
+								SportStyle: SportStyle,
+								HealthCondition: HealthCondition,
+								HealthDesc: HealthDesc,
+								PartlHistory: PartlHistory,
+								FamilyHistory: FamilyHistory,
+								MedicalHistory: MedicalHistory,
+								AllergicHistory: AllergicHistory,
+								MenstrualHistory: MenstrualHistory,
+								ChildbearingHistory:ChildbearingHistory,
+								ShoppingRecord: ShoppingRecord,
+								RoleLevel: RoleLevel,
+								RoleClass: RoleClass,
+								RolePendDate: RolePendDate,
+								CreateUser: CreateUser,
+								PendUser: PendUser
+							}))
+
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.toast("更新档案资料成功!");
+									setTimeout(function() {
+										window.history.go(-1);
+									}, 800);
+
+								} else {
+									hui.toast(response.data.msg);
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					addInterceptors: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							if(hui('#PostSend').buttonIsLoading()) {
+								return false;
+							}
+							hui('#PostSend').loadingButton('正在更新资料中...');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							hui.toast("请求失败");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							hui.toast("更新资料失败");
+							return Promise.reject(error)
+						})
+					}
+
+				}
+			})
+		</script>
+
+	</body>
+
+</html>

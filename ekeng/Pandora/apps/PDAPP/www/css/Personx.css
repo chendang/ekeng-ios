@@ -1,0 +1,88 @@
+/* CSS Document */
+.wrapper{ top:7.2rem; }
+
+.profile{ height: 6.8rem; display: -webkit-box; -wekbit-box-align:center; padding:2.0rem 1rem; background:linear-gradient(120deg,#e71c37,#e009b1); }
+.profile div:nth-of-type(1){ width:6rem;}
+.profile div:nth-of-type(1) img{ width:4.2rem;height:4.2rem; border-radius: 50%; display: block; margin:-5px auto;}
+.profile div:nth-of-type(2) { -webkit-box-flex:1; color:#fff; font-size: 1.2rem; padding-left:0.6rem; position: relative; }
+.profile div h5{ font-weight: bold; font-size: 1.4rem;color:#fff; }
+.profile div h6{ line-height: 1.8rem; color:#fff; }
+.profile div p span{ height: 1.6rem; line-height: 1.6rem; padding:0 0.3rem; font-size: 1.4rem; background: #fff; color:red; border-radius: 0.4rem; display: inline-block;margin-left: 2px;margin-top: 2px;}
+.profile div a{ position: absolute; width:3rem; height: 3rem; top:-0.5rem;}
+.profile div a.a_s_setting{ right:3.4rem;  background: url(../img/icon_setting.png) no-repeat center center/1.8rem auto; }
+.profile div a.a_s_msg{ right:0rem;  background: url(../img/icon_msg.png) no-repeat center center/1.8rem auto; }
+/* profile */
+.round {
+    padding: 4px;
+    width: 42px;
+    height: 42px;
+    border: 0px solid #dedede;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 55px;
+}
+.sec{ background: #fff; box-shadow: 0 1px 2px #aaa; margin-bottom: 1rem; }
+.sec>h3{ height: 3.4rem; line-height: 3.4rem; border-bottom: 1px solid #ddd; padding:0 1rem; position: relative;}
+.sec>h3 span{padding-left:2.4rem; font-size: 1.4rem; color:#222; display:inline-block;}
+.sec>h3 em{ font-size: 1.1rem; color:#ff2150; padding-left:0.6rem; vertical-align: top;}
+.sec>h3 i{ width:3.4rem; height: 3.4rem; position: absolute; right:0.4rem; cursor: pointer; 
+background: url(../img/icon_u_close.png) no-repeat center center/1rem auto;}
+.sec>h3 i.active{ transform: rotate(180deg);}
+/* sec */
+
+.ul_funcs{ margin:0 1%; }
+.ul_funcs li{ width:25%; padding:0.6rem 0; box-sizing: border-box; text-align: center; float:left;}
+.ul_funcs a{ display: block; padding:0.3rem 0 0.3rem;}
+.ul_funcs span{ position: relative;}
+.ul_funcs img{ width:50%; max-width: 120px; margin-bottom:0.5rem; }
+.ul_funcs p{ font-size: 1.3rem; color:#333;}
+/* funcs */
+
+.order h3 span{background: url(../img/icon_order_title.png) no-repeat left center /1.6rem auto;}
+.ul_order{ width:100%; display:-webkit-box; }
+.ul_order li{ -webkit-box-flex:1; width:25%; height:5.6rem; }
+.ul_order li a{ width:100%; padding-top:3rem; line-height:2.6rem; font-size:1.1rem; display:block; text-align:center; color:#000; position:relative;}
+.ul_order li:nth-of-type(1) a{ background:url(../img/icon_order_1.png) no-repeat center 28%/auto 2.0rem;}
+.ul_order li:nth-of-type(2) a{ background:url(../img/icon_order_2.png) no-repeat center 28%/auto 2.0rem;}
+.ul_order li:nth-of-type(3) a{ background:url(../img/icon_order_3.png) no-repeat center 28%/auto 2.0rem;}
+.ul_order li:nth-of-type(4) a{ background:url(../img/icon_order_4.png) no-repeat center 28%/auto 2.0rem;}
+.ul_order li i{ width:1.2rem; height:1.2rem; line-height:1.2rem; text-align:center; font-style:normal; color:#fff; position:absolute; top:0.3rem; right:25%;
+background:#ff2150;  border-radius:50%;}
+/* order */
+
+.wallet h3 span{background: url(../img/icon_wallet_title.png) no-repeat left center /1.6rem auto;}
+.ul_wallet{ width:100%; display:-webkit-box; }
+.ul_wallet li{ -webkit-box-flex:1; width:25%; }
+.ul_wallet a{ display: block; padding:0.6rem 0;}
+.ul_wallet span{ height: 1.8rem; line-height: 1.8rem; font-size:1.3rem; color:#222; display: block; text-align: center;}
+.ul_wallet p{ font-size:1.1rem; color:#222; text-align: center; }
+.ul_wallet img{ height: 1.6rem;}
+.ul_wallet .violet{ color:#ff2150; }
+/* wallet */
+
+.binding { background: #fff; }
+.binding a{ height: 3.4rem; line-height: 3.4rem; border-bottom: 1px solid #ddd; padding:0 1rem; display: block; position: relative;}
+.binding span{padding-left:2.4rem; font-size: 1.4rem; color:#222; display:inline-block; position: relative;
+background: url(../img/icon_binding.png) no-repeat left center /1.6rem auto;}
+.binding i{ width:3.4rem; height: 3.4rem; position: absolute; right:0.4rem; cursor: pointer; 
+background: url(../img/icon_go.png) no-repeat center center/auto 1rem;}
+.binding s{width:1.2rem; height:1.2rem; line-height:1.2rem; text-align:center; font-style:normal; color:#fff; position:absolute; top:0.3rem; right:-1.3rem;
+background:#ff2150;  border-radius:50%; text-decoration: none; font-size: 1.0rem;}
+/* binding */
+
+.ul_menus li{ border-bottom: 1px solid #ddd;}
+.ul_menus h3,.ul_menus h4{ height: 3.2rem; line-height: 3.2rem; display:-webkit-box; padding-left: 1rem; position: relative;}
+.ul_menus h3 img,.ul_menus h4 img{ width:1.6rem; vertical-align: middle; }
+.ul_menus h3 p,.ul_menus h4 p{ -webkit-box-flex:1; padding-left:1rem; font-size: 1.4rem;}
+.ul_menus h3 a{ position: absolute; right:3.8rem; color:#f78744;}
+.ul_menus h3:after{ content:""; width:3.4rem; height: 3.4rem; position: absolute; right:0.4rem; cursor: pointer; 
+background: url(../img/icon_go.png) no-repeat center center/auto 1rem;}
+.ul_menus h4:after{ content:""; width:3.0rem; height: 3.0rem; position: absolute; right:0.4rem; cursor: pointer; 
+background: url(../img/icon_u_close.png) no-repeat center center/1rem auto;}
+.ul_menus li.active h4 p{ border-bottom: 1px solid #ddd;}
+.ul_menus li.active h4:after{ transform: rotate(180deg);}
+.ul_menus div{ padding-left:2.6rem; display: none;}
+.ul_menus div p{ padding-left:1rem; height: 3.0rem; line-height: 3.0rem; border-bottom: 1px solid #ddd;}
+.ul_menus div p:last-of-type{ border-bottom: none;}
+.ul_menus div a{ display: block;}
+/* ul_menus */

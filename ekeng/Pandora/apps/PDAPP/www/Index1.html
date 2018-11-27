@@ -1,0 +1,572 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>e康云健康管理</title>
+		<meta charset="utf-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+		
+		<script>
+			
+			
+		</script>
+		<link href="css/lib/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/lib/huimin.css">
+		<link rel="stylesheet" type="text/css" href="css/lib/CSSRESET.css">
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+			p {
+    color:white;
+}
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="_container clear" id="bodyinfo">
+
+			<article class="wrapper" v-cloak>
+				<div class="main">
+
+					<div class="msg">
+						<div class="msg_left">
+							<img v-bind:src="HeadPic" alt="" id="btnFamily" />
+							<div>
+								<a href="javascript:;">{{UserName}}</a>
+								<p>{{NickName}}</p>
+							</div>
+						</div>
+
+					</div>
+					<!-- msg -->
+
+
+					<!-- title -->
+
+					<div class="welcome">爱谷者体验馆</div>
+
+					<div class="gray">
+						<div class="funcs">
+							<ul class="ul_funcs clearfix">
+								
+								<li>
+									<a href="javascript:clicked('member/NewsIndex.html','NewsIndex.html','slide-in-left','健康资讯');">
+										<span><img src="img/index_link_5.png" alt=""></span>
+										<p>健康资讯</p>
+									</a>
+								</li>
+								
+								<li>
+								<a href="javascript:clicked('member/TestMenu.html','TestMenu.html','zoom-fade-out','健康评测');">
+									<span><img src="img/index_link_6.png" alt=""></span>
+									<p>健康自评</p>
+								</a>
+							   </li>
+								
+								<li>
+								<a href="javascript:clicked('member/MedicalRecord.html','MedicalRecord.html','zoom-fade-out','案例分享');">	
+									<span><img src="img/index_link_7.png" alt=""></span>
+									<p>案例分享</p>
+								</a>
+							  </li>
+
+								<li>
+									<a href="javascript:clicked('member/PlanIndex.html','PlanIndex.html','zoom-fade-out','健康日志');">
+										<span><img src="img/_index_menu_8.png" alt=""></span>
+										<p>健康日志</p>
+									</a>
+								</li>
+								
+								<!--<li>
+									<a href="javascript:clicked('member/TestMenu.html','TestMenu.html','zoom-fade-out','健康评测');">
+										<span><img src="img/_index_menu_5.png" alt=""></span>
+										<p>健康自评</p>
+									</a>
+								</li>-->
+								
+								
+								
+							<!--<li>
+					
+								<a href="javascript:clicked('member/NewsIndex.html','NewsIndex.html','zoom-fade-out','健康资讯');">
+									<span><img src="img/index_link_5.png" alt=""></span>
+									<p>健康资讯</p>
+								</a>
+							</li>				-->
+
+
+							   	<!--<li>
+								<a href="javascript:clickedNoHead('member/MyCardBox.html','MyCardBox.html','slide-in-left','我的权益');">
+									<span><img src="img/index_link_7.png" alt=""></span>
+									<p>我的权益</p>
+								</a>
+							   </li>-->
+							<!--<li>
+								<a href="javascript:clicked('mall/MallIndex.html','MallIndex.html','zoom-fade-out','健康商城');">
+									<span><img src="img/index_link_8.png" alt=""></span>
+									<p>健康商城</p>
+								</a>
+							</li>								
+							-->
+								
+							</ul>
+						</div>
+						<!-- funcs -->
+
+						<div class="news">
+							<h2 class="cm_h2">
+                            <span>健康资讯</span>
+                            <a href="javascript:clicked('member/NewsIndex.html','NewsIndex.html','slide-in-right','健康资讯');">更多</a>
+                        </h2>
+
+							<ul class="ul_news" v-cloak>
+								<li v-for="(Item,index) in NewsList" @click="ShowNewsContent(Item.NewsId)">
+									<div><img :src="Item.NewsPic" alt="" /></div>
+									<div>
+										<h4>{{Item.NewsTitle}}</h4>
+										<p>
+											<a href="javascript:;">{{Item.LikeCount}}赞同</a>·
+											<a href="javascript:;">{{Item.CommentCount}}评论</a>·
+											<a href="javascript:;">关注问题</a>
+										</p>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+						<!-- news -->
+<div style="height: 50px;"></div>
+					</div>
+					<!-- chats -->
+				</div>
+				
+			</article>
+			
+			<!-- wrapper End -->
+
+		</div>
+	</body>
+	<script src="js/lib/mui.min.js"></script>
+		<script src="js/lib/FooterNav.js"></script>
+		<script src="js/index.js" type="text/javascript"></script>
+	<script src="js/lib/jquery-2.1.3.min.js"></script>
+
+	<script src="js/lib/vue20.min.js" type="text/javascript"></script>
+	<script src="js/lib/hui.js" type="text/javascript"></script>
+	<script src="js/public.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		var domainUrl = GetMvcApiDomain();
+		var mallDomainUrl = GetMallApiDomain();
+		var menu, _self, _main;
+
+		mui.init();
+
+
+		function closeshow(aniView) {　　
+var wv=plus.webview.currentWebview();
+var launch = plus.webview.getLaunchWebview();
+wv.setStyle({'popGesture':'none'}); 
+var all = plus.webview.all(); 
+var current = plus.webview.currentWebview().id; 
+for(var i=0,len=all.length;i<len;i++){
+	if(all[i].id!==current && all[i].id!==launch.id){
+      all[i].close(); 
+ } 
+} 
+
+for(var i=0,len=all.length;i<len;i++){
+	console.log("webview"+i+": "+all[i].getURL());
+}
+　　 // 此时，窗口对象只剩下首页以及当前窗口，直接关闭当前窗口即可；
+        self.close(aniView);
+}
+
+
+
+		function plusReadyDo() {
+
+			mui.plusReady(function() {
+				var launchFlag = plus.storage.getItem("launchFlag");
+				if(!launchFlag){
+					plus.webview.open('start.html', 'new', {}, 'none', 0);
+					
+                    setTimeout(function() {
+					plus.navigator.closeSplashscreen();
+					}, 200);
+				}
+				else{
+					
+				
+                mui.os.ios&&plus.navigator.setFullscreen(true);  
+				var objuser = JSON.parse(plus.storage.getItem('user'));
+
+				if(objuser == undefined || objuser == null || objuser == '') {
+					
+					plus.webview.open('login.html', 'new', {}, 'none', 0);
+					
+                    setTimeout(function() {
+					plus.navigator.closeSplashscreen();
+					}, 200);
+				} else {
+
+					vum.UserName = objuser.UserName;
+					vum.NickName=objuser.NickName;
+					vum.HeadPic=objuser.HeadPic;
+					
+					
+					var self = plus.webview.currentWebview();
+
+                    var _footer = new plus.nativeObj.View('footer');
+
+                    var _a = ['img/_icon_home.png','img/_icon_msg.png','img/_icon_restore.png','img/_icon_self.png'];
+                    var _b = ['img/_icon_home_at.png','img/_icon_msg_at.png','img/_icon_restore_at.png','img/_icon_self_at.png'];
+                    var _c = ['首页','消息','问答','我的'];
+                    _fbar.setTabInfo(_footer,_a,_b,_c);
+                 
+                    
+                    _fbar.setCB(function(tab){
+                     console.log('切换选夹>>'+tab);
+                     var url="Index.html";
+                     var urlId="Index.html";
+                     switch (tab) {
+							case 0:
+								closeshow('none');
+								break;
+							case 1:
+								url="member/Message.html";
+								urlId="Message.html";
+								break;
+							case 2:
+								url="member/TopicList.html";
+								urlId="TopicList.html";
+								break;
+							case 3:
+								url="member/Person.html";
+								urlId="Person.html";
+								break;
+							default:
+								closeshow('none');
+								break;
+						}
+                     
+                            console.log('当前>>'+url);
+                            console.log('当前>>'+urlId);
+                            
+
+                            
+                     		clickedNoHead(url,urlId,"none");
+                     		closeshow('none');
+                     
+                     });
+					//	dblBackQuit();				
+
+		                    
+					vum.getUserInfo();
+					vum.getUserAccount(objuser.UserName);
+					vum.getNewsRecommendList('15', '10');
+                    plus.navigator.closeSplashscreen();
+				}
+			 }
+
+			});
+
+		}
+		
+		
+
+		
+		
+
+		plusReadyDo();
+
+		var vum = new Vue({
+			el: '#bodyinfo',
+			data: function() {
+				return {
+					UserName: "",
+					NickName: "",
+					HeadPic: "",
+					CardPowerActive: 0,
+					Quality: '',
+					CityAQI: '',
+					TopicList: [],
+					NewsList: []
+				}
+			},
+			created: function() {
+
+			},
+			mounted: function() {
+
+				this.$nextTick(function() {
+
+				})
+
+			},
+
+			methods: {
+				getTopicList: function(topcount) {
+					var that = this;
+					$.ajax({
+						url: domainUrl + "api/Topic/getTopicList",
+						type: 'get',
+						dataType: "json",
+						data: {
+							topcount: topcount
+						},
+						beforeSend: function() {
+							hui.h5Loading(false, '加载中...', {
+								round: 2,
+								padding: '20px',
+								textalign: 'right'
+							});
+						},
+						success: function(data) {
+							$.each(data, function(i, j) {
+
+								that.TopicList.push({
+									number: (i + 1),
+									topicId: j.Id,
+									PostUser: j.UserName,
+									headpic: j.headpic,
+									title: j.title,
+									CommentCount: j.CommentCount,
+									LikeCount: j.LikeCount,
+									PostTime: getDateDiff(getDateTimeStamp(j.posttime))
+								});
+							});
+						},
+						error: function() {
+							hui.h5Loading(true);
+							plus.nativeUI.toast("网络错误，请稍后再试");
+						},
+						complete: function(data, textStatus) {
+							hui.h5Loading(true);
+						}
+					})
+
+				},
+
+				getUserInfo: function() {
+					var objuser = JSON.parse(plus.storage.getItem('user'));
+					this.UserName = objuser.UserName;
+					this.NickName = objuser.NickName;
+					this.HeadPic = objuser.HeadPic;
+
+				},
+				
+				getUserAccount: function(UserName) {
+					var that = this;
+					$.ajax({
+						url: mallDomainUrl + "api/Member/getUserAccount",
+						type: 'get',
+						dataType: "json",
+						data: {
+							UserName: UserName
+						},
+						beforeSend: function() {
+							hui.loading('数据加载中');
+						},
+						success: function(data) {
+							if(data.code == '200') {
+//								that.UserPoint = data.points;
+//								that.UserAmount = data.amount;
+								that.CardPowerActive = data.cardPower;
+								
+							}
+						},
+						error: function() {
+							hui.closeLoading();
+							hui.toast("网络错误，请稍后再试");
+						},
+						complete: function(data, textStatus) {
+							hui.closeLoading();
+						}
+					})
+
+				},
+				
+				getNewsRecommendList: function(newsClass, topcount) {
+					var that = this;
+					$.ajax({
+						url: domainUrl + "api/News/getNewsRecommendList",
+						type: 'get',
+						dataType: "json",
+						data: {
+							newsClass: newsClass,
+							topcount: topcount
+						},
+						beforeSend: function() {
+							hui.h5Loading(false, '加载中...', {
+								round: 2,
+								padding: '20px',
+								textalign: 'right'
+							});
+						},
+						success: function(data) {
+							var summary = "";
+							$.each(data, function(i, j) {
+								summary = j.summary + '...';
+								that.NewsList.push({
+									number: (i + 1),
+									NewsId: j.Id,
+									NewsTitle: j.title,
+									NewsContent: j.content,
+									summary: summary,
+									NewsPic: j.img_src,
+									CommentCount: j.CommentCount,
+									LikeCount: j.LikeCount,
+									FollowCount: j.FollowCount,
+									click_number: j.click_number
+								});
+
+							});
+						},
+						error: function() {
+							hui.h5Loading(true);
+							plus.nativeUI.toast("网络错误，请稍后再试");
+						},
+						complete: function(data, textStatus) {
+							hui.h5Loading(true);
+						}
+					})
+
+				},
+
+				getIsLikeSet: function(topicId) {
+					var res = 0;
+					var that=this;
+					$.ajax({
+						url: domainUrl + "api/Topic/getTopicIsSetLike",
+						type: 'get',
+						dataType: "json",
+						async: false,
+						data: {
+							UserName: that.UserName,
+							TopicId: topicId
+						},
+						success: function(data) {
+							if(data.code == "200") {
+								if(data.isHave >= "1") {
+									res = '1';
+								}
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("读取数据错误，请稍后再试");
+							return false;
+						}
+					})
+
+					return res;
+
+				},
+
+				SetLikePost: function(topicId) {
+					var res = this.getIsLikeSet(topicId);
+					if(res == '0') {
+						var that=this;
+						$.ajax({
+							url: domainUrl + "api/Topic/GetTopicSetLike",
+							type: 'get',
+							dataType: "json",
+							data: {
+								UserName: that.UserName,
+								TopicId: topicId
+							},
+							success: function(data) {
+								if(data.code == "200") {
+									plus.nativeUI.toast("点赞");
+								}
+							},
+							error: function() {
+								plus.nativeUI.toast("网络错误，请稍后再试");
+							}
+						})
+					} else {
+						plus.nativeUI.toast("已点赞");
+					}
+				},
+
+				getIsFollowSet: function(topicId) {
+					var res = 0;
+					var that=this;
+					$.ajax({
+						url: domainUrl + "api/Topic/getIsSetFollow",
+						type: 'get',
+						dataType: "json",
+						async: false,
+						data: {
+							UserName: that.UserName,
+							TopicId: topicId
+						},
+						success: function(data) {
+							if(data.code == "200") {
+								if(data.isHave >= "1") {
+									res = '1';
+								}
+							}
+						},
+						error: function() {
+							plus.nativeUI.toast("网络错误，请稍后再试");
+						}
+					})
+
+					return res;
+
+				},
+
+				SetFollowPost: function(topicId) {
+					var res = this.getIsFollowSet(topicId);
+					if(res == '0') {
+						var that=this;
+						$.ajax({
+							url: domainUrl + "api/Topic/GetTopicSetFollow",
+							type: 'get',
+							dataType: "json",
+							data: {
+								UserName: that.UserName,
+								TopicId: topicId
+							},
+							success: function(data) {
+								if(data.code == "200") {
+									plus.nativeUI.toast("关注成功");
+								}
+							},
+							error: function() {
+								plus.nativeUI.toast("网络错误，请稍后再试");
+							}
+						})
+					} else {
+						plus.nativeUI.toast("已关注");
+					}
+				},
+
+
+				ShowNewsContent: function(id) {
+					var parm = {
+						"NewsId": id
+					}
+					clickedParm('member/ArticleContent.html', 'ArticleContent.html', 'slide-in-right', parm, '资讯详情');
+				},
+				ShowTopicContent: function(id) {
+					var parm = {
+						"TopicId": id
+					}
+					clickedParm('member/TopicContent.html', 'TopicContent.html', 'zoom-fade-out', parm, '健康话题');
+				}
+
+			}
+
+		});
+	</script>
+
+</html>

@@ -1,0 +1,452 @@
+<!doctype html>
+<html>
+<head>
+<title>个人健康管理--生活习惯--问卷</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link type="text/css" href="../css/style.css" rel="stylesheet" />
+    <style type="text/css">
+         [v-cloak]{ display: none; }
+    </style>
+</head>
+<body>
+
+<!--头部end-->
+<!--当前栏目名start-->
+<div class="assess_name">
+	<h2>生活习惯问卷</h2>
+	<i class="icon icon_circle icon_circle_default"></i>
+</div>
+<div class="assess_line10"></div>
+<!--当前栏目名end-->
+<!--生活习惯问卷start-->
+<div class="assess_content assess_xgwj" id="ExmenItem">
+	<table class="assess_table" v-cloak>
+		<tr>
+			<td>问题</td>
+			<td>回答</td>
+		</tr>
+		<tr>
+			<th class="assess_th_blue" colspan="2">基本情况</th>
+		</tr>
+		<tr>
+			<td>性别</td>
+			<td>{{Part0Data.Sex}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>年龄</td>
+			<td>{{Part0Data.Age}}</td>
+		</tr>
+		<tr>
+			<td>婚姻状况</td>
+			<td>{{Part0Data.MarStats}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>职业性质</td>
+			<td>{{Part0Data.JobType}}</td>
+		</tr>
+		<tr>
+			<td>文化程度</td>
+			<td>{{Part0Data.EduStats}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>目前主要健康诉求</td>
+			<td>{{Part0Data.KeyDesc}}</td>
+		</tr>
+		<tr>
+			<th class="assess_th_light" colspan="2">健康状况</th>
+		</tr>
+		<tr>
+			<td>总体健康状况</td>
+			<td>{{Part1Data.PartOneItem1}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>目前明显不适症状体征</td>
+			<td>{{Part1Data.PartOneItem2}}</td>
+		</tr>
+		<tr>
+			<td>既往病史</td>
+			<td>{{Part1Data.PartOneItem3}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>家族病史</td>
+			<td>{{Part1Data.PartOneItem4}}</td>
+		</tr>
+		<tr>
+			<td>近期感觉疲劳程度</td>
+			<td>{{Part1Data.PartOneItem5}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>近期消化不良等胃肠道不适</td>
+			<td>{{Part1Data.PartOneItem6}}</td>
+		</tr>
+		<tr>
+			<td>人际关系</td>
+			<td>{{Part1Data.PartOneItem7}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>压力状态</td>
+			<td>{{Part1Data.PartOneItem8}}</td>
+		</tr>
+		<tr>
+			<td>家居环境</td>
+			<td>{{Part1Data.PartOneItem9}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>饮用水</td>
+			<td>{{Part1Data.PartOneItem10}}</td>
+		</tr>
+		<tr>
+			<th class="assess_th_green" colspan="2">膳食运动</th>
+		</tr>
+		<tr>
+			<td>是否天天吃早餐</td>
+			<td>{{Part2Data.PartTwoItem1}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>早餐通常吃什么</td>
+			<td>{{Part2Data.PartTwoItem2}}</td>
+		</tr>
+		<tr>
+			<td>午餐主要方式</td>
+			<td>{{Part2Data.PartTwoItem3}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>晚餐主要方式</td>
+			<td>{{Part2Data.PartTwoItem4}}</td>
+		</tr>
+		<tr>
+			<td>是否吃宵夜</td>
+			<td>{{Part2Data.PartTwoItem5}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>饮食口味</td>
+			<td>{{Part2Data.PartTwoItem6}}</td>
+		</tr>
+		<tr>
+			<td>主食结构</td>
+			<td>{{Part2Data.PartTwoItem7}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>是否素食主义</td>
+			<td>{{Part2Data.PartTwoItem8}}</td>
+		</tr>
+		<tr>
+			<td>新鲜蔬菜水果类饮食</td>
+			<td>{{Part2Data.PartTwoItem9}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>白天工作生活久坐为主</td>
+			<td>{{Part2Data.PartTwoItem10}}</td>
+		</tr>
+		<tr>
+			<td>近距离出行方式</td>
+			<td>{{Part2Data.PartTwoItem11}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>日常家务活动</td>
+			<td>{{Part2Data.PartTwoItem12}}</td>
+		</tr>
+		<tr>
+			<td>运动习惯</td>
+			<td>{{Part2Data.PartTwoItem13}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>最常用运动方式</td>
+			<td>{{Part2Data.PartTwoItem14}}</td>
+		</tr>
+		<tr>
+			<td>每周大概运动几次</td>
+			<td>{{Part2Data.PartTwoItem15}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>每次大概运动多少分钟</td>
+			<td>{{Part2Data.PartTwoItem16}}</td>
+		</tr>
+		<tr>
+			<th class="assess_th_orange" colspan="2">行为习惯</th>
+		</tr>
+		<tr>
+			<td>目前吸烟</td>
+			<td>{{Part3Data.PartThreeItem1}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>每天大概吸烟几支</td>
+			<td>{{Part3Data.PartThreeItem2}}</td>
+		</tr>
+		<tr>
+			<td>多大年龄开始吸烟</td>
+			<td>{{Part3Data.PartThreeItem3}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>吸烟多少年</td>
+			<td>{{Part3Data.PartThreeItem4}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>戒烟前一年大概每天吸烟几支</td>
+			<td>{{Part3Data.PartThreeItem5}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>和你一起生活的家人或一起工作的同事是否经常有人吸烟</td>
+			<td>{{Part3Data.PartThreeItem6}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>你每周与吸烟的人共处一室大概几天</td>
+			<td>{{Part3Data.PartThreeItem7}}</td>
+		</tr>
+
+		<tr>
+			<td>目前饮酒</td>
+			<td>{{Part3Data.PartThreeItem8}}</td>
+		</tr>
+		<tr>
+			<td>每天大概饮酒多少毫升</td>
+			<td>{{Part3Data.PartThreeItem9}}</td>
+		</tr>
+		<tr>
+			<td>主要饮酒种类</td>
+			<td>{{Part3Data.PartThreeItem10}}</td>
+		</tr>
+		<tr>
+			<td>多大年龄开始饮酒</td>
+			<td>{{Part3Data.PartThreeItem11}}</td>
+		</tr>
+		<tr>
+			<td>饮酒多少年</td>
+			<td>{{Part3Data.PartThreeItem12}}</td>
+		</tr>
+		<tr>
+			<td>戒酒前一年大概每天饮酒多少毫升</td>
+			<td>{{Part3Data.PartThreeItem13}}</td>
+		</tr>
+		
+		<tr class="assess_tr_bg">
+			<td>睡眠质量</td>
+			<td>{{Part3Data.PartThreeItem14}}</td>
+		</tr>
+		<tr>
+			<td>通常早上起床时间</td>
+			<td>{{Part3Data.PartThreeItem15}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>通常晚上睡觉时间</td>
+			<td>{{Part3Data.PartThreeItem16}}</td>
+		</tr>
+		<tr>
+			<td>午休习惯</td>
+			<td>{{Part3Data.PartThreeItem17}}</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td>熬夜</td>
+			<td>{{Part3Data.PartThreeItem18}}</td>
+		</tr>
+	</table>
+</div>
+
+<!--底部end-->
+</body>
+
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+<script>
+
+
+var domainUrl = GetMvcApiDomain();
+ 
+var username=null;  
+var ReportNum=null;
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+ReportNum=_self.ReportNum;
+
+if(ReportNum==null || ReportNum==''){
+	plus.webview.currentWebview().close();
+}
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+ var vum = new Vue({
+         el: '#ExmenItem',
+         data: function(){
+          return {
+             ReportNum: ReportNum,
+             LiftExmenNum: '',
+             Part0Data: {
+                 Sex: '--',
+                 Age: '--',
+                 MarStats: '--',
+                 EduStats: '--',
+                 JobType: '--',
+                 KeyDesc: '--'
+             },
+             Part1Data: {
+                 PartOneItem1: '--',
+                 PartOneItem2: '--',
+                 PartOneItem3: '--',
+                 PartOneItem4: '--',
+                 PartOneItem5: '--',
+                 PartOneItem6: '--',
+                 PartOneItem7: '--',
+                 PartOneItem8: '--',
+                 PartOneItem9: '--',
+                 PartOneItem10: '--'
+             },
+             Part2Data: {
+                 PartTwoItem1: '--',
+                 PartTwoItem2: '--',
+                 PartTwoItem3: '--',
+                 PartTwoItem4: '--',
+                 PartTwoItem5: '--',
+                 PartTwoItem6: '--',
+                 PartTwoItem7: '--',
+                 PartTwoItem8: '--',
+                 PartTwoItem9: '--',
+                 PartTwoItem10: '--',
+                 PartTwoItem11: '--',
+                 PartTwoItem12: '--',
+                 PartTwoItem13: '--',
+                 PartTwoItem14: '--',
+                 PartTwoItem15: '--',
+                 PartTwoItem16: '--'
+             },
+             Part3Data: {
+                 PartThreeItem1: '--',
+                 PartThreeItem2: '--',
+                 PartThreeItem3: '--',
+                 PartThreeItem4: '--',
+                 PartThreeItem5: '--',
+                 PartThreeItem6: '--',
+                 PartThreeItem7: '--',
+                 PartThreeItem8: '--',
+                 PartThreeItem9: '--',
+                 PartThreeItem10: '--',
+                 PartThreeItem11: '--',
+                 PartThreeItem12: '--',
+                 PartThreeItem13: '--',
+                 PartThreeItem14: '--',
+                 PartThreeItem15: '--',
+                 PartThreeItem16: '--',
+                 PartThreeItem17: '--',
+                 PartThreeItem18: '--'
+             }
+           }
+
+         },
+         validators: {
+             integer: function (val) {
+                 return /^[1-9]\d*$/.test(val);
+             }
+         },
+         
+        mounted: function () {
+
+                   this.$nextTick(function () {
+
+                     var self=this;
+                     setTimeout(function(){
+                     self.getExmenData();
+                     }, 150);
+                 })
+
+          },
+
+         methods: {
+
+
+             getExmenData: function () {
+                 $.ajax({
+                     url: domainUrl + "api/PerReport/getLifeExamineItemByReportNum",
+                     type: 'get',
+                     dataType: "json",
+                     data: { UserName: username,ReportNum: ReportNum },
+                     success: function (data) {
+
+                         vum.LiftExmenNum=data.TestNum
+                         vum.Part0Data.Sex = data.Sex;
+                         vum.Part0Data.Age = data.Age;
+                         vum.Part0Data.MarStats = data.MarStats;
+                         vum.Part0Data.EduStats = data.EduStats;
+                         vum.Part0Data.JobType = data.JobType;
+                         vum.Part0Data.KeyDesc = data.KeyDesc;
+
+                         vum.Part1Data.PartOneItem1 = data.partOneItem1;
+                         vum.Part1Data.PartOneItem2 = data.partOneItem2;
+                         vum.Part1Data.PartOneItem3 = data.partOneItem3;
+                         vum.Part1Data.PartOneItem4 = data.partOneItem4;
+                         vum.Part1Data.PartOneItem5 = data.partOneItem5;
+                         vum.Part1Data.PartOneItem6 = data.partOneItem6;
+                         vum.Part1Data.PartOneItem7 = data.partOneItem7;
+                         vum.Part1Data.PartOneItem8 = data.partOneItem8;
+                         vum.Part1Data.PartOneItem9 = data.partOneItem9;
+                         vum.Part1Data.PartOneItem10 = data.partOneItem10;
+
+
+                         vum.Part2Data.PartTwoItem1 = data.partTwoItem1;
+                         vum.Part2Data.PartTwoItem2 = data.partTwoItem2;
+                         vum.Part2Data.PartTwoItem3 = data.partTwoItem3;
+                         vum.Part2Data.PartTwoItem4 = data.partTwoItem4;
+                         vum.Part2Data.PartTwoItem5 = data.partTwoItem5;
+                         vum.Part2Data.PartTwoItem6 = data.partTwoItem6;
+                         vum.Part2Data.PartTwoItem7 = data.partTwoItem7;
+                         vum.Part2Data.PartTwoItem8 = data.partTwoItem8;
+                         vum.Part2Data.PartTwoItem9 = data.partTwoItem9;
+                         vum.Part2Data.PartTwoItem10 = data.partTwoItem10;
+                         vum.Part2Data.PartTwoItem11 = data.partTwoItem11;
+                         vum.Part2Data.PartTwoItem12 = data.partTwoItem12;
+                         vum.Part2Data.PartTwoItem13 = data.partTwoItem13;
+                         vum.Part2Data.PartTwoItem14 = data.partTwoItem14;
+                         vum.Part2Data.PartTwoItem15 = data.partTwoItem15;
+                         vum.Part2Data.PartTwoItem16 = data.partTwoItem16;
+
+
+                         vum.Part3Data.PartThreeItem1 = data.partThreeItem1;
+                         vum.Part3Data.PartThreeItem2 = data.partThreeItem2;
+                         vum.Part3Data.PartThreeItem3 = data.partThreeItem3;
+                         vum.Part3Data.PartThreeItem4 = data.partThreeItem4;
+                         vum.Part3Data.PartThreeItem5 = data.partThreeItem5;
+                         vum.Part3Data.PartThreeItem6 = data.partThreeItem6;
+                         vum.Part3Data.PartThreeItem7 = data.partThreeItem7;
+                         vum.Part3Data.PartThreeItem8 = data.partThreeItem8;
+                         vum.Part3Data.PartThreeItem9 = data.partThreeItem9;
+                         vum.Part3Data.PartThreeItem10 = data.partThreeItem10;
+                         vum.Part3Data.PartThreeItem11 = data.partThreeItem11;
+                         vum.Part3Data.PartThreeItem12 = data.partThreeItem12;
+                         vum.Part3Data.PartThreeItem13 = data.partThreeItem13;
+                         vum.Part3Data.PartThreeItem14 = data.partThreeItem14;
+                         vum.Part3Data.PartThreeItem15 = data.partThreeItem15;
+                         vum.Part3Data.PartThreeItem16 = data.partThreeItem16;
+                         vum.Part3Data.PartThreeItem17 = data.partThreeItem17;
+                         vum.Part3Data.PartThreeItem18 = data.partThreeItem18;
+
+
+                     },
+                     error: function () {
+                         plus.nativeUI.toast("网络错误，请稍后再试");
+                     }
+                 })
+             }
+
+
+
+         }
+
+
+
+     });
+
+</script>
+</html>

@@ -1,0 +1,706 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+		<meta name="format-detection" content="telephone=no" />
+		<link href="../css/style.css" type="text/css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/lib/huimin.css">
+
+		<title>资讯浏览</title>
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+			body {
+				background: #fff;
+			}
+			
+			body {
+				font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+				line-height: 1.5;
+				font-size: 16px;
+				-webkit-user-select: none;
+				-webkit-text-size-adjust: 100%;
+				-webkit-tap-highlight-color: transparent;
+				outline: 0;
+			}
+			
+			.add_my_common {
+				padding: 0 0px;
+			}
+			
+			.demo-desc {
+				padding: 10px;
+				font-size: 16px;
+				color: #7CAE23;
+			}
+			
+			.demo-block {
+				position: relative;
+			}
+			
+			.ui-input-wrap {
+				background-color: #ebeced;
+				height: 44px;
+				display: -webkit-box;
+				-webkit-box-align: center;
+			}
+			
+			.ui-input {
+				height: 30px;
+				line-height: 30px;
+				margin: 7px 10px;
+				background: #fff;
+				padding-left: 10px;
+				-webkit-box-flex: 1;
+			}
+			
+			.ui-border-radius {
+				position: relative;
+				border: 0;
+				border: 1px solid #e0e0e0;
+				border-radius: 4px;
+			}
+			
+			.ui-input input {
+				width: 100%;
+				height: 100%;
+				border: 0;
+				background: 0 0;
+				-webkit-appearance: none;
+				outline: 0;
+			}
+			
+			.ui-input-wrap .ui-btn,
+			.ui-input-wrap .ui-btn-lg,
+			.ui-input-wrap .ui-btn-s,
+			.ui-input-wrap i {
+				margin-right: 10px;
+			}
+			
+			.ui-btn,
+			.ui-btn-lg,
+			.ui-btn-s {
+				height: 30px;
+				line-height: 30px;
+				padding: 0 11px;
+				min-width: 55px;
+				display: inline-block;
+				position: relative;
+				text-align: center;
+				font-size: 15px;
+				background-color: #fdfdfd;
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, #fff), to(#fafafa));
+				vertical-align: top;
+				color: #00a5e0;
+				-webkit-box-sizing: border-box;
+				background-clip: padding-box;
+				border: 1px solid #cacccd;
+				border-radius: 3px;
+			}
+			
+			button {
+				-webkit-appearance: none;
+				border: 0;
+				background: none;
+			}
+			
+			.find-news .title p i {
+				display: block;
+				padding-left: 23px;
+				padding-right: 18px;
+				background-position: left center;
+				background-repeat: no-repeat;
+				font-size: 15px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<!--发现正文start-->
+		<div id="bodyinfo">
+			<div class="find-news" style="margin-top: 46px;">
+
+				<div>
+					<ul class="title">
+						<h2>{{title}}</h2>
+						<div class="clearfix">
+							<p class="fl"><i class="f-ico05">{{click_number}}</i></p>
+							<p class="fl"><i class="f-ico06">{{CommentCount}}</i></p>
+							<p class="fr" v-if=" IsFavorite == 0 " @click="SetFavoritePost"><i class="f-ico11">收藏</i></p>
+							<p class="fr" v-else><i class="f-ico11">已收藏</i></p>
+							<p class="fr" v-if=" IsFollow == 0 " @click="SetFollowPost"><i class="f-ico07">关注</i></p>
+							<p class="fr" v-else><i class="f-ico07">已关注</i></p>
+						</div>
+					</ul>
+					<ul class="con">
+						<p v-html="content">{{content}}</p>
+					</ul>
+				</div>
+				<!--<ul class="clearfix f-share">
+    <li>
+      <a href="#" title="">
+        <img src="../img/part1/7-03.jpg" alt="" />
+        <h4>120</h4>
+      </a>
+    </li>
+    <li>
+      <a href="#" title="">
+        <img src="../img/part1/7-04.jpg" alt="" />
+        <h4>回复</h4>
+      </a>
+    </li>
+    <li>
+      <a href="#" title="">
+        <img src="../img/part1/7-05.jpg" alt="" />
+        <h4>微信好友</h4>
+      </a>
+    </li>
+    <li>
+      <a href="#" title="">
+        <img src="../img/part1/7-06.jpg" alt="" />
+        <h4>朋友圈</h4>
+      </a>
+    </li>
+    <li>
+      <a href="#" title="">
+        <img src="../img/part1/7-07.jpg" alt="" />
+        <h4>新浪微博</h4>
+      </a>
+    </li>
+  </ul>-->
+
+				<hr style="margin-top:15px;height:1px;border:none;border-top:1px dashed #0066CC;" />
+
+				<div class="recommend-video">
+					<h2>推荐文章</h2>
+					<ul>
+						<li v-for="(Item,index) in ItemList" @click="ShowContent(Item.NewsId)">
+							<a title="">
+								<div class="m_cell_hd"><img :src="Item.NewsPic" alt="" width="116" height="55" /></div>
+								<div class="m_cell_ft m_cell_primary">
+									<h4>{{Item.NewsTitle}}</h4>
+									<p>{{Item.click_number}}</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<ul class="f-question">
+					<li v-for="(Item,index) in CommentList">
+						<div class="f-img01">
+							<ul class="m_cell_hd"><img :src="Item.headPic" alt="" /></ul>
+							<ul class="m_cell_hd m_cell_primary">
+								<h4>{{Item.ReallyName}}</h4></ul>
+							<!--<ul class="m_cell_ft"><i>沙发</i></ul>-->
+						</div>
+						<h4 v-html="Item.content">{{Item.content}}</h4>
+						<div class="f-img02">
+							<ul class="m_cell_hd m_cell_primary">
+								<p>{{Item.pubtime}}</p>
+							</ul>
+							<ul class="m_cell_ft">
+								<a @click="SetPostCommentLike(Item.cid)" class="f-ico07">{{Item.LCount}}</a>
+							</ul>
+							<!--<ul class="m_cell_ft"><a href="javascript:void(0)" class="f-ico08">回复</a></ul>-->
+						</div>
+					</li>
+
+				</ul>
+			</div>
+			<!--发现正文end-->
+
+			<div style="height: 25px;"></div>
+			<div class="add_my_common" style="bottom: 0px;">
+				<div class="demo-item">
+					<div class="demo-block">
+						<section class="ui-input-wrap ui-border-t">
+							<div class="ui-input ui-border-radius">
+								<input type="text" placeholder="我也说一句..." v-model="Detail">
+							</div>
+							<button class="ui-btn" @click="PostCommentSend">评论</button>
+						</section>
+					</div>
+				</div>
+			</div>
+			<!--回复end-->
+		</div>
+		<!--底部end-->
+	</body>
+
+	<script src="../js/base.js" type="text/javascript"></script>
+	<script src="../js/lib/hui.js"></script>
+	<script src="../js/public.js" type="text/javascript"></script>
+
+	<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+	<script src="../js/lib/axios.min.js"></script>
+	<script src="../js/lib/qs.js"></script>
+	<script>
+		var domainUrl = GetMvcApiDomain();
+
+		var username = null;
+		var newsId = null;
+
+		function plusReady() {
+
+			var objuser = JSON.parse(plus.storage.getItem('user'));
+			username = objuser.UserName;
+
+			var _self = plus.webview.currentWebview();
+
+			newsId = _self.NewsId;
+
+			if(newsId == null || newsId == '' || newsId == undefined) {
+				plus.nativeUI.toast("参数错误，请返回重新选择");
+				setTimeout(function() {
+					plus.webview.currentWebview().close();
+				}, 1000);
+			} else {
+				console.log(newsId);
+                  ShowBody(username,newsId);
+
+				
+
+			}
+			HeadShow();
+			back();
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+
+    function ShowBody(username,newsId){
+		var vum = new Vue({
+			el: '#bodyinfo',
+			data: function() {
+				return {
+					UserName: "",
+					newsId: newsId,
+					title: "",
+					Detail: "",
+					CommentCount: 0,
+					IsFollow: 0,
+					IsFavorite: 0,
+					click_number: 0,
+					content: "",
+					ItemList: [],
+					CommentList: []
+				}
+			},
+
+			mounted: function() {
+
+				this.$nextTick(function() {
+					this.UpdateClickNumber();
+                    this.getNewsContent(this.newsId);
+                    this.GetRNewsList('15', '10');
+                    this.GetCommentList(newsId, '10');
+                    this.getIsSetFollow(username, newsId);
+                    this.getIsSetFavorite(username, newsId);
+                    this.getCommentCount(newsId);
+				})
+
+			},
+
+			methods: {
+
+				getNewsContent: function(newsId) {
+
+					var that = this;
+
+					axios.get(domainUrl + 'api/News/getNewsContentById', {
+							params: {
+								newsid: newsId
+							}
+						})
+						.then(function(response) {
+							if(response.data.code == '200') {
+								that.title = response.data.title;
+								that.content = response.data.content;
+								that.click_number = response.data.click_number;
+
+							} else {
+								hui.toast("获取资料详情失败");
+								return false;
+							}
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				GetRNewsList: function(newsClass, topcount) {
+					var that = this;
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/News/getNewsRecommendList', {
+							params: {
+								newsClass: newsClass,
+								topcount: topcount,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data);
+							that.ItemList = [];
+							each(jsonx, function(i, j) {
+								var pubtime = getDateDiff(getDateTimeStamp(j.create_date));
+								that.ItemList.push({
+									number: (i + 1),
+									NewsId: j.Id,
+									NewsTitle: cutstr(j.title, 25),
+									NewsPic: j.img_src,
+									pubtime: pubtime,
+									click_number: j.click_number,
+								});
+
+							});
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+				},
+
+				GetCommentList: function(newsId, topcount) {
+					var that = this;
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/News/getNewsCommentList', {
+							params: {
+								NewsId: newsId,
+								topcount: topcount,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data);
+							that.CommentList = [];
+							each(jsonx, function(i, j) {
+								var pubtime = getDateDiff(getDateTimeStamp(j.posttime));
+								var headpic = '<img src="../img/myhead.png">';
+								if(String(j.headpic).length == 0 || j.headpic == '') {
+									headpic = '<img src="../img/myhead.png">';
+								} else {
+									headpic = j.headpic;
+								}
+								that.CommentList.push({
+									number: (i + 1),
+									cid: j.Id,
+									ReallyName: j.ReallyName,
+									content: cutstr(j.content, 85),
+									headPic: headpic,
+									LCount: j.LCount,
+									pubtime: pubtime,
+								});
+
+							});
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+				},
+
+				PostCommentSend: function() {
+
+					if(username == null || username == undefined || username == "") {
+						hui.upToast('请登陆后再评论!');
+						return false;
+					}
+
+					if(this.Detail == "" || this.Detail == null) {
+						hui.upToast('请输入评论再保存!');
+						return false;
+					}
+
+					this.SendSave(username, newsId, this.Detail)
+				},
+				SendSave: function(UserName, NewsId, Detail) {
+
+					var that = this;
+					//that.addInterceptors();
+
+					axios.post(domainUrl + 'api/News/PostCommentSave', Qs.stringify({
+							UserName: UserName,
+							NewsId: NewsId,
+							Detail: Detail
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								hui.toast("评论保存成功!");
+								setTimeout(function() {
+									that.GetCommentList(newsId, '10');
+								}, 800);
+
+							} else {
+								hui.toast("评论保存失败!");
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				SetFollowPost: function() {
+
+					if(username == null || username == undefined || username == "") {
+						hui.upToast('请登陆后再关注!');
+						return false;
+					}
+
+					var that = this;
+					axios.post(domainUrl + 'api/News/PostNewsSetFollow', Qs.stringify({
+							UserName: username,
+							NewsId: newsId
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								that.IsFollow = 1;
+								hui.toast(response.data.msg);
+
+							} else {
+								hui.toast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				SetFavoritePost: function() {
+
+					if(username == null || username == undefined || username == "") {
+						hui.upToast('请登陆后再收藏!');
+						return false;
+					}
+
+					var that = this;
+					axios.post(domainUrl + 'api/News/PostSetFavorite', Qs.stringify({
+							UserName: username,
+							NewsId: newsId
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								that.IsFavorite = 1;
+								hui.toast(response.data.msg);
+
+							} else {
+								hui.toast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				SetPostCommentLike: function(CommentId) {
+					if(username == null || username == undefined || username == "") {
+						hui.upToast('请登陆后再点赞!');
+						return false;
+					}
+
+					var that = this;
+					axios.post(domainUrl + 'api/News/PostCommentSetLike', Qs.stringify({
+							UserName: username,
+							CommentId: CommentId
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								hui.toast(response.data.msg);
+								that.GetCommentList(newsId, '10');
+
+							} else {
+								hui.toast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				UpdateClickNumber: function() {
+					var that = this;
+
+					axios.post(domainUrl + 'api/News/PostUpdateClick', Qs.stringify({
+							NewsId: newsId
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+
+							} else {
+
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				getIsSetFollow: function(UserName, NewsId) {
+
+					var that = this;
+
+					axios.get(domainUrl + 'api/News/getIsSetFollow', {
+							params: {
+								UserName: UserName,
+								NewsId: NewsId,
+							}
+						})
+						.then(function(response) {
+							if(response.data.code == '200') {
+								that.IsFollow = response.data.isHave;
+
+							} else {
+								hui.toast("获取信息失败");
+								return false;
+							}
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				getIsSetFavorite: function(UserName, NewsId) {
+
+					var that = this;
+
+					axios.get(domainUrl + 'api/News/getIsSetFavorite', {
+							params: {
+								UserName: UserName,
+								NewsId: NewsId,
+							}
+						})
+						.then(function(response) {
+							if(response.data.code == '200') {
+								that.IsFavorite = response.data.isHave;
+
+							} else {
+								hui.toast("获取信息失败");
+								return false;
+							}
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				getCommentCount: function(NewsId) {
+
+					var that = this;
+
+					axios.get(domainUrl + 'api/News/getCommentCount', {
+							params: {
+								NewsId: NewsId,
+							}
+						})
+						.then(function(response) {
+							if(response.data.code == '200') {
+								that.CommentCount = response.data.TCount;
+
+							} else {
+								hui.toast("获取信息失败");
+								return false;
+							}
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				ShowContent: function(newsId) {
+					location.href = "ArticleContent.html?NewsId=" + newsId;
+
+				},
+
+				axiosGetLoadding: function() {
+					axios.interceptors.request.use(function(config) {
+						console.log('开始请求')
+						config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+						hui.loading('数据加载中');
+						return config
+					}, function(error) {
+						console.log('请求失败')
+						hui.closeLoading();
+						hui.toast("数据加载失败,请检查网络");
+						return Promise.reject(error)
+					})
+					axios.interceptors.response.use(function(config) {
+						hui.closeLoading();
+
+						console.log('接收响应')
+						return config
+					}, function(error) {
+						console.log('响应出错')
+						hui.closeLoading();
+						hui.toast("数据加载失败,请检查网络");
+						return Promise.reject(error)
+					})
+				},
+				addInterceptors: function() {
+					axios.interceptors.request.use(function(config) {
+						console.log('开始请求')
+						config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+						if(hui('#PostSend').buttonIsLoading()) {
+							return false;
+						}
+						hui('#PostSend').loadingButton('正在更新资料中...');
+						return config
+					}, function(error) {
+						console.log('请求失败')
+						hui('#PostSend').resetLoadingButton();
+						hui('#PostSend').html("档案提交");
+						hui.toast("请求失败");
+						return Promise.reject(error)
+					})
+					axios.interceptors.response.use(function(config) {
+						hui('#PostSend').resetLoadingButton();
+						hui('#PostSend').html("档案提交");
+						console.log('接收响应')
+						return config
+					}, function(error) {
+						console.log('响应出错')
+						hui('#PostSend').resetLoadingButton();
+						hui('#PostSend').html("档案提交");
+						hui.toast("更新资料失败");
+						return Promise.reject(error)
+					})
+				}
+
+			}
+		})
+		}
+	</script>
+
+</html>

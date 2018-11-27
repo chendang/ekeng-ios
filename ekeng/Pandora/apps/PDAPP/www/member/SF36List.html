@@ -1,0 +1,207 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>我的问卷记录</title>
+
+    <link rel="stylesheet" href="../css/lib/mui.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/lib/huimin.css">
+   
+    <style type="text/css">
+
+         [v-cloak]{ display: none; }
+          body { background: #FFFFFF; }
+         .bk{background: #FFFFFF;}
+
+	</style>
+</head>
+<body>
+
+<div class="mui-content bk" style="margin-top: 15px;" id="bodyinfo">
+ <div class="mui-card">
+  <ul class="mui-table-view" v-for="(Item,index) in ItemList" v-cloak>
+    <li class="mui-table-view-cell" style="list-style-type:none;background-color: #FDF6F6;">
+   	健康调查编号：{{Item.TestNum}}
+   	</li>
+   	<li class="mui-table-view-cell" style="list-style-type:none;">
+   	创建时间：{{Item.CreateTime}}
+   	</li>
+   	<li class="mui-table-view-cell" style="list-style-type:none;">
+   		<p><button type="button" :class="Item.part1 > 0?'mui-btn mui-btn-danger mui-btn-outlined':'mui-btn mui-btn-primary mui-btn-outlined'" @click=GoTo("EditGreatTest1.html",Item.TestNum,'SF-36健康调查简表')>第一页</button>
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   		<button type="button" :class="Item.part2 > 0?'mui-btn mui-btn-danger mui-btn-outlined':'mui-btn mui-btn-primary mui-btn-outlined'" @click=GoTo("EditGreatTest2.html",Item.TestNum,'SF-36健康调查简表')>第二页</button></p>
+   	</li>	
+   	
+    <li class="mui-table-view-cell" style="list-style-type:none;">
+   		<p><button type="button" :class="Item.part3 > 0?'mui-btn mui-btn-danger mui-btn-outlined':'mui-btn mui-btn-primary mui-btn-outlined'" @click=GoTo("EditGreatTest3.html",Item.TestNum,'SF-36健康调查简表')>第三页</button>
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   		<button type="button" :class="Item.part4 > 0?'mui-btn mui-btn-danger mui-btn-outlined':'mui-btn mui-btn-primary mui-btn-outlined'" @click=GoTo("EditGreatTest4.html",Item.TestNum,'SF-36健康调查简表')>第四页</button></p>
+   	</li>  	
+   	
+     <li class="mui-table-view-cell" style="list-style-type:none;">
+   		<p><button type="button" :class="Item.part5 > 0?'mui-btn mui-btn-danger mui-btn-outlined':'mui-btn mui-btn-primary mui-btn-outlined'" @click=GoTo("EditGreatTest5.html",Item.TestNum,'SF-36健康调查简表')>第五页</button>
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   		<button type="button" :class="Item.part6 > 0?'mui-btn mui-btn-danger mui-btn-outlined':'mui-btn mui-btn-primary mui-btn-outlined'" @click=GoTo("EditGreatTest6.html",Item.TestNum,'SF-36健康调查简表')>第六页</button></p>
+   	</li>  
+ 
+      <li class="mui-table-view-cell" style="list-style-type:none;">
+   		<p><button type="button" :class="Item.part1 > 0?'mui-btn mui-btn-danger mui-btn-outlined':'mui-btn mui-btn-primary mui-btn-outlined'" @click=GoTo("EditGreatTest7.html",Item.TestNum,'SF-36健康调查简表')>第七页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+   	</li> 
+   </ul>	
+  </div>  
+<button type="button" class="hui-button hui-button-large hui-danger" style="margin-top:35px;" @click="GoCreate('GreatTest1.html','SF-36健康调查简表');">创建新问卷</button> 
+  
+ </div> 
+ 
+
+</body>
+
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js"></script>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/hui.js" type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+ 
+ 
+var domainUrl = GetMvcApiDomain();
+
+var username=null;
+
+function plusReady() { 
+HeadShow();
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+ 
+   
+            
+            
+ 
+            
+   var vum = new Vue({
+            el: '#bodyinfo',
+            data: function(){
+                return {
+                    UserName:username,
+                    ItemList: []
+                }
+
+            },
+
+            mounted: function () {
+
+                this.$nextTick(function () {
+
+
+                          that=this;
+        	              setTimeout(function () {
+                          that.UserName=username;
+                         
+                          that.GetItemList(username);
+                          }, 800);
+
+                })
+
+            },
+
+            methods: {
+                GetItemList: function (UserName) {
+                    var that = this;
+                    $.ajax({
+                      url: domainUrl + "api/TestSF36/getSF36List",
+                      type: 'get',
+                      dataType: "json",
+                      async: false,
+                      data: {UserName:username},
+                         beforeSend:function()
+                         {
+                         hui.h5Loading(false, '加载中...',{round:2, padding:'20px', textalign:'right'});
+                         },
+                         success: function (data) {
+                         var part1='0';
+                         var part2='0';
+                         var part3='0';
+                         var part4='0';
+                         var part5='0';
+                         var part6='0';
+                         var part7='0';
+
+
+                           $.each(data, function (i, j) {
+                             var testNum=j.TestNum;
+                               $.ajax({
+                               url: domainUrl + "api/TestSF36/getIsHaveGradePart",
+                               type: 'get',
+                               dataType: "json",
+                               async: false,
+                               data: {UserName:username,TestNum:testNum},
+                               success: function (obj) {
+                               part1=obj.partOneItem2;
+                               part2=obj.partTwoItem10;
+                               part3=obj.partThreeItem4;
+                               part4=obj.partFourItem3;
+                               part5=obj.partFiveItem3;
+                               part6=obj.partSixItem10;
+                               part7=obj.partSevenItem4;
+                               },
+                               error: function () {
+                               hui.toast("网络错误，请稍后再试");
+                               }
+                             })
+
+
+                             that.ItemList.push({ number: (i + 1), TestNum: j.TestNum,CreateTime: j.CreateTime,part1: part1,part2: part2,part3: part3,part4: part4,part5: part5,part6: part6,part7: part7 }); 
+
+                           });
+
+                        },
+                        error: function () {
+                         hui.h5Loading(true);
+                         plus.nativeUI.toast("网络错误，请稍后再试");
+                        },
+                        complete: function(data, textStatus)
+                        {
+                         hui.h5Loading(true);
+                        }
+
+                    });
+                },
+                GoTo: function (tourl,Num,headtxt) {
+                    var parm = {"questionBh" : Num}
+                    clickedParm(tourl,tourl,'slide-in-right',parm,headtxt);
+                },
+                GoCreate: function (tourl,headtxt) {
+                    var parm = {"UserName" : username}
+                    clickedParm(tourl,tourl,'slide-in-right',parm,headtxt);
+                }
+
+
+            }
+
+
+        })
+
+
+</script>
+
+
+
+</html>

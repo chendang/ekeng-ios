@@ -1,0 +1,69 @@
+html {
+  font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "宋体", Arial, Verdana, sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-size: 62.5%;
+}
+body {
+  font-size: 1.4rem;
+}
+html,
+body,
+div,
+p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  font-weight: normal;
+}
+
+img {
+  border: 0;
+}
+
+
+
+::-webkit-input-placeholder {
+  -webkit-text-fill-color: #bdbdbd;
+}
+::-moz-placeholder {
+  color: #dddddd;
+}
+
+.publish-article-title {
+  padding: 15px;
+  background: #fff;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+.title-tips {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+.publish-article-content {
+  padding: 15px;
+  background: #fff;
+  border: 0px solid #ccc;
+}
+.publish-article-content .article-content {
+  height: 350px;
+  border-bottom: 0px solid #ccc;
+}
+.publish-article-content .article-content2 {
+  height: 420px;
+  border-bottom: 0px solid #ccc;
+}
+.publish-article-content .footer-btn {
+  text-align: center;
+  padding-top: 5px;
+}
+.publish-article-content .footer-btn .upload-img {
+  display: inline-block;
+  vertical-align: bottom;
+  width: 25px;
+  height: 20px;
+  margin-right: 10px;
+  background: url(../img/img.png) 0 no-repeat;
+  background-size: 100%;
+}

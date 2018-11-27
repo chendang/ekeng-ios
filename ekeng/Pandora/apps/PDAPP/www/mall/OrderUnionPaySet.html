@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no, email=no" />
+		<meta charset="UTF-8">
+		<title>订单支付设置</title>
+		<link rel="stylesheet" href="../css/lib/mui2.min.css" />
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/head.css">
+		<link rel="stylesheet" href="../css/OrderSubmit.css">
+		<script src="../js/base.js"></script>
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+			.hui-picker-menu {
+				height: 49px;
+			}
+			
+			.hui-switch {
+				width: 75px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script>
+			HeadRed("订单支付设置");
+		</script>
+		<div id="app">
+			<section class="aui-address-content">
+				<div class="aui-address-box">
+					<div class="aui-address-box-list">
+						<a href="AddressList.html" class="aui-address-box-default" v-for="(itema,index) in AddressList" v-cloak>
+							<ul>
+								<li>
+									<strong>{{itema.receiver}}&nbsp;&nbsp;{{itema.phone}}</strong>
+									<!--<span class="aui-tag" id="aui-home">家里</span>-->
+									<span class="aui-tag aui-tag-default">默认</span>
+								</li>
+								<li>
+									<i class="aui-icon aui-icon-address"></i> {{itema.province}}{{itema.city}}{{itema.area}}{{itema.address}}
+								</li>
+							</ul>
+						</a>
+					</div>
+				</div>
+				<div class="aui-dri"></div>
+				<div class="aui-list-product-float-item">
+					<a href="javascript:;" class="aui-list-product-fl-item" v-for="(item,index) in ItemList">
+						<div class="aui-list-product-fl-img">
+							<img :src="item.productImage" alt="">
+						</div>
+						<div class="aui-list-product-fl-text">
+							<h3 class="aui-list-product-fl-title">{{item.productName}}</h3>
+							<div class="aui-list-product-fl-mes" style="width: 90%;">
+								<div>
+									<span class="aui-list-product-item-price">
+								<em>¥</em>
+								{{item.productPrice}}
+							</span>
+									<!--<span class="aui-list-product-item-del-price">
+								¥495.65
+							</span>-->
+								</div>
+								<div class="aui-btn-purchase">
+									<span>数量x{{item.productQuentity}}</span>
+								</div>
+							</div>
+
+						</div>
+					</a>
+				</div>
+				<div class="aui-address-well">
+					<!--<a href="#" class="aui-address-cell aui-fl-arrow">
+				<div class="aui-address-cell-bd">支持配送</div>
+				<div class="aui-address-cell-ft">
+					<p>在线支付</p>
+					<p>顺丰快递</p>
+					<p class="aui-address-text"><i class="aui-icon aui-prompt-sm"></i>11月12日[周五]09:00-15:00</p>
+				</div>
+			</a>-->
+					<!--<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>请确认订单支付信息。</div>-->
+					<div class="aui-dri"></div>
+					<!--<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+						<div class="aui-address-cell-bd">发票</div>
+						<div class="aui-address-cell-ft">个人</div>
+					</a>-->
+					<!--<div class="aui-dri"></div>
+			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">
+					运费险
+					<p style="color:#888">7天内退货，15天内可换货</p>
+				</div>
+				<div class="aui-address-cell-ft">￥0.50&nbsp;&nbsp;<input class="aui-switch" type="checkbox" checked="checked"></div>
+			</a>-->
+					<div class="aui-dri"></div>
+					<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" id="btnEcoupon">
+						<div class="aui-address-cell-bd">优惠券&nbsp;<span class="hui-badge hui-danger">{{Ecount}}张</span></div>
+						<!--<div class="aui-address-cell-ft">不可用</div>-->
+					</a>
+					<div class="aui-dri"></div>
+
+					<a href="#" class="aui-address-cell">
+						<div class="aui-address-cell-bd">储值账户&nbsp;<span class="hui-badge hui-danger">{{ShowAmountMoney}}</span></div>
+						<div class="hui-switch hui-switch-off" id="AmountUse"><span>Off</span>
+							<div class="hui-switch-in"></div>
+						</div>
+					</a>
+
+					<div class="aui-dri"></div>
+
+					<a href="#" class="aui-address-cell">
+						<div class="aui-address-cell-bd">积分&nbsp;<span class="hui-badge hui-danger">{{ShowPoint}}</span><span v-if="UserPoint>0">可抵扣{{ShowPointMoney}}元</span></div>
+						<div class="hui-switch hui-switch-off" id="PointUse"><span>Off</span>
+							<div class="hui-switch-in"></div>
+						</div>
+					</a>
+
+					<div class="aui-dri"></div>
+					<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+						<div class="aui-address-cell-bd">
+							<h3>商品金额</h3>
+							<p>运费(公司包邮)</p>
+							<p v-if="EcouponSwitch==1">优惠券</p>
+							<p v-if="PointSwitch==1">积分抵扣</p>
+							<p v-if="AmountSwitch==1">储值支付</p>
+						</div>
+						<div class="aui-address-cell-ft">
+							<span class="aui-red">￥{{totalMoney}}</span><br>
+							<span class="aui-red">+￥0.00</span><br>
+							<span class="aui-red" v-if="EcouponSwitch==1">-￥{{Evalue}}</span><br v-if="EcouponSwitch==1">
+							<span class="aui-red" v-if="PointSwitch==1">-￥{{ShowPointMoney}}</span><br v-if="PointSwitch==1">
+							<span class="aui-red" v-if="AmountSwitch==1">-￥{{UseAmountMoney}}</span>
+						</div>
+					</a>
+				</div>
+				<div class="aui-payment-bar">
+					<div class="shop-total">
+						<span class="aui-red aui-size">实付款: <em>￥{{payMoney}}</em></span>
+					</div>
+					<a class="settlement" @click="GoPay">确认支付</a>
+				</div>
+			</section>
+		</div>
+	</body>
+
+	<script src="../js/CarStorage.js"></script>
+	<script src="../js/public.js" type="text/javascript"></script>
+	<script src="../js/lib/mui.min.js" type="text/javascript"></script>
+	<script src="../js/lib/hui.js" type="text/javascript"></script>
+	<script src="../js/lib/hui-picker.js" type="text/javascript"></script>
+	<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+	<script src="../js/lib/axios.min.js"></script>
+	<script src="../js/lib/qs.js"></script>
+	<script>
+		var OrderNo = getUrlParam("OrderNo");
+		(function(w) {
+
+			if(OrderNo == undefined || OrderNo == null) {
+				hui.upToast("请提交订单再支付");
+				setTimeout(function() {
+					window.history.go(-1);
+				}, 1000);
+
+				return false;
+			}
+		})(window);
+
+
+		var domainUrl = GetMallApiDomain();
+		var ImageUrl=GetMallImage();
+		var objuser = JSON.parse(localStorage.getItem("user"));
+		var username = objuser.UserName;
+		var shopbm = objuser.shopbm;
+		var UserRole = objuser.UserRole;
+
+		vum = new Vue({
+			el: '#app',
+
+			data: {
+				UserName: username,
+				pageIndex: 1,
+				pageSize: 20,
+				filedOrder: 'id',
+				totalMoney: 0,
+				payMoney: 0,
+				GoodsArr: '',
+				AddressId: 0,
+				PointSwitch: 0,
+				EcouponSwitch: 0,
+				AmountSwitch: 0,
+				UserPoint: 0,
+				ShowPoint: 0,
+				PointMoney: 0,
+				ShowPointMoney: 0,
+				UsePointMoney: 0,
+				UseAmountMoney: 0,
+				ShowAmountMoney: 0,
+				UserAmount: 0,
+				Ecount: 0,
+				Evalue: 0,
+				EcouponId: 0,
+				ItemList: [],
+				EcouponList: [],
+				EcouponShow: [],
+				AddressList: []
+			},
+			mounted: function() {
+
+				this.$nextTick(function() {
+
+					this.GetOrderInfo();
+					this.GetAddressList(username, this.pageSize, this.pageIndex, this.filedOrder);
+					this.getUserAccount(username);
+					//this.GetEcouponInfo();
+
+				})
+
+			},
+
+			//	watch: {
+			//  PointSwitch: function (val) {
+			//  	this.$nextTick(() => {
+			//    if (val==0){
+			//    	this.PayMoney=parseFloat(this.totalMoney) - parseFloat(this.Evalue);
+			//    }
+			//    if (val==1){
+			//    	this.PayMoney=parseFloat(this.totalMoney) - parseFloat(this.Evalue)-parseFloat(this.UsePointMoney);
+			//    }
+			//    });
+			//  }
+			//},
+
+			methods: {
+
+				GetOrderInfo: function() {
+
+					var that = this;
+					axios.get(domainUrl + 'api/Order/getOrderInfo', {
+							params: {
+								orderNo: OrderNo,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							each(jsonx, function(i, j) {
+								that.ItemList.push({
+									number: (i + 1),
+									productId: j.goods_id,
+									productName: j.goods_title,
+									productPrice: j.goods_price,
+									productImage: ImageUrl+j.img_url,
+									productQuentity: j.quantity,
+								});
+
+							that.totalMoney = that.totalMoney + Number(j.goods_price) * Number(j.quantity);
+							if(that.GoodsArr == '' || that.GoodsArr.length == 0) {
+								that.GoodsArr = j.goods_id + '/' + j.quantity;
+							} else {
+								that.GoodsArr = that.GoodsArr + ';' + j.goods_id + '/' + j.quantity;
+							}
+						});
+						
+						that.totalMoney = that.totalMoney.toFixed(2);
+						that.payMoney = that.totalMoney;
+
+                        that.GetEcouponInfo();
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+
+				},
+				getUserAccount: function(UserName) {
+
+					var that = this;
+					axios.get(domainUrl + 'api/Member/getUserAccount', {
+							params: {
+								UserName: UserName,
+							}
+						})
+						.then(function(response) {
+
+							that.UserPoint = response.data.points;
+							that.ShowPoint = that.UserPoint;
+							that.UserAmount = response.data.amount;
+							that.ShowAmountMoney = response.data.amount;
+							that.PointMoney = that.UserPoint / 1000;
+							that.ShowPointMoney = that.UserPoint / 1000;
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+
+				},
+				GetEcouponInfo: function() {
+
+					var that = this;
+					axios.get(domainUrl + 'api/Ecoupon/getMyEcouponGoUse', {
+							params: {
+								UserName: username,
+								ProductIdArr: that.GoodsArr,
+								OrderMoney: that.totalMoney,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.Ecount = eval(response.data.ecount);
+							each(jsonx, function(i, j) {
+								that.EcouponList.push({
+									number: (i + 1),
+									ecouponId: j.ecouponid,
+									couponCode: j.couponCode,
+									faceValue: j.faceValue,
+									type: j.type,
+									beginTime: j.beginTime,
+									endTime: j.endTime,
+									beMaxAmount: j.beMaxAmount,
+									productUseValue: j.productUseValue,
+									ecouponUseValue: j.ecouponUseValue,
+								});
+								that.EcouponShow.push({
+									value: j.ecouponid,
+									text: j.couponName
+								})
+
+								var picker1 = new huiPicker('#btnEcoupon', function() {
+									that.EcouponSwitch = 1;
+									var selVal = picker1.getVal(0);
+									var selName = picker1.getText(0);
+									hui('#btnEcoupon').html(selName);
+									var arr1 = that.EcouponList.filter(function(item) {
+										return item.ecouponId === selVal;
+									})
+									that.EcouponId = selVal;
+									console.log(arr1[0].faceValue);
+									that.Evalue = arr1[0].faceValue;
+									if(parseFloat(that.payMoney) > parseFloat(that.Evalue)) {
+										that.payMoney = parseFloat(that.payMoney) - parseFloat(that.Evalue);
+										that.payMoney = that.payMoney.toFixed(2)
+									} else {
+										that.payMoney = 0;
+									}
+
+								});
+
+								picker1.bindData(0, that.EcouponShow);
+
+							});
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+				},
+
+				GetAddressList: function(user_name, pageSize, pageIndex, filedOrder) {
+					var that = this;
+					axios.get(domainUrl + 'api/Order/getAddressDefault', {
+							params: {
+								user_name: user_name,
+								pageSize: pageSize,
+								pageIndex: pageIndex,
+								filedOrder: filedOrder,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.AddressList = [];
+							each(jsonx, function(i, j) {
+
+								that.AddressList.push({
+									number: (i + 1),
+									addressid: j.addressid,
+									receiver: j.receiver,
+									province: j.province,
+									city: j.city,
+									area: j.area,
+									address: j.address,
+									phone: j.phone,
+									poscode: j.poscode,
+									defaultbs: j.defaultbs
+								});
+								that.AddressId = j.addressid;
+							});
+
+							if(that.AddressId == 0) {
+								hui.upToast('请设置默认的收货地址');
+								setTimeout(function() {
+
+									location.href = "AddressList.html";
+
+								}, 800);
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+				},
+
+				GoPay: function() {
+					//hui.upToast(this.GoodsArr);
+					//hui.upToast(this.AddressId);
+
+					this.OrderPay(username, OrderNo, this.payMoney);
+				},
+
+				OrderPay: function(UserName, orderNo, payMoney) {
+					var that = this;
+
+								if(payMoney == 0) {
+									that.PayPost(UserName, orderNo, payMoney);
+								} else {
+									setTimeout(function() {
+
+										var openid = localStorage.getItem("openid");
+										if(openid == '' || openid == null || openid == undefined) {
+											location.href = "WxPay_GetCode.html?OrderNo=" + orderNo;
+										} else {
+											location.href = "OrderPay.html?OrderNo=" + orderNo;
+										}
+
+									}, 800);
+								}
+	
+
+				},
+
+				PayPost: function(UserName, orderNo, payAmount) {
+					var that = this;
+
+					axios.post(domainUrl + 'api/Order/PostPaySave', Qs.stringify({
+							"user_name": UserName,
+							"orderNo": orderNo,
+							"payAmount": payAmount
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								hui.upToast('订单支付成功,请等待收货');
+								setTimeout(function() {
+
+									location.href = "OrderList.html?tab=2";
+
+								}, 800);
+
+							} else {
+								hui.upToast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+				},
+
+			}
+
+		})
+
+		hui('#PointUse').switchBox(['Off', 'On'], function(res) {
+			if(res) {
+				if(vum.UserPoint <= 0) {
+					hui('#PointUse').removeClass('hui-switch-on');
+					vum.PointSwitch = 0;
+					hui.upToast("积分余额不足，无法使用");
+					return;
+				}
+				vum.PointSwitch = 1;
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				mui.prompt('请输入使用积分：', '积分抵扣', '积分抵扣', btnArray, function(e) {
+					if(e.index == 1) {
+
+						var pointInput = e.value;
+						if(null == pointInput || "" == pointInput) {
+							hui('#PointUse').removeClass('hui-switch-on');
+							vum.PointSwitch = 0;
+							hui.upToast("积分不能为空");
+							return;
+						}
+						if(isNaN(pointInput)) {
+							hui('#PointUse').removeClass('hui-switch-on');
+							vum.PointSwitch = 0;
+							hui.upToast("积分必须是数值");
+							return;
+						}
+						if(Number(pointInput) <= 0 || Number(pointInput) > Number(vum.UserPoint)) {
+							hui('#PointUse').removeClass('hui-switch-on');
+							vum.PointSwitch = 0;
+							hui.upToast("积分必须大于零且小于余额的数值");
+							return;
+						}
+
+						vum.ShowPoint = pointInput;
+						vum.ShowPointMoney = (parseFloat(pointInput) / 1000).toFixed(2);
+						vum.UsePointMoney = (parseFloat(pointInput) / 1000).toFixed(2);
+
+						var pm = 0;
+						if(vum.EcouponSwitch == 1) {
+							if(vum.AmountSwitch == 1) {
+								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UsePointMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
+							} else {
+								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UsePointMoney)).toFixed(2);
+							}
+
+						} else {
+							if(vum.AmountSwitch == 1) {
+								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UsePointMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
+							} else {
+								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UsePointMoney)).toFixed(2);
+							}
+						}
+						if(pm < 0) {
+							pm = 0;
+						}
+						vum.payMoney = pm;
+
+					} else {
+						setTimeout(function() {
+							hui('#PointUse').removeClass('hui-switch-on');
+							vum.PointSwitch = 0;
+						}, 100);
+					}
+				})
+
+			} else {
+				vum.PointSwitch = 0;
+				vum.ShowPoint = vum.UserPoint;
+				vum.ShowPointMoney = vum.PointMoney;
+
+				var pm = 0;
+				if(vum.EcouponSwitch == 1) {
+					if(vum.AmountSwitch == 1) {
+						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UseAmountMoney)).toFixed(2);
+					} else {
+						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue)).toFixed(2);
+					}
+
+				} else {
+					if(vum.AmountSwitch == 1) {
+						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
+					} else {
+						pm = parseFloat(vum.totalMoney).toFixed(2);
+					}
+				}
+				if(pm < 0) {
+					pm = 0;
+				}
+				vum.payMoney = pm;
+
+			}
+		}, true);
+
+		hui('#AmountUse').switchBox(['Off', 'On'], function(res) {
+			if(res) {
+				if(vum.UserAmount <= 0) {
+					hui('#AmountUse').removeClass('hui-switch-on');
+					vum.AmountSwitch = 0;
+					hui.upToast("余额不足，无法使用");
+					return;
+				}
+				vum.AmountSwitch = 1;
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				mui.prompt('请输入使用金额：', '储值支付', '储值支付', btnArray, function(e) {
+					if(e.index == 1) {
+
+						var amountInput = e.value;
+						if(null == amountInput || "" == amountInput) {
+							hui('#AmountUse').removeClass('hui-switch-on');
+							vum.AmountSwitch = 0;
+							hui.upToast("金额不能为空");
+							return;
+						}
+						if(isNaN(amountInput)) {
+							hui('#AmountUse').removeClass('hui-switch-on');
+							vum.AmountSwitch = 0;
+							hui.upToast("金额必须是数值");
+							return;
+						}
+						if(Number(amountInput) <= 0 || Number(amountInput) > Number(vum.UserAmount)) {
+							hui('#AmountUse').removeClass('hui-switch-on');
+							vum.AmountSwitch = 0;
+							hui.upToast("金额必须大于零且小于余额的数值");
+							return;
+						}
+
+						if(Number(amountInput) > Number(vum.payMoney)) {
+							hui('#AmountUse').removeClass('hui-switch-on');
+							vum.AmountSwitch = 0;
+							hui.upToast("金额不能大于需支付金额");
+							return;
+						}
+						vum.UseAmountMoney = amountInput;
+						vum.ShowAmountMoney = (parseFloat(vum.UserAmount) - parseFloat(amountInput)).toFixed(2);
+						var pm = 0;
+						if(vum.EcouponSwitch == 1) {
+							if(vum.PointSwitch == 1) {
+								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UsePointMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
+							} else {
+								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UseAmountMoney)).toFixed(2);
+							}
+
+						} else {
+							if(vum.PointSwitch == 1) {
+								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UsePointMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
+							} else {
+								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
+							}
+						}
+						if(pm < 0) {
+							pm = 0;
+						}
+						vum.payMoney = pm;
+
+					} else {
+						setTimeout(function() {
+							hui('#AmountUse').removeClass('hui-switch-on');
+							vum.AmountSwitch = 0;
+						}, 100);
+					}
+				})
+
+			} else {
+				vum.AmountSwitch = 0;
+				vum.ShowAmountMoney = vum.UserAmount;
+				var pm = 0;
+				if(vum.EcouponSwitch == 1) {
+					if(vum.PointSwitch == 1) {
+						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UsePointMoney)).toFixed(2);
+					} else {
+						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue)).toFixed(2);
+					}
+
+				} else {
+					if(vum.PointSwitch == 1) {
+						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UsePointMoney)).toFixed(2);
+					} else {
+						pm = parseFloat(vum.totalMoney).toFixed(2);
+					}
+				}
+				if(pm < 0) {
+					pm = 0;
+				}
+				vum.payMoney = pm;
+
+			}
+		}, true);
+	</script>
+
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>e康云健康管理</title>
+		<meta charset="utf-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+		<script>
+		</script>
+		<link href="css/lib/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/lib/huimin.css">
+		<link rel="stylesheet" type="text/css" href="css/lib/CSSRESET.css">
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="_container clear">
+
+		</div>
+	</body>
+	<script src="js/lib/mui.min.js"></script>
+
+	<script src="js/lib/subViews.js"></script>
+	<script src="js/lib/FooterNav.js"></script>
+	<script src="js/index.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		function plusReadyDo() {
+
+			mui.plusReady(function() {
+
+
+					
+					var objuser = JSON.parse(plus.storage.getItem('user'));
+                    
+
+
+						var self = plus.webview.currentWebview();
+
+						var _footer = new plus.nativeObj.View('footer');
+
+						var _a = ['img/_icon_home.png', 'img/_icon_msg.png', 'img/_icon_restore.png', 'img/_icon_self.png'];
+						var _b = ['img/_icon_home_at.png', 'img/_icon_msg_at.png', 'img/_icon_restore_at.png', 'img/_icon_self_at.png'];
+						var _c = ['首页', '消息', '问答', '我的'];
+						_fbar.setTabInfo(_footer, _a, _b, _c);
+						self.append(_footer);
+						// 创建子webview窗口 并初始化
+						var aniShow = {};
+						util.initSubpage(aniShow);
+
+						var nview = plus.nativeObj.View.getViewById('footer'),
+							activePage = plus.webview.currentWebview(),
+							targetPage,
+							subpages = util.options.subpages,
+							pageW = window.innerWidth;
+
+						targetPage = plus.webview.getWebviewById(subpages[0]);
+						util.changeSubpage(targetPage, activePage, aniShow);
+
+						_fbar.setCB(function(tab) {
+							console.log('切换选夹>>' + tab);
+
+							// 子页面切换
+							if(tab >= 0) {
+								targetPage = plus.webview.getWebviewById(subpages[tab]);
+							}
+
+							if(targetPage == activePage) {
+								return;
+							}
+
+							if(tab == 1) {
+								targetPage.evalJS("getFamilyJionMeBox('" + objuser.UserName + "','10');");
+							}
+							if(tab == 2) {
+								targetPage.evalJS('getTopicList(20)');
+							}
+							if(tab == 3) {
+								targetPage.evalJS('isPlusReady()');
+							}
+
+							util.changeSubpage(targetPage, activePage, aniShow);
+							//更新当前活跃的页面
+							activePage = targetPage;
+							console.log('当前>>' + targetPage);
+							//                          console.log('当前>>'+urlId);
+
+						});
+
+				
+			
+		
+
+			});
+
+		}
+
+		plusReadyDo();
+	</script>
+
+</html>

@@ -1,0 +1,884 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>我的问卷</title>
+
+<link rel="stylesheet" href="../css/lib/mui.min.css" type="text/css">
+
+
+    <style type="text/css">
+    	[v-cloak]{ display: none; }
+</style>
+  
+
+</head>
+<body>
+     
+
+
+
+    <div class="mui-content">
+          <ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="background-color: #FDF6F6;">
+					问卷档案编号:<span id="qbh"></span>
+
+				</li>
+			</ul>
+
+
+			<div class="mui-card" style="margin-top:25px;">
+				<form class="mui-input-group">
+				 <ul class="mui-table-view">
+				 <li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">1.您是否天天吃早餐? </span> 
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>基本上都吃</label>
+						<input name="PartTwoItem1" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>大部分时间吃</label>
+						<input name="PartTwoItem1" type="radio" value="2">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>小部分时间吃</label>
+						<input name="PartTwoItem1" type="radio" value="3">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>基本上不吃</label>
+						<input name="PartTwoItem1" type="radio" value="4">
+					</div>
+
+                 <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">2.您早餐通常吃什么? </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+					<div class="mui-input-row mui-radio mui-left" style="height:55px;">
+						<label>粥、面、饼、馒头、包子、鸡蛋、奶类</label>
+						<input name="PartTwoItem2" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left" style="height:55px;">
+						<label>面包、饼干、方便面等预包装速食品类 </label>
+						<input name="PartTwoItem2" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left" style="height:55px;">
+						<label>油炸类</label>
+						<input name="PartTwoItem2" type="radio" value="3">
+					</div>
+
+
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">3.午餐主要方式? </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>回家吃</label>
+						<input name="PartTwoItem3" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>带饭</label>
+						<input name="PartTwoItem3" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>自助餐</label>
+						<input name="PartTwoItem3" type="radio" value="3">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>餐厅点菜</label>
+						<input name="PartTwoItem3" type="radio" value="4">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>快餐</label>
+						<input name="PartTwoItem3" type="radio" value="5">
+					</div>
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">4.晚餐主要方式 ?  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>回家吃</label>
+						<input name="PartTwoItem4" type="radio"  value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>蔬菜水果为主</label>
+						<input name="PartTwoItem4" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>自助餐</label>
+						<input name="PartTwoItem4" type="radio" value="3">
+					</div>
+                   <div class="mui-input-row mui-radio mui-left">
+						<label>饭店点菜</label>
+						<input name="PartTwoItem4" type="radio" value="4">
+					</div>
+                   <div class="mui-input-row mui-radio mui-left">
+						<label>快餐</label>
+						<input name="PartTwoItem4" type="radio" value="5">
+					</div>
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">5.是否吃宵夜?  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>不吃</label>
+						<input name="PartTwoItem5" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>偶尔</label>
+						<input name="PartTwoItem5" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>有时</label>
+						<input name="PartTwoItem5" type="radio" value="3">
+					</div>
+                   <div class="mui-input-row mui-radio mui-left">
+						<label>经常</label>
+						<input name="PartTwoItem5" type="radio" value="4">
+					</div>
+
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">6.饮食口味  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>清淡</label>
+						<input name="PartTwoItem6" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>适中</label>
+						<input name="PartTwoItem6" type="radio" value="2">
+					</div>
+                   <div class="mui-input-row mui-radio mui-left">
+						<label>偏辣</label>
+						<input name="PartTwoItem6" type="radio" value="3">
+					</div>
+                   <div class="mui-input-row mui-radio mui-left">
+						<label>偏咸</label>
+						<input name="PartTwoItem6" type="radio" value="4">
+					</div>
+                   <div class="mui-input-row mui-radio mui-left">
+						<label>偏甜</label>
+						<input name="PartTwoItem6" type="radio" value="5">
+					</div>
+                   <div class="mui-input-row mui-radio mui-left">
+						<label>偏油</label>
+						<input name="PartTwoItem6" type="radio" value="6">
+					</div>
+             <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">7.主食结构  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>精米白面为主，适量粗杂粮</label>
+						<input name="PartTwoItem7" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>精米白面、粗杂粮都差不多</label>
+						<input name="PartTwoItem7" type="radio" value="2">
+					</div>
+                      <div class="mui-input-row mui-radio mui-left">
+						<label>粗杂粮为主，少量精米白面</label>
+						<input name="PartTwoItem7" type="radio" value="3">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>大都吃精米白面，基本不吃粗杂粮</label>
+						<input name="PartTwoItem7" type="radio" value="4">
+					</div>
+
+
+              <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">8.是否素食主义  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>是，但基本上每天都会有蛋奶豆类</label>
+						<input name="PartTwoItem8" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>不是，每天都会吃些瘦肉或鱼类</label>
+						<input name="PartTwoItem8" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>不是，爱吃肉，特别是内脏、肥肉</label>
+						<input name="PartTwoItem8" type="radio" value="3">
+					</div>
+
+
+                 <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">9.新鲜蔬菜水果类饮食   </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				   		<div class="mui-input-row mui-radio mui-left">
+						<label>都爱吃</label>
+						<input name="PartTwoItem9" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>都不爱吃</label>
+						<input name="PartTwoItem9" type="radio" value="2">
+					</div>
+                      <div class="mui-input-row mui-radio mui-left">
+						<label>蔬菜常吃，不爱吃水果</label>
+						<input name="PartTwoItem9" type="radio" value="3">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>爱吃水果，蔬菜吃的少</label>
+						<input name="PartTwoItem9" type="radio" value="4">
+					</div>
+
+                  <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">10.白天工作生活中久坐为主 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>几乎全部</label>
+						<input name="PartTwoItem10" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>大于半天</label>
+						<input name="PartTwoItem10" type="radio" value="2">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>小于半天</label>
+						<input name="PartTwoItem10" type="radio" value="3">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>较少</label>
+						<input name="PartTwoItem10" type="radio" value="4">
+					</div>
+
+
+             <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">11.近距离出行方式</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>私家车或公共交通</label>
+						<input name="PartTwoItem11" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>自行车</label>
+						<input name="PartTwoItem11" type="radio" value="2">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>步行</label>
+						<input name="PartTwoItem11" type="radio" value="3">
+					</div>
+
+
+
+                  <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">12.日常家务活动  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>经常</label>
+						<input name="PartTwoItem12" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>有时</label>
+						<input name="PartTwoItem12" type="radio" value="2">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>偶尔</label>
+						<input name="PartTwoItem12" type="radio" value="3">
+					</div>
+
+
+
+
+                   <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">13.运动习惯 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>有</label>
+						<input name="PartTwoItem13" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>无</label>
+						<input name="PartTwoItem13" type="radio" value="2">
+					</div>
+
+
+               <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">14.最常用运动方式 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				<div class="mui-input-row" >
+					<textarea id="PartTwoItem14" rows="5" placeholder="请输入"></textarea>
+				</div>
+
+
+
+                   <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">15.每周大概运动几次  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				<div class="mui-numbox" data-numbox-min='0' data-numbox-max='10' style="margin-left:12px;margin-top:3px;width: 150px;height: 40px;">
+					<button class="mui-btn-numbox-minus" type="button">-</button>
+					<input id="PartTwoItem15" class="mui-input-numbox" type="number" />
+					<button class="mui-btn-numbox-plus" type="button">+</button>
+				</div>
+
+
+          <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">16.每次大概运动多少分钟  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label><30</label>
+						<input name="PartTwoItem16" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>30-40</label>
+						<input name="PartTwoItem16" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>＞40</label>
+						<input name="PartTwoItem16" type="radio" value="3">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>＞60</label>
+						<input name="PartTwoItem16" type="radio" value="4">
+					</div>
+
+
+
+				</form>
+			</div>
+
+            
+            
+
+
+            <div class="mui-content-padded">
+				<ul class="mui-pager">
+					<li class="mui-previous">
+						
+							<button type="button" id="saveOne" class="mui-btn mui-btn-danger">保存<span class="mui-badge mui-badge-danger">修改</span></button>
+						
+					</li>
+					<!--<li class="mui-next">
+
+							<button type="button" id="saveOneGo" class="mui-btn mui-btn-primary">保存 <span class="mui-badge mui-badge-primary">继续答题</span></button>
+
+					</li>-->
+				</ul>
+			</div>
+
+  </div>
+</body>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js" type="text/javascript"></script>
+
+ <script type="text/javascript">
+ 
+var domainUrl = GetMvcApiDomain();
+
+var username=null;  
+var questionBh=null;
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+questionBh=_self.questionBh;
+
+if(questionBh==null || questionBh==''){
+	plus.webview.currentWebview().close();
+}
+
+$("#qbh").append(questionBh);
+GetQuestionInfo(questionBh);
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+            
+
+    
+
+       $("#saveOne").click(function () {
+        var msg1="您的问卷膳食与运动成功保存!";
+        var url1 = "BasicInfoTestList.html";
+        questionOne(msg1, url1, username, questionBh);
+        })
+
+//       $("#saveOneGo").click(function () {
+//      var msg2="您的问卷膳食与运动成功保存，将继续答题!";
+//      var url2 = "EditBasicInfoTest4.html?questionBh=" + questionBh;
+//      questionOne(msg2, url2, username, questionBh);
+//      })
+
+
+
+
+function GetQuestionInfo(questionBh) {
+
+   	      $.ajax({
+            url: domainUrl + "api/TestBasicInfo/getInfoByNum",
+            type: 'get',
+            dataType: "json",
+            data: {TestNum:questionBh},
+            success: function (data) {
+            	
+
+            if (data.partTwoItem1 == '1') {
+                $("input:radio[name='PartTwoItem1']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem1 == '2') {
+                $("input:radio[name='PartTwoItem1']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem1 == '3') {
+                $("input:radio[name='PartTwoItem1']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem1 == '4') {
+                $("input:radio[name='PartTwoItem1']").eq(3).attr("checked", true);
+            }
+            
+            if (data.partTwoItem2 == '1') {
+                $("input:radio[name='PartTwoItem2']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem2 == '2') {
+                $("input:radio[name='PartTwoItem2']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem2 == '3') {
+                $("input:radio[name='PartTwoItem2']").eq(2).attr("checked", true);
+            }
+
+            if (data.partTwoItem3 == '1') {
+                $("input:radio[name='PartTwoItem3']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem3 == '2') {
+                $("input:radio[name='PartTwoItem3']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem3 == '3') {
+                $("input:radio[name='PartTwoItem3']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem3 == '4') {
+                $("input:radio[name='PartTwoItem3']").eq(3).attr("checked", true);
+            }
+            if (data.partTwoItem3 == '5') {
+                $("input:radio[name='PartTwoItem3']").eq(4).attr("checked", true);
+            }
+
+            if (data.partTwoItem4 == '1') {
+                $("input:radio[name='PartTwoItem4']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem4 == '2') {
+                $("input:radio[name='PartTwoItem4']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem4 == '3') {
+                $("input:radio[name='PartTwoItem4']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem4 == '4') {
+                $("input:radio[name='PartTwoItem4']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem4 == '5') {
+                $("input:radio[name='PartTwoItem4']").eq(3).attr("checked", true);
+            }
+
+
+            if (data.partTwoItem5 == '1') {
+                $("input:radio[name='PartTwoItem5']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem5 == '2') {
+                $("input:radio[name='PartTwoItem5']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem5 == '3') {
+                $("input:radio[name='PartTwoItem5']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem5 == '4') {
+                $("input:radio[name='PartTwoItem5']").eq(3).attr("checked", true);
+            }
+
+
+
+            if (data.partTwoItem6 == '1') {
+                $("input:radio[name='PartTwoItem6']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem6 == '2') {
+                $("input:radio[name='PartTwoItem6']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem6 == '3') {
+                $("input:radio[name='PartTwoItem6']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem6 == '4') {
+                $("input:radio[name='PartTwoItem6']").eq(3).attr("checked", true);
+            }
+            if (data.partTwoItem6 == '5') {
+                $("input:radio[name='PartTwoItem6']").eq(4).attr("checked", true);
+            }
+            if (data.partTwoItem6 == '6') {
+                $("input:radio[name='PartTwoItem6']").eq(5).attr("checked", true);
+            }
+            
+
+            if (data.partTwoItem7 == '1') {
+                $("input:radio[name='PartTwoItem7']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem7 == '2') {
+                $("input:radio[name='PartTwoItem7']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem7 == '3') {
+                $("input:radio[name='PartTwoItem7']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem7 == '4') {
+                $("input:radio[name='PartTwoItem7']").eq(3).attr("checked", true);
+            }
+
+
+            if (data.partTwoItem8 == '1') {
+                $("input:radio[name='PartTwoItem8']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem8 == '2') {
+                $("input:radio[name='PartTwoItem8']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem8 == '3') {
+                $("input:radio[name='PartTwoItem8']").eq(2).attr("checked", true);
+            }
+
+
+            if (data.partTwoItem9 == '1') {
+                $("input:radio[name='PartTwoItem9']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem9 == '2') {
+                $("input:radio[name='PartTwoItem9']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem9 == '3') {
+                $("input:radio[name='PartTwoItem9']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem9 == '4') {
+                $("input:radio[name='PartTwoItem9']").eq(3).attr("checked", true);
+            }
+
+
+            if (data.partTwoItem10 == '1') {
+                $("input:radio[name='PartTwoItem10']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem10 == '2') {
+                $("input:radio[name='PartTwoItem10']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem10 == '3') {
+                $("input:radio[name='PartTwoItem10']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem10 == '4') {
+                $("input:radio[name='PartTwoItem10']").eq(3).attr("checked", true);
+            }
+            
+            if (data.partTwoItem11 == '1') {
+                $("input:radio[name='PartTwoItem11']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem11 == '2') {
+                $("input:radio[name='PartTwoItem11']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem11 == '3') {
+                $("input:radio[name='PartTwoItem11']").eq(2).attr("checked", true);
+            }
+
+            if (data.partTwoItem12 == '1') {
+                $("input:radio[name='PartTwoItem12']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem12 == '2') {
+                $("input:radio[name='PartTwoItem12']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem12 == '3') {
+                $("input:radio[name='PartTwoItem12']").eq(2).attr("checked", true);
+            }
+
+            if (data.partTwoItem13 == '1') {
+                $("input:radio[name='PartTwoItem13']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem13 == '2') {
+                $("input:radio[name='PartTwoItem13']").eq(1).attr("checked", true);
+            }
+
+
+            document.getElementById("PartTwoItem14").value=data.partTwoItem14; 
+
+            document.getElementById("PartTwoItem15").value=data.partTwoItem15;
+
+ 
+            if (data.partTwoItem16 == '1') {
+                $("input:radio[name='PartTwoItem16']").eq(0).attr("checked", true);
+            }
+            if (data.partTwoItem16 == '2') {
+                $("input:radio[name='PartTwoItem16']").eq(1).attr("checked", true);
+            }
+            if (data.partTwoItem16 == '3') {
+                $("input:radio[name='PartTwoItem16']").eq(2).attr("checked", true);
+            }
+            if (data.partTwoItem16 == '4') {
+                $("input:radio[name='PartTwoItem16']").eq(3).attr("checked", true);
+            }           
+
+
+
+           
+        },
+        error: function () {
+        mui.toast("网络错误，请稍后再试");
+        }
+        })
+
+
+ }
+
+
+function questionOne(msg, tourl, uname, questionBh) {
+
+            var PartTwoItem1 = $('input:radio[name=PartTwoItem1]:checked').val();
+            if(PartTwoItem1==null){
+               mui.toast('请选择是否天天吃早餐', '健康问卷', function() {
+				});
+                return false;
+            }
+
+            var PartTwoItem2 = $('input:radio[name=PartTwoItem2]:checked').val();
+            if(PartTwoItem2==null){
+               mui.toast('请选择早餐通常吃什么', '健康问卷', function() {
+				});
+                return false;
+            }
+            
+            var PartTwoItem3 = $('input:radio[name=PartTwoItem3]:checked').val();
+            if(PartTwoItem3==null){
+               mui.toast('请选择您吃午餐的方式主要是', '健康问卷', function() {
+				});
+                return false;
+            }
+            var PartTwoItem4 = $('input:radio[name=PartTwoItem4]:checked').val();
+            if(PartTwoItem4==null){
+               mui.toast('请选择您吃晚餐的方式是', '健康问卷', function() {
+				});
+                return false;
+            }
+            var PartTwoItem5 = $('input:radio[name=PartTwoItem5]:checked').val();
+            if(PartTwoItem5==null){
+               mui.toast('请选择是否吃夜宵', '健康问卷', function() {
+				});
+                return false;
+            }
+
+           var PartTwoItem6 = $('input:radio[name=PartTwoItem6]:checked').val();
+            if(PartTwoItem6==null){
+               mui.toast('请选择饮食口味', '健康问卷', function() {
+				});
+                return false;
+            }
+
+           var PartTwoItem7 = $('input:radio[name=PartTwoItem7]:checked').val();
+            if(PartTwoItem7==null){
+               mui.toast('请选择主食结构', '健康问卷', function() {
+				});
+                return false;
+            }
+
+            var PartTwoItem8 = $('input:radio[name=PartTwoItem8]:checked').val();
+            if(PartTwoItem8==null){
+               mui.toast('请选择是否素食主义', '健康问卷', function() {
+				});
+                return false;
+            }
+
+            var PartTwoItem9 = $('input:radio[name=PartTwoItem9]:checked').val();
+            if(PartTwoItem9==null){
+               mui.toast('请选择新鲜蔬菜水果类饮食', '健康问卷', function() {
+				});
+                return false;
+            }
+
+           var PartTwoItem10 = $('input:radio[name=PartTwoItem10]:checked').val();
+            if(PartTwoItem10==null){
+               mui.toast('请选择白天工作生活中久坐为主', '健康问卷', function() {
+				});
+                return false;
+            }
+
+          var PartTwoItem11 = $('input:radio[name=PartTwoItem11]:checked').val();
+            if(PartTwoItem11==null){
+               mui.toast('请选择近距离出行方式是', '健康问卷', function() {
+				});
+                return false;
+            }
+
+            var PartTwoItem12 = $('input:radio[name=PartTwoItem12]:checked').val();
+            if (PartTwoItem12 == null) {
+                mui.toast('请选择日常家务活动', '健康问卷', function () {
+                });
+                return false;
+            }
+
+          var PartTwoItem13 = $('input:radio[name=PartTwoItem13]:checked').val();
+            if(PartTwoItem13==null){
+               mui.toast('请选择运动习惯', '健康问卷', function() {
+				});
+                return false;
+            }
+
+           var PartTwoItem14 = document.getElementById("PartTwoItem14").value;
+            if(PartTwoItem14==null || PartTwoItem14=='请输入'|| PartTwoItem14==''){
+               mui.toast('请输入最常用运动方式', '健康问卷', function() {
+				});
+                return false;
+            }
+            
+            var PartTwoItem15 = document.getElementById("PartTwoItem15").value;
+            if(PartTwoItem15==null){
+               mui.toast('请输入每周大概运动几次', '健康问卷', function() {
+				});
+                return false;
+            } 
+
+          var PartTwoItem16 = $('input:radio[name=PartTwoItem16]:checked').val();
+            if(PartTwoItem16==null){
+               mui.toast('请选择每次大概运动多少分钟', '健康问卷', function() {
+				});
+                return false;
+            }
+
+
+
+
+           var jsonData = {
+            "TestNum":questionBh,
+            "UserName":uname,
+            "partTwoItem1":PartTwoItem1,
+            "partTwoItem2":PartTwoItem2,
+            "partTwoItem3":PartTwoItem3,
+            "partTwoItem4":PartTwoItem4,
+            "partTwoItem5":PartTwoItem5,
+            "partTwoItem6":PartTwoItem6,
+            "partTwoItem7":PartTwoItem7,
+            "partTwoItem8":PartTwoItem8,
+            "partTwoItem9":PartTwoItem9,
+            "partTwoItem10":PartTwoItem10,
+            "partTwoItem11":PartTwoItem11,
+            "partTwoItem12":PartTwoItem12,
+            "partTwoItem13":PartTwoItem13,
+            "partTwoItem14":PartTwoItem14,
+            "partTwoItem15":PartTwoItem15,
+            "partTwoItem16":PartTwoItem16
+           }
+            
+            
+             $.ajax({
+             	url: domainUrl + "api/TestBasicInfo/PostPartTwoAddToJson",
+                type: 'post',
+                dataType: "json",
+                data:jsonData,
+                success: function (data) {
+                mui.toast('保存成功');
+                        
+                plus.webview.currentWebview().close();
+
+                        
+ 
+                  },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+  } 
+  
+
+
+</script>
+
+</html>

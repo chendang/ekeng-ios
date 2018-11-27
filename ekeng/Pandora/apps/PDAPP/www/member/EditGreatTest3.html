@@ -1,0 +1,296 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>健康调查</title>
+
+    <link rel="stylesheet" href="../css/lib/mui.min.css" type="text/css">
+
+
+    <style type="text/css">
+    	 [v-cloak]{ display: none; }
+        
+    </style>
+</head>
+<body>
+    
+
+
+
+    <div class="mui-content">
+          <ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="background-color: #F5E79E;">
+					在过去4个星期里，您的工作和日常活动有无因为身体健康原因而出现以下这些问题。<!--<span id="qbh"></span>-->
+
+				</li>
+			</ul>
+
+
+			<div style="margin-top:0px;">
+				<form class="mui-input-group">
+				 <ul class="mui-table-view">
+				 <li class="mui-table-view-cell" style="background-color: #FDF6F6;">
+					
+				<span style="color:#007AFF;font-weight:blod;">1,减少了工作或其它活动时间：</span> 
+				</li>
+                </ul>
+               <!-- <hr style="margin-top:1px;border:1px dotted #036"/>-->
+					<div class="mui-input-row mui-radio mui-left" style="background-color: #FDF6F6;">
+						<label>是</label>
+						<input name="partThreeItem1" type="radio" value="1" style="background-color: #FDF6F6;">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left" style="background-color: #FDF6F6;">
+						<label>不是</label>
+						<input name="partThreeItem1" type="radio" value="2">
+					</div>
+
+
+
+                 <ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="background-color: #ECFFE1;" >
+					
+						<span style="color:#007AFF;font-weight:blod;">2,本要想做的事情只能完成一部分: </span> 
+					
+				</li>
+                </ul>
+
+					<div class="mui-input-row mui-radio mui-left" style="background-color: #ECFFE1;" >
+						<label>是</label>
+						<input name="partThreeItem2" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left" style="background-color: #ECFFE1;" >
+						<label>不是</label>
+						<input name="partThreeItem2" type="radio" value="2">
+					</div>
+
+
+
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="background-color: #FDF6F6;">
+					
+						<span style="color:#007AFF;font-weight:blod;">3,想要干的工作或活动种类受到限制：</span> 
+					
+				</li>
+                </ul>
+              
+   
+					<div class="mui-input-row mui-radio mui-left" style="background-color: #FDF6F6;">
+						<label>是</label>
+						<input name="partThreeItem3" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left" style="background-color: #FDF6F6;">
+						<label>不是</label>
+						<input name="partThreeItem3" type="radio" value="2">
+					</div>
+
+
+
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="background-color: #ECFFE1;">
+					
+						<span style="color:#007AFF;font-weight:blod;">4,完成工作或其它活动困难增多(比如需要额外的努力)：  </span> 
+					
+				</li>
+                </ul>
+               
+					<div class="mui-input-row mui-radio mui-left" style="background-color: #ECFFE1;">
+						<label>是</label>
+						<input name="partThreeItem4" type="radio"  value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left" style="background-color: #ECFFE1;">
+						<label>不是</label>
+						<input name="partThreeItem4" type="radio" value="2">
+					</div>
+			
+
+				</form>
+			</div>
+
+            
+
+
+
+            <div class="mui-content-padded">
+				<ul class="mui-pager">
+					<li class="mui-previous">
+						
+							<button type="button" id="saveThree" class="mui-btn mui-btn-danger">保存<span class="mui-badge mui-badge-danger">修改</span></button>
+						
+					</li>
+
+				</ul>
+			</div>
+
+  </div>
+</body>
+
+
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/utils.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+
+ <script type="text/javascript">
+
+var domainUrl = GetMvcApiDomain();
+
+var username=null;  
+var questionBh=null;
+function plusReady() { 
+HeadShow();			
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+questionBh=_self.questionBh;
+
+if(questionBh==null || questionBh==''){
+	plus.webview.currentWebview().close();
+}
+
+GetQuestionInfo(questionBh);
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+
+document.getElementById("saveThree").addEventListener('tap',function(){	
+        var msg1="您的问卷健康状况成功保存!";
+        var url1 = "SF36List.html";
+        questionOne(msg1, url1, username, questionBh);
+}); 
+
+
+function GetQuestionInfo(questionBh) {
+   $.ajax({
+    url: domainUrl + "api/TestSF36/getInfoByNum",
+    type: 'get',
+    dataType: "json",
+    data: {TestNum:questionBh},
+      success: function (data) {
+            if (data.partThreeItem1 == '1') {
+                $("input:radio[name='partThreeItem1']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem1 == '2') {
+                $("input:radio[name='partThreeItem1']").eq(1).attr("checked", true);
+            }
+
+
+
+            if (data.partThreeItem2 == '1') {
+                $("input:radio[name='partThreeItem2']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem2 == '2') {
+                $("input:radio[name='partThreeItem2']").eq(1).attr("checked", true);
+            }
+            
+            if (data.partThreeItem3 == '1') {
+                $("input:radio[name='partThreeItem3']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem3 == '2') {
+                $("input:radio[name='partThreeItem3']").eq(1).attr("checked", true);
+            }
+
+
+            if (data.partThreeItem4 == '1') {
+                $("input:radio[name='partThreeItem4']").eq(0).attr("checked", true);
+            }
+            if (data.partThreeItem4 == '2') {
+                $("input:radio[name='partThreeItem4']").eq(1).attr("checked", true);
+            }
+
+
+
+       },
+       error: function () {
+       mui.toast("网络错误，请稍后再试");
+       }
+    })
+
+
+ }
+
+
+
+function questionOne(msg, url, uname, questionBh) {
+
+            var partThreeItem1 = $('input:radio[name=partThreeItem1]:checked').val();
+            if(partThreeItem1==null){
+               mui.toast('请选择：减少了工作或其它活动时间', '健康调查', function() {
+				});
+                return false;
+            }
+
+            var partThreeItem2 = $('input:radio[name=partThreeItem2]:checked').val();
+            if(partThreeItem2==null){
+               mui.toast('请选择：本要想做的事情只能完成一部分', '健康调查', function() {
+				});
+                return false;
+            }
+            var partThreeItem3 = $('input:radio[name=partThreeItem3]:checked').val();
+            if(partThreeItem3==null){
+               mui.toast('请选择：想要干的工作或活动种类受到限制', '健康调查', function() {
+				});
+                return false;
+            }
+            var partThreeItem4 = $('input:radio[name=partThreeItem4]:checked').val();
+            if(partThreeItem4==null){
+               mui.toast('请选择：完成工作或其它活动困难增多', '健康调查', function() {
+				});
+                return false;
+            }
+           
+           
+            var jsonData = {
+            "TestNum":questionBh,
+            "UserName":uname,
+            "partThreeItem1":partThreeItem1,
+            "partThreeItem2":partThreeItem2,
+            "partThreeItem3":partThreeItem3,
+            "partThreeItem4":partThreeItem4
+
+           }
+            
+
+
+             $.ajax({
+             	url: domainUrl + "api/TestSF36/PostPartThreeAddToJson",
+                type: 'post',
+                dataType: "json",
+                data:jsonData,
+                success: function (data) {
+                mui.toast('保存成功，请继续答题');
+                        
+                plus.webview.currentWebview().close(); 
+                        
+ 
+                  },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+
+ 
+  
+  }  
+
+
+  
+</script>
+
+
+</html>

@@ -1,0 +1,590 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>我的问卷</title>
+
+<link rel="stylesheet" href="../css/lib/mui.min.css" type="text/css">
+
+
+<style type="text/css">
+	
+	     [v-cloak]{ display: none; }
+       
+    </style>
+   
+</head>
+<body>
+    
+
+
+    <div class="mui-content">
+          <ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="background-color: #FDF6F6;">
+					问卷档案编号:<span id="qbh"></span>
+
+				</li>
+			</ul>
+
+
+			<div class="mui-card" style="margin-top:25px;">
+				<form class="mui-input-group">
+				 <ul class="mui-table-view">
+				 <li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">1.总体来讲，您的健康状况是：</span> 
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>非常好</label>
+						<input name="PartOneItem1" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>好</label>
+						<input name="PartOneItem1" type="radio" value="2">
+					</div>
+                     <div class="mui-input-row mui-radio mui-left">
+						<label>一般</label>
+						<input name="PartOneItem1" type="radio" value="3">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>差</label>
+						<input name="PartOneItem1" type="radio" value="4">
+					</div>
+
+                 <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">2.目前明显不适症状体征: </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+
+				<div class="mui-input-row" >
+					<textarea id="PartOneItem2" rows="5" placeholder="请输入"></textarea>
+				</div>
+
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">3.既往病史?</span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+
+				<div class="mui-input-row" >
+					<textarea id="PartOneItem3" rows="5" placeholder="请输入"></textarea>
+				</div>
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+						<span style="color:#007AFF;font-weight:blod;">4.家族病史?  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				<div class="mui-input-row" >
+					<textarea id="PartOneItem4" rows="5" placeholder="请输入"></textarea>
+				</div>
+
+
+
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">5.近期感觉疲劳程度?  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>无</label>
+						<input name="PartOneItem5" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>稍微</label>
+						<input name="PartOneItem5" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>明显</label>
+						<input name="PartOneItem5" type="radio" value="3">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>严重</label>
+						<input name="PartOneItem5" type="radio" value="4">
+					</div>
+                <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">6.近期消化不良等胃肠道不适?  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>无</label>
+						<input name="PartOneItem6" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>稍微</label>
+						<input name="PartOneItem6" type="radio" value="2">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>明显</label>
+						<input name="PartOneItem6" type="radio" value="3">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重</label>
+						<input name="PartOneItem6" type="radio" value="4">
+					</div>
+
+             <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">7.人际关系  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>和谐</label>
+						<input name="PartOneItem7" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>一般</label>
+						<input name="PartOneItem7" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>紧张</label>
+						<input name="PartOneItem7" type="radio" value="3">
+					</div>
+
+              <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">8.压力状态  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>较大</label>
+						<input name="PartOneItem8" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>适度 </label>
+						<input name="PartOneItem8" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>一般</label>
+						<input name="PartOneItem8" type="radio" value="3">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>不足</label>
+						<input name="PartOneItem8" type="radio" value="4">
+					</div>				
+                 <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">9.家居环境:  </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+					<div class="mui-input-row mui-radio mui-left">
+						<label>好</label>
+						<input name="PartOneItem9" type="radio" value="1">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>一般 </label>
+						<input name="PartOneItem9" type="radio" value="2">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>不好</label>
+						<input name="PartOneItem9" type="radio" value="3">
+					</div>
+                    <div class="mui-input-row mui-radio mui-left">
+						<label>很差</label>
+						<input name="PartOneItem9" type="radio" value="4">
+					</div>
+
+
+
+               <ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					
+				<span style="color:#007AFF;font-weight:blod;">10.饮用水 </span> 
+					
+				</li>
+                </ul>
+                <hr style="margin-top:1px;border:1px dotted #036"/>
+   
+				   <div class="mui-input-row mui-checkbox mui-left">
+						<label>自来水煮沸</label>
+						<input name="PartOneItem10" value="1" type="checkbox" />
+					</div>
+                    <div class="mui-input-row mui-checkbox mui-left">
+						<label>过滤水</label>
+						<input name="PartOneItem10" value="2" type="checkbox" >
+					</div>
+                  <div class="mui-input-row mui-checkbox mui-left">
+						<label>矿泉水</label>
+						<input name="PartOneItem10" value="3" type="checkbox" >
+					</div>
+                    <div class="mui-input-row mui-checkbox mui-left">
+						<label>纯净</label>
+						<input name="PartOneItem10" value="4" type="checkbox" >
+					</div>
+                   <div class="mui-input-row mui-checkbox mui-left">
+						<label>蒸馏水</label>
+						<input name="PartOneItem10" value="5" type="checkbox" >
+					</div>
+                     <div class="mui-input-row mui-checkbox mui-left">
+						<label>大多喝饮料</label>
+						<input name="PartOneItem10" value="6" type="checkbox" >
+					</div>
+
+
+				</form>
+			</div>
+
+            
+
+
+
+            <div class="mui-content-padded">
+				<ul class="mui-pager">
+					<li class="mui-previous">
+						
+							<button type="button" id="saveTwo" class="mui-btn mui-btn-danger">保存<span class="mui-badge mui-badge-danger">修改</span></button>
+						
+					</li>
+					<!--<li class="mui-next">
+
+							<button type="button" id="saveTwoGo" class="mui-btn mui-btn-primary">保存 <span class="mui-badge mui-badge-primary">继续答题</span></button>
+
+					</li>-->
+				</ul>
+			</div>
+
+  </div>
+
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	
+var domainUrl = GetMvcApiDomain();
+
+var username=null;  
+var questionBh=null;
+function plusReady() { 
+HeadShow();	
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+questionBh=_self.questionBh;
+
+if(questionBh==null || questionBh==''){
+	plus.webview.currentWebview().close();
+}
+
+$("#qbh").append(questionBh);
+GetQuestionInfo(questionBh);
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+
+            
+
+          
+
+       $("#saveTwo").click(function () {
+        var msg1="您的问卷健康状况成功保存!";
+        var url1 = "BasicInfoTestList.html";
+        questionOne(msg1, url1, username, questionBh);
+        })
+
+//       $("#saveTwoGo").click(function () {
+//      var msg2="您的问卷健康状况成功保存，将继续答题!";
+//      var url2 = "EditBasicInfoTest3.html?questionBh=" + questionBh;
+//      questionOne(msg2, url2, username, questionBh);
+//      })
+
+
+
+
+function GetQuestionInfo(questionBh) {
+
+   	      $.ajax({
+            url: domainUrl + "api/TestBasicInfo/getInfoByNum",
+            type: 'get',
+            dataType: "json",
+            data: {TestNum:questionBh},
+            success: function (data) {
+            	
+
+            if (data.partOneItem1 == '1') {
+                $("input:radio[name='PartOneItem1']").eq(0).attr("checked", true);
+            }
+            if (data.partOneItem1 == '2') {
+                $("input:radio[name='PartOneItem1']").eq(1).attr("checked", true);
+            }
+            if (data.partOneItem1 == '3') {
+                $("input:radio[name='PartOneItem1']").eq(2).attr("checked", true);
+            }
+            if (data.partOneItem1 == '4') {
+                $("input:radio[name='PartOneItem1']").eq(3).attr("checked", true);
+            }
+            
+            document.getElementById("PartOneItem2").value=data.partOneItem2; 
+
+            document.getElementById("PartOneItem3").value=data.partOneItem3;
+
+            document.getElementById("PartOneItem4").value=data.partOneItem4;
+ 
+            if (data.partOneItem5 == '1') {
+                $("input:radio[name='PartOneItem5']").eq(0).attr("checked", true);
+            }
+            if (data.partOneItem5 == '2') {
+                $("input:radio[name='PartOneItem5']").eq(1).attr("checked", true);
+            }
+            if (data.partOneItem5 == '3') {
+                $("input:radio[name='PartOneItem5']").eq(2).attr("checked", true);
+            }
+            if (data.partOneItem5 == '4') {
+                $("input:radio[name='PartOneItem5']").eq(3).attr("checked", true);
+            }
+
+
+            if (data.partOneItem6 == '1') {
+                $("input:radio[name='PartOneItem6']").eq(0).attr("checked", true);
+            }
+            if (data.partOneItem6 == '2') {
+                $("input:radio[name='PartOneItem6']").eq(1).attr("checked", true);
+            }
+            if (data.partOneItem6 == '3') {
+                $("input:radio[name='PartOneItem6']").eq(2).attr("checked", true);
+            }
+            if (data.partOneItem6 == '4') {
+                $("input:radio[name='PartOneItem6']").eq(3).attr("checked", true);
+            }
+            
+            if (data.partOneItem7 == '1') {
+                $("input:radio[name='PartOneItem7']").eq(0).attr("checked", true);
+            }
+            if (data.partOneItem7 == '2') {
+                $("input:radio[name='PartOneItem7']").eq(1).attr("checked", true);
+            }
+            if (data.partOneItem7 == '3') {
+                $("input:radio[name='PartOneItem7']").eq(2).attr("checked", true);
+            }
+
+
+            if (data.partOneItem8 == '1') {
+                $("input:radio[name='PartOneItem8']").eq(0).attr("checked", true);
+            }
+            if (data.partOneItem8 == '2') {
+                $("input:radio[name='PartOneItem8']").eq(1).attr("checked", true);
+            }
+            if (data.partOneItem8 == '3') {
+                $("input:radio[name='PartOneItem8']").eq(2).attr("checked", true);
+            }
+            if (data.partOneItem8 == '4') {
+                $("input:radio[name='PartOneItem8']").eq(3).attr("checked", true);
+            }
+
+
+            if (data.partOneItem9 == '1') {
+                $("input:radio[name='PartOneItem9']").eq(0).attr("checked", true);
+            }
+            if (data.partOneItem9 == '2') {
+                $("input:radio[name='PartOneItem9']").eq(1).attr("checked", true);
+            }
+            if (data.partOneItem9 == '3') {
+                $("input:radio[name='PartOneItem9']").eq(2).attr("checked", true);
+            }
+            if (data.partOneItem9 == '4') {
+                $("input:radio[name='PartOneItem9']").eq(3).attr("checked", true);
+            }
+
+            if (data.partOneItem10.indexOf('1,') > -1) {
+                $("input:checkbox[name='PartOneItem10']").eq(0).attr("checked", true);
+            }
+            if (data.partOneItem10.indexOf('2,') > -1) {
+                $("input:checkbox[name='PartOneItem10']").eq(1).attr("checked", true);
+            }
+            if (data.partOneItem10.indexOf('3,') > -1) {
+                $("input:checkbox[name='PartOneItem10']").eq(2).attr("checked", true);
+            }
+            if (data.partOneItem10.indexOf('4,') > -1) {
+                $("input:checkbox[name='PartOneItem10']").eq(3).attr("checked", true);
+            }
+            if (data.partOneItem10.indexOf('5,') > -1) {
+                $("input:checkbox[name='PartOneItem10']").eq(4).attr("checked", true);
+            }
+            if (data.partOneItem10.indexOf('6,') > -1) {
+                $("input:checkbox[name='PartOneItem10']").eq(5).attr("checked", true);
+            }
+
+
+           
+        },
+        error: function () {
+        mui.toast("网络错误，请稍后再试");
+        }
+        })
+
+
+ }
+
+
+
+function questionOne(msg, tourl, uname, questionBh) {
+
+            var PartOneItem1 = $('input:radio[name=PartOneItem1]:checked').val();
+            if(PartOneItem1==null){
+               mui.toast('请选择健康状况', '健康问卷', function() {
+				});
+                return false;
+            }
+
+            var PartOneItem2 = document.getElementById("PartOneItem2").value;
+            if(PartOneItem2==null || PartOneItem2=='请输入'|| PartOneItem2==''){
+               mui.toast('请输入不适体征', '健康问卷', function() {
+				});
+                return false;
+            }
+            
+            var PartOneItem3 = document.getElementById("PartOneItem3").value;
+            if(PartOneItem3==null || PartOneItem3=='请输入'|| PartOneItem3==''){
+               mui.toast('请输入既往病史', '健康问卷', function() {
+				});
+                return false;
+            }
+            
+            var PartOneItem4 = document.getElementById("PartOneItem4").value;
+            if(PartOneItem4==null || PartOneItem4=='请输入'|| PartOneItem4==''){
+               mui.toast('请输入家族病史', '健康问卷', function() {
+				});
+                return false;
+            }
+            
+            var PartOneItem5 = $('input:radio[name=PartOneItem5]:checked').val();
+            if(PartOneItem5==null){
+               mui.toast('请选择感觉疲劳程度', '健康问卷', function() {
+				});
+                return false;
+            }
+            var PartOneItem6 = $('input:radio[name=PartOneItem6]:checked').val();
+            if(PartOneItem6==null){
+               mui.toast('请选择是否肠道不适', '健康问卷', function() {
+				});
+                return false;
+            }
+            var PartOneItem7 = $('input:radio[name=PartOneItem7]:checked').val();
+            if(PartOneItem7==null){
+               mui.toast('请选择人际关系', '健康问卷', function() {
+				});
+                return false;
+            }
+
+            var PartOneItem8 = $('input:radio[name=PartOneItem8]:checked').val();
+            if(PartOneItem8==null){
+               mui.toast('请选择压力状态', '健康问卷', function() {
+				});
+                return false;
+            }
+
+            var PartOneItem9 = $('input:radio[name=PartOneItem9]:checked').val();
+            if(PartOneItem9==null){
+               mui.toast('请选择家居环境', '健康问卷', function() {
+				});
+                return false;
+            }
+
+
+            var PartOneItem10='';
+            //var yys=[];
+            $('input:checkbox[name=PartOneItem10]:checked').each(function(){
+            //yys.push($(this).val());
+            PartOneItem10+=$(this).val()+','
+            });
+            if(PartOneItem10==''){
+               mui.toast('请选择饮用水', '健康问卷', function() {
+				});
+                return false;
+            }
+            
+            
+
+           var jsonData = {
+            "TestNum":questionBh,
+            "UserName":uname,
+            "partOneItem1":PartOneItem1,
+            "partOneItem2":PartOneItem2,
+            "partOneItem3":PartOneItem3,
+            "partOneItem4":PartOneItem4,
+            "partOneItem5":PartOneItem5,
+            "partOneItem6":PartOneItem6,
+            "partOneItem7":PartOneItem7,
+            "partOneItem8":PartOneItem8,
+            "partOneItem9":PartOneItem9,
+            "partOneItem10":PartOneItem10
+           }
+            
+            
+             $.ajax({
+             	url: domainUrl + "api/TestBasicInfo/PostPartOneAddToJson",
+                type: 'post',
+                dataType: "json",
+                data:jsonData,
+                success: function (data) {
+                mui.toast('保存成功');                       
+                plus.webview.currentWebview().close();
+
+                },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+  }  
+  
+
+
+
+  
+</script>
+
+
+
+
+</body>
+</html>

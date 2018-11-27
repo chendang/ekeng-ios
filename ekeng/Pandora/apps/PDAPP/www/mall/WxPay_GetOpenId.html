@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no, email=no" />
+		<meta charset="UTF-8">
+		<title>正在获取微信接口资料</title>
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/head.css">
+		<link rel="stylesheet" href="../css/OrderSubmit.css">
+		<script src="../js/base.js"></script>
+
+	</head>
+
+	<body>
+
+		<script>
+			HeadRed("微信支付");
+		</script>
+		<div id="app">
+
+		</div>
+	</body>
+
+	<script src="../js/public.js" type="text/javascript"></script>
+	<script src="../js/lib/hui.js" type="text/javascript"></script>
+
+	<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+	<script src="../js/lib/axios.min.js"></script>
+	<script src="../js/lib/qs.js"></script>
+
+	<script>
+		var OrderNo = getUrlParam("OrderNo");
+		var code = getUrlParam("code");
+		(function(w) {
+
+			if(OrderNo == undefined || OrderNo == null || OrderNo == '' || code == undefined || code == null || code == '') {
+				hui.upToast("微信支付参数获取失败");
+				setTimeout(function() {
+					location.href = "MallIndex.html";
+				}, 1000);
+
+				return false;
+			}
+		})(window);
+
+        var domainWxUrl = GetWxApiDomain();
+		var domainUrl = GetMallApiDomain();
+		var objuser = JSON.parse(localStorage.getItem("user"));
+		var username = objuser.UserName;
+
+
+		vum = new Vue({
+			el: '#app',
+
+			data: {
+				UserName: username,
+				OrderNo: OrderNo,
+				openid:'',
+			},
+			mounted: function() {
+
+				this.$nextTick(function() {
+                    this.getWXOpenId(username,code);
+					
+
+				})
+
+			},
+			methods: {
+				
+				
+				getWXOpenId: function (UserName,code) {
+            	
+            	var that = this;
+            	
+                axios.get(domainWxUrl +'api/WxPay/getMemberWxOpendId', {
+                params: {
+                UserName: UserName,
+                WxCode: code
+                 }
+                })
+                .then(function (response) {
+                	if (response.data.code='200'){
+					localStorage.setItem('openid',response.data.openid);
+					//alert(response.data.openid);
+                     location.href = "OrderPay.html?OrderNo=" + OrderNo;
+                	
+                	}
+                	else{
+                	hui.toast(response.data.msg);
+				setTimeout(function() {
+					location.href = "MallIndex.html";
+				}, 1000);					
+                	}
+                	
+
+                	
+                 })
+                .catch(function (response) {
+                  console.log(response);
+                 });
+            	
+
+            },
+				
+
+
+			}
+
+		})
+	</script>
+
+</html>

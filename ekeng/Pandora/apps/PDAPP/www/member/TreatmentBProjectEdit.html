@@ -1,0 +1,445 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>复健项目登记</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/lib/weui.css" />
+		<link rel="stylesheet" href="../css/lib/weui2.css" />
+
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+
+	</head>
+
+
+
+	<body ontouchstart style="background-color: #f8f8f8;">
+		<div id="bodyinfo">
+			<div class="weui_cells_title"><h4>客户{{UserName}}复健登记</h4></div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入姓名" v-model="ReallyName" readonly/>
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">性别</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="Sex" disabled="disabled">
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">年龄</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="number" pattern="[0-9]*" v-model="Age" readonly="readonly"/>
+					</div>
+				</div>
+
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">联系方式</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="number" pattern="[0-9]*" placeholder="未填写" v-model="Mobile" readonly="readonly"/>
+					</div>
+				</div>
+
+                <div class="weui_cell">
+					<div class="weui_cell_hd"><label for="" class="weui_label">初诊日期</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="date" value="" v-model="FirstVisitDate" readonly="readonly"/>
+					</div>
+				</div>
+				
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">编号</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="" v-model="UserName" readonly/>
+					</div>
+				</div>
+
+			</div>
+			<div class="weui_cells_title">主要症状</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea1" class="weui_textarea" placeholder="主要症状" rows="4" v-model="Symptoms" readonly="readonly"></textarea>
+						<div class="weui_textarea_counter"><span id='count1'>0</span>/<span id='count_max1'>200</span></div>
+					</div>
+				</div>
+			</div>
+
+           <div class="weui_cells_title">初次诊断</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea2" class="weui_textarea" placeholder="初次诊断" rows="4" v-model="FirstVisitResult" readonly="readonly"></textarea>
+						<div class="weui_textarea_counter"><span id='count2'>0</span>/<span id='count_max2'>200</span></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="weui_cells_title">治疗方案</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea3" class="weui_textarea" placeholder="治疗方案" rows="4" v-model="Rx" readonly="readonly"></textarea>
+						<div class="weui_textarea_counter"><span id='count3'>0</span>/<span id='count_max3'>200</span></div>
+					</div>
+				</div>
+			</div>
+
+
+             <div class="weui_cells_title">登记项</div>
+
+            
+            <div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">值班护士</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="Nurser" />
+					</div>
+				</div>
+           		<div class="weui_cell">
+					<div class="weui_cell_hd"><label for="" class="weui_label">日期</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="date" value="" v-model="TreatDate" />
+					</div>
+				</div>
+				
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">项目</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="ProjectType">
+							<option value="1">面部</option>
+							<option value="2">矢状缝</option>
+							<option value="3">项平面</option>
+							<option value="4">颈椎</option>
+							<option value="5">胸锁乳突肌</option>
+							<option value="6">肩关节</option>
+							<option value="7">手臂</option>
+							<option value="8">肘关节</option>
+							<option value="9">腕/指关节</option>
+							<option value="10">胸部</option>
+							<option value="11">ev</option>
+							<option value="12">髂翼双飞</option>
+							<option value="13">腹部</option>
+							<option value="14">内收肌上</option>
+							<option value="15">内收肌下</option>
+							<option value="16">髂棘束</option>
+							<option value="17">大腿五线</option>
+							<option value="18">膝关节</option>
+							<option value="19">小腿三线</option>
+							<option value="20">足部（踝关节）</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">转归</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="TreatEffect" />
+					</div>
+				</div>
+
+			</div>
+			
+
+			
+
+			
+			<div style="padding:10px 20px;">
+				<button type="button" class="hui-button hui-button-large hui-danger" style="margin-top:15px;" id="PostSend" @click="PostSend">登记提交</button>
+			</div>
+		</div>
+		<script src="../js/base.js"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+
+		<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+		<script>
+			$(function() {
+				var max1 = $('#count_max1').text();
+				$('#textarea1').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count1').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+
+				var max2 = $('#count_max2').text();
+				$('#textarea2').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count2').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				var max3 = $('#count_max3').text();
+				$('#textarea3').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count3').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				
+
+
+			})
+		</script>
+
+		<script>
+			var projectId = getUrlParam("projectId");
+			(function(w) {
+				if(projectId == undefined || projectId == null || projectId == '') {
+					hui.upToast("参数错误，请返回重新选择");
+					setTimeout(function() {
+						window.history.go(-1);
+					}, 1000);
+
+					return false;
+				}
+			})(window);
+
+			var domainUrl = GetMvcApiDomain();
+			var objuser = JSON.parse(localStorage.getItem("user"));
+			var RoleUser = objuser.UserName;
+
+
+
+function plusReady(){
+HeadShow();	
+back();
+var _self = plus.webview.currentWebview();
+var projectId=_self.projectId;
+if(projectId==null || projectId=='' || projectId==undefined){
+	plus.nativeUI.toast("参数错误，请返回重新选择");
+		setTimeout(function() {
+			plus.webview.currentWebview().close();
+		}, 1000);
+	
+}
+else{
+
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+
+    vum.RoleUser=objuser.RoleUser;
+    vum.Nurser=objuser.RoleUser;
+    vum.projectId=projectId;
+
+
+vum.getProjectInfo(projectId);
+
+}
+
+
+
+
+
+}
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}
+
+			var vum=new Vue({
+				el: '#bodyinfo',
+				data: function() {
+					return {
+						UserName: "",
+						RoleUser:"",
+						projectId:0,
+						ReallyName: "",
+						Sex: "1",
+						Age: "",
+						Mobile: "",
+						
+                        FirstVisitDate: "",
+                        Symptoms:"",
+                        FirstVisitResult:"",
+                        Rx:"",
+                        
+						Nurser: "",
+						TreatDate: "",
+						TreatEffect: "",
+						
+						ProjectType: "1"
+					}
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+						
+
+					})
+
+				},
+
+				methods: {
+
+					getProjectInfo: function(ProjectId) {
+
+						var that = this;
+
+						axios.get(domainUrl + 'api/WorkFlow/getProjectBRecordById', {
+								params: {
+									ProjectId: ProjectId
+								}
+							})
+							.then(function(response) {
+								if(response.data.code == '200') {
+									that.UserName=response.data.UserName;
+									that.ReallyName = response.data.ReallyName;
+									that.Sex = response.data.Sex;
+									that.Age = jsGetAge(response.data.Birthday);
+									
+									that.Mobile = response.data.Mobile;
+                                    that.FirstVisitDate = response.data.FirstVisitDate;
+                                    that.Symptoms = response.data.Symptoms;
+                                    that.FirstVisitResult = response.data.FirstVisitResult;
+                                    that.Rx = response.data.Rx;
+                                    
+                                    that.TreatDate = response.data.TreatDate;
+                                    that.TreatEffect = response.data.TreatEffect;
+                                    that.Nurser = response.data.Nurser;
+                                    that.ProjectType = response.data.ProjectType;
+                                    
+                                    
+                                    
+								} else {
+									hui.toast("获取客户资料失败");
+									return false;
+								}
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+
+					PostSend: function() {
+
+						if(this.Nurser == "" || this.Nurser == null) {
+							hui.upToast('请输入值班护士!');
+							return false;
+						}
+						
+						if(this.TreatDate == "" || this.TreatDate == null) {
+							hui.upToast('请输入治疗日期!');
+							return false;
+						}
+						
+						if(this.ProjectType == "" || this.ProjectType == null) {
+							hui.upToast('请选择项目!');
+							return false;
+						}
+
+
+
+						this.SendSave(this.projectId, this.TreatDate, this.TreatEffect, this.Nurser,this.ProjectType,this.RoleUser)
+					},
+					SendSave: function(ProjectId, TreatDate,TreatEffect, Nurser, ProjectType, CreateUser) {
+						var that = this;
+						that.addInterceptors();
+
+						axios.post(domainUrl + 'api/WorkFlow/ProjectBRecordEdit', Qs.stringify({
+								ProjectId: ProjectId,
+								TreatDate: TreatDate,
+								ProjectType:ProjectType,
+								TreatEffect: TreatEffect,
+								Nurser: Nurser,
+								CreateUser: CreateUser
+							}))
+
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.toast("更新资料成功!");
+									setTimeout(function() {
+										plus.webview.currentWebview().close();
+									}, 800);
+
+								} else {
+									hui.toast("更新资料失败!");
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					addInterceptors: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							if(hui('#PostSend').buttonIsLoading()) {
+								return false;
+							}
+							hui('#PostSend').loadingButton('正在更新资料中...');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							hui.toast("请求失败");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							hui.toast("更新资料失败");
+							return Promise.reject(error)
+						})
+					}
+
+				}
+			})
+		</script>
+
+	</body>
+
+</html>

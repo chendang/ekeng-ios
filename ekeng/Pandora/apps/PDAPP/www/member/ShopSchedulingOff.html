@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		<title>工作排班表管理</title>
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/lib/weui0.css" />
+		<link rel="stylesheet" href="../css/lib/weui2.css" />
+
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+			* {
+				box-sizing: border-box;
+			}
+			
+			ul {
+				list-style-type: none;
+			}
+			
+			#calendar {
+				width: 100%;
+				margin: 0 auto;
+				box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+			}
+			
+			.month {
+				width: 100%;
+				background: #E92F2F;
+			}
+			
+			.month ul {
+				margin: 0;
+				padding: 0;
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.year-month {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: space-around;
+			}
+			
+			.year-month:hover {
+				background: rgba(150, 2, 12, 0.1);
+			}
+			
+			.choose-year {
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+			
+			.choose-month {
+				text-align: center;
+				font-size: 1.5rem;
+			}
+			
+			.arrow {
+				padding: 30px;
+			}
+			
+			.arrow:hover {
+				background: rgba(100, 2, 12, 0.1);
+			}
+			
+			.month ul li {
+				color: white;
+				font-size: 20px;
+				text-transform: uppercase;
+				letter-spacing: 3px;
+			}
+			
+			.weekdays {
+				margin: 0;
+				padding: 10px 0;
+				background-color: #E92F2F;
+				display: flex;
+				flex-wrap: wrap;
+				color: #FFFFFF;
+				justify-content: space-around;
+			}
+			
+			.weekdays li {
+				display: inline-block;
+				width: 13.6%;
+				text-align: center;
+			}
+			
+			.days {
+				padding: 0;
+				background: #FFFFFF;
+				margin: 0;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+			}
+			
+			.days li {
+				list-style-type: none;
+				display: inline-block;
+				width: 13.4%;
+				text-align: center;
+				padding-bottom: 15px;
+				padding-top: 15px;
+				font-size: 1rem;
+				color: #000;
+			}
+			
+			.days li .active {
+				padding: 6px 10px;
+				border-radius: 50%;
+				background: #00B8EC;
+				color: #fff;
+			}
+			
+			.days li .other-month {
+				padding: 5px;
+				color: gainsboro;
+			}
+			
+			.days li:hover {
+				background: #e1e1e1;
+			}
+			
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+				font: 12px/1 'Roboto', sans-serif;
+				color: #555;
+				background-color: #fff;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			
+			#bg{ display: none;  position: absolute;  top: 0%;  left: 0%;  width: 100%;  height: 100%;  background-color: black;  z-index:1001;  -moz-opacity: 0.7;  opacity:.70;  filter: alpha(opacity=70);}  
+#show{display: none;  position: absolute;  top: 25%;  left: 12%;  width: 75%;  height: 49%;  padding: 8px;  border: 8px solid #E8E9F7;  background-color: white;  z-index:1002;  overflow: auto;}
+			
+		</style>
+
+	</head>
+
+	<body>
+
+
+		<div id="calendar" style="margin-top: 0px;">
+			<!-- 年份 月份 -->
+			<div class="month" v-cloak>
+				<ul>
+					<!--点击会触发pickpre函数，重新刷新当前日期 @click(vue v-on:click缩写) -->
+					<li class="arrow" @click="pickPre(currentYear,currentMonth)">❮</li>
+					<li class="year-month" @click="pickYear(currentYear,currentMonth)">
+						<span class="choose-year">{{ currentYear }}</span>
+						<span class="choose-month">{{ currentMonth }}月</span>
+					</li>
+					<li class="arrow" @click="pickNext(currentYear,currentMonth)">❯</li>
+				</ul>
+			</div>
+			<!-- 星期 -->
+			<ul class="weekdays">
+				<li>一</li>
+				<li>二</li>
+				<li>三</li>
+				<li>四</li>
+				<li>五</li>
+				<li style="color:yellow">六</li>
+				<li style="color:yellow">日</li>
+			</ul>
+			<!-- 日期 -->
+			<ul class="days" v-cloak>
+				<!-- v-for循环 每一次循环用<li>标签创建一天 -->
+				<li v-for="dayobject in days" style="height: 90px;" @click="((dayobject.day.getFullYear() == new Date().getFullYear() && dayobject.day.getMonth() == new Date().getMonth() && dayobject.day.getDate() == new Date().getDate()) || (new Date(dayobject.day) >= new Date())) && order(dayobject)">
+					<!--本月-->
+					<!--如果不是本月  改变类名加灰色-->
+
+					<span v-if="dayobject.day.getMonth()+1 != currentMonth" class="other-month">{{ dayobject.day.getDate() }}</span>
+
+					<!--如果是本月  还需要判断是不是这一天-->
+					<span v-else>
+          <!--今天  同年同月同日-->
+                    <span v-if="dayobject.day.getFullYear() == new Date().getFullYear() && dayobject.day.getMonth() == new Date().getMonth() && dayobject.day.getDate() == new Date().getDate()" class="active">{{ dayobject.day.getDate() }}</span>
+					<span v-else>{{ dayobject.day.getDate() }}</span>
+					</span>
+					<!--显示剩余多少数量-->
+					<p v-if="dayobject.OffTips"><span style="color: red;white-space: pre-wrap;word-wrap: break-word;" @click="(new Date(dayobject.day) < new Date()) && showDesc(dayobject.OffDesc)">{{dayobject.OffTips}}</span></p>
+
+					<!---->
+
+				</li>
+			</ul>
+			
+			
+			
+<div id="show">
+
+			<div class="weui_cells_title">{{setTips}}</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea class="weui_textarea" v-model="setEvent" placeholder="请输入文本" rows="4"></textarea>
+					
+					</div>
+				</div>
+			</div>
+
+
+    <div class="weui_btn_area weui_btn_area_inline">
+        <a @click="closeBox" class="weui_btn bg-orange weui_btn_inline">关闭</a><a @click="sendBox" class="weui_btn bg-orange weui_btn_inline">提交</a>
+        </div>
+    </div>
+
+
+</div>
+<div id="bg"></div>
+			
+			
+			
+		</div>
+		
+		
+ 
+		
+
+	</body>
+	<script src="../js/base.js"></script>
+	<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+	<script src="../js/lib/hui.js" type="text/javascript"></script>
+	<script src="../js/public.js" type="text/javascript"></script>
+	<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+	<script src="../js/lib/axios.min.js"></script>
+	<script src="../js/lib/qs.js"></script>
+	
+
+	<script>
+		var domainUrl = GetMvcApiDomain();
+	
+
+
+function plusReady(){
+HeadShow();	
+back();
+
+
+
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+
+    vum.CreateUser=objuser.UserName;
+    vum.ShopUser=objuser.shopbm;
+    
+
+
+vum.GetEventsList(vum.ShopUser, 1, 2000, "");
+
+
+
+
+}
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}
+
+
+
+		var vum = new Vue({
+			el: '#calendar',
+			data: {
+				currentDay: 1,
+				currentMonth: 1,
+				currentYear: 1970,
+				currentWeek: 1,
+				days: [],
+
+				events: [],
+				setTips:"",
+				setDay:"",
+				setEvent:"",
+				CreateUser: "",
+				ShopUser: ""
+
+			},
+			created: function() { //在vue初始化时调用
+				
+
+			},
+			methods: {
+				order: function(day) { //预定函数
+                 
+					console.log(day.day);
+					this.setTips = '请输入' + formatDate(day.day) + "调休"
+
+					
+					document.getElementById("show").style.display ="block"; 
+					document.getElementById("bg").style.display ="block";  
+					 $('html,body').animate({scrollTop: '0px'}, 100);
+					 $('#bg').bind("touchmove",function(e){  
+                      e.preventDefault();  
+                     }); 
+                     
+                     this.setDay=formatDate(day.day);
+                     this.setEvent=day.OffDesc;
+
+				},
+				
+				
+				sendBox: function() { //预定函数
+
+                    if (this.setDay=='' || this.setDay==null){
+                    	hui.upToast("请选择设定日期");
+                    	return false;
+                    }
+                     if (this.setEvent=='' || this.setEvent==null){
+                    	hui.upToast("请输入调休人员");
+                    	return false;
+                    }                    
+                     
+                     
+                     this.PostSend(this.setDay, this.setEvent);
+
+
+				},
+				
+				
+				closeBox: function() { //预定函数
+
+					
+					document.getElementById("show").style.display ="none"; 
+					document.getElementById("bg").style.display ="none";  
+					 $('html,body').animate({scrollTop: '0px'}, 100);
+					 
+
+
+				},
+				
+				initData: function(cur) {
+
+					//var leftcount=0; //存放剩余数量
+					var date;
+					//var index=0;   //控制显示预定的天数 ，比如下面设置只能预定三天的
+					//this.initleftcount(); 每次初始化更新数量
+					//有两种方案  一种是每次翻页 ajax获取数据初始化   http请求过多会导致资源浪费
+					// 一种是每次请求 ajax获取数据初始化    数据更新过慢会导致缺少实时性
+					//还可以setTimeout 定时请求更新数据  实现数据刷新（可能会更好）
+
+					if(cur) {
+						date = new Date(cur);
+					} else {
+						var now = new Date();
+						var d = new Date(this.formatDate(now.getFullYear(), now.getMonth(), 1));
+						d.setDate(35);
+						date = new Date(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+					}
+					this.currentDay = date.getDate();
+					this.currentYear = date.getFullYear();
+					this.currentMonth = date.getMonth() + 1;
+
+					this.currentWeek = date.getDay(); // 1...6,0
+					if(this.currentWeek == 0) {
+						this.currentWeek = 7;
+					}
+					var str = this.formatDate(this.currentYear, this.currentMonth, this.currentDay);
+					this.days.length = 0;
+					// 今天是周日，放在第一行第7个位置，前面6个
+					//初始化本周
+					for(var i = this.currentWeek - 1; i >= 0; i--) {
+						var d = new Date(str);
+						d.setDate(d.getDate() - i);
+
+						var dayobject = {};
+						dayobject.day = d;
+						
+						var xDate = formatDate(d);
+						this.events.filter(function(item) {
+
+							if(item.OffDate == xDate) {
+								dayobject.OffTips = item.OffTips;
+								dayobject.OffDesc = item.OffDesc;
+							}
+						});
+						
+						var now = new Date();
+						if(d.getDate() === (now.getDate()) && d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) {
+
+						}
+
+						this.days.push(dayobject); //将日期放入data 中的days数组 供页面渲染使用
+
+					}
+					//其他周
+					for(var i = 1; i <= 35 - this.currentWeek; i++) {
+						var d = new Date(str);
+						d.setDate(d.getDate() + i);
+
+						var dayobject = {};
+						dayobject.day = d;
+
+						//var xDate=this.formatDate(d.getFullYear(),d.getMonth(),d.getDate());
+						var xDate = formatDate(d);
+						this.events.filter(function(item) {
+
+							if(item.OffDate == xDate) {
+								dayobject.OffTips = item.OffTips;
+								dayobject.OffDesc = item.OffDesc;
+							}
+						});
+
+						var now = new Date();
+
+						if(d.getDate() === (now.getDate()) && d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) {
+
+						}
+
+						this.days.push(dayobject);
+					}
+
+				},
+				pickPre: function(year, month) {
+
+					// setDate(0); 上月最后一天
+					// setDate(-1); 上月倒数第二天
+					// setDate(dx) 参数dx为 上月最后一天的前后dx天
+					var d = new Date(this.formatDate(year, month, 1));
+					d.setDate(0);
+					this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+				},
+				pickNext: function(year, month) {
+					var d = new Date(this.formatDate(year, month, 1));
+					d.setDate(35);
+					this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+				},
+				pickYear: function(year, month) {
+					alert(year + "," + month);
+				},
+
+				// 返回 类似 2016-01-02 格式的字符串
+				formatDate: function(year, month, day) {
+					var y = year;
+					var m = month;
+					if(m < 10) m = "0" + m;
+					var d = day;
+					if(d < 10) d = "0" + d;
+					return y + "-" + m + "-" + d
+				},
+
+				showDesc: function(txt) {
+					hui.alert(txt,'关闭');
+				},
+
+				GetEventsList: function(ShopUser, pageIndex, pageSize, KeySearch) {
+					var that = this;
+
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/WorkFlow/getSchedulingOffList', {
+							params: {
+								pageIndex: pageIndex,
+								pageSize: pageSize,
+								ShopUser: ShopUser,
+								KeySearch: KeySearch
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.events = [];
+							each(jsonx, function(i, j) {
+
+								that.events.push({
+									eid: j.Id,
+									OffDate: j.OffDate,
+									OffTips: cutstr(j.OffDesc, 25),
+									OffDesc: j.OffDesc,
+									CreateTime: j.CreateTime,
+									CreateUser: j.CreateUser
+								});
+
+							});
+
+                            var now = new Date();
+						    var currYM=now.getFullYear()+"-"+(now.getMonth()+1)
+							that.initData(currYM);
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+
+				},
+
+				PostSend: function(OffDate, OffDesc) {
+
+					if(OffDate == "" || OffDate == null) {
+						hui.upToast('请选择排班日期!');
+						return false;
+					}
+					if(OffDesc == "" || OffDesc == null) {
+						hui.upToast('请输入排班人员!');
+						return false;
+					}
+
+					this.SendSave(this.ShopUser, OffDate, OffDesc, this.CreateUser)
+				},
+
+				SendSave: function(ShopUser, OffDate, OffDesc, CreateUser) {
+					var that = this;
+
+					axios.post(domainUrl + 'api/WorkFlow/ShopSchedulingOffNew', Qs.stringify({
+							ShopUser: ShopUser,
+							OffDesc: OffDesc,
+							OffDate: OffDate,
+							CreateUser: CreateUser
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								that.closeBox();
+								hui.upToast('操作成功');
+								setTimeout(function() {
+									if(response.data.bs == '0') {
+										that.events.filter(function(item, index) {
+											if(item.OffDate == OffDate) {
+												that.events[index].OffTips = cutstr(OffDesc, 25);
+												that.events[index].OffDesc = OffDesc;
+											}
+										});
+									}
+									if(response.data.bs == '1') {
+										that.events.push({
+											eid: response.data.Id,
+											OffDate: OffDate,
+											OffTips: cutstr(OffDesc, 25),
+											OffDesc: OffDesc,
+											CreateTime: response.data.CreateTime,
+											CreateUser: CreateUser
+										});
+
+									}
+									if (that.setDay==""){
+										that.initData(null);
+									}
+									else{
+										that.initData(that.setDay.substr(0, 7));
+									}
+									
+
+								}, 800);
+
+							} else {
+								hui.upToast('操作失败');
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+
+				axiosGetLoadding: function() {
+					axios.interceptors.request.use(function(config) {
+						console.log('开始请求')
+						config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+						hui.loading('数据加载中');
+						return config
+					}, function(error) {
+						console.log('请求失败')
+						hui.closeLoading();
+						hui.toast("数据加载失败,请检查网络");
+						return Promise.reject(error)
+					})
+					axios.interceptors.response.use(function(config) {
+						hui.closeLoading();
+
+						console.log('接收响应')
+						return config
+					}, function(error) {
+						console.log('响应出错')
+						hui.closeLoading();
+						hui.toast("数据加载失败,请检查网络");
+						return Promise.reject(error)
+					})
+				}
+
+			},
+		});
+		
+
+		
+		
+	</script>
+
+</html>

@@ -1,0 +1,207 @@
+/*日历开始-----------------------------------------------------------*/
+.databg{
+    position: relative;
+    width: 100%;
+    height: 8rem;
+    background: url("../img/bluebg.png");
+    -webkit-background-size:100% 100%;
+    background-size:100% 100%;
+}
+.my-content-block-data{
+    /*margin-top: -3.95rem;*/
+    margin: 0;
+}
+.picker-calendar-week-days{
+    background-color: #fff;
+    height: 2rem;
+    font-size: 1rem;
+    font-family: num-font;
+    font-weight: bold;
+    padding-top: 0.5rem;
+}
+.picker-calendar {
+    height: 18rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+#calendar-inline{
+	height: 300px;
+    /*border-bottom: 1px solid #BBBBBB;*/
+}
+.picker-calendar-day span {
+    border-radius: 0.3rem;
+}
+.picker-calendar-day.picker-calendar-day-searched span {
+    background: #8295B3;
+    color: #fff;
+}
+.picker-calendar-row:after {
+    background-color: #fff;
+}
+
+.picker-modal-inner{
+	height: 260px !important;
+    border: none;
+    background-color: #fff;
+}
+.picker-calendar-week-days:after{
+    background-color: #fff;
+}
+.picker-calendar-week-days:after{
+    background-color: #fff;
+}
+
+.databg-showall{
+    position: absolute;
+    color: #fff;
+    width: 80%;
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+.databg-showall .databg-showdata{
+    display: inline-block;
+    float: left;
+    font-size: 4.5rem;
+    line-height: 4.5rem;
+    font-family: num_font;
+}
+.databg-showall .databg-showinfo{
+    padding-top: 0.4rem;
+    margin-left: 0.4rem;
+    float: left;
+}
+.databg-showall .databg-showinfo p{
+    margin: 0 0;
+}
+.databg-showall .databg-showinfo span{
+    line-height: 1.5rem;
+}
+
+
+.picker-calendar-day.picker-calendar-day-type3 span {
+            background: #2bd3c9;
+            border-radius: 50%;
+        }
+        .picker-calendar-day.picker-calendar-day-type4 span{
+            background: #3c7adb;
+        }
+        .picker-calendar-day.picker-calendar-day-selected span {
+            background: #0894ec;
+            color: #fff;
+            border-radius: 0.3rem;
+            border:none;
+        }
+        .picker-calendar-day{
+            position: relative !important;
+        }
+        .picker-calendar-day i{
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: red;
+            top: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 50%;
+        }
+        .picker-calendar-day em{
+            position: absolute;
+            bottom: -5px;
+            /*width: 100%;*/
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            font-style: normal;
+            transform: scale(0.8);
+            color: red;
+        }
+        .picker-calendar-day-selected  em{
+            color: #fff;
+        }
+        
+        .picker-modal.picker-modal-inline {
+        height: 290px !important;
+        }
+
+
+/*日历结束-----------------------------------------------------------*/
+/*头部head-----------------------------------------------------------*/
+.bar{
+    background: url("../img/nav.png");
+    background-size:100% 100%;
+    text-align:center;
+}
+.bar-nav-mt1{
+    margin-top: 0.85rem;
+}
+.bar-nav-mt1 img{
+    width: 18px;
+    height: 16px;
+}
+.bar-nav-mt2{
+    margin-top: 0.7rem;
+}
+.bar-nav-mt2 img{
+    width: 27px;
+    height: 6px;
+}
+.color-white{
+    color: #ffffff;
+    font-size: 0.8rem;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.right-more{
+    position: relative;
+}
+.more-setting{
+    display: none;
+    position: absolute;
+    right: 0.5rem;
+    top:1.8rem;
+}
+#triangle-up {
+    width: 0;
+    margin-left: 5.5rem;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid #4E575E;
+}
+
+.more-setting-div{
+    width: 7rem;
+    height: 7.5rem;
+    background-color: #4E575E;
+    border-radius: 0.2rem;
+    z-index:999;
+    margin-right: -0.3rem;
+}
+.more-setting-div-content{
+    display: block;
+    width:6rem;
+    height: 2.4rem;
+    margin-left:0.5rem;
+    border-bottom:1px solid #BBB;
+}
+.more-setting-div-content img{
+    margin-top: 0.6rem;
+    float: left;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 0.1rem;
+}
+.more-setting-div-content span{
+    float: left;
+    color: #f6f6f6;
+    font-size: 0.8rem;
+    line-height: 1.0rem;
+    padding-left: 0.7rem;
+    padding-top: 0.7rem;
+}
+
+/*头部head结束-----------------------------------------------------------*/
+ 

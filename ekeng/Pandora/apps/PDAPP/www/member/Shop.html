@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>健康商城</title>
+			<script type="text/javascript" src="../js/lib/common.js"></script>
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+		<style type="text/css">
+#url{
+	width:98%;
+	-webkit-user-select:auto;
+	padding-left:0;
+	padding-right:0;
+	background: rgba(0,0,0,0);
+	border: 0px;
+	border-bottom:1px solid #ECB100;
+	border-radius: 0;
+	outline:none;
+}
+		</style>
+	</head>
+	
+	
+	13131
+	<body>
+
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js "></script>
+<script type="text/javascript" charset="utf-8">
+		
+
+var username=null; 	
+var ws=null,embed=null;
+// 扩展API加载完毕，现在可以正常调用扩展API 
+function plusReady(){
+	var objuser=JSON.parse(plus.storage.getItem('user'));
+    username = objuser.UserName;
+	ws=plus.webview.currentWebview();
+	ws.addEventListener('show',createEmbed,false);
+}
+// 判断扩展API是否准备，否则监听"plusready"事件
+if(window.plus){
+	plusReady();
+}else{
+	document.addEventListener("plusready",plusReady,false);
+}
+// 创建子Webview
+function createEmbed(){
+	var topoffset='0px';
+	if(plus.navigator.isImmersedStatusbar()){// 兼容immersed状态栏模式
+		topoffset=(Math.round(plus.navigator.getStatusbarHeight())+0)+'px';
+	}
+	plus.nativeUI.showWaiting('',{style:'black',modal:false,background:'rgba(0,0,0,0)'});
+	var toUrl='http://m.kzjk360.com/puburlshop.aspx?username='+username;
+	embed=plus.webview.create(toUrl,'embed',{top:topoffset,bottom:'0px',position:'dock',dock:'bottom',bounce:'vertical'});
+	ws.append(embed);
+	embed.addEventListener('loaded',function(){
+		plus.nativeUI.closeWaiting();
+	},false);
+	embed.addEventListener('loading',function(){
+		plus.nativeUI.showWaiting('',{style:'black',modal:false,background:'rgba(0,0,0,0)'});
+	},false);
+}
+// 打开网址
+function openUrl(){
+	var url=document.getElementById("url");
+	embed.loadURL(url.value);
+	url.blur();
+}
+
+// 页面跳转完成事件
+function onBrowserLoading(){
+	document.getElementById("url").value=embed.getURL();
+}
+		</script>
+	</body>
+	<script type="text/javascript" src="../js/lib/immersed.js" ></script>
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no, email=no" />
+		<meta charset="UTF-8">
+		<title>我的订单</title>
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/OrderSubmit.css">
+		<script src="../js/base.js"></script>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+			
+
+			
+			#wrapper {
+				position: absolute;
+				top: 60px;
+				bottom: 2px;
+				width: 100%;
+			}
+			
+			#scroller {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.item {
+				height: 60px;
+				line-height: 60px;
+				border-bottom: 1px solid #ddd;
+				text-indent: 1em;
+				background: #fff;
+			}
+			
+			.jroll-infinite-tip {
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+			}
+			
+			.jroll-vue-infinite {
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="bodyinfo">
+			<section class="aui-myOrder-content" style="margin-top: -40px;">
+				<div class="m-tab demo-small-pitch">
+					<div class="aui-myOrder-fix">
+						<ul class="tab-nav">
+							<li class="tab-nav-item" :class="{'tab-active':tabState==0}">
+								<a v-on:click="GetOrderTab(0,0,0,0)">全部</a>
+							</li>
+							<li class="tab-nav-item" :class="{'tab-active':tabState==1}">
+								<a v-on:click="GetOrderTab(1,1,0,1)">待付款</a>
+							</li>
+							<li class="tab-nav-item" :class="{'tab-active':tabState==2}">
+								<a v-on:click="GetOrderTab(1,2,1,2)">待发货</a>
+							</li>
+							<li class="tab-nav-item" :class="{'tab-active':tabState==3}">
+								<a v-on:click="GetOrderTab(2,2,2,3)">待收货</a>
+							</li>
+							<li class="tab-nav-item" :class="{'tab-active':tabState==4}">
+								<a v-on:click="GetOrderTab(3,2,2,4)">评价</a>
+							</li>
+						</ul>
+					</div>
+					<div class="aui-dri"></div>
+					<!--<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>双十一期间发货及物流时效公告</div>-->
+
+					<div class="tab-panel" id="wrapper">
+						<jroll-infinite class="jroll-vue-infinite">
+							<div class="tab-panel-item tab-active">
+								<ul>
+									<li v-for="(Item,index) in OrderList" v-cloak>
+										<div class="aui-list-title-info">
+											<a href="#" class="aui-well ">
+												<div class="aui-well-bd">{{Item.add_time}}</div>
+												<div class="aui-well-ft">{{Item.statustxt}}</div>
+											</a>
+											<a @click="ProductDetail(ItemGoods.goods_id)" class="aui-list-product-fl-item" v-for="ItemGoods in Item.GoodsList" v-cloak>
+												<div class="aui-list-product-fl-img">
+													<img :src="ItemGoods.img_url" alt="">
+												</div>
+												<div class="aui-list-product-fl-text">
+													<h3 class="aui-list-product-fl-title">{{ItemGoods.goods_title}}</h3>
+													<div class="aui-list-product-fl-mes" style="width: 90%;">
+														<div>
+															<span class="aui-list-product-item-price">
+										<em>¥</em>
+										{{ItemGoods.goods_price}}
+									</span>
+															<span class="aui-list-product-item-del-price">
+										¥{{ItemGoods.real_price}}
+									</span>
+														</div>
+														<div class="aui-btn-purchase">
+															x{{ItemGoods.quantity}}
+														</div>
+													</div>
+												</div>
+
+											</a>
+										</div>
+										<div class="aui-list-title-btn">
+											<a @click="orderSet(Item.orderNo,'order_cancel')" v-if="Item.xstatus==1">取消订单</a>
+											<a class="red-color" @click="orderPay(Item.orderNo)" v-if="Item.xstatus==1">立即付款</a>
+
+											<a href="#" v-if="Item.xstatus==2">提醒发货</a>
+
+											<a @click="orderSet(Item.orderNo,'order_complete')" class="red-color" v-if="Item.xstatus==3">确认收货</a>
+
+											<a href="#" v-if="Item.xstatus==4">申请售后</a>
+
+											<a href="#" class="red-color" v-if="Item.xstatus==4">商品评价</a>
+										</div>
+										<div class="aui-dri"></div>
+
+									</li>
+
+								</ul>
+							</div>
+
+							<div class="tab-panel-item">
+								<ul>
+									<li v-for="(Item,index) in OrderList" v-cloak>
+										<div class="aui-list-title-info">
+											<a href="#" class="aui-well ">
+												<div class="aui-well-bd">{{Item.add_time}}</div>
+												<div class="aui-well-ft">{{Item.statustxt}}</div>
+											</a>
+											<a @click="ProductDetail(ItemGoods.goods_id)" class="aui-list-product-fl-item" v-for="ItemGoods in Item.GoodsList" v-cloak>
+												<div class="aui-list-product-fl-img">
+													<img :src="ItemGoods.img_url" alt="">
+												</div>
+												<div class="aui-list-product-fl-text">
+													<h3 class="aui-list-product-fl-title">{{ItemGoods.goods_title}}</h3>
+													<div class="aui-list-product-fl-mes" style="width: 90%;">
+														<div>
+															<span class="aui-list-product-item-price">
+										<em>¥</em>
+										{{ItemGoods.goods_price}}
+									</span>
+															<span class="aui-list-product-item-del-price">
+										¥{{ItemGoods.real_price}}
+									</span>
+														</div>
+														<div class="aui-btn-purchase">
+															x{{ItemGoods.quantity}}
+														</div>
+													</div>
+												</div>
+
+											</a>
+										</div>
+										<div class="aui-list-title-btn">
+											<a @click="orderSet(Item.orderNo,'order_cancel')">取消订单</a>
+											<a class="red-color" @click="orderPay(Item.orderNo)">立即付款</a>
+										</div>
+										<div class="aui-dri"></div>
+									</li>
+								</ul>
+							</div>
+
+							<div class="tab-panel-item">
+								<ul>
+									<li v-for="(Item,index) in OrderList" v-cloak>
+										<div class="aui-list-title-info">
+											<a href="#" class="aui-well ">
+												<div class="aui-well-bd">{{Item.add_time}}</div>
+												<div class="aui-well-ft">{{Item.statustxt}}</div>
+											</a>
+											<a @click="ProductDetail(ItemGoods.goods_id)" class="aui-list-product-fl-item" v-for="ItemGoods in Item.GoodsList" v-cloak>
+												<div class="aui-list-product-fl-img">
+													<img :src="ItemGoods.img_url" alt="">
+												</div>
+												<div class="aui-list-product-fl-text">
+													<h3 class="aui-list-product-fl-title">{{ItemGoods.goods_title}}</h3>
+													<div class="aui-list-product-fl-mes" style="width: 90%;">
+														<div>
+															<span class="aui-list-product-item-price">
+										<em>¥</em>
+										{{ItemGoods.goods_price}}
+									</span>
+															<span class="aui-list-product-item-del-price">
+										¥{{ItemGoods.real_price}}
+									</span>
+														</div>
+														<div class="aui-btn-purchase">
+															x{{ItemGoods.quantity}}
+														</div>
+													</div>
+												</div>
+
+											</a>
+										</div>
+										<div class="aui-list-title-btn">
+											<a href="#">提醒发货</a>
+
+										</div>
+										<div class="aui-dri"></div>
+									</li>
+								</ul>
+							</div>
+
+							<div class="tab-panel-item">
+								<ul>
+									<li v-for="(Item,index) in OrderList" v-cloak>
+										<div class="aui-list-title-info">
+											<a href="#" class="aui-well ">
+												<div class="aui-well-bd">{{Item.add_time}}</div>
+												<div class="aui-well-ft">{{Item.statustxt}}</div>
+											</a>
+											<a @click="ProductDetail(ItemGoods.goods_id)" class="aui-list-product-fl-item" v-for="ItemGoods in Item.GoodsList" v-cloak>
+												<div class="aui-list-product-fl-img">
+													<img :src="ItemGoods.img_url" alt="">
+												</div>
+												<div class="aui-list-product-fl-text">
+													<h3 class="aui-list-product-fl-title">{{ItemGoods.goods_title}}</h3>
+													<div class="aui-list-product-fl-mes" style="width: 90%;">
+														<div>
+															<span class="aui-list-product-item-price">
+										<em>¥</em>
+										{{ItemGoods.goods_price}}
+									</span>
+															<span class="aui-list-product-item-del-price">
+										¥{{ItemGoods.real_price}}
+									</span>
+														</div>
+														<div class="aui-btn-purchase">
+															x{{ItemGoods.quantity}}
+														</div>
+													</div>
+												</div>
+
+											</a>
+										</div>
+										<div class="aui-list-title-btn">
+											<!--<a href="#">取消订货</a>-->
+											<a @click="orderSet(Item.orderNo,'order_complete')" class="red-color">确认收货</a>
+										</div>
+										<div class="aui-dri"></div>
+									</li>
+								</ul>
+							</div>
+
+							<div class="tab-panel-item">
+								<ul>
+									<li v-for="(Item,index) in OrderList" v-cloak>
+										<div class="aui-list-title-info">
+											<a href="#" class="aui-well ">
+												<div class="aui-well-bd">{{Item.add_time}}</div>
+												<div class="aui-well-ft">{{Item.statustxt}}</div>
+											</a>
+											<a @click="ProductDetail(ItemGoods.goods_id)" class="aui-list-product-fl-item" v-for="ItemGoods in Item.GoodsList" v-cloak>
+												<div class="aui-list-product-fl-img">
+													<img :src="ItemGoods.img_url" alt="">
+												</div>
+												<div class="aui-list-product-fl-text">
+													<h3 class="aui-list-product-fl-title">{{ItemGoods.goods_title}}</h3>
+													<div class="aui-list-product-fl-mes" style="width: 90%;">
+														<div>
+															<span class="aui-list-product-item-price">
+										<em>¥</em>
+										{{ItemGoods.goods_price}}
+									</span>
+															<span class="aui-list-product-item-del-price">
+										¥{{ItemGoods.real_price}}
+									</span>
+														</div>
+														<div class="aui-btn-purchase">
+															x{{ItemGoods.quantity}}
+														</div>
+													</div>
+												</div>
+
+											</a>
+										</div>
+										<div class="aui-list-title-btn">
+											<a href="#">申请售后</a>
+											<a href="#" class="red-color">商品评价</a>
+										</div>
+										<div class="aui-dri"></div>
+									</li>
+								</ul>
+							</div>
+						</jroll-infinite>
+					</div>
+
+				</div>
+			</section>
+		</div>
+
+		<script type="text/javascript" src="../js/lib/jquery-2.1.3.min.js"></script>
+
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+		<script src="../js/lib/jroll.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-vue-infinite.js" type="text/javascript"></script>
+
+		<script>
+			var domainUrl = GetMallApiDomain();
+			var ImageUrl = GetMallImage();
+			var username = null;
+			var shopbm = null;
+			var UserRole = null;
+			var filedOrder = 'id desc';
+            var tab=0;
+            					var orderState = 0;
+					var PayState = 0;
+					var ExpressState = 0;
+			function plusReady() {
+				HeadShow();
+				back();
+
+				var _self = plus.webview.currentWebview();
+				tab = _self.tab;
+				if(tab == null || tab == '' || tab == undefined) {
+					tab = 0;
+				}
+				var objuser = JSON.parse(plus.storage.getItem('user'));
+				username = objuser.UserName;
+				shopbm = objuser.shopbm;
+				UserRole = objuser.UserRole;
+
+				vum.GetOrderList(username,orderState,PayState,ExpressState,vum.pageSize,vum.pageIndex,filedOrder);
+
+			}
+
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
+
+			var vum
+			var infOptions = {
+				completeTip: '全部加载完成',
+
+				bottomed: function(complete) {
+					var that = this;
+
+					if(that.$parent.tabState == 0) {
+						orderState = 0;
+						PayState = 0;
+						ExpressState = 0;
+					}
+
+					if(that.$parent.tabState == 1) {
+						orderState = 1;
+						PayState = 1;
+						ExpressState = 0;
+					}
+
+					if(that.$parent.tabState == 2) {
+						orderState = 1;
+						PayState = 2;
+						ExpressState = 1;
+					}
+
+					if(that.$parent.tabState == 3) {
+						orderState = 2;
+						PayState = 2;
+						ExpressState = 2;
+					}
+
+					if(that.$parent.tabState == 4) {
+						orderState = 3;
+						PayState = 2;
+						ExpressState = 2;
+					}
+
+                    that.$parent.GetOrderList(username,orderState,PayState,ExpressState,that.pageSize,that.pageIndex,filedOrder);
+				},
+				updated: function() {
+					console.log('current page is ' + this.page)
+				}
+
+			}
+
+			vum = new Vue({
+				el: '#bodyinfo',
+				components: {
+					'jroll-infinite': JRoll.VueInfinite(infOptions, {
+						scrollBarY: true
+					})
+				},
+				data: {
+					pageIndex: 1,
+					pageSize: 4,
+					pageCount: 1,
+					orderState: 0,
+					PayState: 0,
+					ExpressState: 0,
+					tabState: tab,
+					OrderData: [],
+					OrderList: []
+				},
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+						//this.GetOrderList();
+
+					})
+
+				},
+				methods: {
+
+					GetOrderList: function(username, orderState, PayState, ExpressState, pageSize, pageIndex, filedOrder) {
+						var that = this;
+						//that.axiosGetLoadding();
+						axios.get(domainUrl + 'api/Order/getOrderList', {
+								params: {
+									user_name: username,
+									orderState: orderState,
+									PayState: PayState,
+									ExpressState: ExpressState,
+									pageSize: pageSize,
+									pageIndex: pageIndex,
+									filedOrder: filedOrder
+								}
+							})
+							.then(function(response) {
+								var jsonx = eval(response.data);
+								that.OrderData = [];
+								each(jsonx, function(i, j) {
+									var GoodsList = [];
+									each(j.goodslist, function(m, n) {
+										GoodsList.push({
+											number: (m + 1),
+											gid: n.gid,
+											goods_id: n.goods_id,
+											goods_title: n.goods_title,
+											goods_price: n.goods_price,
+											real_price: n.real_price,
+											quantity: n.quantity,
+											img_url: ImageUrl + n.img_url,
+											point: n.point
+										});
+									});
+									var xstatus = 0;
+									var statustxt = "";
+
+									if(j.payment_status == 1) {
+										xstatus = 1;
+										statustxt = '待支付';
+									}
+									if(j.payment_status == 2 && j.express_status == 1) {
+										xstatus = 2;
+										statustxt = '待发货';
+									}
+									if(j.express_status == 2 && j.status < 3) {
+										xstatus = 3;
+										statustxt = '已发货';
+									}
+									if(j.status == 3) {
+										xstatus = 4;
+										statustxt = '已完成';
+									}
+									if(j.status > 3) {
+										xstatus = 5;
+										statustxt = '已取消';
+									}
+
+									that.OrderData.push({
+										number: (i + 1),
+										order_id: j.order_id,
+										orderNo: j.orderNo,
+										payment_status: j.payment_status,
+										payment_time: j.payment_time,
+										express_no: j.express_no,
+										payable_amount: j.payable_amount,
+										order_amount: j.order_amount,
+										real_amount: j.real_amount,
+										status: j.status,
+										add_time: j.add_time,
+										confirm_time: j.confirm_time,
+										complete_time: j.complete_time,
+										GoodsList: GoodsList,
+										xstatus: xstatus,
+										statustxt: statustxt,
+									});
+
+									that.pageCount = j.PageCount;
+
+								});
+
+
+							if(typeof complete === 'function') {
+								that.OrderList = that.OrderData;
+								that.$children[0].complete();
+							} else {
+								that.OrderList = that.OrderList.concat(that.OrderData);
+							}
+							
+							that.pageCount = response.data.PageCount;
+							that.$children[0].total = response.data.PageCount;
+							if (response.data.PageCount==0){
+								that.$children[0].total =1;
+							}
+							else{
+								that.$children[0].total = response.data.PageCount;
+							}
+							that.$children[0].success();
+
+
+								
+
+								if(that.OrderData == '' || that.OrderData.length == 0) {
+									that.pageCount = 1;
+									that.$children[0].tip = "没有记录";
+								}
+								that.$children[0].total = that.pageCount;
+
+							})
+							.catch(function(response) {
+								console.log(response);
+
+							});
+					},
+
+					GetOrderTab: function(orderState, PayState, ExpressState, tabState) {
+
+						//jroll.scale(0.5);
+						//jroll.resize;
+						//jroll.refresh();
+						//jroll.destroy();
+						//jroll.scrollTo(0, 0).refresh(); //滚回顶部
+						//window.scrollTo(0, 0);
+						this.$children[0].scrollTop();
+						this.tabState = tabState;
+						this.pageIndex = 1;
+						this.OrderList = [];
+						this.OrderData = [];
+						this.$children[0].page = 1;
+
+						this.GetOrderList(username, orderState, PayState, ExpressState, this.pageSize, this.pageIndex, filedOrder);
+					},
+
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+
+					ProductDetail: function(ProductId) {
+					var parm = {
+						"ProductId": ProductId
+					   }
+					    clickedParm('ProductDetail.html', 'ProductDetail.html', 'slide-in-right', parm, '产品详情');
+					},
+					orderPay: function(orderNo) {
+						//									 var openid = localStorage.getItem("openid");
+						//					                 if (openid=='' || openid==null || openid==undefined){
+						//					                      location.href = "WxPay_GetCode.html?OrderNo=" + orderNo;
+						//					                     }
+						//					                 else{
+						//                                     location.href = "OrderPay.html?OrderNo=" + orderNo;
+						//										}
+
+						//location.href = "OrderUnionPaySet.html?OrderNo=" + orderNo;
+
+					},
+
+					orderSet: function(orderNo, setType) {
+						var that = this;
+						axios.post(domainUrl + 'api/Order/PostOrderStatusEdit', Qs.stringify({
+								"orderNo": orderNo,
+								"editType": setType
+							}))
+
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.upToast(response.data.msg);
+									setTimeout(function() {
+
+										if(that.tabState == 0) {
+											that.GetOrderTab(0, 0, 0, 0);
+										}
+										if(that.tabState == 1) {
+											that.GetOrderTab(1, 1, 0, 1);
+										}
+										if(that.tabState == 2) {
+											that.GetOrderTab(1, 2, 1, 2);
+										}
+										if(that.tabState == 3) {
+											that.GetOrderTab(2, 2, 2, 3);
+										}
+										if(that.tabState == 4) {
+											that.GetOrderTab(3, 2, 2, 4);
+										}
+									}, 800);
+
+								} else {
+									hui.upToast(response.data.msg);
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+					},
+
+				}
+
+			})
+		</script>
+
+	</body>
+
+</html>

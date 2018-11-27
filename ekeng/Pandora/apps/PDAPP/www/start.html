@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>E康云 </title>
+<link rel="stylesheet" type="text/css" href="css/lib/huimin.css" />
+<style>
+.hui-start-banner{width:100%; height:100%; position:fixed; z-index:9998; left:0px; top:0px; background:#FFFFFF; display:none;}
+#hui-start-banner-close{width:50px; position:fixed; z-index:9999; top:20px; right:20px; background:#FFFFFF; display:none; text-align:center; border-radius:3px; height:28px; line-height:28px; font-size:14px; color:#26A2FF;}
+.hui-start-banner .hui-swipe-indicator{width:96%; position:absolute; z-index:3; left:2%; bottom:20px; display:none;}
+</style>
+</head>
+<body>
+
+<div class="hui-start-banner" id="startBanner">
+	<div class="hui-swipe-item" style="background:#2C2342;"><img src="img/openOne.png" /></div>
+	<div class="hui-swipe-item" style="background:#6CC5F1;"><img src="img/openTwo.jpg" /></div>
+    <div class="hui-swipe-item" style="background:#62C0CC;"><a href="javascript:huiStartBannerClose();"><img src="img/openOne.png" /></a></div>
+</div>
+<div id="hui-start-banner-close" onclick="huiStartBannerClose();">跳过</div>
+
+<script src="js/lib/util.js"></script>
+<script type="text/javascript" src="js/lib/hui.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/lib/hui-swipe.js" charset="UTF-8"></script>
+<script type="text/javascript">
+
+function huiStartBannerClose(){
+	hui('#startBanner').remove();
+	hui('#hui-start-banner-close').remove();
+
+   Goto();
+        
+}
+
+hui.plusReady(function(){
+	
+	 
+	 
+		var wininfo = hui.winInfo();
+        hui('#startBanner').find('.hui-swipe-item').css({height:wininfo.height+'px'});
+        hui('#startBanner').show();
+        hui('#hui-start-banner-close').show();
+        var swipe      = new huiSwpie('#startBanner');
+        swipe.autoPlay = false;
+        swipe.loop     = false;
+        swipe.run();
+        plus.storage.setItem("launchFlag","1");
+	
+	
+});
+
+
+
+function Goto(){
+	
+       var objuser=JSON.parse(plus.storage.getItem('user'));
+       
+	   if(objuser==undefined || objuser==null || objuser==''){
+	   	var nwaiting = plus.nativeUI.showWaiting();
+		var _LoginView=plus.webview.getWebviewById("login.html");
+        if(!_LoginView){
+        	_LoginView=plus.webview.create("login.html","login.html",{},{});
+        }
+        _LoginView.addEventListener('loaded',function(){
+        nwaiting.close();
+        _LoginView.show("slide-in-right",0);
+	    _LoginView.showded=true;
+		_LoginView=null;
+		plus.webview.currentWebview().close();
+        },false);
+       }
+	   else{
+	   	
+
+	   	
+                          var ws=plus.webview.getWebviewById(plus.runtime.appid);
+                            ws.evalJS('plusReadyDo()');
+                             ws.show();
+                               backToHomeIndex("slide-in-right");
+	   	
+	   }
+
+}
+
+function backToHomeIndex(aniView) {　　
+        var wvs = plus.webview.all();　　 //所有窗口对象
+        var launch = plus.webview.getWebviewById(plus.runtime.appid); 　 //首页窗口对象
+        var self = plus.webview.currentWebview();　　 //当前窗口对象
+        for(var i = 0, len = wvs.length; i < len; i++) {　　　 // 首页 导航页以及当前窗口对象，不关闭；
+            if(wvs[i].id === launch.id || wvs[i].id === self.id) {　　　　　　　　
+                continue;　　　　
+            } else {　　　　　　
+                wvs[i].close('none');　　 //关闭中间的窗口对象，为防止闪屏，不使用动画效果；
+                　　　　
+            }　　
+        }　　 // 此时，窗口对象只剩下首页以及当前窗口，直接关闭当前窗口即可；
+        self.close(aniView);
+}
+function quit(){
+    	var first = null;
+	
+	plus.key.addEventListener("backbutton",function(){
+		//plus.runtime.quit();
+		if (!first) {
+            first = new Date().getTime();
+            hui.toast('再按一次退出系统!');
+            setTimeout(function () {
+                first = null;
+            }, 2000);
+        } else {
+            if (new Date().getTime() - first < 2000) {
+                plus.runtime.quit();
+
+            }
+        }
+	});
+
+}
+</script>
+</body>
+</html>

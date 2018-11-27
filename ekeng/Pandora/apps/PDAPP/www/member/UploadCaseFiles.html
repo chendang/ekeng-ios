@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en" class="feedback">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>病历文件上传</title>
+		<link rel="stylesheet" type="text/css" href="../css/lib/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/feedback.css" />
+    <style type="text/css">
+        [v-cloak]{ display: none; }
+
+        input{font-size: 12px; !important;}
+    </style>
+	</head>
+
+	<body>
+
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<div class="mui-inline" id="FileClass">文件目录</div>
+				<a class="mui-pull-right mui-inline" href="#popover">
+					<span id="selname">请选择</span>
+					<span class="mui-icon mui-icon-arrowdown"></span>
+				</a>
+				<!--快捷输入具体内容，开发者可自己替换常用语-->
+				<div id="popover" class="mui-popover">
+					<div class="mui-popover-arrow"></div>
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul class="mui-table-view">
+								
+								<li class="mui-table-view-cell"><a href="#">病历文档</a></li>
+								<li class="mui-table-view-cell"><a href="#">其它资料</a></li>
+
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="row mui-input-row">
+				<textarea id='FileDesc' class="mui-input-clear question" placeholder="请描述你的文件说明"></textarea>
+			</div>
+				<input type="hidden" id='snum' value="">
+
+			<p>图片(选填,提供问题截图,总大小10M以下)</p>
+			<div class="row image-list" style="height: 80%;">
+			<div style="margin-left: 10px;">
+			<div id="PhotoOnList"></div>
+			<img src="../img/5-16.jpg" alt="" height="65px" width="65px"  id="filePicker"/>
+			
+			
+           </div>
+			</div>
+
+
+
+		</div>
+		
+		<div class="mui-content">
+		    <div class="mui-content-padded">
+		        <button type="button" class="mui-btn mui-btn-danger mui-btn-block" id="btnSend">发送上传</button>		        
+		    </div>
+		    <div class="mui-content-padded">
+		        <button type="button" class="mui-btn mui-btn-block" onclick="clicked('ToFileList.html','ToFileList.html','slide-in-left','病历档案文件');">查看记录</button>		        
+		    </div>
+		</div>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+
+ var domainUrl = GetMvcApiDomain();
+
+var username=null;
+function plusReady() { 
+HeadShow();
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+getUploadListForPost('1','50');
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+         
+
+mui.init();
+mui('.mui-scroll-wrapper').scroll();
+			
+mui('.mui-popover').on('tap','li',function(e){
+	  document.getElementById("FileClass").innerHTML = this.children[0].innerHTML;
+	  document.getElementById("selname").innerHTML = this.children[0].innerHTML;
+	  
+	  mui('.mui-popover').popover('toggle')
+})
+
+        function MathRand() {
+
+            var Num = "";
+
+            for (var i = 0; i < 6; i++) {
+
+                Num += Math.floor(Math.random() * 10);
+
+            }
+            return Num;
+        }
+
+var snum=MathRand();
+ 
+var num = "";
+
+
+
+
+
+
+document.getElementById('filePicker').addEventListener('tap', function() { 
+            if (mui.os.plus) { 
+                var a = [{ 
+                    title: "拍照" 
+                }, { 
+                    title: "从手机相册选择" 
+                }]; 
+                plus.nativeUI.actionSheet({ 
+                    title: "上次图片", 
+                    cancel: "取消", 
+                    buttons: a 
+                }, function(b) { /*actionSheet 按钮点击事件*/ 
+                    switch (b.index) { 
+                        case 0: 
+                            break; 
+                        case 1: 
+                            getImage(); /*拍照*/
+                            break; 
+                        case 2: 
+                            galleryImg();/*打开相册*/ 
+                            break; 
+                        default: 
+                            break; 
+                    } 
+                }) 
+            } 
+        }, false); 
+
+  
+var server=domainUrl+"/FileUpload/CaseFilePicUpload";
+
+
+function getImage() {  
+            var cmr = plus.camera.getCamera();  
+            cmr.captureImage(function(p) {  
+                    plus.io.resolveLocalFileSystemURL(p, function(entry) {  
+                            var path = entry.toLocalURL();  
+                            
+                            //picIndex += 1;  
+                            appendFile(path); //处理图片的地方  
+                            setTimeout("upload(1)", 1000);  
+                        },  
+                        function(e) {  
+                            alert("读取拍照文件错误：" + e.message);  
+                        });  
+                },  
+                function(e) {  
+                    //                  alert("失败：" + e.message);  
+                }, {  
+                    filename: "_doc/camera/",  
+                    index: 1  
+                });  
+}
+
+function galleryImg() {  
+    plus.gallery.pick(function(path) {  
+        
+        //picIndex += 1;  
+        appendFile(path); //处理图片的地方  
+        setTimeout("upload(2)", 1000);  
+    }, function(e) {  
+        console.log("取消选择图片");  
+    }, {  
+        filter: "none",  
+        system: false  
+    });  
+}  
+
+
+var f1=null;
+function appendFile(path) {  
+            var img = new Image();  
+            img.src = path; // 传过来的图片路径在这里用。  
+            img.onload = function() {  
+                var that = this;  
+                //生成比例   
+                var w = that.width,  
+                    h = that.height,  
+                    scale = w / h;  
+                w = 320 || w; //480  你想压缩到多大，改这里  
+                h = w / scale;  
+                //生成canvas  
+                var canvas = document.createElement('canvas');  
+                var ctx = canvas.getContext('2d');  
+                $(canvas).attr({  
+                    width: w,  
+                    height: h  
+                });  
+                ctx.drawImage(that, 0, 0, w, h);  
+                var base64 = canvas.toDataURL('image/jpeg', 1 || 1); //1最清晰，越低越模糊。  
+                f1 = base64;  
+            }  
+}
+
+
+function upload(index) { 
+	        var wt=plus.nativeUI.showWaiting();
+            var url = server;  
+            var dataType = 'json';  
+            //发送数据    
+            var data = {  
+                base64File: f1, //base64数据  
+                index: index  
+            };  
+            
+            $.ajax({
+            url : server,
+            type : "post",
+            data : data,
+            success : function(result) {
+            	document.getElementById("snum").value =snum;
+            	num=document.getElementById("snum").value;
+                SaveImage(username,result,num,'0','1');
+                
+            },
+            error : function() {
+                mui.toast("网络错误,请稍后再试!");;
+            }
+        });
+        plus.nativeUI.closeWaiting();
+        
+} 
+
+
+function SaveImage(username,filename,num,ispost,fromclass){   
+     $.ajax({
+      url: domainUrl + "api/CaseFiles/getUploadPhotoSave",
+      type: 'get',
+      dataType: "json",
+      data: {UserName:username,FileName:filename,Num:num,IsPost:ispost,FromClass:fromclass},
+      success: function (data) {
+      if (data.code='200'){
+      getUploadListForPost('1','50');
+      }
+      else{
+      mui.toast("图片上传出错，请稍后再试");	
+      }
+    },
+    error: function () {
+     mui.toast("网络错误，请稍后再试");
+   }
+ });
+  
+
+}
+
+
+function getUploadListForPost(fClass,topcount) {
+	          $.ajax({
+             	url: domainUrl + "api/CaseFiles/getUploadListForPost",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,sClass:fClass,topcount:topcount},
+                success: function (data) {
+                if (data.length>0){
+                document.getElementById("snum").value =snum;
+            	num=document.getElementById("snum").value;	
+                }
+                var inner = '';
+                 $.each(data, function (i, j) {
+     
+                inner += '<img src="' +domainUrl+'FileUpload/CaseUpload/'+ j.FileName + '"  height="65px" width="65px" onclick="javascript:delFile(' + j.id + ');" style="padding-left: 5px;border-radius:8px;">';
+                });
+                $("#PhotoOnList").html(inner);    
+               },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+ }
+
+
+function getFileRecordSave(username,FileDesc,FileClass,Num,FromClass) {
+	          $.ajax({
+             	url: domainUrl + "api/CaseFiles/getUploadRecord2",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,FileDesc:FileDesc,FileClass:FileClass,Num:Num,FromClass:FromClass},
+                success: function (data) {
+                 if (data.code=='200') {
+                 mui.toast('添加成功');
+				 clicked('ToFileList.html','ToFileList.html','slide-in-left','病历档案文件');
+//				 plus.webview.currentWebview().close();
+
+         
+                 }
+                 else {
+                       mui.toast("数据提交错误，请稍后再试");
+                      }
+ 
+               },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                }
+            })
+
+ }
+
+
+
+function delFile(Id) {
+
+   var btnArray = ['否', '是'];
+   mui.confirm('您确定删除此条记录，确认？', '删除图片记录', btnArray, function(e) {
+		if (e.index == 1) {
+			 $.ajax({
+               url: domainUrl + "api/CaseFiles/getDelUploadRecordById",
+               type: 'get',
+               dataType: "json",
+               data: {id:Id},
+              success: function (data) {
+                        if (data.code=='200') {
+                        mui.toast('删除成功')
+					             getUploadListForPost('1','50');
+                      }
+                        else {
+                        	mui.toast("删除错误");
+
+                        }
+                    }
+                })
+				
+		} else {
+			
+						//mui.alert("您放弃删除了！")
+			}
+		}) 
+      
+}
+
+document.getElementById("btnSend").addEventListener('tap',function(){
+	
+var FileClass=document.getElementById("FileClass").innerHTML;
+if (FileClass==null || FileClass=="" || FileClass=="文件目录"){
+	mui.toast("请选择文件目录！")
+	return false;
+}
+
+var FileDesc=document.getElementById("FileDesc").value;
+if (FileDesc==null || FileDesc==""){
+	mui.toast("请输入文件描述！")
+	return false;
+}
+
+if (num=="" || num==null){
+mui.toast("请上传图片，再提交！")
+return false;	
+}
+
+getFileRecordSave(username,FileDesc,FileClass,num,'1');
+
+});
+
+
+</script>
+	</body>
+
+</html>

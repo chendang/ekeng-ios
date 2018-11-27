@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		<title>我的积分纪录</title>
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/lib/weui.css" />
+		<link rel="stylesheet" href="../css/lib/weui2.css" />
+		<script src="../js/base.js"></script>
+
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+
+			
+	        html,
+
+			body {
+				margin: 0;
+                padding: 0;
+                height: 100%;
+				font: 12px/1 'Roboto', sans-serif;
+				color: #555;
+				background-color: #fff;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			
+			ul {
+				list-style: none;
+			}
+
+
+
+			
+
+			#app {
+				position: absolute;
+				top: 0px;
+                bottom: 2px;
+				width: 100%;
+			}
+			
+			#wrapper {
+				position: absolute;
+				top: 44px;
+				bottom: 0px;
+				width: 100%;
+			}
+			
+			#scroller {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.item {
+				height: 60px;
+				line-height: 60px;
+				border-bottom: 1px solid #ddd;
+				text-indent: 1em;
+				background: #fff;
+			}
+			
+			.jroll-infinite-tip {
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+			}
+			
+			.jroll-vue-infinite {
+				height: 100%;
+			}
+		</style>
+
+	</head>
+
+
+	<body>
+
+
+		<div id="app" >
+			<div class="weui_search_bar">
+             <input type="search" class="search-input" v-model="KeyTxt" placeholder='关键字' style="box-sizing:content-box"/><button  class="weui_btn weui_btn_mini weui_btn_primary" @click="GetSearchData"><i class="icon icon-4"></i></button>    
+            </div>
+			
+			 <jroll-infinite class="jroll-vue-infinite">
+			 	
+			 	
+
+ <div class="weui_cells" v-for="(Item,index) in ItemList" v-cloak>
+           <div class="weui_cell" style="background: cornsilk;">
+                <div class="weui_cell_bd weui_cell_primary">
+                	 <p>{{Item.points}}</p>
+                    <p>{{Item.remark}}</p>
+                </div>
+                <div class="weui_cell_ft">{{Item.add_time}}</div>
+            </div>
+ 
+
+</div>
+			 	
+			 	
+			 	
+
+            
+
+
+     
+
+            </jroll-infinite>
+            </div>
+          </body>
+
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/hui-select-beautify.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+		<script src="../js/lib/jroll.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-vue-infinite.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-pulldown.js" type="text/javascript"></script>
+
+		<script>
+			var mallDomainUrl = GetMallApiDomain();
+			var domainUrl = GetMvcApiDomain();
+
+			var username = null;
+
+            
+function plusReady() { 
+HeadShow();	
+back();
+
+
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+vum.GetItemList(username,vum.pageIndex,vum.pageSize,vum.KeyTxt);
+
+
+
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 			
+
+	
+
+			// vue实例
+			var vum
+			var infOptions = {
+				pulldown: {},
+				bottomed: function(complete) {
+					this.$parent.GetItemList(username,this.$parent.pageIndex,this.$parent.pageSize,this.$parent.KeyTxt);
+
+
+				},
+				updated: function() {
+					console.log('current page is ' + this.page)
+				}
+
+			}
+
+			vum = new Vue({
+				el: '#app',
+				components: {
+					'jroll-infinite': JRoll.VueInfinite(infOptions, {
+						scrollBarY: true
+					})
+				},
+				data: {
+					pageIndex:1,
+					pageSize:20,
+					UserName: username,
+					KeyTxt: "",
+					ItemData: [],
+					ItemList: [] 
+				},
+
+				methods: {
+					
+				GetItemList: function(username,pageIndex,pageSize,KeySearch) {
+					var that = this;
+					//that.axiosGetLoadding();
+					axios.get(mallDomainUrl + 'api/Member/getUserPointsRecord', {
+							params: {
+								pageIndex: pageIndex,
+								pageSize: pageSize,
+								UserName: username,
+								KeySearch: KeySearch
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.ItemData = [];
+							each(jsonx, function(i, j) {
+
+								that.ItemData.push({
+									number: (i + 1),
+									id: j.id,
+									userbm: j.user_name,
+									points: j.points,
+									remark: j.remark,
+									add_time:j.add_time,
+								});
+
+
+							});
+
+								if(typeof complete === 'function') {
+									that.ItemList = that.ItemData;
+									hat.$children[0].complete();
+								} else {
+									that.ItemList = that.ItemList.concat(that.ItemData);
+								}
+
+								that.pageCount = response.data.PageCount;
+								that.$children[0].total = response.data.PageCount;
+								if(response.data.PageCount == 0) {
+									that.$children[0].total = 1;
+								} else {
+									that.$children[0].total = response.data.PageCount;
+								}
+								that.$children[0].success();
+
+
+						})
+						.catch(function(response) {
+							console.log(response);
+			
+						});
+				},
+					GetSearchData: function() {
+						this.$children[0].scrollTop();
+						this.pageIndex = 1;
+						this.ItemList = [];
+						this.ItemData = [];
+						this.$children[0].page=1;
+						this.GetItemList(username, this.pageIndex,this.pageSize, this.KeyTxt);
+					},
+					GetKeepOnData: function() {
+						this.$children[0].scrollTop();
+						this.pageIndex = this.$children[0].page;
+						this.ItemList = [];
+						this.ItemData = [];
+						this.GetItemList(username, this.pageIndex,this.pageSize, this.KeyTxt);
+					},
+					
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					}
+
+				}
+
+			})
+			
+
+		</script>
+
+
+</html>

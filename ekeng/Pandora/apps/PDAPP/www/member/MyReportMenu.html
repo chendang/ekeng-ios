@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<title>个人健康管理--方案目录</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link type="text/css" href="../css/style.css" rel="stylesheet" />
+</head>
+<body>
+
+
+<!--头部end-->
+<!--当前栏目名start-->
+<div class="assess_name">
+	<h2>8S健康管理方案</h2>
+	<i class="icon icon_circle icon_circle_default"></i>
+</div>
+<div class="assess_line10"></div>
+<!--当前栏目名end-->
+<!--导航条start-->
+<div class="assess_nav">
+	<ul>
+		<li><a href="javascript:goUrl('MyReportHealthData.html','健康核心数据');"><img src="../img/13_08.png" alt="" /><h3>健康核心数据</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportTestResult.html','健康生活问卷');"><img src="../img/13_11.png" alt="" /><h3>健康生活问卷</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportAppraisal.html','生活习惯评估');"><img src="../img/13_09.png" alt="" /><h3>生活习惯评估</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportMonitorAdvise.html','健康监测建议');"><img src="../img/13_05.png" alt="" /><h3>健康监测建议</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportMedPlan.html','纯天然植物营养素细胞平衡修复');"><img src="../img/13_06.png" alt="" /><h3>纯天然植物营养素细胞平衡修复</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportFoodPlan.html','膳食管理');"><img src="../img/13_07.png" alt="" /><h3>膳食管理</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportSportPlan.html','运动管理');"><img src="../img/13_08.png" alt="" /><h3>运动管理</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportFeelPlan.html','心态管理');"><img src="../img/13_09.png" alt="" /><h3>心态管理</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportSleepPlan.html','睡眠管理');"><img src="../img/13_10.png" alt="" /><h3>睡眠管理</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportEnvironment.html','环境管理');"><img src="../img/13_11.png" alt="" /><h3>环境管理</h3></a></li>
+		<li><a href="javascript:goUrl('MyReportHavaSchool.html','哈福健康管理商学院');"><img src="../img/13_12.png" alt="" /><h3>哈福健康管理商学院</h3></a></li>
+	</ul>
+</div>
+
+<!--底部end-->
+</body>
+
+
+<script src="../js/base.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+
+var username=null;  
+var ReportNum=null;
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+ReportNum=_self.ReportNum;
+
+if(ReportNum==null || ReportNum==''){
+	plus.webview.currentWebview().close();
+}
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}       
+
+
+function goUrl(tourl,headtxt){
+
+
+var parm = {"ReportNum" : ReportNum}
+clickedParm(tourl,tourl,'slide-in-right',parm,headtxt);
+	
+}
+
+
+</script>
+</html>

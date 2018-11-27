@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<link href="../css/style.css" type="text/css" rel="stylesheet"/>
+
+<title>E康云</title>
+
+    <style type="text/css">
+        /*body { background: #f08519; }*/
+
+         [v-cloak]{ display: none; }
+
+
+    </style>
+</head>
+
+<body>
+
+
+
+    <!--分类end-->
+    <!--健康计划start-->
+    <div class="p_plan mt15" id="ReportItem" style="margin-top:25px;">
+
+      <ul class="p_plan-list">
+
+        <li v-for="ReportRecord in ItemList" v-cloak>
+          <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-07.jpg" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>{{ ReportRecord.PlanNum }} </h4>
+              <p>{{ ReportRecord.CreateTime }}</p>
+            </div>
+            <div class="m_cell_ft" v-on:click="LookReport(ReportRecord.PlanNum)">
+              <i>查阅</i>
+            </div>
+          <div>
+        </li>
+
+        <li style="display:none;" id="nomsg">
+          <div class="blist">
+            <div class="m_cell_hd"><img src="../img/5-07.jpg" alt="" /></div>
+            <div class="m_cell_hd m_cell_primary">
+              <h4>您没有健康报告生成记录</h4>
+              
+            </div>
+
+          <div>
+        </li>
+      </ul>
+    </div>
+
+
+    
+   
+    
+
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+
+
+ var domainUrl = GetMvcApiDomain();
+
+var username=null;  
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+
+
+var vum = new Vue({
+    el: '#ReportItem',
+    data: function(){
+    	return {
+        ItemList: [],
+        where:" UserName='"+username+"'"
+     }
+    },
+    
+   mounted: function () {
+
+        this.$nextTick(function () {
+           
+         var self=this;
+         setTimeout(function(){
+         self.getMyReportList();
+         }, 150);
+            
+            
+
+    })
+
+    },
+
+    methods: {
+             getMyReportList: function () {
+                 var that=this;
+                 $.ajax({
+                     url: domainUrl + "api/PerPlan/getPerPlanList",
+                     type: 'get',
+                     dataType: "json",
+                     data: {pageIndex:1,pageSize:200,where:that.where},
+                     success: function (data) {
+                     	if (data.length==0){
+                     		$("#nomsg").show();
+                     	}else{
+                            $.each(data.RecordList, function (i, j) {
+
+                                that.ItemList.push({ number: (i + 1), PlanNum: data.RecordList[i].PlanNum, DoctorUser: data.RecordList[i].DoctorUser, DoctorName: data.RecordList[i].DoctorName, CreateTime: data.RecordList[i].CreateTime });
+                            });
+                      }
+
+
+                     },
+                     error: function () {
+                         plus.nativeUI.toast("网络错误，请稍后再试");
+                     }
+                 })
+             },
+             
+             LookReport:function(ReportNum){
+             var parm = {"PlanNum" : ReportNum}
+             clickedParm('MyProjectInfo.html','MyProjectInfo.html','slide-in-right',parm,'查看健康报告');
+             }
+
+    }
+
+});
+
+
+
+</script>
+
+</body>
+</html>

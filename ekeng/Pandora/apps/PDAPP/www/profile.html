@@ -1,0 +1,380 @@
+<!doctype html>
+<html>
+<head>
+<title>完善资料</title>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" >
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link rel="stylesheet" type="text/css" href="css/lib/CSSRESET.css">
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/lib/mobiscroll.min.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
+<link rel="stylesheet" type="text/css" href="css/lib/huimin.css">
+<script src="js/lib/jquery-2.1.3.min.js"></script>
+<script src="js/lib/mobiscroll.min.js"></script>
+<script>
+    $(function(){
+        
+        //初始化时间日期
+        setDateTime("#txt_birthday","date");
+        
+        //姓别选择
+        $(".sex label").on("click",function(){
+            
+            $(".sex label").removeClass("active");
+            $(".sex input").removeClass("checked");
+            $(this).prop("checked","checked");
+            $(this).addClass("active");
+            
+        });
+        
+        
+        //时间日期
+        function setDateTime(id,type){
+            var curr = new Date().getFullYear();
+            var opt = {
+                'time': {preset: 'time'},
+                'date': {preset: 'date'},
+                'datetime': {preset: 'datetime'},
+            }
+            $(id).scroller('destroy').scroller($.extend(opt[type], {
+                theme: 'android-holo',
+                mode: 'scroller',
+                display: 'bottom',
+                animate: 'fade',
+                lang: 'zh'
+            }));	 
+        }
+                
+    });
+</script>
+</head>
+<body>
+	<div class="_container" id="bodyinfo">
+	    <header class="header">
+            <a href="javascript:CloseCurrentView();" class="a_back"></a>
+	        <h1></h1>
+	    </header>
+	    <!-- header -->
+	
+		<article class="wrapper">
+            
+            <h2 class="h2_title">完善资料</h2>
+            
+            <div class="panel">
+               
+                <div class="name">
+                    <span></span>
+                    <input type="text" placeholder="姓名" v-model="ReallyName"/>
+                </div>
+                
+                <div class="sex">
+                    <span></span>
+                    <label><input type="radio" name="sex" value="1" v-model="Sex"/>男</label>
+                    <label><input type="radio" name="sex" value="2" v-model="Sex"/>女</label>
+                </div>
+                
+                <div class="birthday">
+                    <span></span>
+                    <input type="text" placeholder="出生年月" id="txt_birthday" v-model="Birthday"/>
+                </div>
+                
+                <div class="tall">
+                    <span></span>
+                    <input type="text" placeholder="身高" id="height" onKeyUp="HNoNum(event,this)" onBlur="checkNum(this)"/>
+                    <i>Cm</i>
+                </div>
+                
+                <div class="weight">
+                    <span></span>
+                    <input type="text" placeholder="体重" id="weight" onKeyUp="WNoNum(event,this)" onBlur="checkNum(this)"/>
+                    <i>Kg</i>
+                </div>
+                
+                <div class="action">
+                    <input type="button" value="跳过" class="btn_skip" @click="SkipNext"/>
+                    <input type="button" value="提交" class="btn_submit" id="btnsave" @click="PostSave"/>
+                </div>
+                
+            </div>
+		</article>
+		<!-- wrapper End -->
+	</div>
+</body>
+<script src="js/click.js"></script>
+<script src="js/public.js" type="text/javascript"></script>
+<script src="js/lib/vue20.min.js"></script>
+<script src="js/lib/hui.js"></script>
+<script src="js/lib/axios.min.js"></script>
+<script src="js/lib/qs.js"></script>
+<script>
+
+
+
+var username = "";
+var domainUrl = GetMvcApiDomain();
+function plusReady() { 
+var objuser=JSON.parse(plus.storage.getItem('user'));
+
+if(objuser==undefined || objuser==null || objuser==''){
+    CloseCurrentView();
+}
+else
+{
+    username = objuser.UserName;
+}
+
+
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+
+    new Vue({
+        el: '#bodyinfo',
+        data: function(){
+        return {
+        	UserName:username,
+        	ReallyName:"",
+        	NickName:"",
+            Sex: "",
+            PersonId:"",
+            Telphone:username,
+            Birthday: "",
+            height:"",
+            weight:""
+        }
+        },
+
+        mounted: function () {
+
+            this.$nextTick(function () {
+
+            })
+
+        },
+
+        methods: {
+
+           
+
+           SkipNext: function () {
+
+                clickedNoHead('Index.html','Index.html','slide-in-left','进入主页');
+
+
+            },
+
+
+            PostSave: function () {
+
+                if (this.ReallyName == "" || this.ReallyName == null) {
+                    hui.upToast('请输入姓名!');
+                    return false;
+                }
+
+
+
+                if (this.Sex == "" || this.Sex == null) {
+                    hui.upToast('请选择性别!');
+                    return false;
+                }
+                
+                
+                this.Birthday=document.getElementById("txt_birthday").value;
+                if (this.Birthday == "" || this.Birthday == null) {
+                    hui.upToast('请选择出生年月!');
+                    return false;
+                }
+                
+                this.height = document.getElementById("height").value;
+
+                if (this.height == "" || this.height == null) {
+                    hui.upToast('请输入身高!');
+                    return false;
+                }
+                
+                
+                this.weight = document.getElementById("weight").value;
+                if (this.weight == "" || this.weight == null) {
+                    hui.upToast('请输入体重!');
+                    return false;
+                }
+                
+                
+                this.SendSave(username,this.ReallyName,this.ReallyName,username,this.PersonId,this.Birthday,this.Sex,this.height,this.weight)
+
+
+            },
+            
+
+            
+            SendSave: function (UserName, ReallyName, NickName, Mobile, PersonId, Birthday,Sex,iHeight,iWeight) {
+                var that = this;
+                that.addInterceptors();
+                
+                axios.post(domainUrl +'api/MemberOperate/PostMemberProfile', Qs.stringify({
+                UserName:UserName,
+                ReallyName:ReallyName,
+                NickName:NickName,
+                Mobile:Mobile,
+                PersonId:PersonId,
+                Birthday:Birthday,
+                Sex:Sex,
+                iHeight:iHeight,
+                iWeight:iWeight
+                 })
+               )
+                .then(function (response) {
+                  	if(response.data.code=='200'){
+                  		hui.toast("资料完善成功!");
+
+                        clickedNoHead('shell.html','shell.html','slide-in-left','进入主页');
+
+                  		
+                  	}
+                  	else
+                  	{
+                  		hui.toast(response.data.msg);
+                  		return false;
+                  	}
+                   //console.log(response);
+                })
+                .catch(function (response) {
+                  console.log(response);
+                 });
+
+            },
+            
+        addInterceptors: function() {
+          axios.interceptors.request.use(function (config) {
+             console.log('开始请求')
+             config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+             document.getElementById("btnsave").value="正在提交中...";
+             document.getElementById("btnsave").disabled = true;        	
+             return config
+             }, function (error) {
+              console.log('请求失败')
+             document.getElementById("btnsave").value="提交错误";
+             document.getElementById("btnsave").disabled = false; 
+             hui.toast("网络错误!");
+             return Promise.reject(error)
+          })
+        axios.interceptors.response.use(function (config) {
+        document.getElementById("btnsave").value="提交成功";
+        
+        document.getElementById("btnsave").disabled = false;
+        console.log('接收响应')
+        return config
+        }, function (error) {
+        console.log('响应出错')
+        document.getElementById("btnsave").value="提交错误";
+        document.getElementById("btnsave").disabled = false;
+        hui.toast(Promise.reject(error));
+        return Promise.reject(error);
+      })
+    }
+  
+
+
+
+
+        }
+    })
+    
+
+
+  
+ 
+
+
+
+ function HNoNum(event,obj){ 
+        //响应鼠标事件，允许左右方向键移动 
+        event = window.event||event; 
+        if(event.keyCode == 37 | event.keyCode == 39){ 
+            return; 
+        } 
+        //先把非数字的都替换掉，除了数字和. 
+        obj.value = obj.value.replace(/[^\d.]/g,""); 
+        //必须保证第一个为数字而不是. 
+        obj.value = obj.value.replace(/^\./g,""); 
+        //保证只有出现一个.而没有多个. 
+        obj.value = obj.value.replace(/\.{2,}/g,"."); 
+        //保证.只出现一次，而不能出现两次以上 
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        if(obj.value<0)
+        {
+        obj.value=0;
+        };
+        if(obj.value>220)
+        {
+  	    obj.value=220;
+         }
+    } 
+    
+    
+     function WNoNum(event,obj){ 
+        //响应鼠标事件，允许左右方向键移动 
+        event = window.event||event; 
+        if(event.keyCode == 37 | event.keyCode == 39){ 
+            return; 
+        } 
+        //先把非数字的都替换掉，除了数字和. 
+        obj.value = obj.value.replace(/[^\d.]/g,""); 
+        //必须保证第一个为数字而不是. 
+        obj.value = obj.value.replace(/^\./g,""); 
+        //保证只有出现一个.而没有多个. 
+        obj.value = obj.value.replace(/\.{2,}/g,"."); 
+        //保证.只出现一次，而不能出现两次以上 
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        if(obj.value<0)
+        {
+        obj.value=0;
+        };
+        if(obj.value>300)
+        {
+  	    obj.value=300;
+         }
+    } 
+    
+    function checkNum(obj){ 
+        //为了去除最后一个. 
+        obj.value = obj.value.replace(/\.$/g,""); 
+    } 
+
+ 
+ 
+ function inspect(obj){
+   if(obj){
+      var regx = /^\d.+$/g;
+      var g = obj.value.match(regx);
+      //var value = parseInt(g);
+      var value = parseFloat(g);
+      if(value&&(value>100||value<50)){
+         alert("值必需在50-100之间");
+         if(obj.setSelectionRange){
+             obj.setSelectionRange(0,obj.value.length);
+             obj.focus();
+         }else if(obj.createTextRange){
+              var rng = obj.createTextRange();
+              rng.select();
+              obj.focus();
+          }
+      }else{
+          alert("非数字");
+      }
+   }
+}
+
+
+
+</script>
+</html>

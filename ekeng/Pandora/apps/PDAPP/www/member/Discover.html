@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+<title>发现</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link rel="stylesheet" type="text/css" href="../css/lib/CSSRESET.css">
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/discover.css">
+<script src="../js/lib/jquery-2.1.3.min.js"></script>
+<script>
+    $(function(){
+        
+        //选项卡切换
+        $(".tabs a").on("click",function(){
+            if(!$(this).hasClass("active")){
+                var $parent=$(this).parents(".tabs");
+                var _id=$(this).data("target");
+                $parent.find("a").removeClass("active");
+                $(this).addClass("active");
+                $parent.next(".tab_content").find(".tab_pane").hide();
+                $("#"+_id).fadeIn();
+            }
+        });        
+        
+    });
+</script>
+</head>
+<body>
+	<div class="_container clear">
+    	<header class="header">
+        	<a href="javascript:;" class="a_add">添加设备</a>
+			<h1>发现</h1>
+            <a href="javascript:;" class="a_alert">提醒</a>
+		</header>
+		<!-- header End -->
+        
+		<article class="wrapper">
+			<div class="main">	
+               
+            	<div class="tabs">
+            	    <a href="javascript:;" data-target="_tab1" class="active">资讯</a>
+            	    <a href="javascript:;" data-target="_tab2">话题</a>
+            	    <a href="javascript:;" data-target="_tab3">数据</a>
+            	</div>
+                <!-- tabs -->
+                
+                <div class="tab_content">
+                    <div class="tab_pane" id="_tab1">
+                       
+                        <div class="cnt">
+                            <div class="title">
+                                <div><img src="../img/icon_doctor.png" alt="" /></div>
+                                <div>
+                                    <h3>E康云</h3>
+                                    <p>
+                                        <span class="span_love">28</span>
+                                        <span class="span_loca">上海市</span>
+                                        <span class="span_time">15分钟以前</span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="describe">
+                                <p>
+                                    5元公益红包，让贫困女童继续求学梦想。女童是弱势群体中的弱势；今天的女童，将成为明天的母亲，帮助一名贫困女童，让贫困女童继续求学梦想。女童是弱势群体中的弱势；助一个人而是将成为明天的母亲，帮助一不仅为明天的母亲，帮助一名贫困女童。
+                                </p>
+                            </div>
+                            
+                            <div class="cfunc clearfix">
+                                <a href="javascript:;" class="a_like">  <i>喜欢</i></a>
+                                <a href="javascript:;" class="a_shared"><i>分享</i></a>
+                                <a href="javascript:;" class="a_mark">  <i>评论</i></a>
+                            </div>
+                        </div>
+                        <!-- cnt -->
+                        
+                        <div class="cnt">
+                            <div class="title">
+                                <div><img src="../img/icon_doctor_2.png" alt="" /></div>
+                                <div>
+                                    <h3>E康云-春蕾计划</h3>
+                                    <p>
+                                        <span class="span_love">28</span>
+                                        <span class="span_loca">上海市</span>
+                                        <span class="span_time">15分钟以前</span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="describe">
+                                <img src="../img/discover_pic_1.jpg" alt="" />
+                                <p>
+                                   5元公益红包，让贫困女童继续求学梦想。女童是弱势群体中的弱势；今天的女童，将成为明天的母亲，帮助一名贫困女童，让贫困女童继续求学梦想。
+                                </p>
+                            </div>
+                            
+                            <div class="comment">
+                                <div>
+                                    <img src="../img/icon_profile.png" alt="" />
+                                    <p><em>爱心小队：</em>真的很有爱心！支持你们！</p>
+                                </div>
+                                
+                                <div>
+                                    <img src="../img/icon_profile.png" alt="" />
+                                    <p><em>爱心小队：</em>真的很有爱心！支持你们！</p>
+                                </div>
+                                
+                                <div>
+                                    <img src="../img/icon_profile.png" alt="" />
+                                    <p><em>爱心小队：</em>真的很有爱心！支持你们！</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cfunc clearfix">
+                                <a href="javascript:;" class="a_like a_like_active">  <i>喜欢</i></a>
+                                <a href="javascript:;" class="a_shared"><i>分享</i></a>
+                                <a href="javascript:;" class="a_mark">  <i>评论</i></a>
+                            </div>
+                        </div>
+                        <!-- cnt -->
+                        
+                        <div class="cnt">
+                            <div class="title">
+                                <div><img src="../img/icon_doctor_2.png" alt="" /></div>
+                                <div>
+                                    <h3>E康云-春蕾计划</h3>
+                                    <p>
+                                        <span class="span_love">28</span>
+                                        <span class="span_loca">上海市</span>
+                                        <span class="span_time">15分钟以前</span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="describe">
+                                <img src="../img/discover_pic_2.jpg" alt="" />
+                                <p>
+                                    5元公益红包，让贫困女童继续求学梦想。女童是弱势群体中的弱势；今天的女童，将成为明天的母亲，帮助一名贫困女童，让贫困女童继续求学梦想。
+                                </p>
+                            </div>
+                            
+                            <div class="cfunc clearfix">
+                                <a href="javascript:;" class="a_like">  <i>喜欢</i></a>
+                                <a href="javascript:;" class="a_shared"><i>分享</i></a>
+                                <a href="javascript:;" class="a_mark">  <i>评论</i></a>
+                            </div>
+                        </div>
+                        <!-- cnt -->
+                        
+                    </div>
+
+                    <div class="tab_pane" id="_tab2">
+                        话题
+                    </div>
+                    
+                    <div class="tab_pane" id="_tab3">
+                        数据
+                    </div>
+                </div>
+                <!-- tab_content -->
+                
+                
+			</div>
+		</article>
+		<!-- wrapper End -->
+
+	</div>
+</body>
+</html>

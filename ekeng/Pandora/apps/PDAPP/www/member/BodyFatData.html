@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>体脂秤监测日志</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/sm.min.css">
+		<link rel="stylesheet" href="../css/Monitor.css">
+		<link rel="stylesheet" href="../css/calendar.css">
+		<link rel="stylesheet" href="../css/lib/huimin.css">
+	    <link rel="stylesheet" href="../css/DataQuery.css">
+    <link rel="stylesheet" href="../css/DataList.css">
+    <script src="../js/base.js"></script>
+		<style>
+	   [v-cloak]{ display: none; }
+       
+       .sp03 {
+       	font-size: 16px !important;
+       	            float: right;
+					color: #fff;
+					text-shadow:0 0 5px #CCCCCC, 0 0 10px #CCCCCC, 0 0 15px #CCCCCC, 0 0 20px #095816, 0 0 25px #095816, 0 0 30px #095816, 0 0 50px #095816, 0 0 80px #095816, 0 0 100px #095816, 0 0 150px #095816
+				}
+
+        .sp01 {
+        	font-size: 16px !important;
+					color: #222;
+					/*text-shadow: 0px 2px 3px #555;*/
+				}
+				
+	.sp11 {
+    font-size: 18px !important;
+    font-family: "Times New Roman", Times, serif;
+    padding-right: 2px;
+    font-weight: bold;
+    float: left;
+    height: 20px;!important;
+    line-height: 20px;!important;
+
+				}
+				
+				
+				
+				
+
+</style>
+	</head>
+
+	<body>
+		<div class="page-group">
+			<div class="page page-current">
+				<header class="bar bar-nav">
+					<a class="left bar-nav-mt1 back" href="javascript:CloseCurrentView();">
+						<img src="../img/5-13.png" alt="">
+					</a>
+					<h2 class="title color-white">体脂秤监测日志</h2>
+
+					<a href="javascript:BindDeviceBluOtc('9');" class="right bar-nav-mt2 right-more">
+						<h4><font color="#FFFFFF">设备连接</font></h4>
+					</a>
+				</header>
+
+				<div class="content">
+					<div class="databg">
+						<div class="databg-showall">
+							<div class="databg-showdata">
+								21
+							</div>
+							<div class="databg-showinfo">
+								<p class="databg-showinfo-week">星期六</p>
+								<p class="databg-showinfo-yearmonth">2016年12月</p>
+								<span class="databg-showinfo-text">
+                            未测量
+                        </span>
+							</div>
+						</div>
+					</div>
+            <div class="content-block my-content-block-data" style="background-color:#fff">
+
+
+                <div class="calendar-block">
+                    <div id='calendar-inline'></div>
+                </div>
+            </div>
+
+				
+<div class="web_container" id="app">
+		<div class="web_con_box01">
+	</div>
+	<div class="web_con_box01">
+		<span class="con_box01_t2">最近监测</span>
+		<div class="con_box01_t2list" v-if="TopShow==1">
+			<span class="sp11">{{TopTime}}</span>
+		</div>
+		<div class="con_box01_t2list" v-else>
+			<span class="sp11">没有监测哦</span>
+		</div>
+	</div>
+	<div class="con_box01_t3list clearfix" v-show="TopShow==1">
+    	<ul>
+        <li><span class="sp01">体重</span><span class="sp03">{{WEIGHT}}</span></li>
+    	<li><span class="sp01">BMI</span><span class="sp03">{{BMI}}</span></li>
+    	<li><span class="sp01">体脂率</span><span class="sp03">{{BFP}}</span></li>
+    	<li><span class="sp01">体水分</span><span class="sp03">{{WATER}}</span></li>
+    	<li><span class="sp01">基础代谢量</span><span class="sp03">{{BMR}}</span></li>
+    	<li><span class="sp01">皮下脂肪率</span><span class="sp03">{{SUBFAT}}</span></li>
+    	<li><span class="sp01">内脏脂肪</span><span class="sp03">{{VISFAT}}</span></li>
+    	<li><span class="sp01">骨骼肌率</span><span class="sp03">{{MUSCLE}}</span></li>
+    	<li><span class="sp01">骨量</span><span class="sp03">{{BONE}}</span></li>
+    	<li><span class="sp01">蛋白质</span><span class="sp03">{{PROTEIN}}</span></li>
+        </ul>
+    </div>
+    
+    
+    <div v-for="(Item,index) in MonitorList" v-cloak>
+    	<div class="web_con_box02">
+		<span class="con_box01_t2">第{{index+1}}次监测</span>
+		<div class="con_box01_t2list">
+			<span class="sp11">{{Item.createTime}}</span>
+		</div>
+
+
+	</div>
+	
+		<div class="con_box01_t3list clearfix">
+    	<ul>
+        <li><span class="sp01">体重</span><span class="sp03">{{Item.WEIGHT}}</span></li>
+    	<li><span class="sp01">BMI</span><span class="sp03">{{Item.BMI}}</span></li>
+    	<li><span class="sp01">体脂率</span><span class="sp03">{{Item.BFP}}</span></li>
+    	<li><span class="sp01">体水分</span><span class="sp03">{{Item.WATER}}</span></li>
+    	<li><span class="sp01">基础代谢量</span><span class="sp03">{{Item.BMR}}</span></li>
+    	<li><span class="sp01">皮下脂肪率</span><span class="sp03">{{Item.SUBFAT}}</span></li>
+    	<li><span class="sp01">内脏脂肪</span><span class="sp03">{{Item.VISFAT}}</span></li>
+    	<li><span class="sp01">骨骼肌率</span><span class="sp03">{{Item.MUSCLE}}</span></li>
+    	<li><span class="sp01">骨量</span><span class="sp03">{{Item.BONE}}</span></li>
+    	<li><span class="sp01">蛋白质</span><span class="sp03">{{Item.PROTEIN}}</span></li>
+        </ul>
+    </div>
+	
+    </div>
+
+    
+
+    
+
+</div>	
+				</div>
+
+			</div>
+		</div>
+		
+        <script src="../js/lib/jquery-2.1.3.min.js"></script>
+		<script src="../js/lib/hui.js"></script>
+		
+		<script src="../js/Monitor.js"></script>
+		<script src="../js/my-sm.js"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+
+<script>
+	var domainUrl = GetMvcApiDomain();
+	var username=null;
+	var wvs=null;
+function plusReady(){
+back();
+//wvs=plus.webview.all();
+//for(var i=0;i<wvs.length;i++){
+//alert("webview"+i+": "+wvs[i].getURL());
+//alert("webview"+i+": "+wvs[i].id);
+//}
+var ws=plus.webview.currentWebview();
+var objuser = JSON.parse(plus.storage.getItem('user'));
+if(objuser!=null){
+username=objuser.UserName;
+}else{
+
+username = plus.webview.currentWebview().username;
+
+}
+//
+ ShowBody(username);
+ initCalendar(username);
+
+
+
+
+
+//plus.key.addEventListener("backbutton",quit());
+
+//plus.key.addEventListener("backbutton",function(){
+	//if(wvs.length >1)
+		//plus.webview.currentWebview().close();
+	//else
+	 //	plus.runtime.quit();
+
+	//});
+}
+if(window.plus){
+	plusReady();
+}else{
+	document.addEventListener('plusready',plusReady,false);
+}	
+
+
+
+
+        
+    function initCalendar(UserName){    
+         $.init();
+         var cjuery = new util.Cjuery();
+        //对对应日期设置点_data为需要传入日期，_color为需要传入的颜色
+        function showDateText(dateYear,dateMonth,dateDay,dataDate) {
+            var today = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
+            var dataYear = dateYear;
+            var dataMonth = parseInt(dateMonth)+1;
+            var yearMonth = dataYear+"年"+dataMonth+"月";
+            var week = today[new Date(dateYear, dateMonth, dateDay).getDay()];
+            $(".databg-showinfo-yearmonth").text(yearMonth);
+            $(".databg-showdata").text(dateDay>9?dateDay:'0'+dateDay);
+            $(".databg-showinfo-week").text(week);
+//            console.log(curElemDate)
+            var data = util.getGlobalData();
+            var filterData = data.filter(function (item) {
+                return item.originalDate == dataDate;
+            });
+            filterData.length >0? $(".databg-showinfo-text").text(filterData[0].content):$(".databg-showinfo-text").text('未完成');
+        }
+
+        var calendarOption ={
+            value:[new Date()],
+            toolbar:true,
+            monthPicker:true,
+            yearPicker:true,
+            onChange:function (p, values, displayValues) {
+
+            },
+            onDayClick:function (p, dayDom, dateYear, dateMonth, dateDay) {
+                var curElem = $(dayDom);
+                var curElemDate = curElem.data("date");
+                showDateText(dateYear,dateMonth,dateDay,curElemDate);
+                var dataYear = dateYear;
+               var dataMonth = (parseInt(dateMonth)+1)>9?(parseInt(dateMonth)+1):'0'+(parseInt(dateMonth)+1);
+               var dateDay = dateDay>9?dateDay:'0'+dateDay;
+               var theDay=dataYear+dataMonth+dateDay
+               hui.alert(username);
+               vum.getDayRecord(username,theDay);
+               vum.MonitorList=[]
+                //alert(theDay);
+            },
+            onOpen:function (p) {
+
+            },
+            onMonthAdd:function (p,theThisMonth) {
+                console.log(p)
+                url = domainUrl + 'api/HItemRecord/getMonitorBodyFatRecord';
+                if(util.getCurrentMonth() != p.currentMonth || util.getCurrentYear() != p.currentYear){
+                    util.setCurrentMonth(p.currentMonth);
+                    util.setCurrentYear(p.currentYear);
+                    cjuery.request(url,{UserName:username,currentMonth:p.currentMonth+1,currentYear:p.currentYear}).then(function (data) {
+                        var dateshow = util.formatData(data.list);
+                        util.setGlobalData(dateshow);
+                        dateshow.forEach(function (item) {
+                                util.dateshow(item);//把数据显示在日历上
+                        });
+                        var nowDate=new Date(p.value[0]);
+                        showDateText(nowDate.getFullYear(),nowDate.getMonth(),nowDate.getDate(),nowDate.getFullYear()+'-'+nowDate.getMonth()+'-'+ nowDate.getDate());
+
+                    });
+                }
+
+            },
+            onMonthYearChangeEnd:function (p,currentYear,currentMonth) {
+            },
+            onMonthChangeEnd:function (data) {
+//                console.log(data)
+            }};
+        $("#calendar-inline").calendar(calendarOption);
+}
+
+
+
+
+
+
+
+
+			
+
+			function daycode() {
+				var now = new Date();
+				var year = now.getFullYear(); //年
+				var month = now.getMonth() + 1; //月
+				var day = now.getDate(); //日
+
+				if(month < 10)
+					month = "0" + month;
+
+				if(day < 10)
+					day = "0" + day;
+
+				var code = year.toString() + month.toString() + day.toString()
+				return(code);
+			}
+			
+     function ShowBody(UserName){
+     	
+     
+			vum=new Vue({
+				el: '#app',
+				data: function() {
+					return {
+						MonitorList: [],
+						TopShow:0,
+						TopTime:"--",
+						BFP:"--",
+						WEIGHT:"--",
+						BMI:"--",
+						WATER:"--",
+						BMR:"--",
+						SUBFAT:"--",
+						VISFAT:"--",
+						MUSCLE:"--",
+						BONE:"--",
+						PROTEIN:"--"
+						
+					}
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+                      this.axiosGetLoadding();
+				      this.getTopRecord(UserName);
+
+					})
+
+				},
+
+				methods: {
+
+					getTopRecord: function(UserName) {
+
+						var that = this;
+
+						axios.get(domainUrl + 'api/HItemRecord/getMonitorBodyFatTop', {
+								params: {
+									UserName: UserName
+								}
+							})
+							.then(function(response) {
+								if (response.data.code=="200"){
+								that.TopShow=1;
+								that.BFP = response.data.BFP;
+							    that.WEIGHT = response.data.WEIGHT;
+							    that.BMI = response.data.BMI;
+							    that.WATER = response.data.WATER;
+							    that.BMR = response.data.BMR;
+							    that.SUBFAT = response.data.SUBFAT;
+							    that.VISFAT = response.data.VISFAT;
+							    that.MUSCLE = response.data.MUSCLE;
+							    that.BONE = response.data.BONE;
+							    that.PROTEIN = response.data.PROTEIN;
+							    that.TopTime = response.data.TopTime;
+							   }
+								else
+								{
+									that.TopShow=0;
+								}
+									
+
+								
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+					
+					getDayRecord: function(UserName, daycode) {
+
+						var that = this;
+
+						axios.get(domainUrl + 'api/HItemRecord/getMonitorBodyFatDayRecord', {
+								params: {
+									UserName: UserName,
+									daycode: daycode
+								}
+							})
+							.then(function(response) {
+								var recordlist = response.data.list;
+								that.MonitorList = [];
+
+								each(recordlist, function(i, arr) {
+									that.MonitorList.push({
+										number: (i + 1),
+										mid: arr.id,
+										createTime: arr.createTime,
+										BFP: arr.BFP,
+										WEIGHT: arr.WEIGHT,
+										BMI: arr.BMI,
+										WATER: arr.WATER,
+										BMR: arr.BMR,
+										SUBFAT: arr.SUBFAT,
+										VISFAT: arr.VISFAT,
+										MUSCLE: arr.MUSCLE,
+										BONE: arr.BONE,
+										PROTEIN: arr.PROTEIN
+									});
+								});
+								
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+
+					
+					axiosSetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('正在操作中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("操作失败");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("操作失败");
+							return Promise.reject(error)
+						})
+					},
+
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					}
+
+				}
+			})
+
+       }
+
+
+function BindDeviceBluOtc(Tval){
+
+	 var Intent = plus.android.importClass("android.content.Intent");
+	 var Bundle = plus.android.importClass("android.os.Bundle");
+	 var main = plus.android.runtimeMainActivity();
+	 var TodoActivity =plus.android.importClass("com.cnnet.otc.health.activities.DetectBle3Activity");
+
+	 TodoActivity = plus.android.importClass("com.cnnet.otc.health.activities.DetectBle3Activity");
+		//血氧蓝牙4.0设备
+		if(Tval =='0'){
+			TodoActivity = plus.android.importClass("com.cnnet.otc.health.activities.DetectBle2Activity");
+		}
+		if(Tval =='3'){
+			TodoActivity = plus.android.importClass("com.cnnet.otc.health.activities.DetectBle4Activity");
+		}
+		if(Tval =='9'){
+			TodoActivity = plus.android.importClass("com.kingnewblesdk.ScanActivity");
+		}
+		var intent = new Intent(main, TodoActivity.class);
+		var bundle = new Bundle();
+		//传设备类型和会员号
+		bundle.putString("DEIVCE_TYPE",Tval);
+		bundle.putString("EXTRA_MEMBER_UNIQUEKEY",username);
+		intent.putExtras(bundle);
+		main.startActivity(intent);
+       plus.nativeUI.closeWaiting();
+}
+
+
+
+
+		</script>
+
+	</body>
+
+</html>

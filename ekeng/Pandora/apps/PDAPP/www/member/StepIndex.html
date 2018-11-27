@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="white" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<link type="text/css" href="../css/step.css" rel="stylesheet" >
+
+<title>手环</title>
+</head>
+<body>
+<div class="web_header web_jb">
+	<div class="web_head">
+		<a class="web_h_n1" href="javascript:CloseCurrentView();"></a>
+		<a class="web_h_n2x" href="javascript:clickedNoHead('StepDayList.html','StepDayList.html','slide-in-left');"></a>
+		<div class="web_h_nx" onclick="showPrompt();" id="connectStat">连接设备</div>
+		<h3>今天</h3>
+	</div>
+	<div class="web_head_t">
+		<div class="head_today">步数</div>
+		<div class="web_bushu_bigsize" id="walkSteps">0</div>
+		<div class="web_bushu_list clearfix">
+			<div class="web_bushu_list01">
+				<div class="web_bushu_list0101">
+					<span id="calories">0</span>
+					<p>消耗卡路里</p>
+				</div>
+			</div>
+			<div class="web_bushu_list02">
+				<div class="web_bushu_list0101">
+					<span>5000</span>
+					<p>目标步数</p>
+				</div>
+			</div>
+			<div class="web_bushu_list03">
+				<div class="web_bushu_list0102">
+					<span id="distance">0</span>
+					<p>行走公里数</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="web_container">
+	<div class="web_sh_con01">
+		<ul>
+			<li class="sh_con01_li01">
+				<div class="sh_con01_t"><span>历史记录</span><span></span></div>
+				<div class="sh_con01_data">查看</div>
+				<a class="con01_li01_a" href="javascript:clickedNoHead('StepDayList.html','StepDayList.html','slide-in-left');"></a>
+			</li>
+			<li class="sh_con01_li02">
+				<div class="sh_con01_t"><span>睡眠</span><span></span></div>
+				<div class="sh_con01_data">睡眠查看</div>
+				<a class="con01_li01_a" href="#"></a>
+			</li>
+		</ul>
+	</div>
+</div>
+<!--<script>
+var count = (function() {
+    var timer;
+    var i = 0;
+    function change(tar) {
+        i++;
+        document.getElementById('count').innerHTML=i;
+        if (i === tar) {
+            clearTimeout(timer);
+            return false;
+        }
+        timer = setTimeout(function() {
+            change(tar)
+        }, 1)
+
+    }
+    return change;
+})()
+count(380)
+</script>-->
+</body>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script type="text/javascript">
+//var username='13601812485';
+
+
+var username=null;  
+var domainUrl = GetMvcApiDomain();
+var theDate = dateConvert(getNowFormatDate()); 
+function plusReady() { 
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+
+
+
+
+getStepCountToday(username,theDate);
+setInterval("getStepCountToday(username,theDate)", 30*1000); 
+
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+
+  
+         
+ function getStepCountToday(username,thedate) {
+  
+	          	$.ajax({
+             	url: domainUrl + "api/IotLx/getStepData",
+                type: 'get',
+                dataType: "json",
+                async:false,
+                data: {UserName:username,theDate:thedate},
+                success: function (data) {
+                	if (data.code=="200"){
+                    document.getElementById("walkSteps").innerHTML=data.walkSteps;
+                    document.getElementById("calories").innerHTML=data.calories;
+                    document.getElementById("distance").innerHTML=Number(data.distance)/1000;
+                	}else{
+                	plus.nativeUI.toast("读取数据错误，请稍后再试");
+                	return;
+                    }
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                 }
+            })
+	                  
+
+ }
+ 
+ 
+ document.addEventListener( "plusready",  function()
+{
+
+// 声明的JS“扩展插件别名”
+    var _BARCODE = 'plugintest',
+        B = window.plus.bridge;
+    var plugintest =
+{
+    	PluginTestFunction : function (Argus1, Argus2, successCallback, errorCallback )
+		{
+			var success = typeof successCallback !== 'function' ? null : function(args)
+			{
+				successCallback(args);
+			},
+			fail = typeof errorCallback !== 'function' ? null : function(code)
+			{
+				errorCallback(code);
+			};
+			callbackID = B.callbackId(success, fail);
+
+			return B.exec(_BARCODE, "PluginTestFunction", [callbackID, Argus1, Argus2]);
+		}
+    };
+    window.plus.plugintest = plugintest;
+}, true );
+ 
+ 
+function showPrompt(){
+			var bts=["确认","取消"];
+			plus.nativeUI.prompt("请输入设备序列号(SN)",function(e){
+			var i=e.index;
+			if(i=="0"){
+				   //确定
+				    if(e.value == ""){
+				       plus.nativeUI.toast("序列号输入格式不正确",{duration:"long"});
+				    }else{
+				    	//e.value="0301570101062540";
+				    	pluginShow(e.value);
+				    }
+
+				}else{
+				  //取消
+				}
+				outLine( "按\""+((i>=0)?bts[e.index]:"返回")+"\"关闭："+e.value );
+			},"","请输入设备序列号",bts);
+}
+
+
+
+		function pluginShow(sn) {
+			plus.nativeUI.showWaiting("正在连接设备...请稍等!");
+			plus.plugintest.PluginTestFunction(sn,username,
+				function(res){
+					//alert("succ:"+res);
+					if(res == "0"){
+						plus.nativeUI.toast("设备连接成功.",{duration:"long"});
+						 plus.nativeUI.closeWaiting();
+						 
+						 document.getElementById("connectStat").innerHTML="已连接";
+						 getStepCountToday(username,theDate);
+						//clicked('TestMenu.html',true);
+					}
+					if(res == "1"){
+						plus.nativeUI.toast("根据SN,未获取到设备注册信息.",{duration:"long"});
+						plus.nativeUI.closeWaiting();
+					}
+					if(res == "2"){
+						plus.nativeUI.toast("未找到设备!",{duration:"long"});
+						plus.nativeUI.closeWaiting();
+					}
+					if(res == "3"){
+						plus.nativeUI.toast("数据未同步到云端!",{duration:"long"});
+						plus.nativeUI.closeWaiting();
+					}
+					if(res == "4"){
+						//未开通蓝牙跳转到系统开通蓝牙界面
+						plus.nativeUI.toast("请打开蓝牙再试!",{duration:"long"});
+						plus.nativeUI.closeWaiting();
+
+					}
+					if(res == "5"){
+						plus.nativeUI.alert("蓝牙设备不支持4.0");
+						plus.nativeUI.closeWaiting();
+					}
+					if(res == "-1"){
+						plus.nativeUI.alert("未找到设备!");
+						plus.nativeUI.closeWaiting();
+					}
+				},
+				function(result){
+					plus.nativeUI.alert("fail:"+result);
+					plus.nativeUI.closeWaiting();
+				});
+		}
+
+ 
+</script>
+</html>

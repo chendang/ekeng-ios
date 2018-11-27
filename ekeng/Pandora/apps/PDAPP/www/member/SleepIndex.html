@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="white" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<link type="text/css" href="../css/sleep.css" rel="stylesheet" >
+
+<title>手环</title>
+</head>
+<body>
+<div class="web_header ">
+	<div class="web_head">
+		<a class="web_h_n1" href="javascript:CloseCurrentView();"></a>
+		<a class="web_h_n2x" href=""></a>
+		<div class="web_h_nx" onclick="showPrompt();" id="connectStat">连接设备</div>
+
+		<h3>睡眠</h3>
+	</div>
+	<div class="web_head_t">
+		<div class="head_today">今天</div>
+		<div class="head_today_zhuangtai">
+			<span class="zt01"><i></i>深睡</span>
+			<span class="zt02"><i></i>浅睡</span>
+			<span class="zt03"><i></i>清醒</span>
+		</div>
+		<div class="head_chart">
+			<div class="chart">
+				<div class="chart_b"></div>
+				<span class="chartsp chart_zt01" style="width:10%;"><i></i></span>
+				<span class="chartsp chart_zt02" style="width:5%;"><i></i></span>
+				<span class="chartsp chart_zt03" style="width:10%;"><i></i></span>
+				<span class="chartsp chart_zt01" style="width:10%;"><i></i></span>
+				<span class="chartsp chart_zt02" style="width:5%;"><i></i></span>
+				<span class="chartsp chart_zt01" style="width:30%;"><i></i></span>
+				<span class="chartsp chart_zt02" style="width:7%;"><i></i></span>
+				<span class="chartsp chart_zt01" style="width:6%;"><i></i></span>
+				<span class="chartsp chart_zt02" style="width:7%;"><i></i></span>
+				<span class="chartsp chart_zt03" style="width:10%;"><i></i></span>
+			</div>
+			<div class="chart_date clearfix"><span class="f_left">11:00</span><span class="f_right">07:15</span></div>
+		</div>
+	</div>
+</div>
+<div class="web_container">
+	<div class="web_con_box01">
+		<span class="con_box01_t">睡眠时间</span>
+		<div class="con_box01_list">
+			<span>8</span>小时<span>15</span>分钟
+		</div>
+	</div>
+	<div class="web_con_box01">
+		<span class="con_box01_t1">睡眠质量</span>
+		<div class="con_box01_list01">
+			<ul>
+				<li><span>深睡</span><div class="box02_li">7小时5分钟</div>
+					<div class="box02_line" style="width:70%;"></div>
+				</li>
+				<li><span>浅睡</span><div class="box02_li">1小时0分钟</div>
+					<div class="box02_line" style="width:20%;"></div>
+				</li>
+				<li><span>清醒</span><div class="box02_li">10分钟</div>
+					<div class="box02_line" style="width:5%;"></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="web_con_box02">
+		<div class="con_box02">
+			<span>今天</span><div class="con_box02_list">6小时55分钟</div>
+		</div>
+	</div>
+	
+		<div class="web_con_box02">
+		<div class="con_box02">
+			<span>今天</span><div class="con_box02_list">6小时55分钟</div>
+		</div>
+	</div>
+</div>
+</body>
+
+
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+
+<script src="../js/lib/vue20.min.js"></script>
+<script src="../js/lib/hui.js"></script>
+<script src="../js/lib/axios.min.js"></script>
+<script src="../js/lib/qs.js"></script>
+
+<script>
+
+
+			
+var domainUrl = GetMvcApiDomain();
+ 
+var username=null;  
+function plusReady() { 
+	
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+back();
+
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+
+
+ document.addEventListener( "plusready",  function()
+{
+
+// 声明的JS“扩展插件别名”
+    var _BARCODE = 'plugintest',
+        B = window.plus.bridge;
+    var plugintest =
+    {
+    	PluginTestFunction : function (Argus1, Argus2, successCallback, errorCallback )
+		{
+			var success = typeof successCallback !== 'function' ? null : function(args)
+			{
+				successCallback(args);
+			},
+			fail = typeof errorCallback !== 'function' ? null : function(code)
+			{
+				errorCallback(code);
+			};
+			callbackID = B.callbackId(success, fail);
+
+			return B.exec(_BARCODE, "PluginTestFunction", [callbackID, Argus1, Argus2]);
+		}
+    };
+    window.plus.plugintest = plugintest;
+}, true );
+
+
+
+function pluginConnect(sn) {
+			plus.nativeUI.showWaiting("正在连接设备...请稍等!");
+			plus.plugintest.PluginTestFunction(sn,username,
+				function(res){
+					//alert("succ:"+res);
+					if(res == "0"){
+						plus.nativeUI.toast("设备连接成功.",{duration:"long"});
+						 plus.nativeUI.closeWaiting();
+						 
+						 document.getElementById("connectStat").innerHTML="已连接";
+						 
+						 
+
+					}
+					if(res == "1"){
+						plus.nativeUI.toast("根据SN,未获取到设备注册信息.",{duration:"long"});
+						plus.nativeUI.closeWaiting();
+					}
+					if(res == "2"){
+						plus.nativeUI.toast("未找到设备!",{duration:"long"});
+						plus.nativeUI.closeWaiting();
+					}
+					if(res == "3"){
+						plus.nativeUI.toast("数据未同步到云端!",{duration:"long"});
+						plus.nativeUI.closeWaiting();
+					}
+					if(res == "4"){
+						//未开通蓝牙跳转到系统开通蓝牙界面
+						plus.nativeUI.toast("请打开蓝牙再试!",{duration:"long"});
+						plus.nativeUI.closeWaiting();
+
+					}
+					if(res == "5"){
+						plus.nativeUI.alert("蓝牙设备不支持4.0");
+						plus.nativeUI.closeWaiting();
+					}
+					if(res == "-1"){
+						plus.nativeUI.alert("未找到设备!");
+						plus.nativeUI.closeWaiting();
+					}
+				},
+				function(result){
+					plus.nativeUI.alert("fail:"+result);
+					plus.nativeUI.closeWaiting();
+				});
+		}
+
+
+		//参考方法调用
+		function pluginShow(SleepData,utc) {
+			plus.nativeUI.showWaiting("正在读取数据...请稍等!");
+			//参数1 ：sleeps data数据; 参数2 :UTC
+//			plus.sleepdata.analyse("1e1e1e01191e1e02020101031e1e1e1e1e1e141e1e1e040e1e1e0a1e11071e1e0a000006000000000000000000000000000000001e1d1e04010718050000000a11000000010908000000010100000101001e03000000070c05000e0000150f0200000013001800030f060303000300000000001e000201080c00030c00000e1c071e07000e00001e000009140b1e031e001e011e1e1e1e1e1e1e1e1e1e0b0c1e160b0e1208021c101e011e08171e1e1e1e0a1e1d1e1e1c1e1e011e0b040a1e080b0f1e1e1e10151e1e011e1e0a090000000200000001010100000b00031e1e1e1e0b1e1408051e12001e08131e091e1e19061a1e1e080c181e1e1e1e1e1e1e051e1e1c141a1e0b0c1e1e1e1e1e1e1e1e1e1e1e10","1494761999",
+			plus.sleepdata.analyse(SleepData,utc,
+				function(res){
+					plus.nativeUI.closeWaiting();
+					alert( res[0]  + "_" + res[1]  )
+				},
+				function(result){
+					alert("fail:"+result);
+					plus.nativeUI.closeWaiting();
+				});
+		}
+		
+function showPrompt(){
+			var bts=["确认","取消"];
+			plus.nativeUI.prompt("请输入设备序列号(SN)",function(e){
+			var i=e.index;
+			if(i=="0"){
+				   //确定
+				    if(e.value == ""){
+				       plus.nativeUI.toast("序列号输入格式不正确",{duration:"long"});
+				    }else{
+				    	//e.value="0301570101062540";
+				    	pluginConnect(e.value);
+				    }
+
+				}else{
+				  //取消
+				}
+				outLine( "按\""+((i>=0)?bts[e.index]:"返回")+"\"关闭："+e.value );
+			},"","请输入设备序列号",bts);
+}
+		
+		
+		
+		
+function getSleepDataYesterDay(username,thedate) {
+  
+	          	$.ajax({
+             	url: domainUrl + "api/IotLx/getStepData",
+                type: 'get',
+                dataType: "json",
+                async:false,
+                data: {UserName:username,theDate:thedate},
+                success: function (data) {
+                	if (data.code=="200"){
+                    document.getElementById("walkSteps").innerHTML=data.walkSteps;
+                    document.getElementById("calories").innerHTML=data.calories;
+                    document.getElementById("distance").innerHTML=Number(data.distance)/1000;
+                	}else{
+                	plus.nativeUI.toast("读取数据错误，请稍后再试");
+                	return;
+                    }
+               },
+                error: function () {
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                 }
+            })
+	                  
+
+ }
+		
+
+</script>
+
+
+</html>

@@ -1,0 +1,1246 @@
+<!doctype html>
+<html>
+<head>
+<title>个人健康管理--生活习惯-评估</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link type="text/css" href="../css/style.css" rel="stylesheet" />
+
+
+</head>
+<body>
+
+<!--当前栏目名start-->
+<div class="assess_name">
+	<h2>健康评估</h2>
+	<i class="icon icon_circle icon_circle_default"></i>
+</div>
+<div class="assess_line10"></div>
+<!--当前栏目名end-->
+<!--健康评估start-->
+<div class="assess_content assess_jkpg" id="ItemChart">
+	<h3>重要数据变化</h3>
+
+
+<div class="tubiao" id="BP" style="display: none;">
+	
+</div>
+            
+<div class="tubiao" id="BP" style="display: none;">
+</div>
+
+ <div class="tubiao" id="PR" style="display: none;">
+</div>
+
+ <div class="tubiao" id="WAIST" style="display: none;">
+</div>
+
+ <div class="tubiao" id="SpO2" style="display: none;">
+</div>
+
+ <div class="tubiao" id="GLU" style="display: none;">
+</div>
+
+ <div class="tubiao" id="TEMP" style="display: none;">
+</div>
+
+ <div class="tubiao" id="BMI" style="display: none;">
+</div>
+
+ <div class="tubiao" id="BFP" style="display: none;">
+</div>
+
+ <div class="tubiao" id="CHOL" style="display: none;">
+</div>
+
+ <div class="tubiao" id="TG" style="display: none;">
+</div>
+
+ <div class="tubiao" id="UA" style="display: none;">
+</div>
+
+ <div class="tubiao" id="U_PH" style="display: none;">
+</div>
+
+ <div class="tubiao" id="SG" style="display: none;">
+</div>
+            
+
+</div>
+	
+
+<div class="assess_line10"></div>
+<div id="ManageData">
+<div class="assess_content assess_jkpg" v-cloak>
+	<h3>现阶段主要危险因素</h3>
+	<table class="assess_jkpg_table">
+		<tr class="assess_tr_bg">
+			<td rowspan="2">1</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeBP}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>血压110mmHg～120mmHg/70mmHg～80mmHg</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td rowspan="2">2</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangePR}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>脉率60-100</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td rowspan="2">3</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeWAIST}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>腰围60-200</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td rowspan="2">4</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeSpO2}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>血氧97%～99%</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td rowspan="2">5</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeGLU}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>血糖4.8mmol/L～5.2mmol/L</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td rowspan="2">6</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeTemp}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>体温36.7℃～37.1℃</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td rowspan="2">7</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeBMI}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>体质18.5-22</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td rowspan="2">8</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeBFP}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>脂肪率18%～22%</td>
+		</tr>
+		<tr class="assess_tr_bg">
+			<td rowspan="2">9</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeCHOL}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>胆固醇3.1mmol/L～5.18mmol/L</td>
+		</tr>
+		
+		<tr class="assess_tr_bg">
+			<td rowspan="2">10</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeTG}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>甘油三脂0.56mmol/L～1.5mmol/L</td>
+		</tr>
+		
+		<tr class="assess_tr_bg">
+			<td rowspan="2">11</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeUA}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>尿酸6-12</td>
+		</tr>
+		
+				<tr class="assess_tr_bg">
+			<td rowspan="2">12</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeU_PH}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>尿PH值6.0-7.5</td>
+		</tr>
+		
+				<tr class="assess_tr_bg">
+			<td rowspan="2">13</td>
+			<td>危险因素</td>
+			<td>{{DangeData.DangeSG}}</td>
+		</tr>
+		<tr>
+			<td>正常参考</td>
+			<td>尿比重1.005～1.025</td>
+		</tr>
+		
+		
+	</table>
+</div>
+<div class="assess_line10"></div>
+<div class="assess_content assess_jkpg" v-cloak>
+	<h3>下阶段主要管理目标</h3>
+	<ul>
+		<li>
+			<img src="../img/13_09-04.png" alt="" />
+			<div>&nbsp;{{ObjData.ObjItem1}}</div>
+		</li>
+		<li>
+			<img src="../img/13_09-05.png" alt="" />
+			<div>&nbsp;{{ObjData.ObjItem2}}</div>
+		</li>
+		<li>
+			<img src="../img/13_09-06.png" alt="" />
+			<div>&nbsp;{{ObjData.ObjItem3}}</div>
+		</li>
+		<li>
+			<img src="../img/13_09-07.png" alt="" />
+			<div>&nbsp;{{ObjData.ObjItem4}}</div>
+		</li>
+		<li>
+			<img src="../img/13_09-08.png" alt="" />
+			<div>&nbsp;{{ObjData.ObjItem5}}</div>
+		</li>
+		<li>
+			<img src="../img/13_09-09.png" alt="" />
+			<div>&nbsp;{{ObjData.ObjItem6}}</div>
+		</li>
+		<li>
+			<img src="../img/13_09-10.png" alt="" />
+			<div>&nbsp;{{ObjData.ObjItem7}}</div>
+		</li>
+		<li>
+			<img src="../img/13_09-11.png" alt="" />
+			<div>&nbsp;{{ObjData.ObjItem8}}</div>
+		</li>
+	</ul>
+</div>
+</div>
+
+<!--底部end-->
+</body>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/echarts.min.js"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var domainUrl = GetMvcApiDomain();
+ 
+var username=null;  
+var ReportNum=null;
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+ReportNum=_self.ReportNum;
+
+if(ReportNum==null || ReportNum==''){
+	plus.webview.currentWebview().close();
+}
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}
+
+var vum = new Vue({
+    el: '#ItemChart',
+    data: function() {
+     return {
+        ReportNum: ReportNum,
+        IsBPShow:false
+       } 
+    },
+
+    mounted: function () {
+
+                   this.$nextTick(function () {
+
+                     var self=this;
+                     setTimeout(function(){
+                     self.ShowChartData();
+                     }, 150);
+                 })
+
+    },
+
+    methods: {
+        
+
+          ShowChartData: function () {
+                 $.ajax({
+                     url: domainUrl + "api/PerReport/getPerItemVal",
+                     type: 'get',
+                     dataType: "json",
+                     data: { UserName: username,ReportNum: ReportNum },
+                     success: function (data) {
+                     if (data.result.indexOf('BP,') > -1){
+                     $("#BP").show();
+                     vum.getBPChartData();
+                     }
+                     if (data.result.indexOf('PR,') > -1){
+                     $("#PR").show();
+                     vum.getPRChartData();
+                     }
+                     if (data.result.indexOf('WAIST,') > -1){
+                     $("#WAIST").show();
+                     vum.getWaistChartData();
+                     }
+                     if (data.result.indexOf('SpO2,') > -1){
+                      $("#SpO2").show();
+                     vum.getSpO2ChartData();
+                     }
+                     if (data.result.indexOf('GLU,') > -1){
+                     $("#GLU").show();
+                     vum.getGluChartData();
+                     }
+                     if (data.result.indexOf('TEMP,') > -1){
+                     $("#TEMP").show();
+                     vum.getTempChartData();
+                     }
+                     if (data.result.indexOf('BMI,') > -1){
+                     $("#BMI").show();
+                     vum.getBmiChartData();
+                     }
+                     if (data.result.indexOf('BFP,') > -1){
+                     $("#BFP").show();
+                     vum.getBfpChartData();
+                     }
+                     if (data.result.indexOf('CHOL,') > -1){
+                     $("#CHOL").show();
+                     vum.getCholChartData();
+                     }
+                     if (data.result.indexOf('UA,') > -1){
+                     $("#UA").show();
+                     vum.getUaChartData();
+                     }
+                     if (data.result.indexOf('U_PH,') > -1){
+                     $("#U_PH").show();
+                     vum.getUphChartData();
+                     }
+                     if (data.result.indexOf('SG,') > -1){
+                     $("#SG").show();
+                     vum.getSgChartData();
+                     }
+
+                     },
+                     error: function () {
+                         plus.nativeUI.toast("网络错误，请稍后再试");
+                     }
+                 })
+             },
+        
+           
+        getBPChartData: function(){
+        var myChart1 = echarts.init(document.getElementById('BP'));
+        var titleName='血压';
+        var legendData=['收缩压', '舒张压'];
+        var xData=[];
+        var yName='血压(mmHg)';
+        var itemName1='收缩压';
+        var itemName2='舒张压';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+        arr[1] = [];//收缩压
+        arr[2] = [];//舒张压  
+	          var itype1="BPHigh";
+	          var itype2="BPLow";
+	          var itype3="HeartRate";
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordBPListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType1:itype1,iType2:itype2,iType3:itype3},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0 || data.lists2.length==0) {
+                 vum.ShowChart(myChart1,titleName,legendData,arr[0],yName,itemName1,arr[1],itemName2,arr[2]);
+                 window.onresize = myChart1.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		arr[2].push(data.lists2[i].value1);
+                		
+                	}
+               vum.ShowChart(myChart1,titleName,legendData,arr[0],yName,itemName1,arr[1],itemName2,arr[2]);
+                window.onresize = myChart1.resize;
+                }     
+               }
+               else{
+               	 
+               	plus.nativeUI.toast("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+                plus.nativeUI.toast("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+        getPRChartData: function(){
+        var myChart2 = echarts.init(document.getElementById('PR'));
+        var titleName='脉率';
+        var legendData=['脉率'];
+        var xData=[];
+        var yName='脉率(次/分)';
+        var itemName='脉率';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="BPPR";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                vum.ShowChartSingle(myChart2,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                window.onresize = myChart2.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart2,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart2.resize;
+
+                }     
+               }
+               else{
+               	 
+               	//alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+                //alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+        getWaistChartData: function(){
+        var myChart3 = echarts.init(document.getElementById('WAIST'));
+        var titleName='腰围';
+        var legendData=['腰围'];
+        var xData=[];
+        var yName='腰围(CM)';
+        var itemName='腰围';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="WAIST";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                vum.ShowChartSingle(myChart3,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                window.onresize = myChart3.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart3,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart3.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+        getSpO2ChartData: function(){
+        var myChart4 = echarts.init(document.getElementById('SpO2'));
+        var titleName='血氧饱和度';
+        var legendData=['血氧饱和度'];
+        var xData=[];
+        var yName='血氧饱和度(%)';
+        var itemName='血氧饱和度';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="SpO2";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                vum.ShowChartSingle(myChart4,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                window.onresize = myChart4.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart4,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart4.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+       getGluChartData: function(){
+        var myChart5 = echarts.init(document.getElementById('GLU'));
+        var titleName='血糖';
+        var legendData=['血糖'];
+        var xData=[];
+        var yName='血糖(mmol/L)';
+        var itemName='血糖';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="GLU";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                   vum.ShowChartSingle(myChart5,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                   window.onresize = myChart5.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart5,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart5.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+       getTempChartData: function(){
+        var myChart6 = echarts.init(document.getElementById('TEMP'));
+        var titleName='体温';
+        var legendData=['体温'];
+        var xData=[];
+        var yName='体温(℃)';
+        var itemName='体温';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="TEMP";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+               vum.ShowChartSingle(myChart6,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize =  myChart6.resize();
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart6,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart6.resize();
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+        getBmiChartData: function(){
+        var myChart7 = echarts.init(document.getElementById('BMI'));
+        var titleName='体质指数';
+        var legendData=['体质指数'];
+        var xData=[];
+        var yName='体质指数(%)';
+        var itemName='体质指数';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="BMI";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                 vum.ShowChartSingle(myChart7,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                 window.onresize = myChart7.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart7,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart7.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+        getBfpChartData: function(){
+        var myChart8 = echarts.init(document.getElementById('BFP'));
+        var titleName='体脂肪率';
+        var legendData=['体脂肪率'];
+        var xData=[];
+        var yName='体脂肪率(%)';
+        var itemName='体脂肪率';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="BFP";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                 vum.ShowChartSingle(myChart8,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                 window.onresize = myChart8.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart8,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart8.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+        getCholChartData: function(){
+        var myChart9 = echarts.init(document.getElementById('CHOL'));
+        var titleName='胆固醇';
+        var legendData=['胆固醇'];
+        var xData=[];
+        var yName='胆固醇(mmol/L)';
+        var itemName='胆固醇';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="CHOL";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                 vum.ShowChartSingle(myChart9,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                 window.onresize = myChart9.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart9,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart9.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+        getTgChartData: function(){
+        var myChart10 = echarts.init(document.getElementById('TG'));
+        var titleName='甘油三脂';
+        var legendData=['甘油三脂'];
+        var xData=[];
+        var yName='甘油三脂(mmol/L)';
+        var itemName='甘油三脂';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="TG";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                 vum.ShowChartSingle(myChart10,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                 window.onresize = myChart10.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart10,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart10.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+        getUaChartData: function(){
+        var myChart11 = echarts.init(document.getElementById('UA'));
+        var titleName='尿酸';
+        var legendData=['尿酸'];
+        var xData=[];
+        var yName='尿酸(umol/L)';
+        var itemName='尿酸';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="UA";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                 vum.ShowChartSingle(myChart11,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                 window.onresize = myChart11.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart11,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart11.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+        getUphChartData: function(){
+        var myChart12 = echarts.init(document.getElementById('U_PH'));
+        var titleName='尿PH值';
+        var legendData=['尿PH值'];
+        var xData=[];
+        var yName='尿PH值(PH)';
+        var itemName='尿PH值';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="U_PH";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                 vum.ShowChartSingle(myChart12,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                 window.onresize = myChart12.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart12,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart12.resize;
+
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+
+        getSgChartData: function(){
+        var myChart13 = echarts.init(document.getElementById('SG'));
+        var titleName='尿比重';
+        var legendData=['尿比重'];
+        var xData=[];
+        var yName='尿比重(SG)';
+        var itemName='尿比重';
+
+        
+
+        var arr = new Array();
+         arr[0] = [];//x轴下标
+         arr[1] = [];//y轴下标
+	      var itype="SG";
+
+       	   $.ajax({
+             	url: domainUrl + "api/HItemRecord/getInsRecordListByType",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:UserName,iType:itype},
+                success: function (data) {
+               if (data.code == "200") {
+               	if (data.lists1.length == 0) {
+                 vum.ShowChartSingle(myChart13,titleName,legendData,arr[0],yName,itemName,arr[1]);
+                 window.onresize = myChart13.resize;
+                }else{
+                	
+                	for (var i = 0; i < data.lists1.length; i++) {
+                		arr[0].push(data.lists1[i].createTime);
+                		arr[1].push(data.lists1[i].value1);
+                		
+                	}
+               vum.ShowChartSingle(myChart13,titleName,legendData,arr[0],yName,itemName,arr[1]);
+               window.onresize = myChart13.resize;
+               
+                }     
+               }
+               else{
+               	 
+//               	alert("数据接口错误，请稍后再试");
+               }
+               
+               },
+                error: function () { 
+//                alert("网络错误，请稍后再试");
+                 }
+           })
+        },
+
+
+         ShowChart: function(el,titleName,legendData,xData,yName,seriesItemName1,seriesItemData1,seriesItemName2,seriesItemData2) {
+            var option = {
+                title: {
+                    text: titleName,
+                    x: 'center',
+                    top: 0,
+
+                    textStyle: {
+                        color: '#333'
+                    }
+                },
+                tooltip: {
+                    trigger: 'axis',
+
+                },
+                legend: {
+                    data: legendData,
+                    bottom: 0
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: 'category',
+                    boundaryGap: false,
+
+                    data: xData
+                }],
+                yAxis: [{
+                    type: 'value',
+                    name: yName,
+                }],
+                series: [{
+                    name: seriesItemName1,
+                    type: 'line',
+//                    stack: '总量',
+                    areaStyle: {
+                        normal: {}
+                    },
+                    data: seriesItemData1
+                },
+                {
+                    name: seriesItemName2,
+                    type: 'line',
+//                    stack: '总量',
+                    areaStyle: {
+                        normal: {}
+                    },
+                    data: seriesItemData2
+                }
+
+                ]
+            };
+            el.setOption(option);
+        },
+
+         ShowChartSingle: function(el,titleName,legendData,xData,yName,seriesItemName,seriesItemData) {
+            var option = {
+                title: {
+                    text: titleName,
+                    x: 'center',
+                    top: 0,
+
+                    textStyle: {
+                        color: '#333'
+                    }
+                },
+                tooltip: {
+                    trigger: 'axis',
+
+                },
+                legend: {
+                    data: legendData,
+                    bottom: 0
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: 'category',
+                    boundaryGap: false,
+
+                    data: xData
+                }],
+                yAxis: [{
+                    type: 'value',
+                    name: yName,
+                }],
+                series: [{
+                    name: seriesItemName,
+                    type: 'line',
+//                    stack: '总量',
+                    areaStyle: {
+                        normal: {}
+                    },
+                    data: seriesItemData
+                }
+
+                ]
+            };
+            el.setOption(option);
+            
+        }
+         
+
+
+   }
+
+});
+
+
+
+var vum1 = new Vue({
+          el: '#ManageData',
+          data: function() {
+          	return {
+              ReportNum:ReportNum,
+              DangeData: {
+                  DangeBP: '--',
+                  DangePR: '--',
+                  DangeWAIST: '--',
+                  DangeSpO2: '--',
+                  DangeGLU: '--',
+                  DangeTemp: '--',
+                  DangeCHOL: '--',
+                  DangeTG: '--',
+                  DangeBMI: '--',
+                  DangeBFP: '--',
+                  DangeU_PH: '--',
+                  DangeUA: '--',
+                  DangeSG: '--'
+              },
+              ObjData: {
+                  ObjItem1: '--',
+                  ObjItem2: '--',
+                  ObjItem3: '--',
+                  ObjItem4: '--',
+                  ObjItem5: '--',
+                  ObjItem6: '--',
+                  ObjItem7: '--',
+                  ObjItem8: '--'
+              }
+            }
+          },
+
+        mounted: function () {
+
+                   this.$nextTick(function () {
+
+                     var self=this;
+                     setTimeout(function(){
+                     self.getManageData();
+                     }, 150);
+                 })
+
+          },
+
+          methods: {
+              getManageData: function () {
+                  $.ajax({
+                      url: domainUrl + "api/PerReport/getLookPerReportItemData",
+                      type: 'get',
+                      dataType: "json",
+                      data: { UserName: username,ReportNum:ReportNum },
+                      success: function (data) {
+                          vum1.DangeData.DangeBP = data.PartSixDangerItem1;
+                          vum1.DangeData.DangePR = data.PartSixDangerItem2;
+                          vum1.DangeData.DangeWAIST = data.PartSixDangerItem3;
+                          vum1.DangeData.DangeSpO2 = data.PartSixDangerItem4;
+                          vum1.DangeData.DangeGLU = data.PartSixDangerItem5;
+                          vum1.DangeData.DangeTemp = data.PartSixDangerItem6;
+                          vum1.DangeData.DangeCHOL = data.PartSixDangerItem7;
+                          vum1.DangeData.DangeTG = data.PartSixDangerItem8;
+                          vum1.DangeData.DangeBMI = data.PartSixDangerItem9;
+                          vum1.DangeData.DangeBFP = data.PartSixDangerItem10;
+                          vum1.DangeData.DangeU_PH = data.PartSixDangerItem11;
+                          vum1.DangeData.DangeUA = data.PartSixDangerItem12;
+                          vum1.DangeData.DangeSG = data.PartSixDangerItem13;
+                          
+                          vum1.ObjData.ObjItem1 = data.PartSevenObjItem1;
+                          vum1.ObjData.ObjItem2 = data.PartSevenObjItem2;
+                          vum1.ObjData.ObjItem3 = data.PartSevenObjItem3;
+                          vum1.ObjData.ObjItem4 = data.PartSevenObjItem4;
+                          vum1.ObjData.ObjItem5 = data.PartSevenObjItem5;
+                          vum1.ObjData.ObjItem6 = data.PartSevenObjItem6;
+                          vum1.ObjData.ObjItem7 = data.PartSevenObjItem7;
+                          vum1.ObjData.ObjItem8 = data.PartSevenObjItem8;
+                          
+                          
+
+                          
+                          
+                          
+                      },
+                      error: function () {
+                          plus.nativeUI.toast("网络错误，请稍后再试");
+                      }
+                  })
+              }
+
+
+          }
+
+
+
+      });
+
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,451 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>复健项目登记</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/lib/weui.css" />
+		<link rel="stylesheet" href="../css/lib/weui2.css" />
+
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+
+	</head>
+
+
+
+	<body ontouchstart style="background-color: #f8f8f8; margin-top: 56px;">
+		<div id="bodyinfo">
+			<div class="weui_cells_title"><h4>客户{{UserName}}复健登记</h4></div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入姓名" v-model="ReallyName" readonly/>
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">性别</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="Sex" disabled="disabled">
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">年龄</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="number" pattern="[0-9]*" v-model="Age" readonly="readonly"/>
+					</div>
+				</div>
+
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">联系方式</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="number" pattern="[0-9]*" placeholder="未填写" v-model="Mobile" readonly="readonly"/>
+					</div>
+				</div>
+
+
+
+			</div>
+			<div class="weui_cells_title">既往史</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea1" class="weui_textarea" placeholder="未填写" rows="4" v-model="PartlHistory" readonly="readonly"></textarea>
+						<div class="weui_textarea_counter"><span id='count1'>0</span>/<span id='count_max1'>200</span></div>
+					</div>
+				</div>
+			</div>
+
+            <div class="weui_cells_title">登记项</div>
+            <div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">值班护士</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="Nurser" />
+					</div>
+				</div>
+           		<div class="weui_cell">
+					<div class="weui_cell_hd"><label for="" class="weui_label">日期</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="date" value="" v-model="RecordDate" />
+					</div>
+				</div>
+				<div class="weui_cell" v-show="show1">
+					<div class="weui_cell_hd"><label class="weui_label">温度</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="AirTemp" />
+					</div>
+				</div>
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">血压（脉搏）</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="Bpm" />
+					</div>
+				</div>	
+				<div class="weui_cell" v-show="show1">
+					<div class="weui_cell_hd"><label class="weui_label">体温</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="BodyTemp" />
+					</div>
+				</div>	
+				<div class="weui_cell" v-show="show1">
+					<div class="weui_cell_hd"><label class="weui_label">体重</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="Weight" />
+					</div>
+				</div>	
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">冶疗时间</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="TimeLength" />
+					</div>
+				</div>
+				<div class="weui_cell" v-show="show2">
+					<div class="weui_cell_hd"><label class="weui_label">冶疗压力</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text"  v-model="TreatmentPressure" />
+					</div>
+				</div>
+			</div>
+			<div class="weui_cells_title">客户反应</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea2" class="weui_textarea" placeholder="出汗情况、神色等" rows="4" v-model="BodyResponse"></textarea>
+						<div class="weui_textarea_counter"><span id='count2'>0</span>/<span id='count_max2'>200</span></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="weui_cells_title">主观感受</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea3" class="weui_textarea" placeholder="舒适度" rows="4" v-model="SubjectiveResponse"></textarea>
+						<div class="weui_textarea_counter"><span id='count3'>0</span>/<span id='count_max3'>200</span></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="weui_cells_title">改善情况</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea4" class="weui_textarea" placeholder="食欲、睡眠、大小便、面色、精神状况、体质等" rows="4" v-model="ImproveEffect"></textarea>
+						<div class="weui_textarea_counter"><span id='count4'>0</span>/<span id='count_max4'>200</span></div>
+					</div>
+				</div>
+			</div>
+			
+
+			
+			<div style="padding:10px 20px;">
+				<button type="button" class="hui-button hui-button-large hui-danger" style="margin-top:15px;" id="PostSend" @click="PostSend">登记提交</button>
+			</div>
+		</div>
+		<script src="../js/base.js"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+
+		<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+		<script>
+			$(function() {
+				var max1 = $('#count_max1').text();
+				$('#textarea1').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count1').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+
+				var max2 = $('#count_max2').text();
+				$('#textarea2').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count2').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				var max3 = $('#count_max3').text();
+				$('#textarea3').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count3').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				var max4 = $('#count_max4').text();
+				$('#textarea4').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count4').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+
+
+			})
+		</script>
+
+		<script>
+
+
+			var domainUrl = GetMvcApiDomain();
+
+
+
+function plusReady(){
+HeadShow();	
+back();
+var _self = plus.webview.currentWebview();
+var projectId=_self.projectId;
+var type=_self.type;
+if(projectId==null || projectId=='' || projectId==undefined || type == null || type == '' || type == undefined){
+	plus.nativeUI.toast("参数错误，请返回重新选择");
+		setTimeout(function() {
+			plus.webview.currentWebview().close();
+		}, 1000);
+	
+}
+else{
+
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+    vum.RoleUser=objuser.RoleUser;
+    vum.Nurser=objuser.RoleUser;
+    vum.projectId=projectId;
+    vum.type=type;
+    vum.ProjectType=type;
+
+vum.getProjectInfo(projectId);
+
+}
+
+
+
+
+
+}
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}
+
+
+			var vum=new Vue({
+				el: '#bodyinfo',
+				data: function() {
+					return {
+						UserName: "",
+						projectId:0,
+						type:0,
+						ProjectType:"1",
+						RoleUser:"",
+						show1:true,
+						show2:false,
+						ReallyName: "",
+						Sex: "1",
+						Age: "",
+						Mobile: "",
+                        PartlHistory: "",
+
+						Nurser: "",
+						RecordDate: "",
+						AirTemp: "",
+						Bpm:"",
+						BodyTemp: "",
+						Weight: "",
+						TimeLength:"",
+						TreatmentPressure:"",
+						
+						BodyResponse: "",
+						SubjectiveResponse: "",
+						ImproveEffect: ""
+					}
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+						
+
+					})
+
+				},
+
+				methods: {
+
+					getProjectInfo: function(projectId) {
+
+						var that = this;
+
+						axios.get(domainUrl + 'api/WorkFlow/getProjectARecordById', {
+								params: {
+									ProjectId: projectId
+								}
+							})
+							.then(function(response) {
+								if(response.data.code == '200') {
+									that.UserName=response.data.UserName;
+									that.ReallyName = response.data.ReallyName;
+									that.Sex = response.data.Sex;
+									that.Age = jsGetAge(response.data.Birthday);
+									that.Mobile = response.data.Mobile;
+									that.PartlHistory = response.data.PartlHistory;
+									
+									that.ProjectType=response.data.ProjectType;
+									that.Nurser=response.data.Nurser;
+									that.RecordDate=response.data.RecordDate;
+									that.AirTemp=response.data.AirTemp;
+									that.Bpm=response.data.Bpm;
+									that.BodyTemp=response.data.BodyTemp;
+									that.Weight=response.data.Weight;
+									that.TimeLength=response.data.TimeLength;
+									that.TreatmentPressure=response.data.TreatmentPressure;
+									that.BodyResponse=response.data.BodyResponse;
+									that.ImproveEffect=response.data.ImproveEffect;
+									
+									if(that.ProjectType==2){
+                      	             that.show2=true;
+                      	             that.show1=false;
+                                     }
+
+								} else {
+									hui.toast("获取客户资料失败");
+									return false;
+								}
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+
+					PostSend: function() {
+
+						if(this.RecordDate == "" || this.RecordDate == null) {
+							hui.upToast('请输入日期!');
+							return false;
+						}
+						if(this.Nurser == "" || this.Nurser == null) {
+							hui.upToast('请输入值班护士!');
+							return false;
+						}
+
+
+
+						this.SendSave(this.projectId, this.RecordDate, this.AirTemp, this.BodyTemp, this.Bpm,this.Weight,this.SpO2, this.TimeLength,this.TreatmentPressure, this.BodyResponse,this.SubjectiveResponse,this.ImproveEffect, this.Nurser, this.RoleUser)
+					},
+					SendSave: function(ProjectId, RecordDate, AirTemp, BodyTemp, Bpm, Weight, SpO2, TimeLength,TreatmentPressure, BodyResponse, SubjectiveResponse,ImproveEffect,Nurser, CreateUser) {
+						var that = this;
+						that.addInterceptors();
+
+						axios.post(domainUrl + 'api/WorkFlow/ProjectARecordEdit', Qs.stringify({
+								ProjectId: ProjectId,
+								RecordDate: RecordDate,
+								AirTemp: AirTemp,
+								BodyTemp: BodyTemp,
+								Bpm: Bpm,
+								Weight: Weight,
+								SpO2: SpO2,
+								TimeLength:TimeLength,
+								TreatmentPressure: TreatmentPressure,
+								BodyResponse: BodyResponse,
+								SubjectiveResponse: SubjectiveResponse,
+								ImproveEffect:ImproveEffect,
+								Nurser:Nurser,
+								CreateUser: CreateUser
+							}))
+
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.toast("更新资料成功!");
+									setTimeout(function() {
+										plus.webview.currentWebview().close();
+									}, 800);
+
+								} else {
+									hui.toast(response.data.msg);
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					addInterceptors: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							if(hui('#PostSend').buttonIsLoading()) {
+								return false;
+							}
+							hui('#PostSend').loadingButton('正在更新资料中...');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							hui.toast("请求失败");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							hui.toast("更新资料失败");
+							return Promise.reject(error)
+						})
+					}
+
+				}
+			})
+		</script>
+
+	</body>
+
+</html>

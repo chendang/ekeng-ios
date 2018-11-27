@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的监测数据</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <link rel="stylesheet" href="../css/lib/huimin.css">
+    <link rel="stylesheet" href="../css/DataScroll.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/DataQuery.css">
+    <link rel="stylesheet" href="../css/DataList.css">
+     
+
+<style>
+
+	[v-cloak]{ display: none; }
+
+
+			 
+			#wrapper {
+				position: absolute;
+				top: 0px;
+				bottom: 0px;
+				width: 100%;
+			}
+			
+			#scroller {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.item {
+				height: 60px;
+				line-height: 60px;
+				border-bottom: 1px solid #ddd;
+				text-indent: 1em;
+				background: #fff;
+			}
+			
+			.jroll-infinite-tip {
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+			}
+			
+			.jroll-vue-infinite {
+				height: 100%;
+			}
+						.showtips{
+				line-height: 24px;
+			}
+			
+			
+</style>
+    
+</head>
+<body>
+	
+
+	
+	<div id="bodyinfo">
+
+  
+    <div id="echarts" style="height: 250px;" ></div>
+
+
+    
+<div class="web_container" v-cloak>
+	<div class="web_con_box01">
+		<span class="con_box01_t2">最近监测</span>
+		<div class="con_box01_t2list">
+			<span class="sp11">{{newVal}}</span>
+            <div class="con_box01_t2list_d">
+            <b>{{ItemUnit}}</b>
+            <span class="t2list_sp">{{newTime}}</span>
+            </div>
+		</div>
+	</div>
+	<div class="con_box01_t3list clearfix">
+    	<ul>
+        <li><span class="sp01">历史高值</span><span class="sp02">{{maxVal}}{{ItemUnit}}</span></li>
+    	<li><span class="sp01">历史低值</span><span class="sp02">{{minVal}}{{ItemUnit}}</span></li>
+    	<li><span class="sp01">平均值</span><span class="sp02">{{aveVal}}{{ItemUnit}}</span></li>
+        </ul>
+    </div>
+    <div class="web_con_box02">
+
+        	<p class="showtips">提示：{{tips}}</p>
+   
+    </div>
+	<div class="web_con_box02" id="app">
+		<jroll-infinite class="jroll-vue-infinite">	
+		<div class="con_box02" v-for="(Item,index) in ItemList" v-cloak>
+			<span>[{{index+1}}] {{Item.CreateTime}}</span><div class="con_box02_list">{{Item.value}}{{ItemUnit}}</div>
+		</div>
+        </jroll-infinite>
+	</div>
+
+</div>
+    
+    
+    </div>
+</body>
+<script src="../js/base.js"></script>
+<script src="../js/public.js" type="text/javascript"></script>    
+<script src="../js/lib/hui.js"></script>
+<script src="../js/EchartScroll.min.js"></script>
+<script src="../js/lib/jquery-2.1.3.min.js"></script>
+<script src="../js/iscroll.js"></script>
+<script src="../js/DataQueryScroll.js"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+<script src="../js/lib/axios.min.js"></script>
+<script src="../js/lib/qs.js"></script>
+<script src="../js/lib/jroll.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-vue-infinite.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-pulldown.js" type="text/javascript"></script>
+<script>
+
+var domainUrl = GetMvcApiDomain();
+
+var iType=null;
+var UserName=null;
+var ItemType=null;
+var ItemUnit='';
+var minval=0;
+var maxval=0;
+var dot=2;
+var nametips1='';
+var nametips2='';
+var tips='';
+
+function plusReady(){
+HeadShow();	
+back();
+var _self = plus.webview.currentWebview();
+iType=_self.iType;
+if(iType==null || iType=='' || iType==undefined){
+	plus.nativeUI.toast("参数错误，请返回重新选择");
+		setTimeout(function() {
+						plus.webview.currentWebview().close();
+		}, 1000);
+	
+}
+else{
+	UserName=_self.UserName;
+	if(iType==null || iType=='' || iType==undefined){
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+	UserName=objuser.UserName;
+	}
+
+    
+    
+    if (iType=="CHOL")
+    {
+    	    ItemType="CHOL";
+            ItemUnit="mmol/L";
+            minval=0;
+            maxval=10;
+            tips="静脉血液中所有脂蛋白所含胆固醇的总和，正常参考范围是≥3.1且<5.7mmol/L，理想状况下是≥4.0且<5.2mmol/L，现代医学常用来指示动脉粥样硬化的动向，特别是反映冠心病风险。";
+    }
+    
+        if (iType=="TG")
+    {
+    	    ItemType="TG";
+            ItemUnit="mmol/L";
+            minval=0.5;
+            maxval=5.65;
+            tips="静脉血液中甘油和3个脂肪酸的结合物，正常参考范围是≥0.56且<1.7mmol/L，理想状况下是≥1且<1.3mmol/L，理想状况下是≥1且<1.3mmol/L，现代医学常用来指示能量储存与供给状况，特别是反映肥胖风险。";
+    }
+    
+            if (iType=="BFP")
+    {
+    	    ItemType="BFP";
+            ItemUnit="%";
+            minval=5;
+            maxval=45;
+            dot=0;
+            tips="人体内脂肪与体重的百分比，正常参考范围是 男士≥10且<20% ， 女士≥17且<30%，现代医学常用来指示人体内脂肪含量的胖与瘦，特别是反映肥胖风险。";
+    }
+    
+                if (iType=="BMI")
+    {
+    	    ItemType="BMI";
+            ItemUnit="%";
+            minval=12;
+            maxval=40;
+            dot=2;
+            tips="用体重公斤数除以身高米数平方的比值，正常参考范围是≥18.5且<24%，理想状况下是22%左右，≥28%即为肥胖，现代医学常用来指示一定身高下不同体重的胖与瘦，特别是反映超重风险。";
+    }
+
+                if (iType=="TEMP")
+    {
+    	    ItemType="TEMP";
+            ItemUnit="℃";
+            minval=35;
+            maxval=41;
+            dot=1;
+            tips="人体内能量物质转化为热能的产物在体表的保持，耳温正常参考范围是 ≥36且<37.5℃ ，理想参考范围是 ≥36.7且<37.1℃，现代医学常用来指示体温调节中枢平衡产热和散热的新陈代谢状况，特别是反映内分泌紊乱风险。";
+    }
+
+                if (iType=="GLU")
+    {
+    	    ItemType="GLU";
+            ItemUnit="mmol/L";
+            minval=0;
+            maxval=30;
+            dot=2;
+            tips="静脉血液中的葡萄糖，是人体能量动力供应的主要来源，正常参考范围是≥3.9且<6.1mmol/L，理想状况下是≥4.8且<5.2mmol/L，现代医学常用来指示胰腺、肝脏等器官对能量平衡的新陈代谢，特别是反映糖尿病风险。";
+    }
+    
+                    if (iType=="SpO2")
+    {
+    	    ItemType="SpO2";
+            ItemUnit="%";
+            minval=70;
+            maxval=100;
+            dot=0;
+            tips="动脉血液中氧合血红蛋白相对于总血红蛋白的浓度比，正常参考范围是≥94且≤99%，理想状况下是≥97且≤99%，现代医学常用来指示肺脏氧合能力和血液携氧状况，特别是反映贫血和慢阻肺风险。";
+    }
+
+                    if (iType=="WAIST")
+    {
+    	    ItemType="WAIST";
+            ItemUnit="CM";
+            minval=0;
+            maxval=200;
+            dot=2;
+            tips="经肚脐点的腰部水平围长，正常参考范围是 男士≥70且<90cm ， 女士≥70且<85cm，现代医学常用来指示人体脂肪总量和腹部脂肪分布状况，特别是反映肥胖风险。";
+    }
+    
+                        if (iType=="BPPR")
+    {
+    	    ItemType="BPPR";
+            ItemUnit="次/分";
+            minval=40;
+            maxval=180;
+            dot=0;
+            tips="动脉搏动的频率，一般与心率一致，正常参考范围是≥60且≤100bpm，理想状况下是≥70且≤80bpm，现代医学常用来指示体循环系统血管网对心跳泵血的传导功效以反馈心脏泵血功能状况，特别是心房颤动风险时格外重要。";
+    }
+    
+                            if (iType=="UA")
+    {
+    	    ItemType="UA";
+            ItemUnit="umol/L";
+            minval=100;
+            maxval=600;
+            dot=2;
+            tips="遗传物质中的嘌呤的代谢废物在血液中的含量，正常参考范围是 ≥90且<420mmol/L，现代医学常用来指示肾脏的滤过和重吸收功能，特别是反映痛风风险。";
+    }
+    
+                                if (iType=="U_PH")
+    {
+    	    ItemType="U_PH";
+            ItemUnit="PH";
+            minval=5;
+            maxval=8;
+            dot=2;
+            tips="尿液的酸碱度，正常参考范围是 >5且≤8，理想参考范围是 >6.5且≤7，现代医学常用来指示肾脏调节体液酸碱平衡的能力，特别是反映肿瘤免疫力风险。";
+    }
+    
+    if (iType=="SG")
+    {
+    	    ItemType="SG";
+            ItemUnit="umol/L";
+            minval=1;
+            maxval=1.04;
+            dot=2;
+            tips="尿液与纯水的重量之比，正常参考范围是 男士≥70且<90cm ， 女士≥70且<85cm，现代医学常用来指示人体脂肪总量和腹部脂肪分布状况，特别是反映肥胖风险。";
+    }
+    
+        if (iType=="SLEEP_TIME")
+    {
+    	    ItemType="SLEEP_TIME";
+            ItemUnit="小时";
+            minval=0;
+            maxval=20;
+            dot=1;
+    }
+    
+            if (iType=="STEP_NUMBER")
+    {
+    	    ItemType="STEP_NUMBER";
+            ItemUnit="步";
+            minval=0;
+            maxval=15000;
+            dot=0;
+    }
+    
+                if (iType=="BPHigh" || iType=="BPLow")
+    {
+    	    ItemType1="BPHigh";
+    	    ItemType2="BPLow";
+            ItemUnit="mmHg";
+            minval=50;
+            maxval=250;
+            nametips1="收缩压";
+            nametips2="舒张压";
+            dot=0;
+            
+            if(iType=="BPHigh"){
+            	tips="当左心室收缩，血液从心室流入动脉时对动脉壁的压力,正常参考范围是≥90且<140mmHg，理想状况下是≥110且<120mmHg,现代医学常用来指示血管对心脏泵血的顺应性，特别是反映高血压风险。";
+            }
+            if(iType=="BPLow"){
+            	tips="当左心室舒张，血液从血管回流到心脏时对动脉壁的压力，正常参考范围是≥60且<90mmHg，现代医学常用来指示血管回缩的弹性，特别是反映高血压风险。";
+            } 
+            
+    }
+
+
+
+}
+
+
+
+
+
+}
+if(window.plus){
+	plusReady();
+}else{
+	document.addEventListener('plusready',plusReady,false);
+}	
+
+
+
+
+
+    
+// vue实例
+			
+
+
+            var vum
+			var infOptions = {
+
+				bottomed: function(complete) {
+                    
+                    	this.$parent.GetJrollItemList();
+    
+                    
+				},
+				updated: function() {
+					console.log('current page is ' + this.page)
+				}
+
+			}
+
+
+
+			  vum=new Vue({
+				el: '#bodyinfo',
+				components: {
+					'jroll-infinite': JRoll.VueInfinite(infOptions, {
+						scrollBarY: true
+					})
+				},
+				data: function() {
+					return {
+						UserName:"",
+						iType:"",
+						ItemType:"",
+						ItemType1:"",
+						ItemType2:"",
+						ItemUnit:"",
+						nametips1:"",
+						nametips2:"",
+						pageIndex:0,
+					    pageSize:20,
+					    
+					    newVal:0,
+				        maxVal:0,
+				        minVal:0,
+				        aveVal:0,
+				        dot:2,
+				        newTime:"--",
+						ItemData: [],
+					    ItemList: [],
+					    tips:""
+
+
+					}
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+                     that = this;
+						setTimeout(function() {
+							that.UserName=UserName;
+                            that.iType=iType;
+                            that.ItemType=ItemType;
+                            that.ItemUnit=ItemUnit;
+                            that.minval=minval;
+                            that.maxval=maxval;
+                            that.dot=dot;
+                            that.nametips1=nametips1;
+                            that.nametips2=nametips2;
+                            that.tips=tips;
+                            
+                            if (iType=="BPHigh" || iType=="BPLow"){
+					        that.getChartTwoDataList(UserName,ItemType1,ItemType2,nametips1,nametips2,ItemUnit,minval,maxval,dot);
+					         }
+					       else{
+                           that.getChartDataList(UserName,ItemType,ItemUnit,minval,maxval,dot);
+                           }
+							//that.GetJrollItemList();
+						}, 800);
+						
+						setTimeout(function() {
+							
+							that.GetJrollItemList();
+						}, 2000);
+                     
+					})
+
+				},
+
+				methods: {
+                    GetJrollItemList: function() {
+					var that = this;
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/HItemRecord/getInsRecordSingleList', {
+							params: {
+								UserName: that.UserName,
+								pageIndex: that.$children[0].page+1,
+								pageSize: that.pageSize,
+								ItemType: that.iType,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.ItemData = [];
+							each(jsonx, function(i, j) {
+                                var pubtime=getDateDiff(getDateTimeStamp(j.create_date));
+								that.ItemData.push({
+									number: (i + 1),
+									id: j.Id,
+									value: j.value,
+									CreateTime: j.CreateTime
+								});
+
+
+							});
+
+							if(typeof complete === 'function') {
+								that.ItemList = that.ItemData;
+								that.$children[0].complete();
+							} else {
+								that.ItemList = that.ItemList.concat(that.ItemData);
+							}
+							
+							that.pageCount = response.data.PageCount;
+							that.$children[0].total = response.data.PageCount;
+							if (response.data.PageCount==0){
+								that.$children[0].total =1;
+							}
+							else{
+								that.$children[0].total = response.data.PageCount;
+							}
+							that.$children[0].success();
+
+
+						})
+						.catch(function(response) {
+							console.log(response);
+			
+						});
+				},
+
+                     getChartDataList: function(UserName,ItemType,ItemUnit,minval,maxval,dot) {
+                        
+						var that = this;
+                        that.axiosGetLoadding();
+						 axios.get(domainUrl + 'api/HItemRecord/getMemberRecordListByType', {
+								params: {
+									UserName: UserName,
+									itemType: ItemType
+								}
+							})
+							.then(function(response) {
+								var jsonx = response.data;
+	                            showChartData(jsonx,that.ItemUnit,that.minval,that.maxval,'line',that.dot);
+	                            
+	                            var listdata = jsonx.list;
+	                            var i=0;
+	                            var sumval=0;
+	                            listdata.forEach(function (item) {
+	                            if (i==0){
+	                            	that.maxVal=Number(item.value).toFixed(that.dot);
+	                            	that.minVal=Number(item.value).toFixed(that.dot);
+	                            	
+	                            }
+	                            
+	                            if (i==listdata.length-1){
+	                            	that.newVal=Number(item.value).toFixed(that.dot);
+	                            	that.newTime=getDateDiff(getDateTimeStamp(item.createTime));
+	                            }
+	                            
+                                if(Number(item.value)>=Number(that.maxVal)){
+                                	that.maxVal=Number(item.value).toFixed(that.dot);
+                                }
+                                if(Number(item.value)<=Number(that.minVal)){
+                                	that.minVal=Number(item.value).toFixed(that.dot);
+                                }
+                                
+                                sumval=sumval+Number(item.value);
+                                
+                                if (i<3){
+                                that.ItemList.push({
+									number: (i + 1),
+									id: item.Id,
+									value: Number(item.value).toFixed(that.dot),
+									CreateTime: item.createTime
+								});
+                                }
+                                
+                                i++;
+                                
+                                });
+                                
+                                that.ItemList=that.ItemList.reverse();
+                                
+                                if (i>0){
+								that.aveVal=(sumval/i).toFixed(that.dot);
+							    }
+                                
+   
+                                
+                                
+
+							})
+						
+							
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					 },
+					 
+					 
+					 getChartTwoDataList: function(UserName,ItemType1,ItemType2,nametips1,nametips2,ItemUnit,minval,maxval,dot) {
+                        
+						var that = this;
+                        that.axiosGetLoadding();
+						 axios.get(domainUrl + 'api/HItemRecord/getMemberRecordTwoListByType', {
+								params: {
+								UserName: UserName,
+								itemType1: ItemType1,
+								itemType2: ItemType2
+								}
+							})
+							.then(function(response) {
+								var jsonx = response.data;
+	                            showChartTwoData(jsonx,that.nametips1,that.nametips2,that.minval,that.maxval,'line',that.dot);
+	                            
+	                            var listdata1 = jsonx.list1;
+	                            var listdata2 = jsonx.list2;
+	                            var listdata=[];
+	                            if (that.iType=="BPHigh"){
+	                            	listdata=listdata1;
+	                            }
+	                            else
+	                            {
+	                            	listdata=listdata2;
+	                            }
+	                            var i=0;
+	                            var sumval=0;
+	                            listdata.forEach(function (item) {
+	                            if (i==0){
+	                            	that.maxVal=Number(item.value).toFixed(dot);
+	                            	that.minVal=Number(item.value).toFixed(dot);
+	                            	
+	                            }
+	                            
+	                            if (i==listdata.length-1){
+	                            	that.newVal=Number(item.value).toFixed(dot);
+	                            	that.newTime=getDateDiff(getDateTimeStamp(item.createTime));
+	                            }
+	                            
+                                if(Number(item.value)>=Number(that.maxVal)){
+                                	that.maxVal=Number(item.value).toFixed(dot);
+                                }
+                                if(Number(item.value)<=Number(that.minVal)){
+                                	that.minVal=Number(item.value).toFixed(dot);
+                                }
+                                
+                                sumval=sumval+Number(item.value);
+                                
+                                if (i<3){
+                                that.ItemList.push({
+									number: (i + 1),
+									id: item.Id,
+									value: Number(item.value).toFixed(dot),
+									CreateTime: item.createTime
+								});
+                                }
+                                
+                                i++;
+                                
+                                });
+                                
+                                that.ItemList=that.ItemList.reverse();
+                                
+                                if (i>0){
+								that.aveVal=(sumval/i).toFixed(dot);
+							    }
+                                
+   
+                                
+                                
+
+							})
+						
+							
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					 },
+
+
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					}
+
+				}
+			})
+
+
+
+
+</script>
+
+</html>
+
+
+
+

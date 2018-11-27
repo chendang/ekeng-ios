@@ -1,0 +1,834 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/lib/weui.css" />
+		<link rel="stylesheet" href="../css/lib/weui2.css" />
+		
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+
+	</head>
+
+	<body ontouchstart style="background-color: #f8f8f8;">
+		<div id="bodyinfo">
+			<div class="weui_cells_title"><h3>客户{{UserName}}({{ReallyName}})的档案资料</h3></div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入姓名" v-model="ReallyName" />
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">性别</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="Sex">
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">年龄</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" type="number" pattern="[0-9]*" v-model="Age" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">民族</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入民族" v-model="Nationality" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">籍贯</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入籍贯" v-model="NativePlace" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">电话</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="number" pattern="[0-9]*" placeholder="请输入电话" v-model="Mobile" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">血型</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入血型" v-model="BloodType" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">身高</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入身高" v-model="Height" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">体重</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入体重" v-model="Weight" />
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">文化程度</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="Education">
+							<option value="小学">小学</option>
+							<option value="初中">初中</option>
+							<option value="中专">中专</option>
+							<option value="大专">大专</option>
+							<option value="本科">本科</option>
+							<option value="硕士">硕士</option>
+							<option value="博士">博士</option>
+							<option value="博士后">博士后</option>
+							<option value="教授">教授</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">婚姻状况</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="MaritalStatus">
+							<option value="未婚">未婚</option>
+							<option value="已婚">已婚</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">职业</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入职业" v-model="JobTitle" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">收入(元/月)</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入收入" v-model="Income" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">电子邮箱</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入电子邮箱" v-model="Email" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">微信号</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入收入" v-model="WeChatId" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">工作单位</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入工作单位" v-model="WorkUnit" />
+					</div>
+				</div>
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">工作地址</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入工作地址" v-model="WorkAddress" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">家庭住址</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入家庭住址" v-model="Address" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">嗜好</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入嗜好" v-model="Interest" />
+					</div>
+				</div>
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">工作状态</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="WorkMood">
+							<option value="紧张">紧张</option>
+							<option value="清闲">清闲</option>
+							<option value="其它">其它</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="weui_cells_title">睡眠</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">每日入睡时间</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入入睡时间" v-model="SleepBedTime" />
+					</div>
+				</div>
+
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">睡眠时长</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入睡眠时长" v-model="SleepLength" />
+					</div>
+				</div>
+			</div>
+
+			<div class="page-bd">
+
+				<div class="weui_cells_title">饮食</div>
+
+				<div class="weui_cells weui_cells_checkbox">
+
+					<div class="weui-form-preview-ft">
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="三餐不规律" checked="checked" v-model="chkFoodItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>三餐不规律</p>
+                </div>
+
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="常年不吃早饭" v-model="chkFoodItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>常年不吃早饭</p>
+                </div>
+            </label>
+
+					</div>
+
+					<div class="weui-form-preview-ft">
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="常暴饮暴食" v-model="chkFoodItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>常暴饮暴食</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="嗜咸" checked="checked" v-model="chkFoodItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>嗜咸</p>
+                </div>
+
+            </label>
+
+					</div>
+
+					<div class="weui-form-preview-ft">
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="嗜甜" v-model="chkFoodItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>嗜甜</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="嗜油炸食品" v-model="chkFoodItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>嗜油炸食品</p>
+                </div>
+            </label>
+
+						</label>
+
+					</div>
+
+					<div class="weui-form-preview-ft">
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="嗜辣" v-model="chkFoodItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>嗜辣</p>
+                </div>
+            </label>
+
+						<label class="weui_cell weui_check_label">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" value="嗜素食" v-model="chkFoodItem">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>嗜素食</p>
+                </div>
+            </label>
+
+						</label>
+
+					</div>
+
+				</div>
+
+			</div>
+			
+			
+	
+
+				<div class="weui_cells_title">运动</div>
+				<div class="weui_cells weui_cells_form">
+
+				<div class="weui_cell weui_cell_select weui_select_after">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">每周锻炼时间</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<select class="weui_select" v-model="SportOptions">
+							<option value="少于30分钟">少于30分钟</option>
+							<option value="30--60分钟">30--60分钟</option>
+							<option value="60分钟以上">60分钟以上</option>
+						</select>
+					</div>
+				</div>
+				
+								<div class="weui_cell">
+					<div class="weui_cell_hd"><label class="weui_label">运动方式</label></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input class="weui_input" type="text" placeholder="请输入运动方式" v-model="SportStyle" />
+					</div>
+				</div>
+            </div>
+
+
+	
+			
+			
+			
+
+			<div class="weui_cells_title">既往史</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea1" class="weui_textarea" placeholder="请输入文本" rows="4" v-model="PartlHistory"></textarea>
+						<div class="weui_textarea_counter"><span id='count1'>0</span>/<span id='count_max1'>200</span></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="weui_cells_title">家族史</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea2" class="weui_textarea" placeholder="请输入文本" rows="4" v-model="FamilyHistory"></textarea>
+						<div class="weui_textarea_counter"><span id='count2'>0</span>/<span id='count_max2'>200</span></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="weui_cells_title">药物史</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea3" class="weui_textarea" placeholder="请输入文本" rows="4" v-model="MedicalHistory"></textarea>
+						<div class="weui_textarea_counter"><span id='count3'>0</span>/<span id='count_max3'>200</span></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="weui_cells_title">过敏史</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea4" class="weui_textarea" placeholder="请输入文本" rows="4" v-model="AllergicHistory"></textarea>
+						<div class="weui_textarea_counter"><span id='count4'>0</span>/<span id='count_max4'>200</span></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="weui_cells_title">月经史</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea5" class="weui_textarea" placeholder="请输入文本" rows="4" v-model="MenstrualHistory"></textarea>
+						<div class="weui_textarea_counter"><span id='count5'>0</span>/<span id='count_max5'>200</span></div>
+					</div>
+				</div>
+			</div>	
+			
+			
+			<div class="weui_cells_title">生育史</div>
+			<div class="weui_cells weui_cells_form">
+				<div class="weui_cell">
+					<div class="weui_cell_bd weui_cell_primary">
+						<textarea id="textarea6" class="weui_textarea" placeholder="请输入文本" rows="4" v-model="ChildbearingHistory"></textarea>
+						<div class="weui_textarea_counter"><span id='count6'>0</span>/<span id='count_max6'>200</span></div>
+					</div>
+				</div>
+			</div>
+			
+			<div style="padding:10px 20px;">
+				<button type="button" class="hui-button hui-button-large hui-danger" style="margin-top:15px;" id="PostSend" @click="PostSend">档案提交</button>
+			</div>
+		</div>
+		
+        <script src="../js/base.js"></script>
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+		<script>
+			$(function() {
+				var max1 = $('#count_max1').text();
+				$('#textarea1').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count1').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+
+				var max2 = $('#count_max2').text();
+				$('#textarea2').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count2').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				var max3 = $('#count_max3').text();
+				$('#textarea3').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count3').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				var max4 = $('#count_max4').text();
+				$('#textarea4').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count4').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				var max5 = $('#count_max5').text();
+				$('#textarea5').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count5').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+				
+				var max6 = $('#count_max6').text();
+				$('#textarea6').on('input', function() {
+					var text = $(this).val();
+					var len = text.length;
+					$('#count6').text(len);
+					if(len > max1) {
+						$(this).closest('.weui_cell').addClass('weui_cell_warn');
+					} else {
+						$(this).closest('.weui_cell').removeClass('weui_cell_warn');
+					}
+				});
+
+			})
+		</script>
+
+		<script>
+
+var domainUrl = GetMvcApiDomain();
+
+function plusReady(){
+HeadShow();	
+back();
+var _self = plus.webview.currentWebview();
+var username=_self.ToUser;
+if(username==null || username=='' || username==undefined){
+	plus.nativeUI.toast("参数错误，请返回重新选择");
+		setTimeout(function() {
+			plus.webview.currentWebview().close();
+		}, 1000);
+	
+}
+else{
+
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+	
+    
+    vum.UserName=username;
+    vum.RoleUser = objuser.UserName;
+    vum.getRegInfo(username);
+
+
+}
+
+
+
+
+
+}
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 	
+
+
+
+		var	vum=new Vue({
+				el: '#bodyinfo',
+				data: function() {
+					return {
+						UserName: "",
+						RoleUser: "",
+						ReallyName: "",
+						Sex: "1",
+						Age: "",
+						Nationality: "",
+						NativePlace: "",
+						Mobile: "",
+						BloodType: "",
+						Height: "",
+						Weight: "",
+						Education: "本科",
+						MaritalStatus: "已婚",
+						JobTitle: "",
+						Income: "",
+						Email: "",
+						WeChatId: "",
+						WorkUnit: "",
+						WorkAddress: "",
+						Address: "",
+
+						Interest: "",
+						WorkMood: "紧张",
+						SleepBedTime: "",
+						SleepLength: "",
+						chkFoodItem: [],
+						chkItemSend: "",
+						SportOptions:"少于30分钟",
+						SportStyle:"",
+						PartlHistory: "",
+						FamilyHistory: "",
+						MedicalHistory: "",
+						AllergicHistory: "",
+						MenstrualHistory: "",
+						ChildbearingHistory: ""
+					}
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+						
+
+					})
+
+				},
+
+				methods: {
+
+					getRegInfo: function(UserName) {
+
+						var that = this;
+
+						axios.get(domainUrl + 'api/MemberOperate/getUserArchives', {
+								params: {
+									UserName: UserName
+								}
+							})
+							.then(function(response) {
+								if(response.data.code == '200') {
+									that.ReallyName = response.data.ReallyName;
+									that.Sex = response.data.Sex;
+									that.Age = jsGetAge(response.data.Birthday);
+									that.Nationality = response.data.Nationality;
+									that.NativePlace = response.data.NativePlace;
+									that.Mobile = response.data.Mobile;
+                                    that.Address = response.data.Address;
+									that.BloodType = response.data.BloodType;
+									that.Weight = response.data.Weight;
+									that.Height = response.data.Height;
+									that.Education = response.data.Education;
+									that.MaritalStatus = response.data.MaritalStatus;
+									that.JobTitle = response.data.JobTitle;
+									that.Income = response.data.Income;
+									that.Email = response.data.Email;
+									that.WeChatId = response.data.WeChatId;
+									that.WorkUnit = response.data.WorkUnit;
+									that.WorkAddress = response.data.WorkAddress;
+									that.Interest = response.data.Interest;
+									that.WorkMood = response.data.WorkMood;
+									that.SleepBedTime = response.data.SleepBedTime;
+									that.SleepLength = response.data.SleepLength;
+									
+
+
+									var FoodItemStrs = response.data.FoodOptions.split(";");
+									for(i = 0; i < FoodItemStrs.length; i++) {
+										that.chkFoodItem[i] = FoodItemStrs[i]; //分割后的字符输出 
+									}
+									
+									that.SportOptions = response.data.SportOptions;
+									that.SportStyle = response.data.SportStyle;
+									that.PartlHistory = response.data.PartlHistory;
+									that.FamilyHistory = response.data.FamilyHistory;
+									that.MedicalHistory = response.data.MedicalHistory;
+									that.AllergicHistory = response.data.AllergicHistory;
+									that.MenstrualHistory = response.data.MenstrualHistory;
+									that.ChildbearingHistory = response.data.ChildbearingHistory;
+
+								} else {
+									hui.toast("获取合伙人资料失败");
+									return false;
+								}
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					setChkFoodItem: function() {
+						var arr = this.chkFoodItem;
+						var DataItem = "";
+						for(var i = 0; i < arr.length; i++) {
+							var obj = arr[i];
+							if(DataItem == "" || DataItem == null) {
+								DataItem = obj;
+							} else {
+								DataItem = DataItem + ";" + obj;
+							}
+						}
+						this.chkItemSend = DataItem;
+
+					},
+
+					PostSend: function() {
+
+						if(this.ReallyName == "" || this.ReallyName == null) {
+							hui.upToast('请输入姓名!');
+							return false;
+						}
+						if(this.Sex == "" || this.Sex == null) {
+							hui.upToast('请选择性性别!');
+							return false;
+						}
+
+						if(this.Age == "" || this.Age == null || this.Age == "2017") {
+							hui.upToast('请输入年龄!');
+							return false;
+						}
+
+						if(Number(this.Age) <= 2 || Number(this.Age) > 110) {
+							hui.upToast('请输入正确的年龄!');
+							return false;
+						}
+						
+						if(this.Mobile=="" || this.Mobile==null){
+							this.Mobile=username;
+						}
+
+						
+
+						var PersonId = "";
+
+
+						
+						var BankName="";
+						var BankUser="";
+					    var BankAccount="";
+
+
+                        var HealthCondition="";
+                        var HealthDesc="";
+                        
+
+						var ShoppingRecord = "";
+						var RoleLevel = 0;
+						var PartnerClass=0;
+						var CreateUser = this.RoleUser;
+						var PendDate = "";
+						var PendUser = this.RoleUser;
+
+						this.setChkFoodItem();
+
+						this.SendSave(this.UserName, this.ReallyName, this.Sex, this.Age, this.Address,this.Email,PersonId,this.Mobile, this.Nationality,this.NativePlace, this.BloodType,this.Height,this.Weight, this.Education, this.MaritalStatus, this.WorkUnit, this.WorkAddress, this.JobTitle, this.Income, this.WeChatId, BankName, BankUser, BankAccount, this.Interest, this.WorkMood, this.SleepBedTime, this.SleepLength, this.chkItemSend, this.SportOptions,this.SportStyle,  HealthCondition,HealthDesc, this.PartlHistory, this.FamilyHistory, this.MedicalHistory, this.AllergicHistory, this.MenstrualHistory,this.ChildbearingHistory, ShoppingRecord, RoleLevel, PartnerClass, PendDate, CreateUser, PendUser)
+					},
+					SendSave: function(UserName, ReallyName, Sex, Age, Address, Email, PersonId, Mobile,Nationality, NativePlace, BloodType,Height,Weight, Education, MaritalStatus, WorkUnit, WorkAddress, JobTitle, Income, WeChatId, BankName, BankUser, BankAccount, Interest, WorkMood, SleepBedTime, SleepLength, FoodOptions, SportOptions,SportStyle, HealthCondition, HealthDesc, PartlHistory, FamilyHistory, MedicalHistory, AllergicHistory, MenstrualHistory,ChildbearingHistory, ShoppingRecord, RoleLevel, RoleClass, RolePendDate, CreateUser, PendUser) {
+						var that = this;
+						that.addInterceptors();
+
+						axios.post(domainUrl + 'api/MemberOperate/PostMemberArchives', Qs.stringify({
+								UserName: UserName,
+								ReallyName: ReallyName,
+								Sex: Sex,
+								Age: Age,
+								Address: Address,
+								Email: Email,
+								PersonId: PersonId,
+								Mobile:Mobile,
+								Nationality: Nationality,
+								NativePlace: NativePlace,
+								BloodType: BloodType,
+								Height:Height,
+								Weight:Weight,
+								Education: Education,
+								MaritalStatus: MaritalStatus,
+								WorkUnit: WorkUnit,
+								WorkAddress: WorkAddress,
+								JobTitle: JobTitle,
+								Income: Income,
+								WeChatId: WeChatId,
+								BankName: BankName,
+								BankUser: BankUser,
+								BankAccount: BankAccount,
+								Interest: Interest,
+								WorkMood: WorkMood,
+								SleepBedTime: SleepBedTime,
+								SleepLength: SleepLength,
+								FoodOptions: FoodOptions,
+								SportOptions: SportOptions,
+								SportStyle: SportStyle,
+								HealthCondition: HealthCondition,
+								HealthDesc: HealthDesc,
+								PartlHistory: PartlHistory,
+								FamilyHistory: FamilyHistory,
+								MedicalHistory: MedicalHistory,
+								AllergicHistory: AllergicHistory,
+								MenstrualHistory: MenstrualHistory,
+								ChildbearingHistory:ChildbearingHistory,
+								ShoppingRecord: ShoppingRecord,
+								RoleLevel: RoleLevel,
+								RoleClass: RoleClass,
+								RolePendDate: RolePendDate,
+								CreateUser: CreateUser,
+								PendUser: PendUser
+							}))
+
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.toast("更新档案资料成功!");
+									setTimeout(function() {
+										window.history.go(-1);
+									}, 800);
+
+								} else {
+									hui.toast(response.data.msg);
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					addInterceptors: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							if(hui('#PostSend').buttonIsLoading()) {
+								return false;
+							}
+							hui('#PostSend').loadingButton('正在更新资料中...');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							hui.toast("请求失败");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui('#PostSend').resetLoadingButton();
+							hui('#PostSend').html("档案提交");
+							hui.toast("更新资料失败");
+							return Promise.reject(error)
+						})
+					}
+
+				}
+			})
+		</script>
+
+	</body>
+
+</html>

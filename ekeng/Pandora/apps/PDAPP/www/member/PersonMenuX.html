@@ -1,0 +1,391 @@
+<!doctype html>
+<html>
+<head>
+<title>我的管理中心</title>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" /> 
+<link rel="stylesheet" type="text/css" href="../css/lib/huimin.css">
+<link rel="stylesheet" type="text/css" href="../css/lib/CSSRESET.css">
+<link rel="stylesheet" type="text/css" href="../css/common2.css">
+<link rel="stylesheet" type="text/css" href="../css/Person.css">
+
+
+ <style type="text/css">
+            [v-cloak]{ display: none; }
+  </style>           
+
+</head>
+<body>
+
+	
+	
+<div class="_container clear" id="person">
+
+	
+
+ 		<article class="wrapper">
+			<div class="main" v-cloak>              	
+
+                
+                <div class="sec binding" @click="GoReg" v-if="showA=='1' && showx=='1'">
+                    <a>
+                        <span>注册新客户</span>
+                        <i></i>
+                    </a>
+                </div>
+                
+
+                <div class="sec binding" @click="GoNewMemberManage" v-if="showB=='1' && showx=='1'">
+                    
+                    <a>
+                        <span>新客户列表<em><font color=red>[{{NewMemberCount}}]</font></em></span>
+                        <i></i>
+                    </a>
+                </div>
+
+                <div class="sec binding" @click="GoMayMemberManage" v-if="showC=='1' && showx=='1'">
+                    <a>
+                        <span>意向客户列表<em><font color=red>[{{MayMemberCount}}]</font></em></span>
+                        <i></i>
+                    </a>
+                </div>
+
+                <div class="sec binding" @click="GoDealMemberManage" v-if="showD=='1' && showx=='1'">
+                    <a>
+                        <span>成交客户列表<em><font color=red>[{{DealMemberCount}}]</font></em></span>
+                        <i></i>
+                    </a>
+                </div>
+
+
+
+                <div class="sec binding" @click="GoMayPartnerManage" v-if="showE=='1' && showx==2">
+                    <a>
+                        <span>意向合伙人<em><font color=red>[{{MayPartnerCount}}]</font></em></span>
+                        <i></i>
+                    </a>
+                </div> 
+
+
+                <div class="sec binding" @click="GoDealPartnerManage" v-if="showF=='1' && showx=='2'">
+                    <a >
+                        <span>合伙人列表<em><font color=red>[{{DealPartnerCount}}]</font></em></span>
+                        <i></i>
+                    </a>
+                </div> 
+                
+                <div class="sec binding" @click="GoDoctorMember" v-if="showG=='1' && showx==4">
+                    <a>
+                        <span>客户健康管理</span>
+                        <i></i>
+                    </a>
+                </div> 
+ 
+ 
+                <div class="sec binding" @click="GoSchedulingOff" v-if="showH=='1' && showx=='3'">
+                   <a>
+                        <span>调休排班表</span>
+                        <i></i>
+                    </a>
+                </div> 
+                
+                <div class="sec binding" @click="GoEventSet" v-if="showI=='1' && showx=='3'">
+                   <a>
+                        <span>月份工作推进表</span>
+                        <i></i>
+                    </a>
+                </div> 
+                
+                
+			</div>
+		</article>
+		<!-- wrapper End -->
+
+	</div>
+</body>
+
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js"></script>
+<script src="../js/lib/hui.js" type="text/javascript"></script>
+<script src="../js/base.js"></script>
+
+
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+<script src="../js/lib/axios.min.js"></script>
+<script src="../js/lib/qs.js"></script>
+<script>
+	
+	
+
+var domainUrl = GetMvcApiDomain();
+
+
+
+
+
+function plusReady(){
+HeadShow();	
+back();
+var _self = plus.webview.currentWebview();
+var menux=_self.menux;
+if(menux==null || menux=='' || menux==undefined){
+	plus.nativeUI.toast("参数错误，请返回重新选择");
+		setTimeout(function() {
+						plus.webview.currentWebview().close();
+		}, 1000);
+	
+}
+else{
+
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+
+    var UserPower = plus.storage.getItem("UserPower");
+
+
+    vum.UserName=objuser.UserName;
+    vum.shopbm=objuser.shopbm;
+    vum.UserRole=objuser.UserRole;
+    vum.userbs=objuser.userbs;
+    vum.UserPower=UserPower;
+    vum.PowerProperty=objuser.PowerProperty;
+    vum.showx=menux;
+    
+    vum.PowerMenuShow();
+    vum.GetItemCount(vum.UserName,vum.shopbm);
+
+
+}
+
+
+
+
+
+}
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+	
+
+
+
+
+var vum = new Vue({
+    el: '#person',
+    data: function(){
+    	return {
+    	UserName: '',
+    	shopbm:'',
+        UserRole:0,
+        userbs:0,
+        UserPower:0,
+        PowerProperty:0,
+        
+        showx:'0',
+        showA:'0',
+        showB:'0',
+        showC:'0',
+        showD:'0',
+        showE:'0',
+        showF:'0',
+        showG:'0',
+        showH:'0',
+        showI:'0',
+
+        
+        GoUrl1:'RegMember.html',
+        GoUrl2:'MyNewMemberList.html',
+        GoUrl3:'MyMayMemberList.html',
+        GoUrl4:'MyDealMemberList.html',
+        
+        
+        NewMemberCount:0,
+        MayMemberCount:0,
+        DealMemberCount:0,
+        MayPartnerCount:0,
+        DealPartnerCount:0,
+        
+        MyNewMemberCount:0,
+        MyMayMemberCount:0,
+        MyDealMemberCount:0,
+        
+        MyMayPartnerCount:0,
+        MyDealPartnerCount:0,
+        
+        ShopNewMemberCount:0,
+        ShopMayMemberCount:0,
+        ShopDealMemberCount:0,
+        ShopMayPartnerCount:0,
+        ShopDealPartnerCount:0
+       
+     }
+    },
+    
+   mounted: function () {
+
+        this.$nextTick(function () {
+           
+
+
+    })
+
+    },
+
+    methods: {
+    	
+        PowerMenuShow:function(){
+
+
+            if (this.userbs=='6' || this.userbs=='7' || this.UserPower>=1){
+            	this.showA=1;
+            	this.showB=1;
+            	this.showC=1;
+            	this.showD=1;
+            }
+            
+            if (this.userbs=='6' || this.userbs=='7'){
+            	this.GoUrl2='MyNewMemberList.html';
+            	this.GoUrl3='MyMayMemberList.html';
+            	this.GoUrl4='MyDealMemberList.html';
+            	
+            }
+            
+            if (this.UserPower>=1){
+            	this.GoUrl2='ShopNewMemberList.html';
+            	this.GoUrl3='ShopMayMemberList.html';
+            	this.GoUrl4='ShopDealMemberList.html';
+            	
+            }
+
+            
+            if (this.UserPower==2 || this.UserPower==3 || this.UserPower==8 || this.UserPower==9 || this.UserPower==10 ){
+            	this.showE=1;
+            	this.showF=1;
+
+
+            }
+            
+            if (this.UserPower==1 || this.UserPower==4){
+            	this.showG=1;
+            } 
+            
+            if (this.UserPower==2 || this.UserPower==3 || this.UserPower==9 || this.UserPower==10 ){
+                this.showH=1;
+            	this.showI=1;
+            }
+                   
+
+
+        },
+              GetItemCount: function(username,shopbm) {
+					var that = this;
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/WorkFlow/getShopWorkItemCount', {
+							params: {
+								RoleUser: username,
+								BindUserName: shopbm,
+							}
+						})
+						.then(function(response) {
+
+                           that.MyNewMemberCount=response.data.MyNewMemberCount;
+                           that.MyMayMemberCount=response.data.MyMayMemberCount;
+                           that.MyDealMemberCount=response.data.MyDealMemberCount;
+                           that.MyMayPartnerCount=response.data.MyMayPartnerCount;
+                           that.MyDealPartnerCount=response.data.MyDealPartnerCount;
+                           that.ShopNewMemberCount=response.data.ShopNewMemberCount;
+                           that.ShopMayMemberCount=response.data.ShopMayMemberCount;
+                           that.ShopDealMemberCount=response.data.ShopDealMemberCount;
+                           that.ShopMayPartnerCount=response.data.ShopMayPartnerCount;
+                           that.ShopDealPartnerCount=response.data.ShopDealPartnerCount;
+
+					       if (that.userbs=='6' || that.userbs=='7'){
+					       	that.NewMemberCount=that.MyNewMemberCount;
+					       	that.MayMemberCount=that.MyMayMemberCount;
+					       	that.DealMemberCount=that.MyDealMemberCount;
+					       }
+					         if (that.UserPower>=1){
+					         	that.NewMemberCount=that.ShopNewMemberCount;
+					         	that.MayMemberCount=that.ShopMayMemberCount;
+					         	that.DealMemberCount=that.ShopDealMemberCount;
+					         	that.MayPartnerCount=that.ShopMayPartnerCount;
+					         	that.DealPartnerCount=that.ShopDealPartnerCount;
+					         }
+
+
+
+						})
+						.catch(function(response) {
+							console.log(response);
+			
+						});
+				},
+				
+				axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+		GoReg:function(){
+            clicked('RegMember.html','RegMember.html','slide-in-right','注册新客户');
+       },
+       	GoNewMemberManage:function(){
+       		var parm = {"menux" : 1}
+            clickedParm(this.GoUrl2,this.GoUrl2,'slide-in-right',parm,'新客户资料');
+        },
+        GoMayMemberManage:function(){
+       		var parm = {"menux" : 1}
+            clickedParm(this.GoUrl3,this.GoUrl3,'slide-in-right',parm,'意向客户资料');
+        },
+        GoDealMemberManage:function(){
+       		var parm = {"menux" : 1}
+            clickedParm(this.GoUrl4,this.GoUrl4,'slide-in-right',parm,'成交客户资料');
+        },
+        GoMayPartnerManage:function(){
+       		var parm = {"menux" : 2}
+            clickedParm('ShopMayPartnerList.html','ShopMayPartnerList.html','slide-in-right',parm,'意向合伙人资料');
+        },
+        GoDealPartnerManage:function(){
+       		var parm = {"menux" : 2}
+            clickedParm('ShopDealPartnerList.html','ShopDealPartnerList.html','slide-in-right',parm,'合伙人资料');
+        },
+        GoDoctorMember:function(){
+       		var parm = {"menux" : 4}
+            clickedParm('DoctorMemberList.html','DoctorMemberList.html','slide-in-right',parm,'客户健康管理');
+        },
+        GoSchedulingOff:function(){
+            clicked('ShopSchedulingOff.html','ShopSchedulingOff.html','slide-in-right','调休排班表');
+        },
+        GoEventSet:function(){
+            clicked('ShopEventSetRecord.html','ShopEventSetRecord.html','slide-in-right','月份工作推进表');
+        }
+
+
+    }
+
+});
+
+</script>
+</html>

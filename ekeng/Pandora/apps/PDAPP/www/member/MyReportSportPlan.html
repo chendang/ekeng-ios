@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+<title>个人健康管理--运动管理</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link type="text/css" href="../css/style.css" rel="stylesheet" />
+    <style type="text/css">
+         [v-cloak]{ display: none; }
+    </style>
+</head>
+<body>
+
+<!--当前栏目名start-->
+<div class="assess_name assess_ydgl">
+	<h2><img src="../img/13_08.png" alt="" />运动管理</h2>
+	<i class="icon icon_circle icon_circle_04"></i>
+</div>
+<div class="assess_line10"></div>
+<!--当前栏目名end-->
+<!--运动管理start-->
+<div class="assess_content assess_ydgl" id="SportData" v-cloak>
+	<h3>建议您目前每天运动能量消耗目标为{{ ItemKCal }}千卡</h3>
+	<div>
+		<div class="assess_ydgl_sport">
+			<h4>{{ ItemName1 }}：</h4>
+			<img src="../img/13_04-01.png" alt="" />
+		</div>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动方式：</span>
+			 &nbsp;{{ ItemMode1 }}
+		</p>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动强度：</span>
+			 &nbsp;{{ ItemIntensity1 }}
+		</p>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动时间：</span>
+			 &nbsp;{{ ItemTime1 }}
+		</p>
+		<div class="assess_trigger_line"></div>
+		<p>
+			<span>运动须知：</span><br>
+			&nbsp;{{ ItemNotice1 }}
+		</p>
+	</div>
+	<div>
+		<div class="assess_ydgl_sport">
+			<h4>{{ ItemName2 }}：</h4>
+			<img src="../img/13_04-02.png" alt="" />
+		</div>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动方式：</span>
+			&nbsp;{{ ItemMode2 }}
+		</p>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动强度：</span>
+			&nbsp;{{ ItemIntensity2 }}
+		</p>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动时间：</span>
+			&nbsp;{{ ItemTime2 }}
+		</p>
+		<div class="assess_trigger_line"></div>
+		<p>
+			<span>运动须知：</span><br>
+			&nbsp;{{ ItemNotice2 }} 
+		</p>
+	</div>
+	<div>
+		<div class="assess_ydgl_sport">
+			<h4>{{ ItemName3 }}：</h4>
+			<img src="../img/13_04-03.png" alt="" />
+		</div>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动方式：</span>
+			&nbsp;{{ ItemMode3 }}
+		</p>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动强度：</span>
+			&nbsp;{{ ItemIntensity3 }}
+		</p>
+		<p class="clearfix">
+			<span><i class="assess_point"></i>运动时间：</span>
+			&nbsp;{{ ItemTime3 }}
+		</p>
+		<div class="assess_trigger_line"></div>
+		<p>
+			<span>运动须知：</span><br>
+			&nbsp;{{ ItemNotice3 }}
+		</p>
+	</div>
+</div>
+
+<!--底部end-->
+</body>
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+<script>
+
+
+var domainUrl = GetMvcApiDomain();
+ 
+var username=null;  
+var ReportNum=null;
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+var _self = plus.webview.currentWebview();
+ReportNum=_self.ReportNum;
+
+if(ReportNum==null || ReportNum==''){
+	plus.webview.currentWebview().close();
+}
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+
+      var vum = new Vue({
+          el: '#SportData',
+          data: function() {
+          	return {
+              ReportNum:ReportNum,
+              ItemKCal: '--',
+              ItemName1: '--',
+              ItemMode1: '--',
+              ItemIntensity1: '--',
+              ItemTime1: '--',
+              ItemNotice1: '--',
+              ItemName2: '--',
+              ItemMode2: '--',
+              ItemIntensity2: '--',
+              ItemTime2: '--',
+              ItemNotice2: '--',
+              ItemName3: '--',
+              ItemMode3: '--',
+              ItemIntensity3: '--',
+              ItemTime3: '--',
+              ItemNotice3: '--'
+             }
+          },
+          
+          
+          mounted: function () {
+
+                   this.$nextTick(function () {
+
+                     var self=this;
+                     setTimeout(function(){
+                     self.getSportData();
+                     }, 150);
+                 })
+
+          },
+          methods: {
+              getSportData: function () {
+                  $.ajax({
+                      url: domainUrl + "api/PerReport/getLookPerReportItemData",
+                      type: 'get',
+                      dataType: "json",
+                      data: { UserName: username,ReportNum:ReportNum },
+                      success: function (data) {
+                          vum.ItemKCal = data.PartElevenSportItemKCal;
+                          vum.ItemName1 = data.PartElevenSportItemName1;
+                          vum.ItemMode1 = data.PartElevenSportItemMode1;
+                          vum.ItemIntensity1 = data.PartElevenSportItemIntensity1;
+                          vum.ItemTime1 = data.PartElevenSportItemTime1;
+                          vum.ItemNotice1 = data.PartElevenSportItemNotice1;
+                          
+                          vum.ItemName2 = data.PartElevenSportItemName2;
+                          vum.ItemMode2 = data.PartElevenSportItemMode2;
+                          vum.ItemIntensity2 = data.PartElevenSportItemIntensity2;
+                          vum.ItemTime2 = data.PartElevenSportItemTime2;
+                          vum.ItemNotice2 = data.PartElevenSportItemNotice2;
+                          
+                          vum.ItemName3 = data.PartElevenSportItemName3;
+                          vum.ItemMode3 = data.PartElevenSportItemMode3;
+                          vum.ItemIntensity3 = data.PartElevenSportItemIntensity3;
+                          vum.ItemTime3 = data.PartElevenSportItemTime3;
+                          vum.ItemNotice3 = data.PartElevenSportItemNotice3;
+                          
+                      },
+                      error: function () {
+                          plus.nativeUI.toast("网络错误，请稍后再试");
+                      }
+                  })
+              }
+
+
+          }
+
+
+
+      });
+
+</script>
+
+</html>

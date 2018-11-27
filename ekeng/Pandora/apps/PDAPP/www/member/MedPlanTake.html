@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>营养素日志</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/sm.min.css">
+		<link rel="stylesheet" href="../css/Monitor.css">
+		<link rel="stylesheet" href="../css/calendar.css">
+		<link rel="stylesheet" href="../css/lib/huimin.css">
+		<link type="text/css" href="../css/style.css" rel="stylesheet" />
+		<script src="../js/base.js"></script>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="page-group">
+			<div class="page page-current">
+				<header class="bar bar-nav">
+					<a class="left bar-nav-mt1 back" href="javascript:CloseCurrentView();">
+						<img src="../img/5-13.png" alt="">
+					</a>
+					<h2 class="title color-white">营养素日志</h2>
+
+					<a href="javascript:clicked('MedSetList.html','MedSetList.html','slide-in-left','营养素设置');" class="right bar-nav-mt2 right-more">
+						<h4><font color="#FFFFFF">设置</font></h4>
+					</a>
+				</header>
+
+				<div class="content">
+					<div class="databg">
+						<div class="databg-showall">
+							<div class="databg-showdata">
+								21
+							</div>
+							<div class="databg-showinfo">
+								<p class="databg-showinfo-week">星期六</p>
+								<p class="databg-showinfo-yearmonth">2016年12月</p>
+								<span class="databg-showinfo-text">
+                            未完成
+                        </span>
+							</div>
+						</div>
+					</div>
+					<div class="content-block my-content-block-data" style="background-color:#fff">
+
+						<div class="calendar-block">
+							<div id='calendar-inline'></div>
+						</div>
+					</div>
+
+					<div class="meal-manage" style="margin-top: 8px;" id="medtake">
+						<ul>
+							<li>
+								<div class="p_info">
+									<div class="p_left">
+										<img src="../img/5-22.png" alt="" />
+									</div>
+									<div class="p_right">
+										<ul class="p_time">
+											<li>
+												<div class="m_cell_hd m_cell_primary">
+													<ul class="clearfix">
+														<h2 class="fl">早</h2>
+														<i>{{txtState1}}</i>
+													</ul>
+												</div>
+												<div class="m_cell_ft">
+													<input type="checkbox" class="weui_switch" v-model="ChkMedBatch1" @click="ChkTakeBatchMed(1,ChkMedBatch1)" />
+												</div>
+											</li>
+											<li><input type="text" value="Am 7:00-10:00" readonly class="date" /></li>
+										</ul>
+										<ul class="p_list">
+											<li class="medxx1" style="padding-top:8px;" v-for="(Item,index) in MedList1" v-cloak>
+												<em class="on" @click="getDelMyBoxMed(Item.medCode,1)"></em>
+												<span class="fl">{{Item.medName}}({{Item.takeNum}}{{Item.medUnit}})</span>
+
+											</li>
+
+										</ul>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="p_info">
+									<div class="p_left">
+										<img src="../img/5-22.png" alt="" />
+									</div>
+									<div class="p_right">
+										<ul class="p_time">
+											<li>
+												<div class="m_cell_hd m_cell_primary">
+													<ul class="clearfix">
+														<h2 class="fl">中</h2>
+														<i>{{txtState2}}</i>
+													</ul>
+												</div>
+												<div class="m_cell_ft"><input type="checkbox" class="weui_switch" v-model="ChkMedBatch2" @click="ChkTakeBatchMed(2,ChkMedBatch2)" /></div>
+											</li>
+											<li><input type="text" value="pm 11:00-14:00" readonly class="date" /></li>
+										</ul>
+										<ul class="p_list">
+
+											<li class="medxx1" style="padding-top:8px;" v-for="(Item,index) in MedList2" v-cloak>
+												<em class="on" @click="getDelMyBoxMed(Item.medCode,2)"></em>
+												<span class="fl">{{Item.medName}}({{Item.takeNum}}{{Item.medUnit}})</span>
+
+											</li>
+
+										</ul>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="p_info">
+									<div class="p_left">
+										<img src="../img/5-22.png" alt="" />
+									</div>
+									<div class="p_right">
+										<ul class="p_time">
+											<li>
+												<div class="m_cell_hd m_cell_primary">
+													<ul class="clearfix">
+														<h2 class="fl">晚</h2>
+														<i>{{txtState3}}</i>
+													</ul>
+												</div>
+												<div class="m_cell_ft"><input type="checkbox" class="weui_switch" v-model="ChkMedBatch3" @click="ChkTakeBatchMed(3,ChkMedBatch3)" /></div>
+											</li>
+											<li><input type="text" value="pm 16:00-21:00" readonly class="date" /></li>
+										</ul>
+										<ul class="p_list">
+											<li class="medxx1" style="padding-top:8px;" v-for="(Item,index) in MedList3" v-cloak>
+												<em class="on" @click="getDelMyBoxMed(Item.medCode,3)"></em>
+												<span class="fl">{{Item.medName}}({{Item.takeNum}}{{Item.medUnit}})</span>
+
+											</li>
+
+										</ul>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<script src="../js/lib/jquery-2.1.3.min.js"></script>
+		<script src="../js/lib/hui.js"></script>
+
+		<script src="../js/Monitor.js"></script>
+		<script src="../js/my-sm.js"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+		<script>
+			var domainUrl = GetMvcApiDomain();
+
+			var UserName = null;
+
+			function plusReady() {
+
+				back();
+
+				var objuser = JSON.parse(plus.storage.getItem('user'));
+
+				UserName = objuser.UserName;
+				initCalendar(UserName);
+
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
+
+			function initCalendar(UserName) {
+
+				$.init();
+				var cjuery = new util.Cjuery();
+				//对对应日期设置点_data为需要传入日期，_color为需要传入的颜色
+				function showDateText(dateYear, dateMonth, dateDay, dataDate) {
+					var today = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+					var dataYear = dateYear;
+					var dataMonth = parseInt(dateMonth) + 1;
+					var yearMonth = dataYear + "年" + dataMonth + "月";
+					var week = today[new Date(dateYear, dateMonth, dateDay).getDay()];
+					$(".databg-showinfo-yearmonth").text(yearMonth);
+					$(".databg-showdata").text(dateDay > 9 ? dateDay : '0' + dateDay);
+					$(".databg-showinfo-week").text(week);
+					//            console.log(curElemDate)
+					var data = util.getGlobalData();
+					var filterData = data.filter(function(item) {
+						return item.originalDate == dataDate;
+					});
+					filterData.length > 0 ? $(".databg-showinfo-text").text(filterData[0].content) : $(".databg-showinfo-text").text('未完成');
+				}
+
+				var calendarOption = {
+					value: [new Date()],
+					toolbar: true,
+					monthPicker: true,
+					yearPicker: true,
+					onChange: function(p, values, displayValues) {
+
+					},
+					onDayClick: function(p, dayDom, dateYear, dateMonth, dateDay) {
+						var curElem = $(dayDom);
+						var curElemDate = curElem.data("date");
+						showDateText(dateYear, dateMonth, dateDay, curElemDate);
+					},
+					onOpen: function(p) {
+
+					},
+					onMonthAdd: function(p, theThisMonth) {
+						console.log(p)
+						url = domainUrl + 'api/med/getMonitorRecord';
+						if(util.getCurrentMonth() != p.currentMonth || util.getCurrentYear() != p.currentYear) {
+							util.setCurrentMonth(p.currentMonth);
+							util.setCurrentYear(p.currentYear);
+							cjuery.request(url, {
+								UserName: UserName,
+								currentMonth: p.currentMonth + 1,
+								currentYear: p.currentYear
+							}).then(function(data) {
+								var dateshow = util.formatData(data.list);
+								util.setGlobalData(dateshow);
+								dateshow.forEach(function(item) {
+									util.dateshow(item); //把数据显示在日历上
+								});
+								var nowDate = new Date(p.value[0]);
+								showDateText(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), nowDate.getFullYear() + '-' + nowDate.getMonth() + '-' + nowDate.getDate());
+
+							});
+						}
+
+					},
+					onMonthYearChangeEnd: function(p, currentYear, currentMonth) {},
+					onMonthChangeEnd: function(data) {
+						//                console.log(data)
+					}
+				};
+
+				$("#calendar-inline").calendar(calendarOption);
+
+			}
+
+			function ShowCalendarData(UserName) {
+				$.init();
+				var cjuery = new util.Cjuery();
+				url = domainUrl + 'api/med/getMonitorRecord';
+				var that = this;
+
+				util.setCurrentMonth(util.getCurrentMonth());
+				util.setCurrentYear(util.getCurrentYear());
+				cjuery.request(url, {
+					UserName: UserName,
+					currentMonth: util.getCurrentMonth() + 1,
+					currentYear: util.getCurrentYear()
+				}).then(function(data) {
+					var dateshow = util.formatData(data.list);
+					util.setGlobalData(dateshow);
+					dateshow.forEach(function(item) {
+						util.dateshow(item); //把数据显示在日历上
+					});
+
+				});
+
+			}
+
+			var vum = new Vue({
+				el: '#medtake',
+				data: function() {
+					return {
+						UserName: "",
+						MedList: [],
+						MedList1: [],
+						MedList2: [],
+						MedList3: [],
+						ChkMedBatch1: false,
+						txtState1: "未完成",
+						ChkMedBatch2: false,
+						txtState2: "未完成",
+						ChkMedBatch3: false,
+						txtState3: "未完成"
+					}
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+						that = this;
+						setTimeout(function() {
+							that.axiosGetLoadding();
+							that.getMedTakeList(UserName, '1', daycode());
+							that.getIsMedTakePierod(UserName, '1', daycode());
+							that.getMedTakeList(UserName, '2', daycode());
+							that.getIsMedTakePierod(UserName, '2', daycode());
+							that.getMedTakeList(UserName, '3', daycode());
+							that.getIsMedTakePierod(UserName, '3', daycode());
+						}, 800);
+
+					})
+
+				},
+
+				methods: {
+
+					getMedTakeList: function(UserName, taketime, daycode) {
+
+						var that = this;
+
+						axios.get(domainUrl + 'api/med/getMedTakeList', {
+								params: {
+									UserName: UserName,
+									takeTime: taketime,
+									daycode: daycode
+								}
+							})
+							.then(function(response) {
+								var recordlist = response.data;
+								that.MedList = [];
+
+								each(recordlist, function(i, arr) {
+									that.MedList.push({
+										number: (i + 1),
+										mid: arr.id,
+										medCode: arr.medCode,
+										medName: arr.medName,
+										medUnit: arr.medUnit,
+										medWay: arr.medWay,
+										medSpec: arr.medSpec,
+										takeNum: arr.takeNum,
+										takeTxt: arr.takeTxt,
+										istake: arr.istake
+									});
+								});
+								if(taketime == '1') {
+									that.MedList1 = [];
+									that.MedList1 = that.MedList;
+								}
+								if(taketime == '2') {
+									that.MedList2 = [];
+									that.MedList2 = that.MedList;
+								}
+								if(taketime == '3') {
+									that.MedList3 = [];
+									that.MedList3 = that.MedList;
+								}
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					ChkTakeBatchMed: function(takePeriod, istake) {
+						var that = this;
+						that.axiosSetLoadding();
+						if(istake == true) {
+							that.takeMedBatchAdd(that.UserName, takePeriod);
+
+						} else {
+							that.takeMedBatchDel(that.UserName, daycode(), takePeriod);
+
+						}
+
+					},
+
+					takeMedBatchAdd: function(username, takePeriod) {
+						var that = this;
+						axios.get(domainUrl + 'api/Med/GetMDaysMedAddBatch', {
+								params: {
+									UserName: username,
+									TakePeriod: takePeriod,
+								}
+							})
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.toast("操作成功!");
+									if(takePeriod == '1') {
+										that.ChkMedBatch1 = true;
+										that.txtState1 = "已完成";
+									}
+									if(takePeriod == '2') {
+										that.ChkMedBatch2 = true;
+										that.txtState2 = "已完成";
+									}
+									if(takePeriod == '3') {
+										that.ChkMedBatch3 = true;
+										that.txtState3 = "已完成";
+									}
+									ShowCalendarData(username);
+
+								} else {
+									hui.toast("操作失败!");
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					takeMedBatchDel: function(username, daycode, takePeriod) {
+						var that = this;
+						axios.get(domainUrl + 'api/Med/GetMDaysMedBatchDel', {
+								params: {
+									UserName: username,
+									daycode: daycode,
+									TakePeriod: takePeriod,
+								}
+							})
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.toast("操作成功!");
+									if(takePeriod == '1') {
+										that.ChkMedBatch1 = false;
+										that.txtState1 = "未完成";
+									}
+									if(takePeriod == '2') {
+										that.ChkMedBatch2 = false;
+										that.txtState2 = "未完成";
+									}
+									if(takePeriod == '3') {
+										that.ChkMedBatch3 = false;
+										that.txtState3 = "未完成";
+									}
+
+									ShowCalendarData(username);
+								} else {
+									hui.toast("操作失败!");
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					getIsMedTakePierod: function(username, takeType, daycode) {
+						var that = this;
+						axios.get(domainUrl + 'api/med/getIsHaveTake', {
+								params: {
+									UserName: username,
+									takeTime: takeType,
+									daycode: daycode,
+								}
+							})
+							.then(function(response) {
+								if(response.data.code == '200') {
+									if(response.data.isHave >= 1) {
+										if(takeType == '1') {
+											that.ChkMedBatch1 = true;
+											that.txtState1 = "已完成";
+										}
+										if(takeType == '2') {
+											that.ChkMedBatch2 = true;
+											that.txtState2 = "已完成";
+										}
+										if(takeType == '3') {
+											that.ChkMedBatch3 = true;
+											that.txtState3 = "已完成";
+
+										}
+									} else {
+
+										if(takeType == '1') {
+											that.ChkMedBatch1 = false;
+											that.txtState1 = "未完成";
+										}
+										if(takeType == '2') {
+											that.ChkMedBatch2 = false;
+											that.txtState2 = "未完成";
+										}
+										if(takeType == '3') {
+
+											that.ChkMedBatch3 = false;
+											that.txtState3 = "未完成";
+
+										}
+									}
+
+								} else {
+									hui.toast("读取数据失败!");
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					getDelMyBoxMed: function(medcode, takePeriod) {
+						var that = this;
+						axios.get(domainUrl + 'api/Med/getMyBoxMedDel', {
+								params: {
+									UserName: username,
+									MedCode: medcode,
+								}
+							})
+							.then(function(response) {
+								if(response.data.code == '200') {
+									if(response.data.res >= 1) {
+										hui.toast("操作成功!");
+										that.getMedTakeList(that.UserName, takePeriod, daycode());
+									} else {
+										hui.toast("操作失败!");
+									}
+
+								} else {
+									hui.toast("操作失败!");
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+
+					axiosSetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('正在操作中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("操作失败");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("操作失败");
+							return Promise.reject(error)
+						})
+					},
+
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					}
+
+				}
+			})
+
+			function daycode() {
+				var now = new Date();
+				var year = now.getFullYear(); //年
+				var month = now.getMonth() + 1; //月
+				var day = now.getDate(); //日
+
+				if(month < 10)
+					month = "0" + month;
+
+				if(day < 10)
+					day = "0" + day;
+
+				var code = year.toString() + month.toString() + day.toString()
+				return(code);
+			}
+		</script>
+
+	</body>
+
+</html>

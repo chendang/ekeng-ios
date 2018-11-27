@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		<title>成交客户列表管理</title>
+		<link rel="stylesheet" href="../css/lib/huimin.css" />
+		<link rel="stylesheet" href="../css/lib/weui.css" />
+		<link rel="stylesheet" href="../css/lib/weui2.css" />
+
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+
+			
+	        html,
+
+			body {
+				margin: 0;
+                padding: 0;
+                height: 100%;
+				font: 12px/1 'Roboto', sans-serif;
+				color: #555;
+				background-color: #fff;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			
+			ul {
+				list-style: none;
+			}
+
+
+
+			
+
+			#app {
+				position: absolute;
+				top: 0px;
+                bottom: 2px;
+				width: 100%;
+			}
+			
+			#wrapper {
+				position: absolute;
+				top: 44px;
+				bottom: 0px;
+				width: 100%;
+			}
+			
+			#scroller {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.item {
+				height: 60px;
+				line-height: 60px;
+				border-bottom: 1px solid #ddd;
+				text-indent: 1em;
+				background: #fff;
+			}
+			
+			.jroll-infinite-tip {
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+			}
+			
+			.jroll-vue-infinite {
+				height: 100%;
+			}
+		</style>
+
+	</head>
+
+
+
+	<body>
+
+
+		<div id="app" >
+			<div class="weui_search_bar">
+             <input type="search" class="search-input" v-model="UsersNameKey" placeholder='关键字' style="box-sizing:content-box"/><button  class="weui_btn weui_btn_mini weui_btn_primary" @click="GetSearchData"><i class="icon icon-4"></i></button>    
+            </div>
+			
+			 <jroll-infinite class="jroll-vue-infinite">
+			 	
+			 	
+
+       <div class="weui_cells" v-for="(Item,index) in ItemList" v-cloak>
+           <div class="weui_cell" style="background: cornsilk;">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>{{Item.userbm}}({{Item.ReallyName}})</p>
+                </div>
+                <div class="weui_cell_ft">{{Item.CreateTime}}</div>
+            </div>
+ 
+
+ 
+            <div class="weui-form-preview-ft">
+                <a class="weui-form-preview-btn weui-form-preview-btn-primary" @click="ArchivesManger(Item.userbm);">客户档案</a>
+                <button class="weui-form-preview-btn weui-form-preview-btn-primary" @click="SetFollow(Item.userbm);"><div v-if="Item.IsFollow == '0'">关注</div><div v-else>已关注</div></button>
+                <button class="weui-form-preview-btn weui-form-preview-btn-primary" @click="SetOrderBy(Item.userbm);">置顶</button>
+                
+                
+		          <select style="text-align:center; float:left;margin-left: 0px;" v-model="Item.selected" @change="SetState(Item);">
+			       <option v-for="option in options" v-bind:value="option.value">  
+                   {{ option.text }}  
+                   </option>  
+		        </select>
+
+            </div>
+            
+            <div class="weui-form-preview-ft">
+                <a class="weui-form-preview-btn weui-form-preview-btn-primary" v-on:click="TraceRecord(Item.userbm);">跟踪服务</a>
+                <button class="weui-form-preview-btn weui-form-preview-btn-primary" @click="TreatmentARecord('1',Item.userbm);">肾细胞</button>
+                <button class="weui-form-preview-btn weui-form-preview-btn-primary" @click="TreatmentARecord('2',Item.userbm);">免疫力</button>
+                 <button class="weui-form-preview-btn weui-form-preview-btn-primary" @click="TreatmentARecord('3',Item.userbm);">肝细胞</button>
+
+            </div>            
+            
+            <div class="weui-form-preview-ft">
+                <a class="weui-form-preview-btn weui-form-preview-btn-primary" v-on:click="TreatmentARecord('4',Item.userbm);">肺细胞</a>
+                <button class="weui-form-preview-btn weui-form-preview-btn-primary" @click="TreatmentBRecord(Item.userbm);">深筋膜</button>
+
+            </div>               
+            
+</div>
+			 	
+			 	
+			 	
+
+            
+
+
+     
+
+            </jroll-infinite>
+            </div>
+          </body>
+		<script src="../js/base.js"></script>
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/hui-select-beautify.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+		<script src="../js/lib/jroll.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-vue-infinite.js" type="text/javascript"></script>
+		<script src="../js/lib/jroll-pulldown.js" type="text/javascript"></script>
+
+		<script>
+			
+			var domainUrl = GetMvcApiDomain();
+			var MemberLevel=21;
+			
+
+			
+function plusReady(){
+HeadShow();	
+back();
+var _self = plus.webview.currentWebview();
+var ToUser=_self.ToUser;
+if(ToUser==null || ToUser=='' || ToUser==undefined){
+	plus.nativeUI.toast("参数错误，请返回重新选择");
+		setTimeout(function() {
+			plus.webview.currentWebview().close();
+		}, 1000);
+	
+}
+else{
+
+	var objuser = JSON.parse(plus.storage.getItem('user'));
+
+
+
+    initData(ToUser,objuser.shopbm,objuser.UserName)
+}
+
+
+
+
+
+}
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}
+	
+function initData(toUser,shopbm,RoleUser){
+			// vue实例
+			var vum
+			var infOptions = {
+				pulldown: {},
+				bottomed: function(complete) {
+					var that = this;
+					axios.get(domainUrl + 'api/MemberOperate/getMyMemberListByLevel', {
+							params: {
+								pageIndex: that.page+1,
+								pageSize: that.$parent.pageSize,
+								LoginUser: toUser,
+								KeySearch: that.$parent.UsersNameKey,
+								MemberLevel:MemberLevel
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.$parent.ItemData = [];
+							each(jsonx, function(i, j) {
+
+								that.$parent.ItemData.push({
+									number: (i + 1),
+									bid: j.bid,
+									userbm: j.UserName,
+									ReallyName: cutstr(j.ReallyName, 7),
+									CreateTime: j.CreateTime,
+									IsFollow:j.IsFollow,
+									selected:"x",
+								});
+
+
+							});
+
+							if(typeof complete === 'function') {
+								that.$parent.ItemList = that.$parent.ItemData;
+								complete();
+							} else {
+								that.$parent.ItemList = that.$parent.ItemList.concat(that.$parent.ItemData);
+							}
+
+							that.$parent.pageCount = response.data.PageCount;
+							that.total = response.data.PageCount;
+							if (response.data.PageCount==0){
+								that.total =1;
+							}
+							else{
+								that.total = response.data.PageCount;
+							}
+							that.success();
+
+						})
+						.catch(function(response) {
+							console.log(response);
+							that.error();
+						});
+				},
+				updated: function() {
+					console.log('current page is ' + this.page)
+				}
+
+			}
+
+			vum = new Vue({
+				el: '#app',
+				components: {
+					'jroll-infinite': JRoll.VueInfinite(infOptions, {
+						scrollBarY: true
+					})
+				},
+				data: {
+					pageIndex:0,
+					pageSize:20,
+					UserName: toUser,
+					shopbm: shopbm,
+					RoleUser: RoleUser,
+					UsersNameKey: "",
+					ItemData: [],
+					ItemList: [],
+					options: [  
+                     { text: '客户标签', value: 'x' },
+                     { text: '意向客户', value: '20' },
+                     { text: '取消成交标签', value: '0' },  
+                     { text: '意向合伙人', value: '22' }  
+                    ]  
+				},
+
+				methods: {
+					
+				GetItemList: function(username,shopbm,pageIndex,pageSize,KeySearch,MemberLevel) {
+					var that = this;
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/MemberOperate/getMyMemberListByLevel', {
+							params: {
+								pageIndex: pageIndex,
+								pageSize: pageSize,
+								LoginUser: username,
+								KeySearch: KeySearch,
+								MemberLevel:MemberLevel,
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.ItemData = [];
+							each(jsonx, function(i, j) {
+
+								that.ItemData.push({
+									number: (i + 1),
+									bid: j.bid,
+									userbm: j.UserName,
+									ReallyName: cutstr(j.ReallyName, 7),
+									CreateTime: j.CreateTime,
+									IsFollow:j.IsFollow,
+									selected:"x",
+								});
+
+
+							});
+
+								that.ItemList = that.ItemData;
+								
+
+
+							that.pageCount = response.data.PageCount;
+							that.$children[0].total = response.data.PageCount;
+							if(that.$children[0].total<=1) {
+								that.$children[0].tip="";
+							}
+
+
+						})
+						.catch(function(response) {
+							console.log(response);
+			
+						});
+				},
+					GetSearchData: function() {
+						this.$children[0].scrollTop();
+						this.pageIndex = 1;
+						this.ItemList = [];
+						this.ItemData = [];
+						this.$children[0].page=1;
+						this.GetItemList(this.UserName, this.shopbm, this.pageIndex,this.pageSize, this.UsersNameKey,MemberLevel);
+					},
+					
+				SendSetLevel: function(UserName, SetLevel, CreateUser) {
+					var that = this;
+
+					axios.post(domainUrl + 'api/WorkFlow/MemberLevelSet', Qs.stringify({
+							UserName: UserName,
+							SetLevel: SetLevel,
+							CreateUser: CreateUser
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								hui.upToast('操作成功');
+								setTimeout(function() {
+
+										that.GetSearchData();
+
+									
+
+								}, 800);
+
+							} else {
+								hui.upToast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+				
+				SendSetOrderBy: function(UserName, OrderByType,ShopUser, CreateUser) {
+					var that = this;
+
+					axios.post(domainUrl + 'api/WorkFlow/MemberOrderBySet', Qs.stringify({
+							UserName: UserName,
+							OrderByType:OrderByType,
+							ShopUser: ShopUser,
+							CreateUser: CreateUser
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								hui.upToast('操作成功');
+								setTimeout(function() {
+
+										that.GetSearchData();
+
+									
+
+								}, 800);
+
+							} else {
+								hui.upToast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},
+				
+				SendSetFollow: function(UserName, CreateUser) {
+					var that = this;
+
+					axios.post(domainUrl + 'api/WorkFlow/ShopFollowMemberSet', Qs.stringify({
+							UserName: UserName,
+							CreateUser: CreateUser
+						}))
+
+						.then(function(response) {
+							if(response.data.code == '200') {
+								hui.upToast(response.data.msg);
+								setTimeout(function() {
+
+										that.GetSearchData();
+
+									
+
+								}, 800);
+
+							} else {
+								hui.upToast(response.data.msg);
+								return false;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+						});
+
+				},	
+					
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+					
+					SetFollow: function(ToUser) {
+						this.SendSetFollow(ToUser, this.UserName);
+
+					},
+					
+					SetOrderBy: function(ToUser) {
+						this.SendSetOrderBy(ToUser, 1,this.shopbm, this.UserName);
+
+					},
+					
+					SetState: function(item) {
+						
+						if (item.selected=='x' || item.selected==''){
+							hui.upToast('请选择客户标签');
+							return false;
+						}
+						this.SendSetLevel(item.userbm, item.selected, this.UserName)
+						
+
+					},
+
+					
+					ArchivesManger: function(ToUser) {
+						var parm = {"ToUser" : ToUser}
+                        clickedParm('ArchivesMember.html','ArchivesMember.html','slide-in-right',parm,'客户档案建立');
+
+					},
+					TraceRecord: function(ToUser) {
+						var parm = {"ToUser" : ToUser}
+                        clickedParm('TraceServiceRecord.html','TraceServiceRecord.html','slide-in-right',parm,'客户跟踪服务管理');
+
+					},
+					TreatmentARecord: function(type,ToUser) {
+						var parm = {"ToUser" : ToUser,"type" : type}
+                        clickedParm('TreatmentAProjectRecord.html','TreatmentAProjectRecord.html','slide-in-right',parm,'复健项目登记');
+
+					},
+					
+					TreatmentBRecord: function(ToUser) {
+						var parm = {"ToUser" : ToUser}
+                         clickedParm('TreatmentBProjectRecord.html','TreatmentBProjectRecord.html','slide-in-right',parm,'复健项目登记');
+
+					}
+
+				}
+
+			})
+			
+}
+		</script>
+
+
+</html>

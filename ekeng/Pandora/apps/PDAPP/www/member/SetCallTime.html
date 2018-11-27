@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>设置项目</title>
+<meta charset="utf-8">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+
+<link rel="stylesheet" type="text/css" href="../css/lib/mui.min.css">
+<link rel="stylesheet" type="text/css" href="../css/lib/mui.picker.min.css" />
+    <style type="text/css">
+    	 [v-cloak]{ display: none; }
+
+    </style>
+</head>
+
+	<body>
+
+		<div class="mui-content">
+		    <div class="mui-card">
+		        <ul class="mui-table-view">
+		            <li class="mui-table-view-cell">营养素管理提醒
+		                <div id="medset" class="mui-switch">
+		                    <div class="mui-switch-handle"></div>
+		                </div>
+		            </li>
+		            
+		            <li class="mui-table-view-cell">早晨 <button type="button" id='medtime1' data-options='{"type":"time"}' class="btn mui-btn mui-btn-primary"><span class="mui-badge mui-badge-primary" id='medvalue1'>07:00</span></button></li>
+		            <li class="mui-table-view-cell">中午<button type="button" id='medtime2' data-options='{"type":"time"}' class="btn mui-btn mui-btn-primary"><span class="mui-badge mui-badge-primary" id='medvalue2'>12:00</span></button></li>
+		            <li class="mui-table-view-cell">晚上<button type="button" id='medtime3' data-options='{"type":"time"}' class="btn mui-btn mui-btn-primary"><span class="mui-badge mui-badge-primary" id='medvalue3'>18:00</span></button></li>
+		        </ul>
+		    </div>
+		    
+		    <div class="mui-card" style="margin-top: 20px;">
+		        <ul class="mui-table-view">
+		            <li class="mui-table-view-cell">运动管理提醒
+		                <div id="sportset" class="mui-switch mui-active">
+		                    <div class="mui-switch-handle"></div>
+		                </div>
+		            </li>
+		            
+		            <li class="mui-table-view-cell">早晨 <button type="button" id='sporttime1' data-options='{"type":"time"}' class="btn mui-btn mui-btn-primary"><span class="mui-badge mui-badge-primary" id='sportvalue1'>08:00</span></button></li>
+		        </ul>
+		    </div>
+		    
+		    <div class="mui-card" style="margin-top: 20px;">
+		        <ul class="mui-table-view">
+		            <li class="mui-table-view-cell">睡眠管理提醒
+		                <div id="sleepset" class="mui-switch mui-active">
+		                    <div class="mui-switch-handle"></div>
+		                </div>
+		            </li>
+		            
+		            <li class="mui-table-view-cell">晚上 <button type="button" id='sleeptime1' data-options='{"type":"time"}' class="btn mui-btn mui-btn-primary"><span class="mui-badge mui-badge-primary" id='sleepvalue1'>20:00</span></button></li>
+		        </ul>
+		    </div>	
+		    
+		    
+		    
+		</div>
+	</body>
+
+
+<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="../js/lib/mui.min.js" type="text/javascript"></script>
+<script src="../js/lib/mui.picker.min.js"></script>
+<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/public.js" type="text/javascript"></script>
+<script>
+
+		
+		
+var domainUrl = GetMvcApiDomain();
+ 
+var username=null;  
+function plusReady() { 
+HeadShow();		
+var objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
+  getMedSetInfo1(username,'1','1');
+  getMedSetInfo2(username,'1','2');
+  getMedSetInfo3(username,'1','3');
+  getSportSetInfo1(username,'2','1')
+  getSleepSetInfo1(username,'3','1')
+
+back();
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+} 
+		
+		
+		
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});		
+				(function($) {
+				$.init();
+				var btns = $('.btn');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+
+						/*
+						 * 首次显示时实例化组件
+						 * 示例为了简洁，将 options 放在了按钮的 dom 上
+						 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+						 */
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							/*
+							 * rs.value 拼合后的 value
+							 * rs.text 拼合后的 text
+							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+							 * rs.m 月，用法同年
+							 * rs.d 日，用法同年
+							 * rs.h 时，用法同年
+							 * rs.i 分（minutes 的第二个字母），用法同年
+							 */
+						if (id=='medtime1'){
+						document.getElementById('medvalue1').innerHTML=rs.text;
+						setTimeSave(username,'1','1',rs.text);
+						}
+						if (id=='medtime2'){
+						document.getElementById('medvalue2').innerHTML=rs.text;
+						setTimeSave(username,'1','2',rs.text);
+						}
+						if (id=='medtime3'){
+						document.getElementById('medvalue3').innerHTML=rs.text;
+						setTimeSave(username,'1','3',rs.text);
+						}
+						
+						if (id=='sporttime1'){
+						document.getElementById('sportvalue1').innerHTML=rs.text;
+						setTimeSave(username,'2','1',rs.text);
+						}
+						if (id=='sleeptime1'){
+						document.getElementById('sleepvalue1').innerHTML=rs.text;
+						setTimeSave(username,'3','1',rs.text);
+						}
+						
+						
+							/* 
+							 * 返回 false 可以阻止选择框的关闭
+							 * return false;
+							 */
+							/*
+							 * 释放组件资源，释放后将将不能再操作组件
+							 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+							 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+							 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+							 */
+							picker.dispose();
+						});
+					}, false);
+				});
+			})(mui);
+
+
+		
+var onoff='0';				
+document.getElementById("medset").addEventListener('toggle', function(event) {
+
+if (event.detail.isActive==true){
+onoff='1';
+}
+else{
+onoff='0';	
+}
+
+var medtime1=document.getElementById('medvalue1').innerText;
+var medtime2=document.getElementById('medvalue2').innerText;
+var medtime2=document.getElementById('medvalue3').innerText;
+setOnOffSave(username,'1','1',medtime1,onoff);
+setOnOffSave(username,'1','2',medtime2,onoff);
+setOnOffSave(username,'1','3',medtime2,onoff);
+
+
+});
+
+document.getElementById("sportset").addEventListener('toggle', function(event) {
+	
+if (event.detail.isActive==true){
+onoff='1';
+}
+else{
+onoff='0';	
+}
+
+var sporttime1=document.getElementById('sportvalue1').innerText;
+setOnOffSave(username,'2','1',sporttime1,onoff);
+
+
+});
+
+document.getElementById("sleepset").addEventListener('toggle', function(event) {
+if (event.detail.isActive==true){
+onoff='1';
+}
+else{
+onoff='0';	
+}
+
+var sleeptime1=document.getElementById('sleepvalue1').innerText;
+setOnOffSave(username,'3','1',sleeptime1,onoff);
+});
+
+
+	function setTimeSave(username,settype,timetype,settime){
+
+             $.ajax({
+             	url: domainUrl + "api/CallSet/getCallSetAdd",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,SetType:settype,TimeType:timetype,SetTime:settime},
+                success: function (data) {
+                	    if (data.code=='200'){
+                        mui.toast("您的设置成功提交！");
+                        }else{
+                       	mui.toast("设置失败,请稍后再试！");
+                       	return false;
+                        }
+                  },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+  } 
+  
+  
+  	function setOnOffSave(username,settype,timetype,settime,onoff){
+
+             $.ajax({
+             	url: domainUrl + "api/CallSet/getCallSetOnOff",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,SetType:settype,TimeType:timetype,SetTime:settime,OnOff:onoff},
+                success: function (data) {
+                	    if (data.code=='200'){
+                        mui.toast("您的设置成功提交！");
+                        }else{
+                       	mui.toast("设置失败,请稍后再试！");
+                       	return false;
+                        }
+                  },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+  } 
+  
+  
+  
+
+  function getMedSetInfo1(username,setType,timeType) {
+	          $.ajax({
+             	url: domainUrl + "api/CallSet/getCallSet",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,SetType:setType,TimeType:timeType},
+                success: function (data) {
+                	if (data.code=="200"){
+                		if (data.SetTime.length!=0){
+                		document.getElementById('medvalue1').innerHTML=data.SetTime;
+                		}
+                		if (data.OnOff=='1'){
+                		document.getElementById("medset").className="mui-switch mui-active";
+                		}else{
+                		document.getElementById("medset").className="mui-switch";	
+                		}
+                	}
+               },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+
+ }
+  
+    function getMedSetInfo2(username,setType,timeType) {
+	          $.ajax({
+             	url: domainUrl + "api/CallSet/getCallSet",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,SetType:setType,TimeType:timeType},
+                success: function (data) {
+                	if (data.code=="200"){
+                		if (data.SetTime.length!=0){
+                		document.getElementById('medvalue2').innerHTML=data.SetTime;
+                		}
+
+                	}
+               },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+
+ }
+  
+     function getMedSetInfo3(username,setType,timeType) {
+	          $.ajax({
+             	url: domainUrl + "api/CallSet/getCallSet",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,SetType:setType,TimeType:timeType},
+                success: function (data) {
+                	if (data.code=="200"){
+                		if (data.SetTime.length!=0){
+                		document.getElementById('medvalue3').innerHTML=data.SetTime;
+                		}
+
+                	}
+               },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+
+ } 
+  
+   function getSportSetInfo1(username,setType,timeType) {
+	          $.ajax({
+             	url: domainUrl + "api/CallSet/getCallSet",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,SetType:setType,TimeType:timeType},
+                success: function (data) {
+                	if (data.code=="200"){
+                		if (data.SetTime.length!=0){
+                		document.getElementById('sportvalue1').innerHTML=data.SetTime;
+                		}
+                		if (data.OnOff=='1'){
+                		document.getElementById("sportset").className="mui-switch mui-active";
+                		}else{
+                		document.getElementById("sportset").className="mui-switch";	
+                		}
+                	}
+               },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+
+ } 
+ 
+    function getSleepSetInfo1(username,setType,timeType) {
+	          $.ajax({
+             	url: domainUrl + "api/CallSet/getCallSet",
+                type: 'get',
+                dataType: "json",
+                data: {UserName:username,SetType:setType,TimeType:timeType},
+                success: function (data) {
+                	if (data.code=="200"){
+                		if (data.SetTime.length!=0){
+                		document.getElementById('sleepvalue1').innerHTML=data.SetTime;
+                		}
+                		if (data.OnOff=='1'){
+                		document.getElementById("sleepset").className="mui-switch mui-active";
+                		}else{
+                		document.getElementById("sleepset").className="mui-switch";	
+                		}
+                	}
+               },
+                error: function () {
+                mui.toast("网络错误，请稍后再试");
+                 }
+            })
+
+
+ }
+
+
+
+	</script>
+</html>
