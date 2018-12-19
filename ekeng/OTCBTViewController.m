@@ -32,6 +32,7 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
 @property (nonatomic, strong) CBCharacteristic *characteristic; // 服务特征
 @property (strong, nonatomic) PNLineChart *lineChart;
 //@property (nonatomic, strong) ZBNetworking *httpMgr;// 网络管理者
+@property (strong, nonatomic)  NSString *_temp ;//因为会重复读取三遍数据 临时增加此方法
 @end
 
 @implementation OTCBTViewController
@@ -48,6 +49,7 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     GraphicView *_gView; // 数据记录视图
     
     BOOL hadShow; // 检测到蓝牙未开启提醒用户一次
+    
 }
 @synthesize userid=_userid,deviceType=_deviceType;
 -(void)updateName:(NSString*)userid{
@@ -74,10 +76,9 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     _tipArr = [[NSMutableArray alloc] init];
 //    _pointArr = [NSMutableArray array];
     _pointArr = [[NSMutableArray alloc] init];
-    
     [self initSubviews];
     _cMgr = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-
+    
 }
 
 - (void)initSubviews
@@ -225,23 +226,20 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     _lineChart.showYGridLines = YES;
     //设置网格线颜色
     _lineChart.yGridLinesColor = [UIColor grayColor];
+    
+    [self refreshChartData];
     //设置是否显示图例
     _lineChart.hasLegend = YES;
     //设置图例样式
     _lineChart.legendStyle = PNLegendItemStyleSerial;
     //设置图例位置
-//    _lineChart.legendPosition = PNLegendPositionLeft;
-   
-    // 显示位置
-    _lineChart.legendPosition = PNLegendPositionTop;
-    // 获得图例 当横向排布不下另起一行
-    UIView *legend = [_lineChart getLegendWithMaxWidth:100];
-    legend.frame = CGRectMake(100, 300, legend.bounds.size.width, legend.bounds.size.height);
+    //    _lineChart.legendPosition = PNLegendPositionLeft;
+    
+    _lineChart.legendStyle = PNLegendItemStyleSerial;
+    //    _lineChart.legendFont =;
+    UIView *legend = [_lineChart getLegendWithMaxWidth:320];
+    legend.frame = CGRectMake(5, 330, legend.bounds.size.width, legend.bounds.size.height);
     [self.view addSubview:legend];
-
-    
-    
-    [self refreshChartData];
      return _lineChart;
 }
 
@@ -353,7 +351,7 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
                 //曲线数据
                 PNLineChartData *prdata = [PNLineChartData new];
                 //数据点颜色
-                prdata.color = PNFreshGreen;
+                prdata.color = PNBlue;
                 //数据点格式
                 prdata.inflexionPointStyle = PNLineChartPointStyleCircle;
                 
@@ -404,6 +402,9 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     } else if (button.tag == 101) { // 搜索
         [_perArr removeAllObjects];
         [_tableView reloadData];
+        [_perArr addObject:@"正在搜索..."];
+        [button setTitle:@"重新搜索" forState:UIControlStateNormal];
+         [_tableView reloadData];
         [self.cMgr stopScan];
         [self.cMgr scanForPeripheralsWithServices:nil // 通过某些服务筛选外设
                                           options:nil];
@@ -474,17 +475,14 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
 // 蓝牙未开启，提示用户开启
 - (void)showOpenBluetoothAlert
 {
-    UIAlertController *ctr = [UIAlertController alertControllerWithTitle:nil message:@"蓝牙未开启，是否现在开启蓝牙?" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *doAction = [UIAlertAction actionWithTitle:@"开启蓝牙" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSURL *url = [NSURL URLWithString:@"App-Prefs:root=Bluetooth"];
-        if ([[UIApplication sharedApplication] canOpenURL:url])
-        {
-            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-        }
+    UIAlertController *ctr = [UIAlertController alertControllerWithTitle:nil message:@"蓝牙未开启，请开启蓝牙" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *doAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+
     }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"暂不开启" style:UIAlertActionStyleCancel handler:nil];
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"暂不开启" style:UIAlertActionStyleCancel handler:nil];
     [ctr addAction:doAction];
-    [ctr addAction:cancelAction];
+//    [ctr addAction:cancelAction];
     [self presentViewController:ctr animated:YES completion:nil];
 }
 
@@ -616,6 +614,9 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     [dateformmater setDateFormat:@"YYYY-MM-DD HH:mm"];
     NSString *date=[dateformmater stringFromDate:[NSDate date]];
     
+    
+    
+    
     //这里区分血压 血糖
     if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"FFF1"]]) {
          NSLog(@"%@", characteristic.value);
@@ -623,7 +624,8 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
         NSLog(@"%s, line 1= %d, %@", __FUNCTION__, __LINE__, string);
         //血氧
         if([_deviceType isEqualToString:@"0"]){
-            if ([string rangeOfString:@"88cks"].location != NSNotFound) {
+//            if ([string rangeOfString:@"88cks"].location != NSNotFound) {
+            if ([string hasPrefix:@"fe6a755a"] && [string rangeOfString:@"88"].location != NSNotFound) {
                 NSString *str = [string substringWithRange:NSMakeRange(10, 2)];
                 str = [self to10:str];
                 CGFloat n = [str floatValue];
@@ -633,6 +635,28 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
                 [_gView rushUpWithArray:_pointArr];
                 NSString *tStr = [NSString stringWithFormat:@"%@ mmol/L", str];
                 [_tipArr insertObject:tStr atIndex:0];
+                
+                //post 数据到服务端
+                NSDictionary *onerecord = @{
+                                             @"iType" : @"GLU",
+                                             @"value1" : str,
+                                             @"idesc" : @"血氧",
+                                             };
+                NSDictionary *params = @{
+                                          @"UserName" : _userid,
+                                          @"CreateTime" : date,
+                                          @"data" :onerecord
+                                          };
+                NSString *url= @"http://healthapi.ekeng.com.cn";
+                NSLog(@"post url:%@",url);
+                NSLog(@"post data:%@",params);
+                [[PCNetworkManager defaultManager] sendRequestMethod:(HTTPMethodPOST) serverUrl:url apiPath:@"/device/api/OtcPushData" parameters:params progress:nil success:^(BOOL isSuccess, id  _Nullable responseObject) {
+                    NSLog(@"post success:%@",responseObject);
+                    NSLog(@"response code:%@",[responseObject objectForKey:@"ReturnCode"]);
+                    NSLog(@"response msg2:%@",[[responseObject objectForKey:@"ReturnMessage"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+                } failure:^(NSString * _Nullable errorMessage) {
+                    NSLog(@"post failure:%@",errorMessage);
+                }];
             } else {
                 // FE 6A75 5A 55 AABB CC
                 if (![string isEqualToString:@"fe6a755a55aabbcc"]) {
@@ -643,12 +667,11 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
         }
         //血压
         if([_deviceType isEqualToString:@"1"]){
-            //因为会重复读取三遍数据 临时增加此方法
-            NSString *temp =  [[NSString alloc] init];
-            temp= @"";
+           
             //显示结果 "fe6a735a"
-            if([string hasPrefix:@"fe6a735a"] && ![temp isEqualToString:string]){
-                temp = string;
+//            NSLog(@"%@", _temp);
+            if([string hasPrefix:@"fe6a735a"] && ![self._temp isEqualToString:string]){
+                self._temp = string;
                 //高压  hi
                 NSString *hi = [string substringWithRange:NSMakeRange(10, 2)];
                 hi = [self to10:hi];
@@ -719,6 +742,8 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
                     NSLog(@"post success:%@",responseObject);
                     NSLog(@"response code:%@",[responseObject objectForKey:@"ReturnCode"]);
                     NSLog(@"response msg2:%@",[[responseObject objectForKey:@"ReturnMessage"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+                    [self refreshChartData];
+                   
                 } failure:^(NSString * _Nullable errorMessage) {
                     NSLog(@"post failure:%@",errorMessage);
                 }];
@@ -786,7 +811,7 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     CBPeripheral *peripheral = _perArr[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@%@%@", peripheral.name, @"mac = " ,peripheral.identifier.UUIDString];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", [self transDeviceName:peripheral.name]];
     //cell.textLabel.text = peripheral.name;
     return cell;
 }
@@ -853,6 +878,19 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
         return @"请稍候 1s...";
     }
     return tipStr;
+}
+- (NSString *)transDeviceName:(NSString *)str
+{
+    if ([str isEqualToString:@"OTC-GLU"]) {
+        return @"血糖仪OTC-GLU";
+    } else if ([str isEqualToString:@"0TC-GLU"]) {
+        return @"血糖仪0TC-GLU";
+    } else if ([str isEqualToString:@"BGM-3.0"]) {
+        return @"血糖仪BGM-3.0";
+    } else if ([str isEqualToString:@"BPM-3.0"]) {
+        return @"血压计BPM-3.0";
+    }
+    return str;
 }
 
 @end

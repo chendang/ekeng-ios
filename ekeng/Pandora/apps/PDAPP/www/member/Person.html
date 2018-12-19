@@ -31,9 +31,9 @@
 					<img :src='HeadPic' alt="" v-cloak/>
 				</div>
 				<div v-cloak>
-					<h5>{{NickName}}&nbsp;&nbsp;<span v-if="UserPowerName!=''">{{UserPowerName}}</span></h5>
-					<h6>{{UserName}}</h6>
-					<p><span v-if="LevelName!=''">{{LevelName}}</span><span v-for="(Item,index) in RoleNameArr" v-cloak style="padding-left: 2px;margin-left: 2px;" @click="ExUserPower(Item.RolePower,Item.RoleName);">{{Item.RoleName}}</span></p>
+					<h5 v-cloak>{{NickName}}&nbsp;&nbsp;<span v-if="UserPowerName!=''">{{UserPowerName}}</span></h5>
+					<h6 v-cloak>{{UserName}}</h6>
+					<p><span v-if="LevelName!=''" v-cloak>{{LevelName}}</span><span v-for="(Item,index) in RoleNameArr" v-cloak style="padding-left: 2px;margin-left: 2px;" @click="ExUserPower(Item.RolePower,Item.RoleName);" v-cloak>{{Item.RoleName}}</span></p>
 
 					<!--<a href="javascript:;" class="a_s_setting"></a>-->
 					<!--<a @click="GoImChat" class="a_s_msg"></a>-->
@@ -42,7 +42,7 @@
 			<!-- profile -->
 			<article class="wrapper">
 				<div class="main">
-					<div class="sec funcs">
+					<!--<div class="sec funcs">
 						<ul class="ul_funcs clearfix">
 							<li>
 								<a @click="PowerCardActive(1);">
@@ -71,7 +71,7 @@
 									<p>我的权益</p>
 								</a>
 							</li>
-							<!-- group -->
+	
 
 							<li>
 								<a href="javascript:clicked('PlanIndex.html','PlanIndex.html','zoom-fade-out','健康日志');">
@@ -94,12 +94,12 @@
 								</a>
 							</li>
 
-							<!--<li>
+							<li>
 								<a href="javascript:clicked('PlanIndex.html','PlanIndex.html','zoom-fade-out','健康日志');">
 									<span><img src="../img/index_func_8.png" alt=""></span>
 									<p>健康日志</p>
 								</a>
-							</li>-->
+							</li>
 							<li>
 								<a href="javascript:clickedNoHead('BodyFatData.html','BodyFatData.html','zoom-fade-out');">
 									<span><img src="../img/index_func_8.png" alt=""></span>
@@ -107,7 +107,7 @@
 								</a>
 							</li>
 						</ul>
-					</div>
+					</div>-->
 					<!-- funcs -->
 
 					<!--<div class="sec order">
@@ -137,21 +137,21 @@
 							<ul class="ul_wallet">
 								<li>
 									<a href="javascript:;">
-										<span>{{UserAmount}}</span>
+										<span v-cloak>{{UserAmount}}</span>
 										<p>PV</p>
 									</a>
 								</li>
 
 								<li>
 									<a href="javascript:clicked('MyPointsRecord.html','MyPointsRecord.html','zoom-fade-out','我的积分纪录');">
-										<span>{{UserPoint}}</span>
+										<span v-cloak>{{UserPoint}}</span>
 										<p>积分</p>
 									</a>
 								</li>
 
 								<li>
 									<a href="javascript:;">
-										<span class="violet">{{UserAmount}}</span>
+										<span class="violet" v-cloak>{{UserAmount}}</span>
 										<p>PA币</p>
 									</a>
 								</li>
@@ -217,7 +217,23 @@
                     </a>
                     
                 </div>  -->
-
+                
+                <div class="sec binding">
+                   <a @click="PowerCardActive(3);">
+                        <span style="background: url(../img/_index_menu_4.png) no-repeat left center /1.6rem auto;">设备绑定</span>
+                        <i></i>
+                    </a>
+                    
+                </div>
+                
+                <div class="sec binding">
+                    
+                    <a href="javascript:clicked('MedicalRecord.html','MedicalRecord.html','zoom-fade-out','案例分享');">
+                        <span style="background: url(../img/index_link_7.png) no-repeat left center /1.6rem auto;">案例分享</span>
+                        <i></i>
+                    </a>
+                    
+                </div> 
 					<div class="sec binding">
 						<a @click="logout">
 							<span style="background: url(../img/icon_clock.png) no-repeat left center /1.6rem auto;">退出登陆</span>

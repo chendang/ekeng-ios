@@ -31,7 +31,7 @@
 	</head>
 
 	<body>
-		<div class="_container clear" id="bodyinfo">
+		<div class="_container" id="bodyinfo">
 
 			<article class="wrapper" v-cloak>
 				<div class="main">
@@ -40,8 +40,8 @@
 						<div class="msg_left">
 							<img v-bind:src="HeadPic" alt="" id="btnFamily" />
 							<div>
-								<a href="javascript:;">{{UserName}}</a>
-								<p>{{NickName}}</p>
+								<a href="javascript:;" v-cloak>{{UserName}}</a>
+								<p v-cloak>{{NickName}}</p>
 							</div>
 						</div>
 
@@ -56,41 +56,52 @@
 					<div class="gray">
 						<div class="funcs">
 							<ul class="ul_funcs clearfix">
-								
 								<li>
+								<a @click="PowerCardActive(1);">
+									<span><img src="img/index_func_1.png" alt=""></span>
+									<p>健康数据</p>
+								</a>
+							   </li>
+							   <li>
+								<a @click="PowerCardActive(2);">
+									<span><img src="../img/index_func_2.png" alt=""></span>
+									<p>病例上传</p>
+								</a>
+							   </li>
+								<!--<li>
 									<a href="javascript:clicked('member/NewsIndex.html','NewsIndex.html','slide-in-left','健康资讯');">
 										<span><img src="img/index_link_5.png" alt=""></span>
 										<p>健康资讯</p>
 									</a>
-								</li>
+								</li>-->
 								
 								<li>
 								<a href="javascript:clicked('member/TestMenu.html','TestMenu.html','zoom-fade-out','健康评测');">
 									<span><img src="img/index_link_6.png" alt=""></span>
-									<p>健康自评</p>
+									<p>健康自测</p>
 								</a>
 							   </li>
 								
-								<li>
+								<!--<li>
 								<a href="javascript:clicked('member/MedicalRecord.html','MedicalRecord.html','zoom-fade-out','案例分享');">	
 									<span><img src="img/index_link_7.png" alt=""></span>
 									<p>案例分享</p>
 								</a>
-							  </li>
+							  </li>-->
 
-								<li>
+								<!--<li>
 									<a href="javascript:clicked('member/PlanIndex.html','PlanIndex.html','zoom-fade-out','健康日志');">
 										<span><img src="img/_index_menu_8.png" alt=""></span>
 										<p>健康日志</p>
 									</a>
-								</li>
-								
-								<!--<li>
-									<a href="javascript:clicked('member/TestMenu.html','TestMenu.html','zoom-fade-out','健康评测');">
-										<span><img src="img/_index_menu_5.png" alt=""></span>
-										<p>健康自评</p>
-									</a>
 								</li>-->
+								
+                            <li>
+								<a @click="PowerCardActive(4);">
+									<span><img src="../img/index_func_6.png" alt=""></span>
+									<p>健康评估</p>
+								</a>
+							</li>
 								
 								
 								
@@ -131,10 +142,10 @@
 								<li v-for="(Item,index) in NewsList" @click="ShowNewsContent(Item.NewsId)">
 									<div><img :src="Item.NewsPic" alt="" /></div>
 									<div>
-										<h4>{{Item.NewsTitle}}</h4>
+										<h4 v-cloak>{{Item.NewsTitle}}</h4>
 										<p>
-											<a href="javascript:;">{{Item.LikeCount}}赞同</a>·
-											<a href="javascript:;">{{Item.CommentCount}}评论</a>·
+											<a href="javascript:;" v-cloak>{{Item.LikeCount}}赞同</a>·
+											<a href="javascript:;" v-cloak>{{Item.CommentCount}}评论</a>·
 											<a href="javascript:;">关注问题</a>
 										</p>
 									</div>
@@ -209,7 +220,7 @@
 					
 					var self = plus.webview.currentWebview();
 
-                    var _footer = new plus.nativeObj.View('footer');
+                          var _footer = new plus.nativeObj.View('footer',{bottom: '0px',width: '100%'});
 
                     var _a = ['img/_icon_home.png','img/_icon_msg.png','img/_icon_restore.png','img/_icon_self.png'];
                     var _b = ['img/_icon_home_at.png','img/_icon_msg_at.png','img/_icon_restore_at.png','img/_icon_self_at.png'];
@@ -353,7 +364,31 @@
 					})
 
 				},
+				PowerCardActive: function(goid) {
+						if(this.CardPowerActive == 0) {
 
+							hui.confirm('您没有权限,需要激活服务卡？', ['取消', '确定'], function() {
+								clicked('../mall/MyPowerCardCount.html', 'MyPowerCardCount.html', 'slide-in-left', '健康服务卡');
+							});
+
+						} else {
+							if(goid == 1) {
+								clicked('member/MemberDataIndex.html', 'MemberDataIndex.html', 'slide-in-left', '健康数据');
+							}
+							if(goid == 2) {
+								clicked('member/UploadCaseFiles.html', 'UploadCaseFiles.html', 'slide-in-left', '病历上传')
+							}
+							if(goid == 3) {
+								clicked('member/DeviceList.html', 'DeviceList.html', 'slide-in-left', '监测设备绑定');
+							}
+							if(goid == 4) {
+								clicked('member/MyReportIndex.html', 'MyReportIndex.html', 'zoom-fade-out', '健康评估报告');
+							}
+							if(goid == 5) {
+								clicked('member/MyProjectRecord.html', 'MyProjectRecord.html', 'zoom-fade-out', '健康方案');
+							}
+						}
+					},
 				getUserInfo: function() {
 					var objuser = JSON.parse(plus.storage.getItem('user'));
 					this.UserName = objuser.UserName;
