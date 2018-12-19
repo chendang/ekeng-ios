@@ -401,9 +401,9 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
         return;
     } else if (button.tag == 101) { // 搜索
         [_perArr removeAllObjects];
-        [_tableView reloadData];
-        [_perArr addObject:@"正在搜索..."];
-        [button setTitle:@"重新搜索" forState:UIControlStateNormal];
+//        [_tableView reloadData];
+//        [_perArr addObject:@"正在搜索..."];
+//        [button setTitle:@"重新搜索" forState:UIControlStateNormal];
          [_tableView reloadData];
         [self.cMgr stopScan];
         [self.cMgr scanForPeripheralsWithServices:nil // 通过某些服务筛选外设
