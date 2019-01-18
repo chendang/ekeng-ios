@@ -16,6 +16,7 @@
 #import "WebViewController.h"
 #import "OTCBTViewController.h"
 #import "AppDelegate.h"
+#import "QingNiuSDK.h"
 #define kStatusBarHeight 20.f
 
 @interface WebAppController ()
@@ -106,7 +107,7 @@
 
     // 如果应用可能会重复打开的话建议使用restart方法
     //[[[PDRCore Instance] appManager] restart:pAppHandle];
-
+    
 }
 
 -(void)clicked{

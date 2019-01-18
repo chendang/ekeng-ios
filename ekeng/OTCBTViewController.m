@@ -19,7 +19,8 @@
 #define Device_4_1 @"0TC-GLU"
 #define Device_3_0 @"BGM-3.0"
 #define Device_P_3_0 @"BPM-3.0"//血压计
-
+#define SERCHING_DEVICE @"正在查找设备,请稍等..."
+#define SERCHED_DEVICE @"已查找到如下设备："
 @interface OTCBTViewController ()
 <CBCentralManagerDelegate, CBPeripheralDelegate, //蓝牙代理协议
 UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源协议
@@ -33,6 +34,9 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
 @property (strong, nonatomic) PNLineChart *lineChart;
 //@property (nonatomic, strong) ZBNetworking *httpMgr;// 网络管理者
 @property (strong, nonatomic)  NSString *_temp ;//因为会重复读取三遍数据 临时增加此方法
+
+@property (nonatomic)  BOOL btnTitle ;//
+@property (strong, nonatomic)  UIButton *serchButton ;//
 @end
 
 @implementation OTCBTViewController
@@ -195,8 +199,12 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     _tableView.delegate = self;
 //    _tableView.backgroundColor = [UIColor blueColor];
     _tableView.dataSource = self;
+    
     [_backView addSubview:_tableView];
+//    [_perArr addObject:SERCHING_DEVICE];
+//    [_tableView reloadData];
 }
+
 
 - (void)hideBackView
 {
@@ -225,7 +233,7 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     //设置是否显示网格线
     _lineChart.showYGridLines = YES;
     //设置网格线颜色
-    _lineChart.yGridLinesColor = [UIColor grayColor];
+    _lineChart.yGridLinesColor = [UIColor yellowColor];
     
     [self refreshChartData];
     //设置是否显示图例
@@ -402,8 +410,20 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     } else if (button.tag == 101) { // 搜索
         [_perArr removeAllObjects];
 //        [_tableView reloadData];
-//        [_perArr addObject:@"正在搜索..."];
+//        [_perArr addObject:SERCHING_DEVICE];
 //        [button setTitle:@"重新搜索" forState:UIControlStateNormal];
+        
+        if(YES==self.btnTitle)
+        {
+            [self.serchButton setTitle:@"搜索" forState:UIControlStateNormal];
+            self.btnTitle=NO;
+        }else
+        {
+            [self.serchButton setTitle:@"停止搜索" forState:UIControlStateNormal];
+            self.btnTitle=YES;
+        }
+        
+       
          [_tableView reloadData];
         [self.cMgr stopScan];
         [self.cMgr scanForPeripheralsWithServices:nil // 通过某些服务筛选外设
@@ -411,9 +431,11 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     } else if (button.tag == 201) { // 搜索设备
         [_perArr removeAllObjects];
         [self showBackView];
+        
         [self.cMgr stopScan];
         [self.cMgr scanForPeripheralsWithServices:nil // 通过某些服务筛选外设
                                           options:nil];
+        
     } else if (button.tag == 202) { // 断开连接
         if (self.peripheral) {
             [_cMgr cancelPeripheralConnection:self.peripheral];
@@ -500,7 +522,8 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     NSLog(@"搜索到的设备%@  mac = %@" ,peripheral.name,peripheral.identifier.UUIDString);
     if([_deviceType isEqualToString:@"0"]){
         if ([peripheral.name isEqualToString:Device_4_0] || [peripheral.name isEqualToString:Device_3_0] || [peripheral.name isEqualToString:Device_4_1]) {
-            
+            //替换指定下标的元素
+//            [_perArr replaceObjectAtIndex:0 withObject:SERCHED_DEVICE];
             // 将血糖仪加入设备列表，用户手动选择连接
             [_perArr addObject:peripheral];
             [_tableView reloadData];
@@ -508,7 +531,7 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     }
     if([_deviceType isEqualToString:@"1"]){
         if ([peripheral.name isEqualToString:Device_P_3_0] ) {
-            
+//            [_perArr replaceObjectAtIndex:0 withObject:SERCHED_DEVICE];
             // 将血糖仪加入设备列表，用户手动选择连接
             [_perArr addObject:peripheral];
             [_tableView reloadData];
@@ -810,8 +833,15 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    CBPeripheral *peripheral = _perArr[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", [self transDeviceName:peripheral.name]];
+//    NSLog(@"%@",indexPath.row);
+//    if([_perArr[indexPath.row] isEqualToString:SERCHING_DEVICE]){
+//        cell.textLabel.text = _perArr[indexPath.row];
+//    }else{
+        CBPeripheral *peripheral = _perArr[indexPath.row];
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", [self transDeviceName:peripheral.name]];
+//    }
+    
     //cell.textLabel.text = peripheral.name;
     return cell;
 }
@@ -834,13 +864,13 @@ UITableViewDelegate, UITableViewDataSource // 表视图代理协议和数据源�
         return nil;
     }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth - 40, 50)];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(5, 5, 85, 40);
-    [button setTitle:@"搜索" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:button];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.tag = 101;
+    self.serchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.serchButton.frame = CGRectMake(5, 5, 85, 40);
+    [self.serchButton setTitle:@"搜索" forState:UIControlStateNormal];
+    [self.serchButton addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:self.serchButton];
+    [self.serchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.serchButton.tag = 101;
     
     UIButton *cBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cBtn.frame = CGRectMake(kScreenWidth - 40 - 85 - 5, 5, 85, 40);

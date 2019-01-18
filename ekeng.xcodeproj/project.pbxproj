@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1807DE4821EC994E00601F41 /* libQingNiuSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1807DE4421EC98EE00601F41 /* libQingNiuSDK.a */; };
+		1807DE4B21EC9AB300601F41 /* QingNiuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1807DE4921EC9AB200601F41 /* QingNiuViewController.m */; };
 		180986DF20BFD7D8006552EE /* libGtExtensionSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 180986DE20BFD7D8006552EE /* libGtExtensionSdk.a */; };
 		180986E020BFD82D006552EE /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2447372B1D08322900D0F08F /* BaiduMapAPI_Search.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		180986E120BFD901006552EE /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 24BD5B011C994C2E00B05AA2 /* libstdc++.6.tbd */; };
@@ -24,6 +26,10 @@
 		180986EE20BFDE98006552EE /* liblibGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD8961CB50CC100C0F062 /* liblibGeolocation.a */; };
 		180ABD341FFF51EE00D7DFEE /* OTCBTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C98DC81F7CEA6B00D2C49B /* OTCBTViewController.m */; };
 		18377DEF20BD757D00F84B24 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242725CE1D26690400EBD79E /* UMMobClick.framework */; };
+		1848FC3C21F1B72000C832E6 /* HistoryContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1848FC3421F1AF7500C832E6 /* HistoryContentCell.m */; };
+		1848FC3E21F1B72A00C832E6 /* YJJTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1848FC3721F1AF7500C832E6 /* YJJTextField.m */; };
+		1848FC4121F1BCBF00C832E6 /* HistoryContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1848FC3521F1AF7500C832E6 /* HistoryContentCell.xib */; };
+		1848FC4221F1BCC400C832E6 /* YJJTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1848FC3821F1AF7500C832E6 /* YJJTextField.xib */; };
 		1859869720C66A7D00F4E8DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1859869620C66A7D00F4E8DE /* Images.xcassets */; };
 		18C98DD71F7CED7500D2C49B /* aview.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C98DD11F7CED7400D2C49B /* aview.m */; };
 		18C98DD81F7CED7500D2C49B /* DrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C98DD41F7CED7500D2C49B /* DrawView.m */; };
@@ -166,6 +172,12 @@
 
 /* Begin PBXFileReference section */
 		165BA62E08615C6526371901 /* libPods-ekeng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ekeng.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1807DE4421EC98EE00601F41 /* libQingNiuSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libQingNiuSDK.a; sourceTree = "<group>"; };
+		1807DE4521EC98EE00601F41 /* QingNiuDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QingNiuDevice.h; sourceTree = "<group>"; };
+		1807DE4621EC98EE00601F41 /* QingNiuSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QingNiuSDK.h; sourceTree = "<group>"; };
+		1807DE4721EC98EE00601F41 /* QingNiuUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QingNiuUser.h; sourceTree = "<group>"; };
+		1807DE4921EC9AB200601F41 /* QingNiuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QingNiuViewController.m; sourceTree = "<group>"; };
+		1807DE4A21EC9AB200601F41 /* QingNiuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QingNiuViewController.h; sourceTree = "<group>"; };
 		180986DE20BFD7D8006552EE /* libGtExtensionSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGtExtensionSdk.a; path = ../SDK/Libs/libGtExtensionSdk.a; sourceTree = "<group>"; };
 		180986E520BFDB5A006552EE /* libWeChatSDK_pay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK_pay.a; path = ../SDK/Libs/libWeChatSDK_pay.a; sourceTree = "<group>"; };
 		180ABD401FFF55A300D7DFEE /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -203,6 +215,15 @@
 		180ABD611FFF55A400D7DFEE /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		18377DED20BD29D100F84B24 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		18377DF020BD757E00F84B24 /* UMMobClick-idfa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "UMMobClick-idfa.framework"; path = "../SDK/Libs/UMMobClick-idfa.framework"; sourceTree = "<group>"; };
+		183A460421EDBA12005AFCB7 /* libMasonry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMasonry.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		183A460621EDBD65005AFCB7 /* libMasonry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMasonry.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1848FC3321F1AF7500C832E6 /* HistoryContentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryContentCell.h; sourceTree = "<group>"; };
+		1848FC3421F1AF7500C832E6 /* HistoryContentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryContentCell.m; sourceTree = "<group>"; };
+		1848FC3521F1AF7500C832E6 /* HistoryContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryContentCell.xib; sourceTree = "<group>"; };
+		1848FC3621F1AF7500C832E6 /* YJJTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YJJTextField.h; sourceTree = "<group>"; };
+		1848FC3721F1AF7500C832E6 /* YJJTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YJJTextField.m; sourceTree = "<group>"; };
+		1848FC3821F1AF7500C832E6 /* YJJTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YJJTextField.xib; sourceTree = "<group>"; };
+		1848FC3A21F1B48C00C832E6 /* libReactiveCocoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReactiveCocoa.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1859869620C66A7D00F4E8DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		185D47C520BEE5240073A940 /* libPods-ekeng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-ekeng.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1883156E20BEDF4700C3B1F6 /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -390,6 +411,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1807DE4821EC994E00601F41 /* libQingNiuSDK.a in Frameworks */,
+				24BD5B061C994C4000B05AA2 /* libsqlite3.0.tbd in Frameworks */,
 				180986EB20BFDE98006552EE /* libpingpp.a in Frameworks */,
 				180986EC20BFDE98006552EE /* libpingpppay.a in Frameworks */,
 				180986ED20BFDE98006552EE /* libIAPPay.a in Frameworks */,
@@ -462,7 +485,6 @@
 				180986E220BFD93E006552EE /* BaiduMapAPI_Location.framework in Frameworks */,
 				24AFD8831CB50CB400C0F062 /* iflyMSC.framework in Frameworks */,
 				24AFD8841CB50CB400C0F062 /* TencentOpenAPI.framework in Frameworks */,
-				24BD5B061C994C4000B05AA2 /* libsqlite3.0.tbd in Frameworks */,
 				24BD5B041C994C3800B05AA2 /* libiconv.tbd in Frameworks */,
 				180986E120BFD901006552EE /* libstdc++.6.tbd in Frameworks */,
 				24BD5B001C994C2000B05AA2 /* libstdc++.tbd in Frameworks */,
@@ -503,6 +525,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1807DE4321EC98EE00601F41 /* QingNiuSDK */ = {
+			isa = PBXGroup;
+			children = (
+				1807DE4421EC98EE00601F41 /* libQingNiuSDK.a */,
+				1807DE4521EC98EE00601F41 /* QingNiuDevice.h */,
+				1807DE4621EC98EE00601F41 /* QingNiuSDK.h */,
+				1807DE4721EC98EE00601F41 /* QingNiuUser.h */,
+			);
+			path = QingNiuSDK;
+			sourceTree = "<group>";
+		};
 		180ABD3F1FFF55A300D7DFEE /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,6 +585,19 @@
 			path = "ekeng/UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		1848FC3221F1AF7500C832E6 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				1848FC3321F1AF7500C832E6 /* HistoryContentCell.h */,
+				1848FC3421F1AF7500C832E6 /* HistoryContentCell.m */,
+				1848FC3521F1AF7500C832E6 /* HistoryContentCell.xib */,
+				1848FC3621F1AF7500C832E6 /* YJJTextField.h */,
+				1848FC3721F1AF7500C832E6 /* YJJTextField.m */,
+				1848FC3821F1AF7500C832E6 /* YJJTextField.xib */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
 		18C98DD01F7CEC8D00D2C49B /* GraphicView */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,6 +614,7 @@
 		18F8EDCD2008979200D5EDD2 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				1848FC3221F1AF7500C832E6 /* TextField */,
 				18F8EDCE200897EA00D5EDD2 /* PCNetworkManager.h */,
 				18F8EDCF2008983600D5EDD2 /* PCNetworkManager.m */,
 			);
@@ -623,6 +670,9 @@
 		8EED629A198A1D13000A4449 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1848FC3A21F1B48C00C832E6 /* libReactiveCocoa.a */,
+				183A460621EDBD65005AFCB7 /* libMasonry.a */,
+				183A460421EDBA12005AFCB7 /* libMasonry.a */,
 				180986E520BFDB5A006552EE /* libWeChatSDK_pay.a */,
 				180986DE20BFD7D8006552EE /* libGtExtensionSdk.a */,
 				18E80E4C20BEEC27003AA500 /* libPods-ekeng.a */,
@@ -754,11 +804,14 @@
 		8EED62A1198A1D13000A4449 /* ekeng */ = {
 			isa = PBXGroup;
 			children = (
+				1807DE4321EC98EE00601F41 /* QingNiuSDK */,
 				18A6900E20C0DA0000E267DD /* control.xml */,
 				18F8EDCD2008979200D5EDD2 /* common */,
 				18C98DD01F7CEC8D00D2C49B /* GraphicView */,
 				18C98DC91F7CEA6C00D2C49B /* OTCBTViewController.h */,
 				18C98DC81F7CEA6B00D2C49B /* OTCBTViewController.m */,
+				1807DE4A21EC9AB200601F41 /* QingNiuViewController.h */,
+				1807DE4921EC9AB200601F41 /* QingNiuViewController.m */,
 				244737321D08364300D0F08F /* WebAppController.h */,
 				244737331D08364300D0F08F /* WebAppController.m */,
 				244737341D08364300D0F08F /* WebViewController.h */,
@@ -860,7 +913,7 @@
 				TargetAttributes = {
 					8EED6297198A1D13000A4449 = {
 						DevelopmentTeam = VHC2V73GXK;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -887,6 +940,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1848FC4221F1BCC400C832E6 /* YJJTextField.xib in Resources */,
+				1848FC4121F1BCBF00C832E6 /* HistoryContentCell.xib in Resources */,
 				8E175F521A37B9DC004A45F6 /* Pandora in Resources */,
 				8E175F261A37B98E004A45F6 /* InfoPlist.strings in Resources */,
 				8E175F191A37B905004A45F6 /* Default-Landscape-736h@3x.png in Resources */,
@@ -985,6 +1040,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1848FC3E21F1B72A00C832E6 /* YJJTextField.m in Sources */,
+				1848FC3C21F1B72000C832E6 /* HistoryContentCell.m in Sources */,
+				1807DE4B21EC9AB300601F41 /* QingNiuViewController.m in Sources */,
 				18F8EDD02008983600D5EDD2 /* PCNetworkManager.m in Sources */,
 				8E175F4D1A37B9C5004A45F6 /* AppDelegate.m in Sources */,
 				180ABD341FFF51EE00D7DFEE /* OTCBTViewController.m in Sources */,
@@ -1112,7 +1170,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: lsmamy@163.com (G2744M4RFL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VHC2V73GXK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1137,16 +1195,18 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../SDK/libs",
 					"$(inherited)",
+					"$(PROJECT_DIR)/ekeng/QingNiuSDK",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"$(inherited)",
 					"-ObjC",
+					"$(inherited)",
+					"-l\"ReactiveCocoa\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.foxchen.ekeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "ab0c8850-eede-473c-acbd-91112c38ac9f";
+				PROVISIONING_PROFILE_SPECIFIER = ekeng_dev;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)";
@@ -1166,8 +1226,8 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: HF(jingmen) Health Management Co.Ltd (VHC2V73GXK)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VHC2V73GXK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1193,16 +1253,18 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../SDK/libs",
 					"$(inherited)",
+					"$(PROJECT_DIR)/ekeng/QingNiuSDK",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"$(inherited)",
 					"-ObjC",
+					"$(inherited)",
+					"-l\"ReactiveCocoa\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.foxchen.ekeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "74105141-d4a1-4415-b77b-d3c5b3d11f23";
+				PROVISIONING_PROFILE_SPECIFIER = ekeng_prod;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)";

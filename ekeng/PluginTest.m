@@ -11,6 +11,7 @@
 #import "H5WEEngineExport.h"
 #import "PDRToolSystemEx.h"
 #import "OTCBTViewController.h"
+#import "QingNiuViewController.h"
 // 扩展插件中需要引入需要的系统库
 #import <LocalAuthentication/LocalAuthentication.h>
 
@@ -87,10 +88,22 @@
         // 通知JS层Native层运行结果
        [self toCallback:cbId withReslut:[result toJSONString]];
         
-        OTCBTViewController* pNewController = [[OTCBTViewController alloc] init];
-        [pNewController updateName : pArgument2];
-         [pNewController updateDeviceType : pArgument1];
-        [self.rootViewController presentViewController:pNewController animated:YES completion:nil];
+        if([pArgument1 isEqualToString:@"9"]){
+            
+            QingNiuViewController* pNewController = [[QingNiuViewController alloc] init];
+            [pNewController updateName : pArgument2];
+            [pNewController updateDeviceType : pArgument1];
+            [self.rootViewController presentViewController:pNewController animated:YES completion:nil];
+        }else{
+            OTCBTViewController* pNewController = [[OTCBTViewController alloc] init];
+            [pNewController updateName : pArgument2];
+            [pNewController updateDeviceType : pArgument1];
+            [self.rootViewController presentViewController:pNewController animated:YES completion:nil];
+        }
+        
+        
+       
+        
     }
 }
 
