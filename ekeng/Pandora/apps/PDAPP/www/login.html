@@ -73,8 +73,7 @@
             PostSend: function () {
 
 
-            this.LoginUser = '13601812485';
-            this.LoginPass = '123456';
+
 
                 if (this.LoginUser == "" || this.LoginUser == null) {
                     hui.upToast('请输入用户名!');
@@ -130,16 +129,16 @@
                             
                             //clickedNoHead('shell.html','shell.html','slide-in-left');
                             
-                            var ws=plus.webview.getWebviewById(plus.runtime.appid);
+                           //var ws=plus.webview.getWebviewById(plus.runtime.appid);
                      // alert(plus.runtime.appid);
                       //alert(ws);
-                      var wvs=plus.webview.all();
+                      //var wvs=plus.webview.all();
                      // for(var i=0;i<wvs.length;i++){
                      // console.log('webview'+i+': '+wvs[i].getURL());
                      // alert('webview'+i+': '+wvs[i].getURL()+'id======'+wvs[i].id);
                      // }
-                            //var ws=plus.webview.getLaunchWebview();
-                            ws.evalJS('plusReadyDo()');
+                            var ws=plus.webview.getLaunchWebview();
+                            ws.evalJS('goIndex()');
                              ws.show();
                               //plus.webview.currentWebview().close();
                                backToHomeIndex("slide-in-right");

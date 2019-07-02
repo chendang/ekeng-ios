@@ -125,22 +125,17 @@
  <script>
 
 var domainUrl = GetMvcApiDomain();
-
+var username=null;
   
 function plusReady() { 
 HeadShow();		
 
 
-
-var _self = plus.webview.currentWebview();
-var UserName=_self.ToUser;
-if(UserName==null || UserName=='' || UserName==undefined){
 var objuser=JSON.parse(plus.storage.getItem('user'));
-UserName = objuser.UserName;
-}
+username = objuser.UserName;
 
-vum.UserName=UserName;
-vum.GetMemberInfo(UserName);
+
+
 
 
 back();
@@ -156,7 +151,7 @@ document.addEventListener("plusready",plusReady,false);
             el: '#bodyinfo',
             data: function(){
                 return {
-                    UserName:"",
+                    UserName:username,
                     ReallyName:"",
                     NickName:"",
                     options:[{"text": "男", "value":"1"},{"text": "女", "value":"2"}],
@@ -171,7 +166,7 @@ document.addEventListener("plusready",plusReady,false);
             mounted: function () {
 
                 this.$nextTick(function () {
-                    //this.GetMemberInfo(this.UserName);
+                    this.GetMemberInfo(username);
                 })
 
             },

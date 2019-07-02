@@ -128,7 +128,7 @@ body{background: #EFEFF4}
 
 
 .swiper_img{
-    margin-top:44px;
+    margin-top:0px;
     height:300px;
 }
 .swiper-slide img{
@@ -261,8 +261,8 @@ body{background: #EFEFF4}
 }
 .affirm_up{
     width:100%;
-    height: 102px;
-    padding: 8px 25px 15px 10px;
+    /* height: 102px; */
+    padding: 15px 25px 15px 10px;
     border-bottom: 1px solid #DCDCDC;
     overflow: hidden;
 }
@@ -289,16 +289,16 @@ body{background: #EFEFF4}
 }
 .affirm_down{
     padding-left: 15px;
-    padding-top: 0px;
+    padding-top: 18px;
 }
 
-.affirm_num{
-	/*margin-top: -15px;*/
+/* .affirm_num{
+	margin-top: -15px;
 	padding-bottom: 112px;
-}
+} */
 
 .norms{
-    margin-bottom:42px;
+    margin-bottom:20px;
 }
 .norms p{
     margin-bottom: 2px;
@@ -332,16 +332,16 @@ body{background: #EFEFF4}
     background: #fff;
     border:1px solid #C8C8C8;
     text-align: center;
-    line-height: 23px;
+    line-height: 25px;
     margin:0 1px;
 }
 .affirm_ok{
     display: block;
-    margin-top: 26px;
+    margin-top: 72px;
     height:40px;
     line-height: 36px;
     text-align: center;
-    background: #FF3B30;
+    background: #FF3B30;swiper_img
     color: #fff;
 }
 

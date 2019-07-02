@@ -35,7 +35,6 @@ function clicked(url,id,type,headtitle) {
 }
 
 function clickedParm(url,id,type,parm,headtitle) {
-
         var nwaiting = plus.nativeUI.showWaiting();
         var _ViewPage=plus.webview.getWebviewById(id);
         if(!_ViewPage){
@@ -61,6 +60,21 @@ function clickedNoHead(url,id,type) {
         }, false);
 
 }
+
+function clickedNoHeadParm(url,id,type,parm) {
+        var nwaiting = plus.nativeUI.showWaiting();
+        var _ViewPage=plus.webview.getWebviewById(id);
+        if(_ViewPage==null){
+        	_ViewPage=plus.webview.create(url,id,{},parm);
+        }
+        
+        _ViewPage.addEventListener("loaded", function() { //注册新webview的载入完成事件
+         nwaiting.close(); //新webview的载入完毕后关闭等待框
+        _ViewPage.show(type,150); //把新webview窗体显示出来，显示动画效果为速度150毫秒的右侧移入动画
+        }, false);
+
+}
+
 function dblBackQuit(){
 		var first = null;
        plus.key.addEventListener('backbutton', function(){

@@ -1,6 +1,6 @@
-﻿function addShoppingCart(productId, productName, productPrice, productImage, num) {
+﻿function addShoppingCart(productId, productName, productPrice, rewardPoint, productImage, num) {
 	var isSave = false;
-	var goods = plus.storage.getItem("goods"); //取回goods变量
+	var goods = plus.storage.getItem("goods");  //取回goods变量
 	goods = JSON.parse(goods); //把字符串转换成JSON对象
 	if(goods != null && goods != "undefined") { //如果不为空，则判断购物车中是否包含了当前购买的商品
 		var objs = goods.good;
@@ -17,6 +17,7 @@
 				productId: productId,
 				productName: productName,
 				productPrice: productPrice,
+				rewardPoint: rewardPoint,
 				productImage: productImage,
 				productQuentity: num
 			};
@@ -27,19 +28,20 @@
 				productId: productId,
 				productName: productName,
 				productPrice: productPrice,
+				rewardPoint: rewardPoint,
 				productImage: productImage,
 				productQuentity: num
 			}]
 		} //要存储的JSON对象
 	}
 	goods = JSON.stringify(goods); //将JSON对象转化成字符串
-	plus.storage.setItem("goods", goods); //用localStorage保存转化好的的字符串
+	plus.storage.setItem("goods", goods);//用localStorage保存转化好的的字符串
 
 }
 
 function delGoodFromCart(productId) {
 
-	var goods = plus.storage.getItem("goods"); //取回goods变量
+	var goods = plus.storage.getItem("goods");//取回goods变量
 
 	goods = JSON.parse(goods); //把字符串转换成JSON对象
 
@@ -88,7 +90,7 @@ function GoodsCarDecNum(productId) {
 
 				goods = JSON.stringify(goods); //将JSON对象转化成字符串
 
-				plus.storage.setItem("goods", goods); //用localStorage保存转化好的的字符串
+				plus.storage.setItem("goods", goods);//用localStorage保存转化好的的字符串
 
 				break;
 
@@ -101,9 +103,9 @@ function GoodsCarDecNum(productId) {
 
 
 
-function addShoppingOrder(productId, productName, productPrice, productImage, num) {
+function addShoppingOrder(productId, productName, productPrice, rewardPoint, productImage, num) {
 	var isSave = false;
-	var OrderSubmit = localStorage.getItem("OrderSubmit"); //取回goods变量
+	var OrderSubmit = plus.storage.getItem("OrderSubmit"); //取回goods变量
 	OrderSubmit = JSON.parse(OrderSubmit); //把字符串转换成JSON对象
 	if(OrderSubmit != null && OrderSubmit != "undefined") { //如果不为空，则判断购物车中是否包含了当前购买的商品
 		var objs = OrderSubmit.order;
@@ -120,6 +122,7 @@ function addShoppingOrder(productId, productName, productPrice, productImage, nu
 				productId: productId,
 				productName: productName,
 				productPrice: productPrice,
+				rewardPoint: rewardPoint,
 				productImage: productImage,
 				productQuentity: num
 			};
@@ -130,6 +133,7 @@ function addShoppingOrder(productId, productName, productPrice, productImage, nu
 				productId: productId,
 				productName: productName,
 				productPrice: productPrice,
+				rewardPoint: rewardPoint,
 				productImage: productImage,
 				productQuentity: num
 			}]
@@ -143,7 +147,29 @@ function addShoppingOrder(productId, productName, productPrice, productImage, nu
 
 function ClearShoppingOrder() {
 
-       localStorage.removeItem("OrderSubmit");//清空变量
+       plus.storage.removeItem("OrderSubmit");//清空变量
 
 
 }
+
+function CalcGoodsNum() {
+    var num=0;
+	var goods = plus.storage.getItem("goods"); //取回goods变量
+
+	goods = JSON.parse(goods); //把字符串转换成JSON对象
+	if(goods != null && goods != "undefined") {
+		var objs = goods.good;
+		for(var i = 0; i < objs.length; i++) {
+
+
+
+				num = num+parseInt(objs[i].productQuentity);
+
+
+
+		}
+	}
+	
+	return num;
+
+};

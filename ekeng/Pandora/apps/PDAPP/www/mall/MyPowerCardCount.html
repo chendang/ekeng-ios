@@ -15,6 +15,7 @@
 
 		<script type="text/javascript" src="../js/lib/jquery-2.1.3.min.js"></script>
 		<script src="../js/base.js"></script>
+		<script src="../js/lib/JsBarcode.all.min.js"></script>
 		<title>我的健康管理卡</title>
 		<style>
 			[v-cloak] {
@@ -29,6 +30,24 @@
 			
 			.hui-form-items {
 				border-bottom: 0px solid #E3E3E3;
+			}
+			
+			h3 {
+				text-align: center;
+				font-size: 16px;
+				margin: 10px;
+			}
+			
+			.boxcode {
+				text-align: center;
+			}
+			
+			#barcode {
+				width: 240px;
+			}
+			
+			ul {
+				padding: 5px;
 			}
 		</style>
 	</head>
@@ -72,13 +91,21 @@
 				<!--<div style="height: 20px;"></div>
       <b><span style="color: red;margin-left: 35px;">彭墩电商普通会员可以向以上会员索取</span></b>-->
 				<!--</div>-->
+				<div class="boxcode">
+					<img id="barcode" />
+				</div>
+				<ul>
 
-				<div class="pay_w" v-show="cardCount>=1 && CardPowerActive==0">
+				</ul>
+				<div class="pay_w" v-show="cardCount>=1 && CardPowerActive==0" v-cloak>
 					<span class="blue" @click="PaPay">PA币支付激活(余额：{{UserAmount}})<i></i></span>
 				</div>
-				<!--<div class="pay_w" v-show="cardCount>=1 && CardPowerActive==0">
-       <span class="blue" @click="WxPay">微信支付激活<i></i></span>
-   </div>-->
+				<div class="pay_w" v-show="cardCount>=1 && CardPowerActive==0">
+					<span class="blue" @click="WxPay">微信支付激活<i></i></span>
+				</div>
+				<div class="pay_w" v-show="cardCount>=1 && CardPowerActive==0">
+					<span class="blue" @click="AliPay">支付宝支付激活<i></i></span>
+				</div>
 
 			</div>
 
@@ -154,9 +181,16 @@
 
 				var objuser = JSON.parse(plus.storage.getItem('user'));
 				username = objuser.UserName;
-                ShowBody(username);
-				
-				
+				ShowBody(username);
+
+				     // 获取支付通道
+				    
+				plus.payment.getChannels(function(channels) {        
+					channel = channels[0];    
+				}, function(e) {        
+					hui.alert("获取支付通道失败：" + e.message);    
+				});
+
 			}
 			if(window.plus) {
 				plusReady();
@@ -164,307 +198,437 @@
 				document.addEventListener("plusready", plusReady, false);
 			}
 
+			function ShowBody(UserName) {
 
-    function ShowBody(UserName){
+				var strWhere = "";
+				var filedOrder = 'id';
 
-			var strWhere = "";
-			var filedOrder = 'id';
+				vum = new Vue({
+						el: '#bodyinfo',
+						data: {
+							pageIndex: 0,
+							pageSize: 1000,
+							state: 1,
+							showtime: 0,
+							tabshow: 1,
+							cardCount: 0,
+							CardPowerActive: 0,
+							UserAmount: 0,
+							toUser: "",
+							toCount: 1,
+							recommender: "",
+							shopuser: "",
+							ItemData: [],
+							ItemList: [],
+							openid: '',
+							PayMoney: 199,
+							PayBody: '健康管理服务卡',
+							PayFlag: 0
+						},
+						mounted: function() {
 
-			vum = new Vue({
-				el: '#bodyinfo',
-				data: {
-					pageIndex: 0,
-					pageSize: 1000,
-					state: 1,
-					showtime: 0,
-					tabshow: 1,
-					cardCount: 0,
-					CardPowerActive: 0,
-					UserAmount: 0,
-					toUser: "",
-					toCount: 1,
-					recommender: "",
-					shopuser: "",
-					ItemData: [],
-					ItemList: [],
-					openid: '',
-					PayMoney: 199,
-					PayBody: '健康管理服务卡',
-					PayFlag: 0
-				},
-				mounted: function() {
+							this.$nextTick(function() {
+								this.GetItemCount(UserName);
+								this.getUserCardActive(UserName);
+								this.GetUserInfo(UserName);
+							})
 
-					this.$nextTick(function() {
-                      this.GetItemCount(UserName);
-                      this.getUserCardActive(UserName);
-                      this.GetUserInfo(UserName);
-					})
+						},
 
-				},
+						methods: {
 
-				methods: {
+							GetItemCount: function(username) {
+								var that = this;
+								that.axiosGetLoadding();
+								axios.get(mallDomainUrl + 'api/CardPower/getMyCardPowerCount', {
+										params: {
+											state: that.state,
+											UserName: username,
+										}
+									})
+									.then(function(response) {
 
-					GetItemCount: function(username) {
-						var that = this;
-						that.axiosGetLoadding();
-						axios.get(mallDomainUrl + 'api/CardPower/getMyCardPowerCount', {
-								params: {
-									state: that.state,
-									UserName: username,
+										that.cardCount = response.data.cardCount;
+
+									})
+									.catch(function(response) {
+										console.log(response);
+
+									});
+							},
+
+							GetUserInfo: function(username) {
+								var that = this;
+								that.axiosGetLoadding();
+								axios.get(domainUrl + 'api/MemberOperate/getUserInfoByCode', {
+										params: {
+											UserName: username,
+										}
+									})
+									.then(function(response) {
+										that.shopuser = response.data.Shopbm,
+											that.recommender = response.data.referee;
+
+									})
+									.catch(function(response) {
+										console.log(response);
+
+									});
+							},
+							getUserCardActive: function(UserName) {
+								var that = this;
+								$.ajax({
+									url: mallDomainUrl + "api/Member/getUserAccount",
+									type: 'get',
+									dataType: "json",
+									data: {
+										UserName: UserName
+									},
+									beforeSend: function() {
+										hui.loading('数据加载中');
+									},
+									success: function(data) {
+										if(data.code == '200') {
+
+											that.CardPowerActive = data.cardPower;
+											that.UserAmount = data.amount;
+											plus.storage.setItem('CardPowerActive', data.cardPower);
+										}
+									},
+									error: function() {
+										hui.closeLoading();
+										hui.toast("网络错误，请稍后再试");
+									},
+									complete: function(data, textStatus) {
+										hui.closeLoading();
+									}
+								})
+
+							},
+
+							showx: function(x) {
+
+								if(x == 0) {
+									this.showtime = 0;
+									this.state = 1;
+									this.tabshow = 1;
 								}
-							})
-							.then(function(response) {
-
-								that.cardCount = response.data.cardCount;
-
-							})
-							.catch(function(response) {
-								console.log(response);
-
-							});
-					},
-
-					GetUserInfo: function(username) {
-						var that = this;
-						that.axiosGetLoadding();
-						axios.get(domainUrl + 'api/MemberOperate/getUserInfoByCode', {
-								params: {
-									UserName: username,
+								if(x == 1) {
+									this.showtime = 1;
+									this.state = 2;
+									this.tabshow = 2;
 								}
-							})
-							.then(function(response) {
-								that.shopuser = response.data.Shopbm,
-								that.recommender = response.data.referee;
 
-							})
-							.catch(function(response) {
-								console.log(response);
-
-							});
-					},
-					getUserCardActive: function(UserName) {
-						var that = this;
-						$.ajax({
-							url: mallDomainUrl + "api/Member/getUserAccount",
-							type: 'get',
-							dataType: "json",
-							data: {
-								UserName: UserName
 							},
-							beforeSend: function() {
-								hui.loading('数据加载中');
-							},
-							success: function(data) {
-								if(data.code == '200') {
 
-									that.CardPowerActive = data.cardPower;
-									that.UserAmount = data.amount;
-									plus.storage.setItem('CardPowerActive', data.cardPower);
+							axiosGetLoadding: function() {
+								axios.interceptors.request.use(function(config) {
+									console.log('开始请求')
+									config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+									hui.loading('数据加载中');
+									return config
+								}, function(error) {
+									console.log('请求失败')
+									hui.closeLoading();
+									hui.toast("数据加载失败,请检查网络");
+									return Promise.reject(error)
+								})
+								axios.interceptors.response.use(function(config) {
+									hui.closeLoading();
+
+									console.log('接收响应')
+									return config
+								}, function(error) {
+									console.log('响应出错')
+									hui.closeLoading();
+									hui.toast("数据加载失败,请检查网络");
+									return Promise.reject(error)
+								})
+							},
+
+							WxPay: function() {
+								if(this.CardPowerActive == 1) {
+									hui.upToast("您的卡已经激活,请不要重复操作。");
+									return false;
+								} else {
+									var PayPrice = "199";
+									var OrderNo = 'WX-AC' + random_No(4);
+									var PayBody = 'e康健康服务卡';
+										console.log(OrderNo);
+									this.GetWxPayInfo(PayPrice, OrderNo, PayBody);
 								}
-							},
-							error: function() {
-								hui.closeLoading();
-								hui.toast("网络错误，请稍后再试");
-							},
-							complete: function(data, textStatus) {
-								hui.closeLoading();
+								},
+
+								AliPay: function() {
+										if(this.CardPowerActive == 1) {
+											hui.upToast("您的卡已经激活,请不要重复操作。");
+											return false;
+										} else {
+											var PayPrice = "199";
+											var OrderNo = 'ZFB-AC' + random_No(4);
+											//console.log(OrderNo);
+											this.GetAliPayInfo(PayPrice, OrderNo);
+
+										}
+									},
+
+									PaPay: function() {
+										var PayPrice = "199";
+										this.PaPayPost(username, this.recommender, this.shopuser, PayPrice)
+
+									},
+
+									GetAliPayInfo: function(amount, orderNo) {
+
+										                
+										plus.payment.getChannels(function(channels) {                  
+											for (var  i  in  channels)  {                         
+												if (channels[i].id  ==  "alipay")  {                              
+													channel = channels[i];                          
+												}                    
+											}                     
+										}, function(e) {                   
+											hui.alert("获取支付通道失败：" + e.message); 
+											return false;                 
+										}); 
+
+										var that = this;
+										axios.get(mallDomainUrl + 'api/Alipay/getPayData', {
+												params: {
+													amount: amount,
+													orderNo: orderNo
+												}
+											})
+											.then(function(response) {
+												plus.payment.request(channel, response.data.strJson, function(result) {
+													console.log(JSON.stringify(result));
+													//hui.alert(JSON.stringify(result), title);
+													that.PayPost(username, that.recommender, that.shopuser);
+													//                              hui.alert("付费成功", title);
+												}, function(e) {
+													console.log(JSON.stringify(e));
+													//hui.alert(JSON.stringify(e));
+													//                              hui.alert("付费失败", title);
+												});
+
+												console.log(response.data)
+
+											})
+											.catch(function(response) {
+												console.log(response);
+
+											});
+									},
+
+									GetWxPayInfo: function(amount, OutTradeNo, body) {
+
+										                
+										plus.payment.getChannels(function(channels) {                  
+											for (var  i  in  channels)  {                         
+												if (channels[i].id  ==  "wxpay")  {                              
+													channel = channels[i];                          
+												}                    
+											}                     
+										}, function(e) {                   
+											hui.alert("获取支付通道失败：" + e.message); 
+											return false;                 
+										}); 
+
+										var that = this;
+
+										axios.get('http://wx.kzjk360.com/api/WxAppPay/getAppPay', {
+												params: {
+													total_fee: amount,
+													OutTradeNo: OutTradeNo,
+													body: body
+												}
+											})
+											.then(function(response) {
+												var payJson = JSON.stringify(response.data);
+												console.log(channel);
+												console.log(payJson);
+												plus.payment.request(channel, payJson, function(result) {
+													console.log(JSON.stringify(result));
+
+													//hui.alert(JSON.stringify(result), title);
+													that.PayPost(username, that.recommender, that.shopuser);
+												}, function(e) {
+													console.log(JSON.stringify(e));
+													//hui.alert(JSON.stringify(e));
+													//hui.alert("支付失败", title);
+												});
+
+												console.log(response.data)
+
+											})
+											.catch(function(response) {
+												console.log(response);
+
+											});
+									},
+
+									callpay: function() {
+
+									},
+
+									PayPost: function(UserName, Recommender, ShopUser) {
+										var that = this;
+
+										axios.post(mallDomainUrl + 'api/CardPower/PostSendCardActive', Qs.stringify({
+												"user_name": UserName,
+												"recommender": Recommender,
+												"shop_user": ShopUser
+											}))
+
+											.then(function(response) {
+												if(response.data.code == '200') {
+													hui.upToast('您的卡激活成功');
+
+													//that.GetRePVSignInfo(UserName, "100.00", "0.00", response.data.createTime, response.data.traceNo);
+													//that.GetRePVSignInfo(Recommender, "30.00", "0.00", response.data.createTime, response.data.traceNo);
+													//that.GetRePVSignInfo(ShopUser, "3.00", "0.00", response.data.createTime, response.data.traceNo);
+													setTimeout(function() {
+														plus.webview.currentWebview().close();
+													}, 1000);
+
+												} else {
+													hui.upToast(response.data.msg);
+													setTimeout(function() {
+
+														plus.webview.currentWebview().close();
+
+													}, 800);
+													return false;
+												}
+
+											})
+											.catch(function(response) {
+												console.log(response);
+											});
+									},
+
+									PaPayPost: function(UserName, Recommender, ShopUser, PayPrice) {
+										var that = this;
+										axios.post(mallDomainUrl + 'api/CardPower/PostSendCardActivePA', Qs.stringify({
+												"user_name": UserName,
+												"recommender": Recommender,
+												"shop_user": ShopUser,
+												"pay_price": PayPrice,
+											}))
+
+											.then(function(response) {
+												if(response.data.code == '200') {
+													hui.upToast('您的卡激活成功');
+													//that.GetRePVSignInfo(UserName, "100.00", "0.00", response.data.createTime, response.data.traceNo);
+													//									setTimeout(function() {
+													//										that.GetRePVSignInfo(Recommender, "30.00", "0.00", response.data.createTime, response.data.traceNo);
+													//									}, 50);
+													//
+													//									setTimeout(function() {
+													//										that.GetRePVSignInfo(ShopUser, "3.00", "0.00", response.data.createTime, response.data.traceNo);
+													//									}, 100);
+													setTimeout(function() {
+
+														plus.webview.currentWebview().close();
+
+													}, 1000);
+
+												} else {
+													hui.upToast(response.data.msg);
+													setTimeout(function() {
+
+														plus.webview.currentWebview().close();
+
+													}, 800);
+													return false;
+												}
+
+											})
+											.catch(function(response) {
+												console.log(response);
+											});
+									},
+
+									GetRePVSignInfo: function(UserName, ToPV, ToAmount, CreateTime, OrderNo) {
+										var that = this;
+
+										axios.post('http://gateway.kzjk360.com/api/Member/takeRePVSign', Qs.stringify({
+												username: UserName,
+												pv: ToPV,
+												amount: ToAmount,
+												createTime: CreateTime,
+												orderNo: OrderNo
+											}))
+
+											.then(function(response) {
+												if(response.data.code == '200') {
+
+													that.ReturnPVPost(UserName, ToPV, ToAmount, CreateTime, OrderNo, response.data.sign);
+
+												} else {
+													hui.toast(response.data.msg);
+													return false;
+												}
+
+											})
+											.catch(function(response) {
+												console.log(response);
+											});
+
+									},
+
+									ReturnPVPost: function(UserName, ToPV, ToAmount, CreateTime, OrderNo, sign) {
+										var that = this;
+										axios.post('http://api.powerdo.net/api/ek/pv', Qs.stringify({
+												username: UserName,
+												pv: ToPV,
+												amount: ToAmount,
+												createTime: CreateTime,
+												orderNo: OrderNo,
+												sign: sign
+											}))
+
+											.then(function(response) {
+												if(response.data.code == '200') {
+													hui.upToast(response.data.msg);
+													return false;
+
+												} else {
+													hui.upToast(response.data.msg);
+
+													return false;
+												}
+
+											})
+											.catch(function(response) {
+												console.log(response);
+											});
+									},
+
 							}
+
 						})
 
-					},
-
-					showx: function(x) {
-
-						if(x == 0) {
-							this.showtime = 0;
-							this.state = 1;
-							this.tabshow = 1;
-						}
-						if(x == 1) {
-							this.showtime = 1;
-							this.state = 2;
-							this.tabshow = 2;
-						}
-
-					},
-
-					axiosGetLoadding: function() {
-						axios.interceptors.request.use(function(config) {
-							console.log('开始请求')
-							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-							hui.loading('数据加载中');
-							return config
-						}, function(error) {
-							console.log('请求失败')
-							hui.closeLoading();
-							hui.toast("数据加载失败,请检查网络");
-							return Promise.reject(error)
-						})
-						axios.interceptors.response.use(function(config) {
-							hui.closeLoading();
-
-							console.log('接收响应')
-							return config
-						}, function(error) {
-							console.log('响应出错')
-							hui.closeLoading();
-							hui.toast("数据加载失败,请检查网络");
-							return Promise.reject(error)
-						})
-					},
-
-					WxPay: function() {
-
-					},
-
-					PaPay: function() {
-						var PayPrice = "199";
-						this.PaPayPost(username, this.recommender, this.shopuser, PayPrice)
-
-					},
-
-					callpay: function() {
-
-					},
-
-
-					PayPost: function(UserName, Recommender, ShopUser) {
-						var that = this;
-
-						axios.post(mallDomainUrl + 'api/CardPower/PostSendCardActive', Qs.stringify({
-								"user_name": UserName,
-								"recommender": Recommender,
-								"shop_user": ShopUser
-							}))
-
-							.then(function(response) {
-								if(response.data.code == '200') {
-									hui.upToast('您的卡激活成功');
-									that.GetRePVSignInfo(UserName, "70.00", "0.00", response.data.createTime, response.data.traceNo);
-									that.GetRePVSignInfo(Recommender, "30.00", "0.00", response.data.createTime, response.data.traceNo);
-									that.GetRePVSignInfo(ShopUser, "3.00", "0.00", response.data.createTime, response.data.traceNo);
-									setTimeout(function() {
-										plus.webview.currentWebview().close();
-									}, 3000);
-
-								} else {
-									hui.upToast(response.data.msg);
-									setTimeout(function() {
-
-										plus.webview.currentWebview().close();
-
-									}, 800);
-									return false;
-								}
-
-							})
-							.catch(function(response) {
-								console.log(response);
-							});
-					},
-
-					PaPayPost: function(UserName, Recommender, ShopUser, PayPrice) {
-						var that = this;
-						axios.post(mallDomainUrl + 'api/CardPower/PostSendCardActivePA', Qs.stringify({
-								"user_name": UserName,
-								"recommender": Recommender,
-								"shop_user": ShopUser,
-								"pay_price": PayPrice,
-							}))
-
-							.then(function(response) {
-								if(response.data.code == '200') {
-									hui.upToast('您的卡激活成功');
-									that.GetRePVSignInfo(UserName, "70.00", "0.00", response.data.createTime, response.data.traceNo);
-									setTimeout(function() {
-										that.GetRePVSignInfo(Recommender, "30.00", "0.00", response.data.createTime, response.data.traceNo);
-									}, 50);
-
-									setTimeout(function() {
-										that.GetRePVSignInfo(ShopUser, "3.00", "0.00", response.data.createTime, response.data.traceNo);
-									}, 100);
-									setTimeout(function() {
-
-										plus.webview.currentWebview().close();
-
-									}, 3000);
-
-								} else {
-									hui.upToast(response.data.msg);
-									setTimeout(function() {
-
-										plus.webview.currentWebview().close();
-
-									}, 800);
-									return false;
-								}
-
-							})
-							.catch(function(response) {
-								console.log(response);
-							});
-					},
-
-					GetRePVSignInfo: function(UserName, ToPV, ToAmount, CreateTime, OrderNo) {
-						var that = this;
-
-						axios.post('http://gateway.kzjk360.com/api/Member/takeRePVSign', Qs.stringify({
-								username: UserName,
-								pv: ToPV,
-								amount: ToAmount,
-								createTime: CreateTime,
-								orderNo: OrderNo
-							}))
-
-							.then(function(response) {
-								if(response.data.code == '200') {
-
-									that.ReturnPVPost(UserName, ToPV, ToAmount, CreateTime, OrderNo, response.data.sign);
-
-								} else {
-									hui.toast(response.data.msg);
-									return false;
-								}
-
-							})
-							.catch(function(response) {
-								console.log(response);
-							});
-
-					},
-
-					ReturnPVPost: function(UserName, ToPV, ToAmount, CreateTime, OrderNo, sign) {
-						var that = this;
-						axios.post('http://api.powerdo.net/api/ek/pv', Qs.stringify({
-								username: UserName,
-								pv: ToPV,
-								amount: ToAmount,
-								createTime: CreateTime,
-								orderNo: OrderNo,
-								sign: sign
-							}))
-
-							.then(function(response) {
-								if(response.data.code == '200') {
-									hui.upToast(response.data.msg);
-									return false;
-
-								} else {
-									hui.upToast(response.data.msg);
-
-									return false;
-								}
-
-							})
-							.catch(function(response) {
-								console.log(response);
-							});
-					},
+					var barcode = document.getElementById('barcode'),
+						str = username,
+						options = {
+							format: "CODE128",
+							displayValue: true,
+							fontSize: 18,
+							height: 50
+						}; JsBarcode(barcode, str, options); //原生    
 
 				}
 
-			})
-			}
+				function random_No(j) {
+					var random_no = "";
+					for(var i = 0; i < j; i++) //j位随机数，用以加在时间戳后面。
+					{
+						random_no += Math.floor(Math.random() * 10);
+					}
+					random_no = new Date().getTime() + random_no;
+					return random_no;
+				};
 		</script>
 
 	</body>

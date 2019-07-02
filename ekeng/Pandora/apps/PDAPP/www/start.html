@@ -72,11 +72,11 @@ function Goto(){
        }
 	   else{
 	   	
-
-	   	
-                          var ws=plus.webview.getWebviewById(plus.runtime.appid);
-                            ws.evalJS('plusReadyDo()');
+                            var ws=plus.webview.getLaunchWebview();
+                            //var ws=plus.webview.getWebviewById(plus.runtime.appid);
+                            ws.evalJS('goIndex()');
                              ws.show();
+                             
                                backToHomeIndex("slide-in-right");
 	   	
 	   }

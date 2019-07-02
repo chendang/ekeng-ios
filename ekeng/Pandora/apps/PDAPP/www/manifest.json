@@ -1,7 +1,7 @@
 {
     "@platforms": ["android", "iPhone", "iPad"],
     "id": "PDAPP",
-    "name": "易康",
+    "name": "e康云",
     "version": {
         "name": "2.0",
         "code": ""

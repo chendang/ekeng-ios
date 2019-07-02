@@ -140,7 +140,7 @@ back();
 var objuser=JSON.parse(plus.storage.getItem('user'));
 username = objuser.UserName;
 
-vum.GetItemList(username,vum.pageIndex,vum.pageSize,vum.KeyTxt);
+
 
 
 
@@ -183,6 +183,20 @@ document.addEventListener("plusready",plusReady,false);
 					KeyTxt: "",
 					ItemData: [],
 					ItemList: [] 
+				},
+				
+					mounted: function() {
+
+					this.$nextTick(function() {
+
+
+
+						this.GetItemList(username,this.pageIndex,this.pageSize,this.KeyTxt);
+						
+					
+
+					})
+
 				},
 
 				methods: {

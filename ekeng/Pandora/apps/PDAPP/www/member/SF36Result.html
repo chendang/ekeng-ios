@@ -69,16 +69,13 @@
 var domainUrl = GetMvcApiDomain();
 
 var username=null;  
-var testNum=null;
 function plusReady() { 
 	
 var objuser=JSON.parse(plus.storage.getItem('user'));
 username = objuser.UserName;
 
-var _self = plus.webview.currentWebview();
-testNum=_self.questionBh;
 
-getGrade(username,testNum);
+getGrade(username);
 backIndex()
 }
 
@@ -96,13 +93,13 @@ document.addEventListener("plusready",plusReady,false);
 
 
 
-function getGrade(username,testnum){
+function getGrade(username){
 
              $.ajax({
-             	url: domainUrl + "api/TestSF36/getTheGrade",
+             	url: domainUrl + "api/TestSF36/getNewGrade",
                 type: 'get',
                 dataType: "json",
-                data: {UserName:username,TestNum:testnum},
+                data: {UserName:username},
                 success: function (data) {
                 	      if (data.code='200'){
                         var desc="";
@@ -146,41 +143,57 @@ function getGrade(username,testnum){
 
  function backIndex(){
 	plus.key.addEventListener("backbutton",function(){
-		clearview();
+		closeOpenView('zoom-fade-out');
 
 	});
 }
 
-function clearview(){
-		plus.webview.currentWebview().close();
-		var view1=plus.webview.getWebviewById("GreatTest1.html");
-        if(view1){
-        view1.close();
+function closeOpenView(aniView) {　　
+
+	    
+        var _view1=plus.webview.getWebviewById("SF36Index.html");
+        if(_view1!=null){
+        _view1.close('none');
         }
-        var view2=plus.webview.getWebviewById("GreatTest2.html");
-        if(view2){
-        view2.close();
+        var _view2=plus.webview.getWebviewById("SF36-1.html");
+        if(_view2!=null){
+        _view2.close('none');
         }
-        var view3=plus.webview.getWebviewById("GreatTest3.html");
-        if(view3){
-        view3.close();
+        var _view3=plus.webview.getWebviewById("SF36-2.html");
+        if(_view3!=null){
+        _view3.close('none');
         }
-        var view4=plus.webview.getWebviewById("GreatTest4.html");
-        if(view4){
-        view4.close();
+        
+        var _view4=plus.webview.getWebviewById("SF36-3.html");
+        if(_view4!=null){
+        _view4.close('none');
         }
-        var view5=plus.webview.getWebviewById("GreatTest5.html");
-        if(view5){
-        view5.close();
-        }
-        var view6=plus.webview.getWebviewById("GreatTest6.html");
-        if(view6){
-        view6.close();
-        }
-        var view7=plus.webview.getWebviewById("GreatTest7.html");
-        if(view7){
-        view7.close();
-        }
+
+         var _view5=plus.webview.getWebviewById("SF36-4.html");
+        if(_view5!=null){
+        _view5.close('none');
+        } 
+        
+         var _view5=plus.webview.getWebviewById("SF36-5.html");
+        if(_view5!=null){
+        _view5.close('none');
+        } 
+        
+        var _view6=plus.webview.getWebviewById("SF36-6.html");
+        if(_view6!=null){
+        _view6.close('none');
+        }  
+        
+        
+        var ws=plus.webview.getWebviewById("TestMenu.html");
+        ws.evalJS('plusReady()');
+        
+        
+        
+        var self = plus.webview.currentWebview();　　 //当前窗口对象
+	    self.close(aniView);
+
+        
 }
 
 

@@ -4,7 +4,7 @@ body{font-family: text_font;font-size: 14px;color: #BBB; background-color: #f9f9
 .left{float: left;}
 .right{float: right}
 
-h1,h2,h3,h4,h5,h6{display: inline-block;}
+h1,h2,h4,h5,h6{display: inline-block;}
 .pad-left {padding-left: 1rem}
 .pad-right{padding-right: 1rem}
 .mar-top{margin-top: 1rem;}

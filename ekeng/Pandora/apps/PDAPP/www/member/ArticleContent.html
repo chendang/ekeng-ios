@@ -124,22 +124,22 @@
 
 		<!--发现正文start-->
 		<div id="bodyinfo">
-			<div class="find-news" style="margin-top: 46px;">
+			<div class="find-news" style="margin-top: 6px;">
 
-				<div>
+				<div v-cloak>
 					<ul class="title">
-						<h2>{{title}}</h2>
+						<h2 v-cloak>{{title}}</h2>
 						<div class="clearfix">
-							<p class="fl"><i class="f-ico05">{{click_number}}</i></p>
-							<p class="fl"><i class="f-ico06">{{CommentCount}}</i></p>
+							<p class="fl"><i class="f-ico05" v-cloak>{{click_number}}</i></p>
+							<p class="fl"><i class="f-ico06" v-cloak>{{CommentCount}}</i></p>
 							<p class="fr" v-if=" IsFavorite == 0 " @click="SetFavoritePost"><i class="f-ico11">收藏</i></p>
 							<p class="fr" v-else><i class="f-ico11">已收藏</i></p>
-							<p class="fr" v-if=" IsFollow == 0 " @click="SetFollowPost"><i class="f-ico07">关注</i></p>
-							<p class="fr" v-else><i class="f-ico07">已关注</i></p>
+							<p class="fr" v-if=" IsLike == 0 " @click="SetLikePost"><i class="f-ico07">赞同</i></p>
+							<p class="fr" v-else><i class="f-ico07">已点赞</i></p>
 						</div>
 					</ul>
 					<ul class="con">
-						<p v-html="content">{{content}}</p>
+						<p v-html="content" v-cloak>{{content}}</p>
 					</ul>
 				</div>
 				<!--<ul class="clearfix f-share">
@@ -177,32 +177,32 @@
 
 				<hr style="margin-top:15px;height:1px;border:none;border-top:1px dashed #0066CC;" />
 
-				<div class="recommend-video">
+				<!--<div class="recommend-video">
 					<h2>推荐文章</h2>
-					<ul>
+					<ul v-cloak>
 						<li v-for="(Item,index) in ItemList" @click="ShowContent(Item.NewsId)">
 							<a title="">
 								<div class="m_cell_hd"><img :src="Item.NewsPic" alt="" width="116" height="55" /></div>
 								<div class="m_cell_ft m_cell_primary">
-									<h4>{{Item.NewsTitle}}</h4>
-									<p>{{Item.click_number}}</p>
+									<h4 v-cloak>{{Item.NewsTitle}}</h4>
+									<p v-cloak>{{Item.click_number}}</p>
 								</div>
 							</a>
 						</li>
 					</ul>
-				</div>
-				<ul class="f-question">
+				</div>-->
+				<ul class="f-question" v-cloak>
 					<li v-for="(Item,index) in CommentList">
 						<div class="f-img01">
 							<ul class="m_cell_hd"><img :src="Item.headPic" alt="" /></ul>
 							<ul class="m_cell_hd m_cell_primary">
-								<h4>{{Item.ReallyName}}</h4></ul>
+								<h4 v-cloak>{{Item.ReallyName}}</h4></ul>
 							<!--<ul class="m_cell_ft"><i>沙发</i></ul>-->
 						</div>
-						<h4 v-html="Item.content">{{Item.content}}</h4>
+						<h4 v-html="Item.content" v-cloak>{{Item.content}}</h4>
 						<div class="f-img02">
 							<ul class="m_cell_hd m_cell_primary">
-								<p>{{Item.pubtime}}</p>
+								<p v-cloak>{{Item.pubtime}}</p>
 							</ul>
 							<ul class="m_cell_ft">
 								<a @click="SetPostCommentLike(Item.cid)" class="f-ico07">{{Item.LCount}}</a>
@@ -241,6 +241,7 @@
 
 	<script src="../js/lib/axios.min.js"></script>
 	<script src="../js/lib/qs.js"></script>
+	<script src="../js/lib/jquery-2.1.3.min.js"></script>
 	<script>
 		var domainUrl = GetMvcApiDomain();
 
@@ -265,11 +266,17 @@
 				console.log(newsId);
                   ShowBody(username,newsId);
 
+                               
 				
 
 			}
 			HeadShow();
 			back();
+			
+ 
+			
+             //ws.evalJS("vum.getNewsRecommendList('15', '10')");
+			
 		}
 
 		if(window.plus) {
@@ -289,6 +296,7 @@
 					Detail: "",
 					CommentCount: 0,
 					IsFollow: 0,
+					IsLike:0,
 					IsFavorite: 0,
 					click_number: 0,
 					content: "",
@@ -304,8 +312,10 @@
                     this.getNewsContent(this.newsId);
                     this.GetRNewsList('15', '10');
                     this.GetCommentList(newsId, '10');
+                    if (username!=null && username!=undefined && username!=""){
                     this.getIsSetFollow(username, newsId);
                     this.getIsSetFavorite(username, newsId);
+                    }
                     this.getCommentCount(newsId);
 				})
 
@@ -324,8 +334,9 @@
 						})
 						.then(function(response) {
 							if(response.data.code == '200') {
+								var nContent=response.data.content.replace(/\/upload-file\//g, 'http://healthback.ekeng.com.cn/upload-file/');
 								that.title = response.data.title;
-								that.content = response.data.content;
+								that.content = nContent;
 								that.click_number = response.data.click_number;
 
 							} else {
@@ -483,7 +494,35 @@
 						});
 
 				},
+					SetLikePost: function() {
+						
+						if (username==null || username==undefined || username==""){
+                        	hui.upToast('请登陆后再点赞!');
+							return false;	
+                        }
+						
+						var that = this;
+						axios.post(domainUrl + 'api/News/PostNewsSetLike', Qs.stringify({
+								UserName: username,
+								NewsId: newsId
+							}))
 
+							.then(function(response) {
+								if(response.data.code == '200') {
+									that.IsLike=1;
+									hui.toast(response.data.msg);
+
+								} else {
+									hui.toast(response.data.msg);
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
 				SetFavoritePost: function() {
 
 					if(username == null || username == undefined || username == "") {
@@ -552,7 +591,10 @@
 
 						.then(function(response) {
 							if(response.data.code == '200') {
-
+                                 var ws=plus.webview.getLaunchWebview();
+                                 //ws.evalJS('plusReadyDo()');
+			                      ws.evalJS("vum.getNewsRecommendList('15', '10');");
+                                  console.log(ws.id);
 							} else {
 
 								return false;
@@ -640,7 +682,20 @@
 				},
 
 				ShowContent: function(newsId) {
-					location.href = "ArticleContent.html?NewsId=" + newsId;
+                    this.UpdateClickNumber();
+                    this.getNewsContent(newsId);
+                    this.GetRNewsList('15', '10');
+                    this.GetCommentList(newsId, '10');
+                    if (username!=null && username!=undefined && username!=""){
+                    this.getIsSetFollow(username, newsId);
+                    this.getIsSetFavorite(username, newsId);
+                    }
+                    this.getCommentCount(newsId);
+                    $("html, body").animate({
+                    scrollTop: $("#bodyinfo").offset().top }, {duration: 500,easing: "swing"});
+
+                    return false;
+                  
 
 				},
 

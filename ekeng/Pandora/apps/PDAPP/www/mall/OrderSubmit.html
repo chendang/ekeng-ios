@@ -32,8 +32,8 @@
 		<div id="app">
 			<section class="aui-address-content">
 				<div class="aui-address-box">
-					<div class="aui-address-box-list">
-						<a href="javascript:clickedNoHead('AddressList.html','AddressList.html','zoom-fade-out');" class="aui-address-box-default" v-for="(itema,index) in AddressList" v-cloak>
+					<div class="aui-address-box-list" v-cloak>
+						<a href="javascript:clickedNoHead('AddressList.html', 'AddressList.html', 'slide-in-left');" class="aui-address-box-default" v-for="(itema,index) in AddressList" v-cloak>
 							<ul>
 								<li>
 									<strong>{{itema.receiver}}&nbsp;&nbsp;{{itema.phone}}</strong>
@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="aui-dri"></div>
-				<div class="aui-list-product-float-item">
+				<div class="aui-list-product-float-item" v-cloak>
 					<a href="javascript:;" class="aui-list-product-fl-item" v-for="(item,index) in ItemList">
 						<div class="aui-list-product-fl-img">
 							<img :src="item.productImage" alt="">
@@ -96,15 +96,25 @@
 				</div>
 				<div class="aui-address-cell-ft">￥0.50&nbsp;&nbsp;<input class="aui-switch" type="checkbox" checked="checked"></div>
 			</a>-->
+			
 					<div class="aui-dri"></div>
-					<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" id="btnEcoupon">
+
+					<a href="#" class="aui-address-cell" v-cloak>
+						<div class="aui-address-cell-bd">本单自提&nbsp;</div>
+						<div class="hui-switch hui-switch-off" id="TakeUse"><span>Off</span>
+							<div class="hui-switch-in"></div>
+						</div>
+					</a>
+			
+					<div class="aui-dri"></div>
+					<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" id="btnEcoupon" v-cloak>
 						<div class="aui-address-cell-bd">优惠券&nbsp;<span class="hui-badge hui-danger">{{Ecount}}张</span></div>
 						<!--<div class="aui-address-cell-ft">不可用</div>-->
 					</a>
 					<div class="aui-dri"></div>
 
-					<a href="#" class="aui-address-cell">
-						<div class="aui-address-cell-bd">储值账户&nbsp;<span class="hui-badge hui-danger">{{ShowAmountMoney}}</span></div>
+					<a href="#" class="aui-address-cell" v-cloak>
+						<div class="aui-address-cell-bd">PA&nbsp;<span class="hui-badge hui-danger">{{ShowAmountMoney}}</span></div>
 						<div class="hui-switch hui-switch-off" id="AmountUse"><span>Off</span>
 							<div class="hui-switch-in"></div>
 						</div>
@@ -112,34 +122,35 @@
 
 					<div class="aui-dri"></div>
 
-					<a href="#" class="aui-address-cell">
-						<div class="aui-address-cell-bd">积分&nbsp;<span class="hui-badge hui-danger">{{ShowPoint}}</span><span v-if="UserPoint>0">可抵扣{{ShowPointMoney}}元</span></div>
-						<div class="hui-switch hui-switch-off" id="PointUse"><span>Off</span>
-							<div class="hui-switch-in"></div>
-						</div>
+					<a href="#" class="aui-address-cell" v-cloak>
+						<div class="aui-address-cell-bd">积分余额&nbsp;<span class="hui-badge hui-danger">{{UserPoint}}</span><br><span>本订单最多可使用：{{MaxRewardPoint}}分,已为您节省{{ShowPointMoney}}元</span></div>
+
 					</a>
 
 					<div class="aui-dri"></div>
 					<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
 						<div class="aui-address-cell-bd">
 							<h3>商品金额</h3>
-							<p>运费(公司包邮)</p>
+							<p>运费<span v-show="postage==0">(公司包邮)</span></p>
 							<p v-if="EcouponSwitch==1">优惠券</p>
 							<p v-if="PointSwitch==1">积分抵扣</p>
-							<p v-if="AmountSwitch==1">储值支付</p>
+							<p v-if="AmountSwitch==1">PA支付</p>
 						</div>
-						<div class="aui-address-cell-ft">
-							<span class="aui-red">￥{{totalMoney}}</span><br>
-							<span class="aui-red">+￥0.00</span><br>
+						<div class="aui-address-cell-ft" v-cloak>
+							<span class="aui-red">￥{{goodsMoney}}</span><br>
+							<span class="aui-red">+￥{{postage}}</span><br>
 							<span class="aui-red" v-if="EcouponSwitch==1">-￥{{Evalue}}</span><br v-if="EcouponSwitch==1">
 							<span class="aui-red" v-if="PointSwitch==1">-￥{{ShowPointMoney}}</span><br v-if="PointSwitch==1">
 							<span class="aui-red" v-if="AmountSwitch==1">-￥{{UseAmountMoney}}</span>
 						</div>
 					</a>
 				</div>
+				
+
+				
 				<div class="aui-payment-bar">
 					<div class="shop-total">
-						<span class="aui-red aui-size">实付款: <em>￥{{payMoney}}</em></span>
+						<span class="aui-red aui-size" v-cloak>实付款: <em>￥{{payMoney}}</em></span>
 					</div>
 					<a class="settlement" @click="OrderSave">提交订单</a>
 				</div>
@@ -183,12 +194,15 @@ shopbm = objuser.shopbm;
 UserRole = objuser.UserRole;
 
 
-					vum.GetOrderInfo();
-					vum.GetAddressList(username, vum.pageSize, vum.pageIndex, vum.filedOrder);
-					vum.getUserAccount(username);
-					vum.GetEcouponInfo();
+
+
 
 back();
+
+
+
+
+
 }
 
 if(window.plus){  
@@ -196,8 +210,6 @@ plusReady();
 }else{  
 document.addEventListener("plusready",plusReady,false);  
 }
-
-
 
 		vum = new Vue({
 			el: '#app',
@@ -208,10 +220,14 @@ document.addEventListener("plusready",plusReady,false);
 				pageSize: 20,
 				filedOrder: 'id',
 				totalMoney: 0,
+				goodsMoney:0,
+				postage:0,
 				payMoney: 0,
+				xMoney:0,
 				GoodsArr: '',
 				AddressId: 0,
-				PointSwitch: 0,
+				takeWay: 0,
+				PointSwitch: 1,
 				EcouponSwitch: 0,
 				AmountSwitch: 0,
 				UserPoint: 0,
@@ -222,6 +238,7 @@ document.addEventListener("plusready",plusReady,false);
 				UseAmountMoney: 0,
 				ShowAmountMoney: 0,
 				UserAmount: 0,
+				MaxRewardPoint: 0,
 				Ecount: 0,
 				Evalue: 0,
 				EcouponId: 0,
@@ -234,24 +251,40 @@ document.addEventListener("plusready",plusReady,false);
 
 				this.$nextTick(function() {
 
-
+					this.getUserAccount(username);
+					this.GetAddressList(username, this.pageSize, this.pageIndex, this.filedOrder);
+					
+					
 
 				})
 
 			},
 
-			//	watch: {
-			//  PointSwitch: function (val) {
-			//  	this.$nextTick(() => {
-			//    if (val==0){
-			//    	this.PayMoney=parseFloat(this.totalMoney) - parseFloat(this.Evalue);
-			//    }
-			//    if (val==1){
-			//    	this.PayMoney=parseFloat(this.totalMoney) - parseFloat(this.Evalue)-parseFloat(this.UsePointMoney);
-			//    }
-			//    });
-			//  }
-			//},
+			watch: {
+			  takeWay: function (val) {
+			  	this.$nextTick(() => {
+			    if (val==0){
+			    	
+			    	
+			    		if (this.goodsMoney<150){
+							this.postage=12;
+							
+
+							this.payMoney=parseFloat(this.xMoney)+12;
+							this.payMoney = this.payMoney.toFixed(2);
+						}
+						
+			    }
+			    if (val==1){
+	
+			    	
+			    	this.postage=0;
+                    this.payMoney=parseFloat(this.xMoney);
+                    this.payMoney = this.payMoney.toFixed(2);
+			    }
+			    });
+			  }
+			},
 
 			methods: {
 
@@ -267,11 +300,14 @@ document.addEventListener("plusready",plusReady,false);
 								productId: objs[i].productId,
 								productName: objs[i].productName,
 								productPrice: objs[i].productPrice,
+								rewardPoint: objs[i].rewardPoint,
 								productImage: objs[i].productImage,
 								productQuentity: objs[i].productQuentity,
 							});
 
-							this.totalMoney = this.totalMoney + Number(objs[i].productPrice) * Number(objs[i].productQuentity);
+							this.goodsMoney = this.goodsMoney + Number(objs[i].productPrice) * Number(objs[i].productQuentity);
+							this.MaxRewardPoint = this.MaxRewardPoint + Number(objs[i].rewardPoint) * Number(objs[i].productQuentity);
+							
 							if(this.GoodsArr == '' || this.GoodsArr.length == 0) {
 								this.GoodsArr = objs[i].productId + '/' + objs[i].productQuentity;
 							} else {
@@ -279,11 +315,32 @@ document.addEventListener("plusready",plusReady,false);
 							}
 
 						}
+						
+						this.totalMoney=parseFloat(this.goodsMoney);						
+						this.goodsMoney = this.goodsMoney.toFixed(2);
 						this.totalMoney = this.totalMoney.toFixed(2);
-						this.payMoney = this.totalMoney;
-
+                        this.xMoney = this.totalMoney;
+                        
+                        this.GetEcouponInfo();
 					}
 				},
+				
+				GetPostage: function() {
+
+						if (this.goodsMoney<150){
+							this.postage=12;
+							this.payMoney=parseFloat(this.xMoney)+12;
+						}
+						else{
+							this.postage=0;
+							this.payMoney=parseFloat(this.xMoney);
+						}
+						
+                        this.payMoney = this.payMoney.toFixed(2);
+   
+					
+				},
+				
 				getUserAccount: function(UserName) {
 
 					var that = this;
@@ -294,12 +351,16 @@ document.addEventListener("plusready",plusReady,false);
 						})
 						.then(function(response) {
 
-							that.UserPoint = response.data.points;
+							that.UserPoint = response.data.reward_point;
 							that.ShowPoint = that.UserPoint;
 							that.UserAmount = response.data.amount;
 							that.ShowAmountMoney = response.data.amount;
-							that.PointMoney = that.UserPoint / 1000;
-							that.ShowPointMoney = that.UserPoint / 1000;
+							that.PointMoney = that.UserPoint;
+							that.ShowPointMoney = that.UserPoint;
+							
+							that.GetOrderInfo();
+							that.PointUse2();
+							that.GetPostage();
 						})
 						.catch(function(response) {
 							console.log(response);
@@ -349,11 +410,11 @@ document.addEventListener("plusready",plusReady,false);
 									that.EcouponId = selVal;
 									console.log(arr1[0].faceValue);
 									that.Evalue = arr1[0].faceValue;
-									if(parseFloat(that.payMoney) > parseFloat(that.Evalue)) {
-										that.payMoney = parseFloat(that.payMoney) - parseFloat(that.Evalue);
-										that.payMoney = that.payMoney.toFixed(2)
+									if(parseFloat(that.xMoney) > parseFloat(that.Evalue)) {
+										that.xMoney = parseFloat(that.xMoney) - parseFloat(that.Evalue);
+										that.xMoney = that.xMoney.toFixed(2)
 									} else {
-										that.payMoney = 0;
+										that.xMoney = 0;
 									}
 
 								});
@@ -402,8 +463,7 @@ document.addEventListener("plusready",plusReady,false);
 							if(that.AddressId == 0) {
 								hui.upToast('请设置默认的收货地址');
 								setTimeout(function() {
-
-									location.href = "AddressList.html";
+                                    clickedNoHead('AddressList.html', 'AddressList.html', 'slide-in-left');
 
 								}, 800);
 							}
@@ -422,6 +482,7 @@ document.addEventListener("plusready",plusReady,false);
 					this.OrderPost(username, this.AddressId, this.GoodsArr, this.totalMoney, this.UsePointMoney, this.Evalue, this.EcouponId, this.UseAmountMoney, this.payMoney);
 				},
 
+
 				OrderPost: function(UserName, AddressId, GoodsArr, OrderMoney, pointMoney, ecouponMoney, ecouponId, accountMoney, payMoney) {
 					var that = this;
 
@@ -439,21 +500,16 @@ document.addEventListener("plusready",plusReady,false);
 
 						.then(function(response) {
 							if(response.data.code == '200') {
-
+                                var orderNo = response.data.orderNo;
 								if(payMoney == 0) {
-									var orderNo = response.data.orderNo;
 									that.PayPost(UserName, orderNo, payMoney);
 								} else {
-
-									hui.upToast('订单提交成功,请支付');
 									setTimeout(function() {
-
-										var openid = localStorage.getItem("openid");
-										if(openid == '' || openid == null || openid == undefined) {
-											location.href = "WxPay_GetCode.html?OrderNo=" + response.data.orderNo;
-										} else {
-											location.href = "OrderPay.html?OrderNo=" + response.data.orderNo;
-										}
+                                     var parm = {
+						                   "OrderNo": orderNo,
+						                   "FromName": "orderSub"
+					                 }
+					                  clickedParm('OrderPay.html', 'OrderPay.html', 'zoom-fade-out', parm,'订单支付');
 
 									}, 800);
 								}
@@ -468,6 +524,98 @@ document.addEventListener("plusready",plusReady,false);
 						});
 				},
 
+
+PointUse: function() {
+
+
+				
+				if(this.UserPoint <= 0) {
+					this.PointSwitch = 1;
+
+				}
+				else{
+
+				 
+                        this.PointSwitch = 1;
+						var pointInput = 0
+                        if (this.UserPoint>this.MaxRewardPoint){
+                        	pointInput=this.MaxRewardPoint;
+                        }
+                        else{
+                        	pointInput=this.UserPoint;
+                        }
+						this.ShowPoint = pointInput;
+						this.ShowPointMoney = parseFloat(pointInput*10).toFixed(2);
+						this.UsePointMoney =  parseFloat(pointInput*10).toFixed(2);
+
+						var pm = 0;
+						if(this.EcouponSwitch == 1) {
+							if(this.AmountSwitch == 1) {
+								pm = (parseFloat(this.totalMoney) - parseFloat(this.Evalue) - parseFloat(this.UsePointMoney) - parseFloat(this.UseAmountMoney)).toFixed(2);
+							} else {
+								pm = (parseFloat(this.totalMoney) - parseFloat(this.Evalue) - parseFloat(this.UsePointMoney)).toFixed(2);
+							}
+
+						} else {
+							if(this.AmountSwitch == 1) {
+								pm = (parseFloat(this.totalMoney) - parseFloat(this.UsePointMoney) - parseFloat(this.UseAmountMoney)).toFixed(2);
+							} else {
+								pm = (parseFloat(this.totalMoney) - parseFloat(this.UsePointMoney)).toFixed(2);
+							}
+						}
+						if(pm < 0) {
+							pm = 0;
+						}
+						
+						this.xMoney = pm;
+
+                    					
+				}
+
+
+},
+
+
+PointUse2: function() {
+
+
+
+
+				 
+                        this.PointSwitch = 1;
+						var pointInput = this.MaxRewardPoint
+
+						this.ShowPoint = pointInput;
+						this.ShowPointMoney = parseFloat(pointInput).toFixed(2);
+						this.UsePointMoney =  parseFloat(pointInput).toFixed(2);
+
+						var pm = 0;
+						if(this.EcouponSwitch == 1) {
+							if(this.AmountSwitch == 1) {
+								pm = (parseFloat(this.totalMoney) - parseFloat(this.Evalue) - parseFloat(this.UsePointMoney) - parseFloat(this.UseAmountMoney)).toFixed(2);
+							} else {
+								pm = (parseFloat(this.totalMoney) - parseFloat(this.Evalue) - parseFloat(this.UsePointMoney)).toFixed(2);
+							}
+
+						} else {
+							if(this.AmountSwitch == 1) {
+								pm = (parseFloat(this.totalMoney) - parseFloat(this.UsePointMoney) - parseFloat(this.UseAmountMoney)).toFixed(2);
+							} else {
+								pm = (parseFloat(this.totalMoney) - parseFloat(this.UsePointMoney)).toFixed(2);
+							}
+						}
+						if(pm < 0) {
+							pm = 0;
+						}
+						
+						this.xMoney = pm;
+
+
+
+},
+
+
+
 				PayPost: function(UserName, orderNo, payAmount) {
 					var that = this;
 
@@ -481,8 +629,10 @@ document.addEventListener("plusready",plusReady,false);
 							if(response.data.code == '200') {
 								hui.upToast('订单支付成功,请等待收货');
 								setTimeout(function() {
-
-									location.href = "OrderList.html?tab=2";
+                                    var parm = {
+						                   "tab": 2
+					                 }
+					                  clickedParm('OrderList.html', 'OrderList.html', 'zoom-fade-out', parm,'订单列表');
 
 								}, 800);
 
@@ -498,102 +648,10 @@ document.addEventListener("plusready",plusReady,false);
 				},
 
 			}
+			
+			
 
 		})
-
-		hui('#PointUse').switchBox(['Off', 'On'], function(res) {
-			if(res) {
-				if(vum.UserPoint <= 0) {
-					hui('#PointUse').removeClass('hui-switch-on');
-					vum.PointSwitch = 0;
-					hui.upToast("积分余额不足，无法使用");
-					return;
-				}
-				vum.PointSwitch = 1;
-				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-				var btnArray = ['取消', '确定'];
-				mui.prompt('请输入使用积分：', '积分抵扣', '积分抵扣', btnArray, function(e) {
-					if(e.index == 1) {
-
-						var pointInput = e.value;
-						if(null == pointInput || "" == pointInput) {
-							hui('#PointUse').removeClass('hui-switch-on');
-							vum.PointSwitch = 0;
-							hui.upToast("积分不能为空");
-							return;
-						}
-						if(isNaN(pointInput)) {
-							hui('#PointUse').removeClass('hui-switch-on');
-							vum.PointSwitch = 0;
-							hui.upToast("积分必须是数值");
-							return;
-						}
-						if(Number(pointInput) <= 0 || Number(pointInput) > Number(vum.UserPoint)) {
-							hui('#PointUse').removeClass('hui-switch-on');
-							vum.PointSwitch = 0;
-							hui.upToast("积分必须大于零且小于余额的数值");
-							return;
-						}
-
-						vum.ShowPoint = pointInput;
-						vum.ShowPointMoney = (parseFloat(pointInput) / 1000).toFixed(2);
-						vum.UsePointMoney = (parseFloat(pointInput) / 1000).toFixed(2);
-
-						var pm = 0;
-						if(vum.EcouponSwitch == 1) {
-							if(vum.AmountSwitch == 1) {
-								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UsePointMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
-							} else {
-								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UsePointMoney)).toFixed(2);
-							}
-
-						} else {
-							if(vum.AmountSwitch == 1) {
-								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UsePointMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
-							} else {
-								pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UsePointMoney)).toFixed(2);
-							}
-						}
-						if(pm < 0) {
-							pm = 0;
-						}
-						vum.payMoney = pm;
-
-					} else {
-						setTimeout(function() {
-							hui('#PointUse').removeClass('hui-switch-on');
-							vum.PointSwitch = 0;
-						}, 100);
-					}
-				})
-
-			} else {
-				vum.PointSwitch = 0;
-				vum.ShowPoint = vum.UserPoint;
-				vum.ShowPointMoney = vum.PointMoney;
-
-				var pm = 0;
-				if(vum.EcouponSwitch == 1) {
-					if(vum.AmountSwitch == 1) {
-						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue) - parseFloat(vum.UseAmountMoney)).toFixed(2);
-					} else {
-						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.Evalue)).toFixed(2);
-					}
-
-				} else {
-					if(vum.AmountSwitch == 1) {
-						pm = (parseFloat(vum.totalMoney) - parseFloat(vum.UseAmountMoney)).toFixed(2);
-					} else {
-						pm = parseFloat(vum.totalMoney).toFixed(2);
-					}
-				}
-				if(pm < 0) {
-					pm = 0;
-				}
-				vum.payMoney = pm;
-
-			}
-		}, true);
 
 		hui('#AmountUse').switchBox(['Off', 'On'], function(res) {
 			if(res) {
@@ -655,7 +713,7 @@ document.addEventListener("plusready",plusReady,false);
 						if(pm < 0) {
 							pm = 0;
 						}
-						vum.payMoney = pm;
+						vum.xMoney = pm;
 
 					} else {
 						setTimeout(function() {
@@ -686,10 +744,28 @@ document.addEventListener("plusready",plusReady,false);
 				if(pm < 0) {
 					pm = 0;
 				}
-				vum.payMoney = pm;
+				vum.xMoney = pm;
 
 			}
 		}, true);
+		
+		
+		hui('#TakeUse').switchBox(['Off', 'On'], function(res) {
+			if(res) {
+
+				vum.takeWay = 1;
+				console.log(vum.takeWay);
+
+
+			} 
+			else{
+				vum.takeWay = 0;
+
+				console.log(vum.takeWay);
+			}
+		}, true);
+		
+		
 	</script>
 
 </html>

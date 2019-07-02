@@ -23,7 +23,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.9</string>
+	<string>2.1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -74,7 +74,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>20009</string>
+	<string>20101</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -102,8 +102,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>MiSDKAppID</key>
-	<string>2882303761517526143</string>
 	<key>MiSDKAppKey</key>
 	<string>5211752656143</string>
 	<key>MiSDKRun</key>
@@ -198,20 +196,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>baidu</key>
-	<dict>
-		<key>appkey</key>
-		<string>33sQNaF1czbLgyIgHGw9cpc1</string>
-	</dict>
-	<key>getui</key>
-	<dict>
-		<key>appid</key>
-		<string>bBPiGM1VQ66mhMI3d9tG0A</string>
-		<key>appkey</key>
-		<string>uS09ESNrE46NQgnHmSYjL2</string>
-		<key>appsecret</key>
-		<string>nG809brIPr7aTF7o0VpZM1</string>
-	</dict>
 	<key>iFly</key>
 	<dict>
 		<key>appid</key>
@@ -246,15 +230,6 @@
 		<string>3e4eaaefe9ab84cd9d2c1a14a5a2cc9d</string>
 		<key>appid</key>
 		<string>wxbe7f03382358338d</string>
-	</dict>
-	<key>xiaomioauth</key>
-	<dict>
-		<key>appid</key>
-		<string>2882303761517526143</string>
-		<key>appsecret</key>
-		<string>RHYzhpJEut+Ijt9tGBhL3g==</string>
-		<key>redirectURI</key>
-		<string>http://www.dcloud.io/</string>
 	</dict>
 </dict>
 </plist>

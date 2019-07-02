@@ -823,6 +823,9 @@ select{ height:22px; line-height:18px; padding:2px 0; outline:none;}
 .img-list .m_cell_ft a { display: block; padding-left: 20px; line-height: 20px; height: 20px; font-size: 12px; color: #989a9c; background-repeat: no-repeat; background-position: left center; margin-left: 12px; background-size: 16px auto; }
 .f-ico03 { background-image: url(../img/6-11.png); }
 .f-ico04 { background-image: url(../img/6-12.png); }
+.f-ico11 { background-image: url(../img/icon_love.png); }
+
+
 /*设置社区*/
 .personal-header01 { background-image: url(../img/6-09.jpg); }
 .community-introduction { padding: 10px; }

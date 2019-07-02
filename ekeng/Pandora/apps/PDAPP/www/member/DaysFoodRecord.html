@@ -6,9 +6,7 @@
 <meta name="format-detection" content="telephone=no" />
 
 <link type="text/css" href="../css/foodopeate.css" rel="stylesheet" />
-<link rel="stylesheet" href="../css/lib/huimin.css">
-
-
+    <link rel="stylesheet" href="../css/lib/huimin.css">
 
     
 <style>
@@ -35,13 +33,17 @@ display:inline;
     .pic-list{margin: 10px;line-height: 18px;font-size: 13px;}
     .pic-list a{display: block;margin: 10px 0;}
     .pic-list a img{vertical-align: middle;max-width: 30px;max-height: 30px;margin: -4px 0 0 10px;}
+    
+
+    
 </style>
     
-<title>E康云</title>
+<title>Q博士</title>
 
 </head>
 
 <body>
+
 
 
 <!--膳食评论start-->
@@ -53,7 +55,12 @@ display:inline;
     <b class="p_02">25%</b>
     <b class="p_03">50%</b>
   </div>
-  <div class="today">
+    <div class="today">
+    <p><ul class="d-button">
+    <input type="button" value="查看我的配餐方案" onclick="FoodTakePlan();" style="width: 250px;"/>
+  </ul></p>
+  </div>
+  <div class="today" style="margin-top: 24px;">
     <p>今天<br/>膳食记录</p>
   </div>
 </div>
@@ -64,7 +71,7 @@ display:inline;
   <ul class="d-title">
     <li class="m_cell_hd"><p class="wd90">膳食种类</p></li>
     <li class="m_cell_hd m_cell_primary"><p>推荐标准</p></li>
-    <li class="m_cell_ft"><p>少<i>适量</i>多</p></li>
+    <li class="m_cell_ft"><p>&nbsp;无<i>少<i>适量</i>多</p></li>
   </ul>
   <ul class="d-list">
     <li>
@@ -74,7 +81,8 @@ display:inline;
         <p>油/25-30g</p>
       </div>
       <div class="m_cell_ft" id="part1">
-        <a href="#" id='a1' class="on"><input type="checkbox" value="1" /></a>
+      	<a href="#" id='a0' class="on"><input type="checkbox" value="0" /></a>
+        <a href="#" id='a1'><input type="checkbox" value="1" /></a>
         <a href="#" id='a2'><input type="checkbox" value="2" /></a>
         <a href="#" id='a3'><input type="checkbox" value="3" /></a>
       </div>
@@ -86,7 +94,8 @@ display:inline;
         <p>大豆坚果类/25-35g</p>
       </div>
       <div class="m_cell_ft">
-        <a href="#" class="on" id='b1'><input type="checkbox" value="1" checked="checked"/></a>
+      	<a href="#" class="on" id='b0'><input type="checkbox" value="0" checked="checked"/></a>
+        <a href="#" id='b1'><input type="checkbox" value="1"/></a>
         <a href="#" id='b2'><input type="checkbox" value="2"/></a>
         <a href="#" id='b3'><input type="checkbox" value="3"/></a>
       </div>
@@ -99,7 +108,8 @@ display:inline;
         <p>蛋   类/ 40-50g</p>
       </div>
       <div class="m_cell_ft">
-        <a href="#" class="on" id='c1'><input type="checkbox" value="1" checked="checked"/></a>
+      	<a href="#" class="on" id='c0'><input type="checkbox" value="0" checked="checked"/></a>
+        <a href="#" id='c1'><input type="checkbox" value="1" /></a>
         <a href="#" id='c2'><input type="checkbox" value="2" /></a>
         <a href="#" id='c3'><input type="checkbox" value="3"/></a>
       </div>
@@ -111,7 +121,8 @@ display:inline;
         <p>水果类/200-350g</p>
       </div>
       <div class="m_cell_ft">
-        <a href="#" class="on" id='d1'><input type="checkbox" value="1" checked="checked"/></a>
+      	<a href="#" class="on" id='d0'><input type="checkbox" value="0" checked="checked"/></a>
+        <a href="#" id='d1'><input type="checkbox" value="1"/></a>
         <a href="#" id='d2'><input type="checkbox" value="2"/></a>
         <a href="#" id='d3'><input type="checkbox" value="3"/></a>
       </div>
@@ -124,7 +135,8 @@ display:inline;
         <p>薯类/50-100g</p>
       </div>
       <div class="m_cell_ft">
-        <a href="#" class="on" id='e1'><input type="checkbox" value="1" checked="checked"/></a>
+      	<a href="#" class="on" id='e0'><input type="checkbox" value="0" checked="checked"/></a>
+        <a href="#" id='e1'><input type="checkbox" value="1"/></a>
         <a href="#" id='e2'><input type="checkbox" value="2"/></a>
         <a href="#" id='e3'><input type="checkbox" value="3"/></a>
       </div>
@@ -135,9 +147,22 @@ display:inline;
         <p>水/1500-1700ml</p>
       </div>
       <div class="m_cell_ft">
-        <a href="#" class="on" id='f1'><input type="checkbox" value="1" checked="checked"/></a>
+        <a href="#" class="on" id='f0'><input type="checkbox" value="0" checked="checked"/></a>
+        <a href="#" id='f1'><input type="checkbox" value="1"/></a>
         <a href="#" id='f2'><input type="checkbox" value="2"/></a>
         <a href="#" id='f3'><input type="checkbox" value="3"/></a>
+      </div>
+    </li>
+     <li>
+      <div class="m_cell_hd"><ul><img src="../img/11-06.jpg" alt="" /></ul></div>
+      <div class="m_cell_hd m_cell_primary">
+        <p>酒/50-5000ml</p>
+      </div>
+      <div class="m_cell_ft">
+        <a href="#" class="on" id='h0'><input type="checkbox" value="0" checked="checked"/></a>
+        <a href="#" id='h1'><input type="checkbox" value="1"/></a>
+        <a href="#" id='h2'><input type="checkbox" value="2"/></a>
+        <a href="#" id='h3'><input type="checkbox" value="3"/></a>
       </div>
     </li>
   </ul>
@@ -170,12 +195,15 @@ display:inline;
       </a>
     </li>
   </ul>
-  
-  <ul class="d-button">
-    <input type="button" value="提交" onclick="RecordSend();" id="RecordSave"/>
-  </ul>
-  
-          <div class="comment">
+  <div style="padding:28px 20px 30px 30px;" id="btnList1">
+		<button type="button" class="hui-button hui-fl" id="RecordSave" onclick="RecordSend('AM');" style="margin-left:10px;background: yellowgreen;color: white;">早餐</button>
+		<button type="button" class="hui-button hui-fl" onclick="RecordSend('NM');" style="margin-left:10px;background:darkcyan;color: white;">中餐</button>
+		<button type="button" class="hui-button hui-primary hui-fl" onclick="RecordSend('PM');" style="margin-left:10px;">晚餐</button>
+		<button type="button" class="hui-button hui-danger hui-fl" onclick="RecordSend('EM');" style="margin-left:10px;">宵夜</button>
+	</div>
+
+ 
+          <div class="comment" style="padding-top: 56px;">
             <textarea placeholder="记录你的美食日志" id="tContent"></textarea>
             <p>添加图片0/5</p>
 
@@ -206,6 +234,7 @@ display:inline;
 </body>
 
 <script src="../js/base.js"></script>
+    <script src="../js/public.js" type="text/javascript"></script>
 <script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
 <script src="../js/lib/hui.js"></script>
 <script src="../js/public.js" type="text/javascript"></script>
@@ -216,32 +245,39 @@ display:inline;
 
 
 <script>
-
-var domainUrl = GetMvcApiDomain();
- 
-var username=null;  
-function plusReady() { 
-HeadShow();		
-var objuser=JSON.parse(plus.storage.getItem('user'));
-username = objuser.UserName;
-getUploadListForPost(username, '1', '50')
-back();
-}
-
-if(window.plus){  
-plusReady();  
-}else{  
-document.addEventListener("plusready",plusReady,false);  
-} 
+	
 
 
-var chkitem1 = '1';
-var chkitem2 = '1';
-var chkitem3 = '1';
-var chkitem4 = '1';
-var chkitem5 = '1';
-var chkitem6 = '1';
-var chkitem7 = '1';
+		var domainUrl = GetMvcApiDomain();
+		var username = null;
+
+
+		
+		function plusReady() {
+
+			var objuser = JSON.parse(plus.storage.getItem('user'));
+			username = objuser.UserName;
+            getUploadListForPost(username, '1', '50');
+            
+            HeadShow();
+			back();
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+
+
+var chkitem1 = '0';
+var chkitem2 = '0';
+var chkitem3 = '0';
+var chkitem4 = '0';
+var chkitem5 = '0';
+var chkitem6 = '0';
+var chkitem7 = '0';
+var chkitem8 = '0';
 
 $(".dietary-list .d-list li:nth-child(1) a").click(function(e) {
 
@@ -254,6 +290,9 @@ $(".dietary-list .d-list li:nth-child(1) a").click(function(e) {
 	$(this).find("input").attr("checked", true);
 
 	var id = this.getAttribute('id');
+	if(id == 'a0') {
+		chkitem1 = '0';
+	}
 	if(id == 'a1') {
 		chkitem1 = '1';
 	}
@@ -275,6 +314,9 @@ $(".dietary-list .d-list li:nth-child(2) a").click(function(e) {
 	$(this).find("input").attr("checked", true);
 
 	var id = this.getAttribute('id');
+	if(id == 'b0') {
+		chkitem2 = '0';
+	}
 	if(id == 'b1') {
 		chkitem2 = '1';
 	}
@@ -295,6 +337,9 @@ $(".dietary-list .d-list li:nth-child(3) a").click(function(e) {
 	$(this).find("input").attr("checked", true);
 
 	var id = this.getAttribute('id');
+	if(id == 'c0') {
+		chkitem3 = '0';
+	}
 	if(id == 'c1') {
 		chkitem3 = '1';
 	}
@@ -317,6 +362,9 @@ $(".dietary-list .d-list li:nth-child(4) a").click(function(e) {
 	$(this).find("input").attr("checked", true);
 
 	var id = this.getAttribute('id');
+	if(id == 'd0') {
+		chkitem4 = '0';
+	}
 	if(id == 'd1') {
 		chkitem4 = '1';
 	}
@@ -339,7 +387,10 @@ $(".dietary-list .d-list li:nth-child(5) a").click(function(e) {
 	$(this).find("input").attr("checked", true);
 
 	var id = this.getAttribute('id');
-	if(id == 'e1') {
+	if(id == 'e0') {
+		chkitem5 = '0';
+	}
+    if(id == 'e1') {
 		chkitem5 = '1';
 	}
 	if(id == 'e2') {
@@ -360,6 +411,9 @@ $(".dietary-list .d-list li:nth-child(6) a").click(function(e) {
 	$(this).find("input").attr("checked", true);
 
 	var id = this.getAttribute('id');
+	if(id == 'f0') {
+		chkitem6 = '0';
+	}
 	if(id == 'f1') {
 		chkitem6 = '1';
 	}
@@ -371,6 +425,33 @@ $(".dietary-list .d-list li:nth-child(6) a").click(function(e) {
 	}
 
 });
+
+
+$(".dietary-list .d-list li:nth-child(7) a").click(function(e) {
+	e.preventDefault();
+	if(!jQuery(this).hasClass("on")) {
+		$(".dietary-list .d-list li:nth-child(7)  a.on").removeClass("on")
+		$(".dietary-list .d-list li:nth-child(7)  a input").attr("checked", false);
+	}
+	$(this).addClass("on");
+	$(this).find("input").attr("checked", true);
+
+	var id = this.getAttribute('id');
+	if(id == 'h0') {
+		chkitem6 = '0';
+	}
+	if(id == 'h1') {
+		chkitem6 = '1';
+	}
+	if(id == 'h2') {
+		chkitem6 = '2';
+	}
+	if(id == 'h3') {
+		chkitem6 = '3';
+	}
+
+});
+
 $(".dietary-list .total li a").click(function(e) {
 	e.preventDefault();
 	if(!jQuery(this).hasClass("on")) {
@@ -382,16 +463,16 @@ $(".dietary-list .total li a").click(function(e) {
 
 	var id = this.getAttribute('id');
 	if(id == 'g1') {
-		chkitem7 = '1';
+		chkitem8 = '1';
 	}
 	if(id == 'g2') {
-		chkitem7 = '2';
+		chkitem8 = '2';
 	}
 	if(id == 'g3') {
-		chkitem7 = '3';
+		chkitem8 = '3';
 	}
 	if(id == 'g4') {
-		chkitem7 = '4';
+		chkitem8 = '4';
 	}
 
 });
@@ -426,9 +507,26 @@ function getUploadListForPost(UserName, sClass, topcount) {
 
 }
 
-function RecordSend() {
-
-	TakeFoodSave(username, chkitem1, chkitem2, chkitem3, chkitem4, chkitem5, chkitem6, chkitem7);
+function RecordSend(TypesTime) {
+  var conname='';
+  if (TypesTime=='AM'){
+  	conname='早餐';
+  }
+    if (TypesTime=='NM'){
+  	conname='午餐';
+  }
+      if (TypesTime=='PM'){
+  	conname='晚餐';
+  }
+        if (TypesTime=='EM'){
+  	conname='宵夜';
+  }
+  hui.confirm('您将提交您的'+conname+'？', ['取消','确定'], function(){
+       TakeFoodSave(username, chkitem1, chkitem2, chkitem3, chkitem4, chkitem5, chkitem6, chkitem7,chkitem8,TypesTime);
+    },function(){
+        console.log('取消');
+    });
+	
 
 }
 
@@ -445,7 +543,7 @@ function TwitterSend() {
 
 }
 
-function TakeFoodSave(UserName, typesPart1, typesPart2, typesPart3, typesPart4, typesPart5, typesPart6, typesPart7) {
+function TakeFoodSave(UserName, typesPart1, typesPart2, typesPart3, typesPart4, typesPart5, typesPart6, typesPart7,typesPart8,TypesTime) {
 
 	axiosRecordLoadding();
 	axios.get(domainUrl + 'api/Food/getMDaysFoodTypesAdd', {
@@ -457,21 +555,18 @@ function TakeFoodSave(UserName, typesPart1, typesPart2, typesPart3, typesPart4, 
 				typesPart4: typesPart4,
 				typesPart5: typesPart5,
 				typesPart6: typesPart6,
-				typesPart7: typesPart7
+				typesPart7: typesPart7,
+				typesPart8: typesPart8,
+				TypesTime: TypesTime
 			}
 		})
 
 		.then(function(response) {
 			if(response.data.code == '200') {
-				if(response.data.res >= "1") {
-
-					hui.toast("记录成功");
-
-				} else {
-					hui.toast("记录失败");
-				}
+					hui.toast(response.data.msg);
+                    return false;
 			} else {
-				hui.toast("记录失败!");
+				hui.toast(response.data.msg);
 				return false;
 			}
 
@@ -497,7 +592,7 @@ function getTwitterSave(UserName, tClass,tcontent) {
 
 				hui.iconToast('记录成功', 'success');
 				window.setTimeout(function() {
-					plus.webview.currentWebview().close();
+					location.href = "FoodMyTwitter.html";
 				}, 500);
 
 			} else {
@@ -674,8 +769,21 @@ function upload(basestr, type, $li) {
 			}
 		}, 30)
 	}
+	
+	
+
 
 }
+
+
+	function FoodTakePlan() {
+		
+					var parm = {
+						"UserName": username
+					}
+					clickedNoHeadParm('FoodPlanRecord.html', 'FoodPlanRecord.html', 'zoom-fade-out', parm);
+
+	}
 
 
 </script>

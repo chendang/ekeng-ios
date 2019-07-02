@@ -11,6 +11,7 @@
 #import "PDRCommonString.h"
 #import "WebAppController.h"
 #import "OTCBTViewController.h"
+#import "QingNiuSDK.h"
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -55,6 +56,10 @@
     
     [pNavCon release];
     
+    //注册轻牛APP
+    [QingNiuSDK registerApp:@"123456789" andReleaseModeFlag:NO registerAppBlock:^(QingNiuRegisterAppState qingNiuRegisterAppState) {
+        NSLog(@"1registerAppState:%ld",(long)qingNiuRegisterAppState);
+    }];
     // 设置当前SDK运行模式
     return [PDRCore initEngineWihtOptions:launchOptions withRunMode:PDRCoreRunModeAppClient];
 }

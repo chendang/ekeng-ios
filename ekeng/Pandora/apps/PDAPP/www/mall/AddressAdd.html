@@ -96,16 +96,19 @@
 
         
         	var domainUrl = GetMallApiDomain();
+        	var UserName="";
+        	var shopbm="";
+        	var UserRole="";
 
      function plusReady(){
 HeadShow();	
 back();
 
 	var objuser = JSON.parse(plus.storage.getItem('user'));
+                    UserName=objuser.UserName;
+    shopbm=objuser.shopbm;
+    UserRole=objuser.UserRole;
     
-    vum.UserName=objuser.UserName;
-    vum.shopbm=objuser.shopbm;
-    vum.UserRole=objuser.UserRole;
 
 }
 if(window.plus){  
@@ -127,7 +130,20 @@ document.addEventListener("plusready",plusReady,false);
 					area:''
 				},
 
+        mounted: function () {
+
+            this.$nextTick(function () {
+
+ this.UserName=UserName;
+    this.shopbm=shopbm;
+    this.UserRole=UserRole;
+
+            })
+
+        },
+
 				methods: {
+					
 				PostSend: function() {
 					if (this.receiver==null || this.receiver==''){
 						hui.upToast("请输入收货人姓名");
@@ -145,7 +161,7 @@ document.addEventListener("plusready",plusReady,false);
 						hui.upToast("请输入详细地址");
 						return;
 					}				
-					this.SendSave(username,this.receiver,this.province,this.city,this.area,this.address,this.phone);
+					this.SendSave(this.UserName,this.receiver,this.province,this.city,this.area,this.address,this.phone);
 
 
 				},
@@ -166,9 +182,9 @@ document.addEventListener("plusready",plusReady,false);
 							if(response.data.code == '200') {
 								hui.upToast(response.data.msg);
 								setTimeout(function() {
-
-										location.href = "AddressList.html"
-
+                                      var ws=plus.webview.getWebviewById("AddressList.html");
+                                       ws.evalJS('plusReady()');
+										plus.webview.currentWebview().close();
 									
 
 								}, 800);

@@ -9,23 +9,29 @@
 		<meta charset="UTF-8">
 		<title>收银台</title>
 		<link rel="stylesheet" href="../css/lib/huimin.css" />
-		<link rel="stylesheet" href="../css/head.css">
 		<link rel="stylesheet" href="../css/OrderSubmit.css">
-		<script src="../js/base.js"></script>
+<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+.aui-settle-content {
+    padding-top: 0px; 
+    padding-bottom: 44px;
+}
+		</style>
 
 	</head>
 
 	<body>
-		<script>
-			HeadRed("收银台");
-		</script>
+
 		<div id="app">
 			<section class="aui-settle-content">
-				<div class="aui-settle-title">
+				<div class="aui-settle-title" v-cloak>
 					<p>支付订单号: <span>{{OrderNo}}</span></p>
 				</div>
 				<div class="aui-dri"></div>
-				<div class="aui-settle-title">
+				<div class="aui-settle-title" v-cloak>
 					<p>需要支付: <span>{{PayMoney}}元</span></p>
 				</div>
 				<div class="aui-prompt"><i class="aui-icon aui-prompt-sm" style="width: 12px;height: 12px;"></i>E康云提示您：请确认支付环境安全。</div>
@@ -66,7 +72,7 @@
 			</a>
 		</div>-->
 				<div class="aui-settle-ways">
-					请选择支付方式(目前只支持微信支付)
+					请选择支付方式
 				</div>
 				<div class="aui-settle-choice">
 					<!--<a href="#" class="aui-address-cell  aui-fl-arrow-clear">
@@ -79,7 +85,7 @@
 				</div>
 				<div class="aui-address-cell-ft"><span>花呗分期</span>&nbsp;&nbsp;<input type="checkbox" class="check check-pay goods-check goodsCheck"></div>
 			</a>-->
-					<a href="#" class="aui-address-cell  aui-fl-arrow-clear">
+					<!--<a @click="WxPay" class="aui-address-cell  aui-fl-arrow-clear" style="margin-top: 25px;">
 						<div class="aui-address-cell-hd">
 							<img src="../img/apy-5.png" alt="">
 						</div>
@@ -87,26 +93,26 @@
 							微信支付
 							<p>微信安全支付</p>
 						</div>
-						<div class="aui-address-cell-ft"><input type="checkbox" class="check check-pay goods-check" checked="checked"></div>
-					</a>
-					<!--<a href="#" class="aui-address-cell  aui-fl-arrow-clear">
+
+					</a>-->
+					<a @click="AliPay" class="aui-address-cell  aui-fl-arrow-clear" style="margin-top: 25px;">
 				<div class="aui-address-cell-hd">
-					<img src="../img/apy-6.png" alt="">
+					<img src="../img/apy-4.png" alt="">
 				</div>
 				<div class="aui-address-cell-bd">
-					Apple Pay
-					<p>Apple Pay专属安全支付</p>
+					支付宝支付
+					<p>支付宝支付安全支付</p>
 				</div>
-				<div class="aui-address-cell-ft"><input type="checkbox" class="check check-pay goods-check goodsCheck"></div>
-			</a>-->
+
+			</a>
 				</div>
 			</section>
-			<div class="aui-settle-payment">
+			<!--<div class="aui-settle-payment">
 				<a @click="WxPay">微信支付 {{PayMoney}} 元</a>
-			</div>
+			</div>-->
 		</div>
 	</body>
-
+		<script src="../js/base.js"></script>
 	<script src="../js/public.js" type="text/javascript"></script>
 	<script src="../js/lib/hui.js" type="text/javascript"></script>
 
@@ -115,42 +121,80 @@
 	<script src="../js/lib/qs.js"></script>
 
 	<script>
-		var OrderNo = getUrlParam("OrderNo");
-		(function(w) {
 
-			if(OrderNo == undefined || OrderNo == null) {
-				hui.upToast("请提交订单再支付");
-				setTimeout(function() {
-					window.history.go(-1);
-				}, 1000);
-
-				return false;
-			}
-		})(window);
 
 		var domainWxUrl = GetWxApiDomain();
 		var domainUrl = GetMallApiDomain();
-		var objuser = JSON.parse(localStorage.getItem("user"));
-		var username = objuser.UserName;
-		var shopbm = objuser.shopbm;
-		var UserRole = objuser.UserRole;
+		var username = null;
+		var shopbm = null;
+		var UserRole = null;
+        var OrderNo = null;
+        var FromName = null;
+        var channel=null;
+        var title="e康云";
+
+function plusReady() { 
+HeadShow();		
+
+			var _self = plus.webview.currentWebview();
+			OrderNo = _self.OrderNo;
+			FromName = _self.FromName;
+
+			if(OrderNo == null || OrderNo == "" || OrderNo == undefined) {
+				plus.nativeUI.toast("参数错误，请重新确认订单");
+				setTimeout(function() {
+					plus.webview.currentWebview().close();
+				}, 1000);
+			} 
+
+
+objuser = JSON.parse(plus.storage.getItem("user"));
+username = objuser.UserName;
+shopbm = objuser.shopbm;
+UserRole = objuser.UserRole;
+
+
+
+
+
+back();
+
+    // 获取支付通道
+    plus.payment.getChannels(function(channels){
+        channel=channels[0];
+    },function(e){
+        hui.alert("获取支付通道失败："+e.message);
+    });
+
+
+
+}
+
+if(window.plus){  
+plusReady();  
+}else{  
+document.addEventListener("plusready",plusReady,false);  
+}
+
+
+
 
 		vum = new Vue({
 			el: '#app',
 
 			data: {
-				UserName: username,
-				OrderNo: OrderNo,
-				openid:'',
+				UserName: '',
+				OrderNo: '',
 				PayMoney: 0,
-				PayBody:'凯泽健康产品',
+				PayBody:'e康健康产品',
 				PayFlag: 0,
 			},
 			mounted: function() {
 
 				this.$nextTick(function() {
-
-					this.GetOrderPay(OrderNo);
+this.OrderNo=OrderNo;
+this.GetOrderPay(OrderNo);
+					
 
 				})
 
@@ -173,7 +217,7 @@
 								hui.upToast(response.data.msg);
 								that.PayFlag = 0;
 								setTimeout(function() {
-					            window.history.go(-1);
+					            plus.webview.currentWebview().close();
 				                 }, 1000);
 							}
 
@@ -184,93 +228,163 @@
 						});
 				},
 				
-				onBridgeReady: function(openid, total_fee, body) {
+				GetWxPayInfo: function(amount,OutTradeNo,body) {
+			
+                plus.payment.getChannels(function(channels){  
+                for (var i in channels) { 
+                        if (channels[i].id == "wxpay") { 
+                             channel=channels[i];  
+                        }
+                    }     
+                },function(e){  
+                 hui.alert("获取支付通道失败："+e.message); 
+                 return false; 
+                }); 
+ 
 					var that = this;
-					axios.get(domainWxUrl + 'api/WxPay/getJsApiPay', {
-							params: {
-								openid: openid,
-								total_fee: total_fee,
-								body: body,
-							}
-						})
-
-						.then(function(response) {
-						    
-							if(response.data.code == '200') {
-								WeixinJSBridge.invoke(
-									'getBrandWCPayRequest',
-									{
-                 "appId":response.data.appId,
-                 "timeStamp":response.data.timeStamp,
-                 "nonceStr":response.data.nonceStr,
-                 "package":response.data.package,
-                 "signType":response.data.signType,
-                 "paySign":response.data.paySign
-             },
-									function(res) {
-									hui.upToast(res);
-										console.log(res)
-										if(res.err_msg === 'get_brand_wcpay_request:ok') {
-											hui.upToast('微信支付成功');
-											that.OrderPay();
-										} else if(res.err_msg === 'get_brand_wcpay_request:cancel') {
-											hui.upToast('用户取消支付')
-											// window.location.href = 'gift_failview.do?out_trade_no=' + this.orderId
-										} else if(res.err_msg === 'get_brand_wcpay_request:fail') {
-											hui.upToast('网络异常，请重试')
+                               
+								axios.get('http://wx.kzjk360.com/api/WxAppPay/getAppPay', {
+										params: {
+											total_fee: amount,
+											OutTradeNo: OutTradeNo,
+											body: body
 										}
-									}
-								)
+									})
+						.then(function(response) {
+							var payJson=JSON.stringify(response.data);
+							console.log(channel);
+							console.log(payJson);
+							plus.payment.request(channel, payJson, function(result) {
+                                console.log(JSON.stringify(result));
+                                
+                                //hui.alert(JSON.stringify(result), title);
+                                that.PayPost(username, OutTradeNo, amount, "WeChat");
+                            }, function(e) {
+                                console.log(JSON.stringify(e));
+                              //hui.alert(JSON.stringify(e));
+//                              hui.alert("支付失败", title);
+                            });
+							
+                              console.log(response.data)
 
-							}
 						})
 						.catch(function(response) {
 							console.log(response);
 
 						});
+				},
 
+				GetAliPayInfo: function(amount,orderNo) {
+
+                 
+                 
+                plus.payment.getChannels(function(channels){  
+                for (var i in channels) { 
+                        if (channels[i].id == "alipay") { 
+                             channel=channels[i];  
+                        }
+                    }     
+                },function(e){  
+                 hui.alert("获取支付通道失败："+e.message); 
+                 return false; 
+                }); 
+
+ 
+					var that = this;
+					axios.get(domainUrl + 'api/Alipay/getPayData', {
+							params: {
+								amount: amount,
+								orderNo: orderNo
+							}
+						})
+						.then(function(response) {
+							plus.payment.request(channel, response.data.strJson, function(result) {
+                                console.log(JSON.stringify(result));
+                                //hui.alert(JSON.stringify(result), title);
+                                that.PayPost(username, orderNo, amount, "Alipay");
+//                              hui.alert("付费成功", title);
+                            }, function(e) {
+                                console.log(JSON.stringify(e));
+                                //hui.alert(JSON.stringify(e));
+//                              hui.alert("付费失败", title);
+                            });
+							
+                              console.log(response.data)
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
 				},
-				callpay: function() {
-					if(typeof WeixinJSBridge === 'undefined') {
-						if(document.addEventListener) {
-							document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(this.openid,this.PayMoney,this.PayBody), false)
-						} else if(document.attachEvent) {
-							document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(this.openid,this.PayMoney,this.PayBody))
-							document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(this.openid,this.PayMoney,this.PayBody))
-						}
-					} else {
-						this.onBridgeReady(this.openid,this.PayMoney,this.PayBody);
-					}
-				},
-				
 
 					WxPay: function() {
-					   var openid = localStorage.getItem("openid");
-					   //alert(openid);
-					   this.openid=openid;
-					  this.callpay();
 
+					if(this.PayFlag == 0) {
+						hui.upToast("获取订单资料失败,无法支付");
+						setTimeout(function() {
+					            plus.webview.currentWebview().close();
+				        }, 1000);
+					}
+					else{
+					this.GetWxPayInfo(this.PayMoney,OrderNo,this.PayBody);
+					
+					}
+                     
 	
                         
 					},				
 
 
-				PayPost: function(UserName, orderNo, payAmount) {
+					AliPay: function() {
+
+					if(this.PayFlag == 0) {
+						hui.upToast("获取订单资料失败,无法支付");
+						setTimeout(function() {
+					            plus.webview.currentWebview().close();
+				        }, 1000);
+					}
+					else{
+					this.GetAliPayInfo(this.PayMoney,OrderNo);
+					
+					}
+                     
+	
+                        
+					},	
+
+
+				PayPost: function(UserName, orderNo, payAmount, payType) {
 					var that = this;
 
 					axios.post(domainUrl + 'api/Order/PostPaySave', Qs.stringify({
 							"user_name": username,
 							"orderNo": orderNo,
-							"payAmount": payAmount
+							"payAmount": payAmount,
+							"payType": payType
 						}))
 
 						.then(function(response) {
 							if(response.data.code == '200') {
 								hui.upToast('订单支付成功,请等待收货');
+								//console.log(FromName);
+								var ws1=plus.webview.getWebviewById("OrderList.html");
+								console.log(ws1);
+                                if(ws1!=null){
+                                    ws1.close('none');
+                                }
+                                
+                                var ws2=plus.webview.getWebviewById("OrderSubmit.html");
+								console.log(ws2);
+                                if(ws2!=null){
+                                    ws2.close('none');
+                                 }
+                                
 								setTimeout(function() {
+									
 
-									location.href = "OrderList.html?tab=2";
-
+                                    	plus.webview.currentWebview().close();
+									
 								}, 800);
 
 							} else {
@@ -284,15 +398,6 @@
 						});
 				},
 				
-					OrderPay: function() {
-					if(this.PayFlag == 0) {
-						hui.upToast("获取订单资料失败,无法支付");
-						location.href = "MallIndex.html";
-					}
-					else{
-					this.PayPost(username, OrderNo, this.PayMoney);
-					}
-				},
 				
 
 			}

@@ -287,37 +287,31 @@ function getUrlParamCn(key){
 }
 
 function GetMvcApiDomain() {
-    //var data = "http://localhost:30373/";
     var data = "http://healthapi.ekeng.com.cn/";
     return data;
 }
 
 function GetMallApiDomain() {
-    //var data = "http://localhost:49626/";
     var data = "http://mallapi.ekeng.com.cn/";
     return data;
 }
 
 function GetMallImage() {
-    //var data = "http://mall.kzjk360.com/";
-    var data = "http://mallback.ekeng.com.cn/";
+    var data = "http://ekmallback.kzjk360.net/";
     return data;
 }
 
 function GetWxApiDomain() {
-    //var data = "http://wx.kzjk360.com/";
-    var data = "http://wxserver.ekeng.com.cn/";
+    var data = "http://ekwxserver.kzjk360.net/";
     return data;
 }
 
 function GetPDApiDomain() {
     var data = "http://gateway.kzjk360.com/";
-    //var data = "http://healthapi.kzjk360.com/";
     return data;
 }
 
 function GetHttpApi() {
-    //var data = "http://localhost:63342/webapi/";
     var data = "http://webapi.ekeng.com.cn/";
     return data;
 }
@@ -327,10 +321,7 @@ function GetUploadApi() {
     return data;
 }
 
-function GetServerUrl() {
-    var data = "http://180.97.81.235:9000/";
-    return data;
-}
+
 
 
 

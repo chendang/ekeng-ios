@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '49772738A667465C809E3FD5F9519E5B'
+               BlueprintIdentifier = 'DD4C53E0B54D9DDCF0995A86766C6ABA'
                BlueprintName = 'Pods-ekeng'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-ekeng.a'>

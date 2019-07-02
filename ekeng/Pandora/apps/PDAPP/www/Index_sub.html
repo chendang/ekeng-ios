@@ -7,26 +7,60 @@
 		<meta name="format-detection" content="telephone=no" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 
-		
-		<script>
-			
-			
-		</script>
-		<link href="css/lib/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/lib/huimin.css">
 		<link rel="stylesheet" type="text/css" href="css/lib/CSSRESET.css">
-		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<link rel="stylesheet" type="text/css" href="css/common2.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<link rel="stylesheet" type="text/css" href="css/indexNew.css">
+		<link rel="stylesheet" type="text/css" href="css/lib/swiper.min.css">
+		<link rel="stylesheet" href="css/lib/huimin.css" />
+		<script src="js/lib/jquery-2.1.3.min.js"></script>
+		<script src="js/lib/swiper.jquery.min.js"></script>
 
 		<style type="text/css">
 			[v-cloak] {
 				display: none;
 			}
 			
-			p {
-    color:white;
-}
+			.circle {
+				display: block;
+				float: left;
+				padding: 1px;
+				margin-left: 2px;
+				width: 15%;
+			}
 			
+			.circles-text {
+				margin-top: -6px;
+			}
+			
+			a:link {
+				text-decoration: none;
+				color: #8295B3;
+			}
+			
+			a:visited {
+				text-decoration: none;
+			}
+			
+			a:hover {
+				text-decoration: none;
+			}
+			
+			a:active {
+				text-decoration: none;
+			}
+			
+						.list_3{ margin:0.8rem 0; padding:0.5rem 0.3rem; font-size: 0; background: #fff; }
+			.list_3 li{ /*width:33.3333%;*/width:50%; display: inline-block; padding:0.3rem;  position: relative; box-sizing: border-box; }
+			.list_3 a{ display: block; }
+			.list_3 img{  width:100%; border-radius: 0.5rem;}
+			.list_3 div{ width:100%; height: 100%; position: absolute; top:0; left:0; padding:1.0rem; box-sizing: border-box; }
+			.list_3 h5{ font-size: 1.4rem; color:#222; font-weight: bold; margin-bottom: 0.4rem; }
+			.list_3 h6{ font-size: 1.1rem; color:#777; }
+			.list_3 p{ font-size: 1.1rem; position: absolute; bottom:1rem; }
+			.list_3 em{ font-size: 1.6rem; padding-right:0.6rem; color:inherit; }
+			.list_3 strong{ font-size: 1.8rem; padding-right:0.6rem; color:inherit; }
+				
 		</style>
 	</head>
 
@@ -36,61 +70,139 @@
 			<article class="wrapper" v-cloak>
 				<div class="main">
 
-					<div class="msg">
-						<div class="msg_left">
-							<img v-bind:src="HeadPic" alt="" id="btnFamily" />
-							<div>
-								<a href="javascript:;" v-cloak>{{UserName}}</a>
-								<p v-cloak>{{NickName}}</p>
+					<div class="banner">
+
+						<div class="fix">
+
+						</div>
+						<!-- nav -->
+
+						<div class="swiper-wrapper" @click="goMainBannerUrl">
+							<div class="swiper-slide" v-for="(Item,index) in Ad1List" v-cloak>
+								<img :src="Item.Ad1_img_url" alt="" />
 							</div>
 						</div>
-
+						<div class="pagination"></div>
 					</div>
 					<!-- msg -->
 
 
 					<!-- title -->
 
-					<div class="welcome">爱谷者体验馆</div>
+					<div class="welcome">e康云健康管理系统</div>
 
 					<div class="gray">
-						<div class="funcs">
-							<ul class="ul_funcs clearfix">
-								
-								<li>
-								<a @click="PowerCardActive(1);">
+					<div class="links">
+						<ul class="ul_links clearfix">
+							<li>
+								<a href="javascript:clicked('member/MemberDataIndex.html', 'MemberDataIndex.html', 'slide-in-left', '健康数据');">
 									<span><img src="img/index_func_1.png" alt=""></span>
 									<p>健康数据</p>
 								</a>
-							   </li>
-								
-							   <li>
-								<a @click="PowerCardActive(2);">
+							</li>
+
+							<li>
+								<a href="javascript:clicked('member/UploadCaseFiles.html', 'UploadCaseFiles.html', 'slide-in-left', '病历上传');">
 									<span><img src="img/index_func_2.png" alt=""></span>
-									<p>病历上传</p>
+									<p>资料保存</p>
 								</a>
-							   </li>
-								
-								<li>
-								<a href="javascript:clicked('member/TestMenu.html','TestMenu.html','zoom-fade-out','健康评测');">
-									<span><img src="img/index_link_6.png" alt=""></span>
-									<p>健康自测</p>
-								</a>
-							   </li>
+							</li>
+
 
                             <li>
+								<a href="javascript:clicked('member/TestMenu.html','TestMenu.html','zoom-fade-out','健康评测');">
+									<span><img src="img/index_link_6.png" alt=""></span>
+									<p>趣味自测</p>
+								</a>
+							</li>
+							<li>
 								<a @click="PowerCardActive(4);">
 									<span><img src="img/index_func_6.png" alt=""></span>
 									<p>健康评估</p>
 								</a>
 							</li>
-								
+							
+							<li>
+                            <a href="javascript:clicked('member/MyProjectRecord.html','TestMenu.html','zoom-fade-out','健康方案');">
+                                <span><img src="img/index_func_7.png" alt=""></span>
+                                <p>健康方案</p>
+                            </a>
+                        </li>
+							
+							<li>
+								<a @click="GoImChat">
+									<span><img src="img/doservices.png" alt=""></span>
+									<p>在线客服</p>
+								</a>
+							</li>
+							
+							<li>
+								<a href="javascript:clicked('member/AskedQuestionRecord.html','AskedQuestionRecord.html','zoom-fade-out','百问百答');">
+									<span><img src="img/index_link_5.png" alt=""></span>
+									<p>百问百答</p>
+								</a>
+							</li>
+							
+							<li>
+								<a href="javascript:clicked('member/CaseShareRecord.html','CaseShareRecord.html','zoom-fade-out','案例分享');">
+									<span><img src="img/index_link_7.png" alt=""></span>
+									<p>案例分享</p>
+								</a>
+							</li>
+							<!--<li>
+								<a href="javascript:clickedNoHead('member/DeviceList.html', 'DeviceList.html', 'slide-in-left');">
+										<span><img src="img/_index_menu_8.png" alt=""></span>
+										<p>健康监测</p>
+									</a>
+							</li>-->
 
-								
-							</ul>
-						</div>
+							
+
+						</ul>
+					</div>
 						<!-- funcs -->
+					<div class="daily" v-cloak v-show="CardPowerActive==1" @click="GoTask2">
+						<h3>我的健康日志</h3>
+						<h4>今天快完成了哦!加油</h4>
 
+						<div class="data" v-cloak>
+							<!--  data-value 值 为 0-100 -->
+							<div class="cprogress" v-cloak>
+
+								<div id="circles1" class="mui-icon" v-cloak></div>
+								<span v-cloak>运动</span>
+
+							</div>
+
+							<div class="cprogress" v-cloak>
+
+								<div id="circles2" class="mui-icon"></div>
+								<span>膳食</span>
+
+							</div>
+
+							<div class="cprogress" v-cloak>
+
+								<div id="circles3" class="mui-icon"></div>
+								<span>营养素</span>
+
+							</div>
+
+							<div class="cprogress" v-cloak>
+
+								<div id="circles4" class="mui-icon"></div>
+								<span>监测</span>
+
+							</div>
+						</div>
+
+					</div>
+					<div class="news" @click=GoTaskWelcome() v-show="CardPowerActive==0" v-cloak>
+
+						<div><img src="img/banner8s.jpg" alt="" width=100%/></div>
+
+					</div>
+					
 						<div class="news">
 							<h2 class="cm_h2">
                             <span>健康资讯</span>
@@ -113,7 +225,6 @@
 							</ul>
 						</div>
 						<!-- news -->
-<div style="height: 50px;"></div>
 					</div>
 					<!-- chats -->
 				</div>
@@ -125,17 +236,26 @@
 		</div>
 	</body>
 	<script src="js/lib/mui.min.js"></script>
-	
-
-		<script src="js/index.js" type="text/javascript"></script>
-	<script src="js/lib/jquery-2.1.3.min.js"></script>
-
-	<script src="js/lib/vue20.min.js" type="text/javascript"></script>
+	<script src="js/index.js" type="text/javascript"></script>
 	<script src="js/lib/hui.js" type="text/javascript"></script>
 	<script src="js/public.js" type="text/javascript"></script>
+	<script src="js/lib/vue20.min.js" type="text/javascript"></script>
+	<script src="js/circles.js"></script>
+	<script src="js/taskDataCircles.js"></script>
+	<script src="js/lib/axios.min.js"></script>
+	<script src="js/lib/qs.js"></script>
 	<script type="text/javascript">
 		var domainUrl = GetMvcApiDomain();
-		var mallDomainUrl = GetMallApiDomain();
+		var domainMallUrl = GetMallApiDomain();
+		var ImageUrl = GetMallImage();
+		
+				var child1 = document.getElementById('circles1');
+		var child2 = document.getElementById('circles2');
+		var child3 = document.getElementById('circles3');
+		var child4 = document.getElementById('circles4');
+		
+		
+		
 		var menu, _self, _main;
 
 		mui.init();
@@ -166,9 +286,8 @@
 					//	dblBackQuit();				
 
 		                    
-					vum.getUserInfo();
-					vum.getUserAccount(objuser.UserName);
-					vum.getNewsRecommendList('15', '10');
+						
+	
 
 	
 	
@@ -184,18 +303,21 @@
 
 		plusReadyDo();
 
-		var vum = new Vue({
+	var vum = new Vue({
 			el: '#bodyinfo',
 			data: function() {
 				return {
 					UserName: "",
-					NickName: "",
-					HeadPic: "",
 					CardPowerActive: 0,
-					Quality: '',
-					CityAQI: '',
-					TopicList: [],
+					IsTask: -1,
+					TaskDays: 1,
+					SportVal: 0,
+					FoodVal: 0,
+					MedVal: 0,
+					MonitorVal: 0,
+					Ad1List: [],
 					NewsList: []
+
 				}
 			},
 			created: function() {
@@ -204,117 +326,53 @@
 			mounted: function() {
 
 				this.$nextTick(function() {
-
+                        this.GetAdList();
+						this.getUserInfo(vum.UserName);
+						this.getTaskData(vum.UserName);
+						this.getNewsRecommendList('15', '10');
+					that = this;
+					setTimeout(function() {
+						that.MySwiper();
+					}, 800);
+					setTimeout(function() {
+						that.closeTopMsg();
+					}, 3000);
 				})
 
 			},
 
 			methods: {
-				getTopicList: function(topcount) {
+				GetAdList: function() {
 					var that = this;
-					$.ajax({
-						url: domainUrl + "api/Topic/getTopicList",
-						type: 'get',
-						dataType: "json",
-						data: {
-							topcount: topcount
-						},
-						beforeSend: function() {
-							hui.h5Loading(false, '加载中...', {
-								round: 2,
-								padding: '20px',
-								textalign: 'right'
-							});
-						},
-						success: function(data) {
-							$.each(data, function(i, j) {
+					axios.get(domainMallUrl + 'api/News/getIndexAdList', {
+							params: {
+								pageIndex: 1,
+								strWhere: ' 1=1',
+								filedOrder: 'id',
+							}
+						})
+						.then(function(response) {
+							var jsonx1 = eval(response.data.Ad1RecordList);
+							that.Ad1List = [];
+							each(jsonx1, function(i, j) {
 
-								that.TopicList.push({
+								that.Ad1List.push({
 									number: (i + 1),
-									topicId: j.Id,
-									PostUser: j.UserName,
-									headpic: j.headpic,
-									title: j.title,
-									CommentCount: j.CommentCount,
-									LikeCount: j.LikeCount,
-									PostTime: getDateDiff(getDateTimeStamp(j.posttime))
+									Ad1_Id: j.Ad1_Id,
+									Ad1_Title: j.Ad1_Title,
+									Ad1_link_url: j.Ad1_link_url,
+									Ad1_img_url: ImageUrl + j.Ad1_img_url
 								});
-							});
-						},
-						error: function() {
-							hui.h5Loading(true);
-							plus.nativeUI.toast("网络错误，请稍后再试");
-						},
-						complete: function(data, textStatus) {
-							hui.h5Loading(true);
-						}
-					})
 
-				},
-				PowerCardActive: function(goid) {
-						if(this.CardPowerActive == 0) {
-
-							hui.confirm('您没有权限,需要激活服务卡？', ['取消', '确定'], function() {
-								clicked('../mall/MyPowerCardCount.html', 'MyPowerCardCount.html', 'slide-in-left', '健康服务卡');
 							});
 
-						} else {
-							if(goid == 1) {
-								clicked('member/MemberDataIndex.html', 'MemberDataIndex.html', 'slide-in-left', '健康数据');
-							}
-							if(goid == 2) {
-								clicked('member/UploadCaseFiles.html', 'UploadCaseFiles.html', 'slide-in-left', '病历上传')
-							}
-							if(goid == 3) {
-								clicked('member/DeviceList.html', 'DeviceList.html', 'slide-in-left', '监测设备绑定');
-							}
-							if(goid == 4) {
-								clicked('member/MyReportIndex.html', 'MyReportIndex.html', 'zoom-fade-out', '健康评估报告');
-							}
-							if(goid == 5) {
-								clicked('member/MyProjectRecord.html', 'MyProjectRecord.html', 'zoom-fade-out', '健康方案');
-							}
-						}
-					},
-				getUserInfo: function() {
-					var objuser = JSON.parse(plus.storage.getItem('user'));
-					this.UserName = objuser.UserName;
-					this.NickName = objuser.NickName;
-					this.HeadPic = objuser.HeadPic;
+						})
+						.catch(function(response) {
+							console.log(response);
 
+						});
 				},
-				
-				getUserAccount: function(UserName) {
-					var that = this;
-					$.ajax({
-						url: mallDomainUrl + "api/Member/getUserAccount",
-						type: 'get',
-						dataType: "json",
-						data: {
-							UserName: UserName
-						},
-						beforeSend: function() {
-							hui.loading('数据加载中');
-						},
-						success: function(data) {
-							if(data.code == '200') {
-//								that.UserPoint = data.points;
-//								that.UserAmount = data.amount;
-								that.CardPowerActive = data.cardPower;
-								
-							}
-						},
-						error: function() {
-							hui.closeLoading();
-							hui.toast("网络错误，请稍后再试");
-						},
-						complete: function(data, textStatus) {
-							hui.closeLoading();
-						}
-					})
 
-				},
-				
 				getNewsRecommendList: function(newsClass, topcount) {
 					var that = this;
 					$.ajax({
@@ -334,8 +392,10 @@
 						},
 						success: function(data) {
 							var summary = "";
+                            that.NewsList=[];
 							$.each(data, function(i, j) {
 								summary = j.summary + '...';
+								var pubtime = getDateDiff(getDateTimeStamp(j.create_date));
 								that.NewsList.push({
 									number: (i + 1),
 									NewsId: j.Id,
@@ -343,6 +403,7 @@
 									NewsContent: j.content,
 									summary: summary,
 									NewsPic: j.img_src,
+									pubtime: pubtime,
 									CommentCount: j.CommentCount,
 									LikeCount: j.LikeCount,
 									FollowCount: j.FollowCount,
@@ -361,128 +422,296 @@
 					})
 
 				},
+					getUserInfo: function(UserName) {
+						var that = this;
+						axios.get(domainUrl + 'api/MemberOperate/getUserInfoByCode', {
+								params: {
+									UserName: UserName,
+								}
+							})
+							.then(function(response) {
 
-				getIsLikeSet: function(topicId) {
-					var res = 0;
-					var that=this;
+									that.getUserAccount(UserName,response.data.userbs)
+
+
+							})
+							.catch(function(response) {
+								console.log(response);
+
+							});
+					},
+				getUserAccount: function(UserName,userbs) {
+					var that = this;
 					$.ajax({
-						url: domainUrl + "api/Topic/getTopicIsSetLike",
+						url: domainMallUrl + "api/Member/getUserAccount",
 						type: 'get',
 						dataType: "json",
-						async: false,
 						data: {
-							UserName: that.UserName,
-							TopicId: topicId
+							UserName: UserName
+						},
+						beforeSend: function() {
+							hui.loading('数据加载中');
 						},
 						success: function(data) {
-							if(data.code == "200") {
-								if(data.isHave >= "1") {
-									res = '1';
-								}
+							if(data.code == '200') {
+								if (userbs>=5 && data.cardPower==0){
+                  			     that.SendCardActiveAuto(UserName,'2');
+                  		         }
+								else{
+									
+								
+								that.CardPowerActive = data.cardPower;
+								localStorage.setItem('CardPowerActive', data.cardPower);
+                                if (that.CardPowerActive==1){
+                                	that.showTopMsg();
+                                }
+                               }
+								
+								
 							}
 						},
 						error: function() {
-							plus.nativeUI.toast("读取数据错误，请稍后再试");
-							return false;
+							hui.closeLoading();
+							hui.toast("网络错误，请稍后再试");
+						},
+						complete: function(data, textStatus) {
+							hui.closeLoading();
 						}
 					})
 
-					return res;
-
 				},
+				
+					
+				SendCardActiveAuto: function (UserName, OppState) {
+                var that = this;
 
-				SetLikePost: function(topicId) {
-					var res = this.getIsLikeSet(topicId);
-					if(res == '0') {
-						var that=this;
-						$.ajax({
-							url: domainUrl + "api/Topic/GetTopicSetLike",
-							type: 'get',
-							dataType: "json",
-							data: {
-								UserName: that.UserName,
-								TopicId: topicId
-							},
-							success: function(data) {
-								if(data.code == "200") {
-									plus.nativeUI.toast("点赞");
-								}
-							},
-							error: function() {
-								plus.nativeUI.toast("网络错误，请稍后再试");
+                axios.post(domainMallUrl + 'api/CardPower/PostSendCardActiveAuto', Qs.stringify({
+				user_name: UserName,
+                oppstate:OppState
+				}))
+                
+                .then(function (response) {
+                  	if(response.data.code=='200'){
+                  		that.CardPowerActive=1;
+								localStorage.setItem('CardPowerActive', that.CardPowerActive);
+                                if (that.CardPowerActive==1){
+                                	that.showTopMsg();
+                                }
+                  	}
+
+                })
+                .catch(function (response) {
+                  console.log(response);
+                 });
+
+            },
+				
+				getTaskConfig: function(UserName) {
+					var that = this;
+					axios.get(domainUrl + 'api/HealthTask/getTaskConfig', {
+							params: {
+								UserName: UserName,
 							}
 						})
-					} else {
-						plus.nativeUI.toast("已点赞");
-					}
+						.then(function(response) {
+							if(response.data.code = '200') {
+
+								that.IsTask = response.data.res;
+
+								if(response.data.res == 5) {
+									hui.alert('您有任务可领取哦', '好的', function() {
+										window.location.href = "GuideTaskGet.html";
+									});
+								} else if(response.data.res == 1) {
+
+									setTimeout(function() {
+										that.getTaskDays(UserName);
+										that.showTopMsg();
+									}, 300);
+
+								}
+
+							} else {
+								that.IsTask = -1;
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+
+				},
+				
+				
+				opMsg: function() {
+					
+                     $(".hpn_top_container").slideDown(300);
+					},
+					closeTopMsg: function() {
+                     $(".hpn_top_container").slideUp(500);
+					},
+					
+				getTaskDays: function(UserName) {
+
+					var that = this;
+					axios.get(domainUrl + 'api/HealthTask/getTaskDays', {
+							params: {
+								UserName: UserName
+							}
+						})
+						.then(function(response) {
+
+							if(response.data.code == "200") {
+
+								that.TaskDays = response.data.theDays;
+
+							}
+
+						})
+
+						.catch(function(response) {
+
+							console.log(response);
+						});
+
 				},
 
-				getIsFollowSet: function(topicId) {
-					var res = 0;
-					var that=this;
-					$.ajax({
-						url: domainUrl + "api/Topic/getIsSetFollow",
-						type: 'get',
-						dataType: "json",
-						async: false,
-						data: {
-							UserName: that.UserName,
-							TopicId: topicId
-						},
-						success: function(data) {
-							if(data.code == "200") {
-								if(data.isHave >= "1") {
-									res = '1';
-								}
+				getTaskData: function(UserName) {
+
+					var that = this;
+					axios.get(domainUrl + 'api/HItemRecord/getInsRecordNewData', {
+							params: {
+								UserName: UserName
 							}
-						},
-						error: function() {
-							plus.nativeUI.toast("网络错误，请稍后再试");
+						})
+						.then(function(response) {
+
+							if(response.data.code == "200") {
+
+								//hui.loading('数据加载中');
+
+								that.SportVal = 85;
+								that.FoodVal = response.data.BPLow;
+								that.MedVal = response.data.BPPR;
+								that.Monitor = response.data.BPPR;
+
+								that.showItemData('Sport', that.SportVal, child1, getColor, getCircle);
+								that.showItemData('Food', that.FoodVal, child2, getColor, getCircle);
+								that.showItemData('Med', that.MedVal, child3, getColor, getCircle);
+								that.showItemData('Monitor', that.MedVal, child4, getColor, getCircle);
+
+								//hui.loading(false, true);
+							}
+
+						})
+
+						.catch(function(response) {
+							that.IsShow = 0;
+							console.log(response);
+						});
+
+				},
+
+				PowerCardActive: function(goid) {
+					if(this.CardPowerActive == 0) {
+
+						hui.confirm('您没有权限,需要激活服务卡？', ['取消', '确定'], function() {
+							clicked('mall/MyPowerCardCount.html', 'MyPowerCardCount.html', 'slide-in-left', '健康服务卡');
+						});
+
+					} else {
+						if(goid == 1) {
+							clicked('member/MemberDataIndex.html', 'MemberDataIndex.html', 'slide-in-left', '健康数据');
 						}
-					})
-
-					return res;
-
-				},
-
-				SetFollowPost: function(topicId) {
-					var res = this.getIsFollowSet(topicId);
-					if(res == '0') {
-						var that=this;
-						$.ajax({
-							url: domainUrl + "api/Topic/GetTopicSetFollow",
-							type: 'get',
-							dataType: "json",
-							data: {
-								UserName: that.UserName,
-								TopicId: topicId
-							},
-							success: function(data) {
-								if(data.code == "200") {
-									plus.nativeUI.toast("关注成功");
-								}
-							},
-							error: function() {
-								plus.nativeUI.toast("网络错误，请稍后再试");
-							}
-						})
-					} else {
-						plus.nativeUI.toast("已关注");
+						if(goid == 2) {
+							clicked('member/UploadCaseFiles.html', 'UploadCaseFiles.html', 'slide-in-left', '病历上传');
+						}
+						if(goid == 3) {
+							clickedNoHead('member/DeviceList.html', 'DeviceList.html', 'slide-in-left');
+						}
+						if(goid == 4) {
+							clicked('member/MyReportIndex.html', 'MyReportIndex.html', 'zoom-fade-out', '健康评估报告');
+						}
+						if(goid == 5) {
+							clicked('member/MyProjectRecord.html', 'MyProjectRecord.html', 'zoom-fade-out', '健康方案');
+						}
 					}
 				},
 
 
+				showTopMsg: function() {
+					if (this.CardPowerActive==1){
+						$(".hpn_top_container").slideDown(300);
+					}
+					
+				},
+				closeTopMsg: function() {
+					$(".hpn_top_container").slideUp(500);
+				},
 				ShowNewsContent: function(id) {
 					var parm = {
 						"NewsId": id
 					}
 					clickedParm('member/ArticleContent.html', 'ArticleContent.html', 'slide-in-right', parm, '资讯详情');
 				},
-				ShowTopicContent: function(id) {
+
+				GoTask: function() {
 					var parm = {
-						"TopicId": id
+						"FromUrl": "MsgTo"
 					}
-					clickedParm('member/TopicContent.html', 'TopicContent.html', 'zoom-fade-out', parm, '健康话题');
+					clickedNoHeadParm('member/HealthTask.html', 'member/HealthTask.html', 'zoom-fade-out', parm);
+				},
+				GoTask2: function() {
+					clickedNoHead('member/HealthTask.html', 'HealthTask.html', 'slide-in-left');
+				},
+				
+				GoImChat: function() {
+					if(this.CardPowerActive == 0) {
+						clicked('member/CardWelcome.html', 'CardWelcome.html', 'slide-in-left', '健康管理服务卡');
+					} else {
+						clicked('mall/webviewUrl.html', 'webviewUrl.html', 'slide-in-left', '在线咨询');
+					}
+
+				},
+				
+				
+				GoTaskWelcome: function() {
+					clickedNoHead('member/CardWelcome.html', 'CardWelcome.html', 'slide-in-left');
+
+				},
+				showItemData: function(iType, insVal, circleId, FuncColor, FunCircle) {
+
+					if(insVal != '' && insVal != null && insVal != undefined) {
+						var colorVal = FuncColor(iType);
+						var maxVal = getCircleMaxValue(iType);
+
+						FunCircle(circleId, insVal, colorVal, maxVal);
+
+					}
+
+				},
+
+				goMainBannerUrl: function () {
+					    var subpages = util.options.subpages;
+                        var currIndex=2;
+                        var targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
+                        var activePage = plus.webview.currentWebview();
+                        var aniShow = {};
+                        targetPage.evalJS('plusReady()');
+                        util.toggleNview(currIndex);
+                        util.changeSubpage(targetPage, activePage, aniShow);
+                        activePage = targetPage;
+					    //clickedNoHead('mall/MallIndex.html', 'MallIndex.html', 'slide-in-left');
+				},
+				MySwiper: function() {
+					var mySwiper = new Swiper('.banner', {
+						autoplay: 5000,
+						visibilityFullFit: true,
+						loop: true,
+						pagination: '.pagination',
+					});
+
 				}
 
 			}

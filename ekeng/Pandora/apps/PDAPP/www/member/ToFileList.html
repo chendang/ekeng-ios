@@ -75,7 +75,9 @@
 
 
          
- var domainUrl = GetMvcApiDomain(); 
+ //var domainUrl = GetMvcApiDomain(); 
+ var domainUrl = "http://healthapi.kzjk360.com/"; 
+ 
  var webfileUrl = "http://upload.kzjk360.com/UpLoad"; 
  var portfileUrl= "http://healthapi.kzjk360.com/FileUpload/CaseUpload";
 
@@ -98,7 +100,7 @@ Vue.use(VueLazyload, {
   attempt: 1
 })
 
-vum.getFileList(username,'50','20');
+//vum.getFileList(username,'50','20');
 
 hui.imagePreview('.fl');
 
@@ -128,7 +130,7 @@ var vum = new Vue({
     mounted: function () {
 
         this.$nextTick(function () {
-        	//this.getFileList(username,'50','20');
+        	this.getFileList(username,'50','20');
         
     })
 
@@ -172,6 +174,7 @@ var vum = new Vue({
                     
 
                   }); 
+
                 },
                 error: function () {
                 //plus.nativeUI.toast("网络错误，请稍后再试");

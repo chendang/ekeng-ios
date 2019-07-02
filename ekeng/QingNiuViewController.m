@@ -12,29 +12,37 @@
 #import "QingNiuSDK.h"
 #import "QingNiuDevice.h"
 #import "QingNiuUser.h"
-#import "YJJTextField.h"
+#import <BRPickerView.h>
+#import "BRTextField.h"
+#import "NSDate+BRAdd.h"
+
 #define kScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define kScreenHeight [[UIScreen mainScreen] bounds].size.height
 
-@interface QingNiuViewController ()<UITableViewDelegate,UITableViewDataSource>{
-    UIView *_headView;
-    YJJTextField *_idTextField;
-    YJJTextField *_heightTextField;
-    UIButton *_maleButton;
-    UIButton *_femaleButton;
-    NSString *_gender;
-    YJJTextField *_birthdayTextField;
+@interface QingNiuViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+
+    @property (nonatomic, strong)  UIView *headView;
+    @property (nonatomic, strong)  BRTextField *idTextField;
+    @property (nonatomic, strong)  BRTextField *heightTextField;
+//    @property (nonatomic, strong)  UIButton *maleButton;
+//    @property (nonatomic, strong)  UIButton *femaleButton;
+    @property (nonatomic, strong)  BRTextField *gender;
+    @property (nonatomic, strong)  BRTextField *birthdayTextField;
 //    UITextField *_idTextField;
     
-    UIButton *_scanButton;
+    @property (nonatomic, strong)  UIButton *scanButton;
     
-    NSMutableArray *_allScanDevice;
-    NSMutableArray *_deviceData;
-    UITableView *_tableView;
-    BOOL _scanFlag;
-    NSString *_userid;//用户唯一ID
-    NSString *_deviceType;//监测设备种类0 血糖 1 血压
-}
+    @property (nonatomic, strong)  NSMutableArray *allScanDevice;
+    @property (nonatomic, strong)  NSMutableArray *deviceData;
+    @property (nonatomic, strong)  UITableView *tableView;
+    @property (nonatomic, strong)  UITableView *headTableView;
+    @property (nonatomic, strong) NSArray *titleArr;
+
+    @property (nonatomic)  BOOL *scanFlag;
+    @property (nonatomic, strong)  NSString *userid;//用户唯一ID
+    @property (nonatomic, strong)  NSString *deviceType;//监测设备种类0 血糖 1 血压
+
 @end
 
 
@@ -54,10 +62,7 @@
     [super viewDidLoad];
     [self initSubviews];
     
-    //注册轻牛APP
-    [QingNiuSDK registerApp:@"123456789" andReleaseModeFlag:NO registerAppBlock:^(QingNiuRegisterAppState qingNiuRegisterAppState) {
-        NSLog(@"1registerAppState:%ld",(long)qingNiuRegisterAppState);
-    }];
+    
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7 ) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -89,45 +94,45 @@
 //    _idTextField = [self createTextFieldWithFrame:CGRectMake(CGRectGetMaxX(idLabel.frame), CGRectGetMinY(idLabel.frame), 60, subViewsHeight) andText:_userid onSuperView:_headView];
     
 
-    _idTextField = [YJJTextField yjj_textField];
-    _idTextField.frame = CGRectMake(0, 0, self.view.frame.size.width, subViewsHeight);
-    _idTextField.maxLength = 11;
-    _idTextField.errorStr = @"*字数长度不得超过11位";
-    _idTextField.placeholder = @"请输入手机号";
-    _idTextField.historyContentKey =_userid;
-
-   // self.idTextField = _idTextField;
-    [_headView addSubview:_idTextField];
-    
-   
-    
-    
-    
-    _heightTextField = [YJJTextField yjj_textField];
-    _heightTextField.frame = CGRectMake(0, 60, self.view.frame.size.width, subViewsHeight);
-    _heightTextField.maxLength = 3;
-    _heightTextField.errorStr = @"长度不得超过3位";
-    _heightTextField.placeholder = @"请输入身高";
-   
-    [_headView addSubview:_heightTextField];
-    
-    UILabel *genderLabel = [self createLabelWithFrame:CGRectMake(0, 120, 40, subViewsHeight) andTitle:@"性别:" onView:_headView];
-    _maleButton = [self createButtonWithFrame:CGRectMake(CGRectGetMaxX(genderLabel.frame), CGRectGetMinY(genderLabel.frame) + 5, 40, 20) andTitle:@"男" andSelector:@selector(chooseGender:) onSuperView:_headView];
-    _maleButton.tag = 3;
-    
-    _femaleButton = [self createButtonWithFrame:CGRectMake(CGRectGetMaxX(_maleButton.frame), CGRectGetMinY(_maleButton.frame), 40, 20) andTitle:@"女" andSelector:@selector(chooseGender:) onSuperView:_headView];
-    _femaleButton.tag = 4;
-    
-    [self chooseGender:_maleButton];
-    
-    
-    
-    _birthdayTextField = [YJJTextField yjj_textField];
-    _birthdayTextField.frame = CGRectMake(0, 180, self.view.frame.size.width, subViewsHeight);
-    _birthdayTextField.maxLength = 3;
-    _birthdayTextField.errorStr = @"长度不得超过3位";
-    _birthdayTextField.placeholder = @"请输入生日";
-    [_headView addSubview:_birthdayTextField];
+//    _idTextField = [YJJTextField yjj_textField];
+//    _idTextField.frame = CGRectMake(0, 0, self.view.frame.size.width, subViewsHeight);
+//    _idTextField.maxLength = 11;
+//    _idTextField.errorStr = @"*字数长度不得超过11位";
+//    _idTextField.placeholder = @"请输入手机号";
+//    _idTextField.historyContentKey =_userid;
+//
+//   // self.idTextField = _idTextField;
+//    [_headView addSubview:_idTextField];
+//
+//
+//
+//
+//
+//    _heightTextField = [YJJTextField yjj_textField];
+//    _heightTextField.frame = CGRectMake(0, 60, self.view.frame.size.width, subViewsHeight);
+//    _heightTextField.maxLength = 3;
+//    _heightTextField.errorStr = @"长度不得超过3位";
+//    _heightTextField.placeholder = @"请输入身高";
+//
+//    [_headView addSubview:_heightTextField];
+//
+//    UILabel *genderLabel = [self createLabelWithFrame:CGRectMake(0, 120, 40, subViewsHeight) andTitle:@"性别:" onView:_headView];
+//    _maleButton = [self createButtonWithFrame:CGRectMake(CGRectGetMaxX(genderLabel.frame), CGRectGetMinY(genderLabel.frame) + 5, 40, 20) andTitle:@"男" andSelector:@selector(chooseGender:) onSuperView:_headView];
+//    _maleButton.tag = 3;
+//
+//    _femaleButton = [self createButtonWithFrame:CGRectMake(CGRectGetMaxX(_maleButton.frame), CGRectGetMinY(_maleButton.frame), 40, 20) andTitle:@"女" andSelector:@selector(chooseGender:) onSuperView:_headView];
+//    _femaleButton.tag = 4;
+//
+//    [self chooseGender:_maleButton];
+//
+//
+//
+//    _birthdayTextField = [YJJTextField yjj_textField];
+//    _birthdayTextField.frame = CGRectMake(0, 180, self.view.frame.size.width, subViewsHeight);
+//    _birthdayTextField.maxLength = 3;
+//    _birthdayTextField.errorStr = @"长度不得超过3位";
+//    _birthdayTextField.placeholder = @"请输入生日";
+//    [_headView addSubview:_birthdayTextField];
     
     
 //    UILabel *heightLabel = [self createLabelWithFrame:CGRectMake(CGRectGetMaxX(_idTextField.frame) + 10, CGRectGetMinY(_idTextField.frame), 40, subViewsHeight) andTitle:@"身高:" onView:_headView];
@@ -138,22 +143,33 @@
 //    UILabel *birthdayLabel = [self createLabelWithFrame:CGRectMake(0, 240, 40, subViewsHeight) andTitle:@"生日:" onView:_headView];
 //    _birthdayTextField = [self createTextFieldWithFrame:CGRectMake(CGRectGetMaxX(birthdayLabel.frame), CGRectGetMinY(birthdayLabel.frame), 120, subViewsHeight) andText:@"1992-01-10" onSuperView:_headView];
 //
+    
+    if (!_headTableView) {
+        _headTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 210) style:UITableViewStylePlain];
+        _headTableView.backgroundColor = [UIColor whiteColor];
+        _headTableView.dataSource = self;
+        _headTableView.delegate = self;
+        _headTableView.tableFooterView = [[UIView alloc]init];
+        [_headView addSubview:_headTableView];
+    }
+    
     CGFloat scanButtonWidth = 80;
     _scanButton = [self createButtonWithFrame:CGRectMake(self.view.frame.size.width/2-40,240, scanButtonWidth, subViewsHeight) andTitle:@"开始扫描" andSelector:@selector(scanBle:) onSuperView:_headView];
-    _scanButton.tag = 1;
+    //_scanButton.tag = 1;
 }
 
-- (void)chooseGender:(UIButton *)button
-{
-    button.backgroundColor = [UIColor lightGrayColor];
-    if (button.tag == 3) {
-        _femaleButton.backgroundColor = [UIColor whiteColor];
-        _gender = @"1";
-    }else {
-        _maleButton.backgroundColor = [UIColor whiteColor];
-        _gender = @"0";
-    }
-}
+
+//- (void)chooseGender:(UIButton *)button
+//{
+//    button.backgroundColor = [UIColor lightGrayColor];
+//    if (button.tag == 3) {
+//        _femaleButton.backgroundColor = [UIColor whiteColor];
+//        _gender = @"1";
+//    }else {
+//        _maleButton.backgroundColor = [UIColor whiteColor];
+//        _gender = @"0";
+//    }
+//}
 
 - (void)initSubviews
 {
@@ -248,41 +264,128 @@
     }
 }
 
+#pragma mark - UITableViewDataSource, UITableViewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_scanFlag) {
-        return _allScanDevice.count;
-    }else {
-        //NSLog(_deviceData);
-        return 0;
+    if ([tableView isEqual:self.tableView]) {
+        if (_scanFlag) {
+            return _allScanDevice.count;
+        }else {
+            //NSLog(_deviceData);
+            return 0;
+        }
+    }else{
+         //NSLog(@"titleArr %d",self.titleArr.count);
+        return 3;
     }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_scanFlag) {
-        static NSString *deviceCell = @"DeviceCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:deviceCell];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:deviceCell];
+    if ([tableView isEqual:self.tableView]) {
+        if (_scanFlag) {
+            static NSString *deviceCell = @"DeviceCell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:deviceCell];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:deviceCell];
+            }
+            QingNiuDevice *qingNiuDevice = _allScanDevice[indexPath.row];
+            cell.textLabel.text = qingNiuDevice.name;
+            cell.detailTextLabel.text = qingNiuDevice.macAddress;
+            return cell;
+        } else {
+            static NSString *deviceDataCell = @"DeviceDataCell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:deviceDataCell];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:deviceDataCell];
+            }
+            NSDictionary *oneIndex = _deviceData[indexPath.row];
+            cell.textLabel.text = oneIndex[@"name"];
+            cell.detailTextLabel.text = [oneIndex[@"value"] stringByAppendingString:oneIndex[@"unit"]];
+            return cell;
         }
-        QingNiuDevice *qingNiuDevice = _allScanDevice[indexPath.row];
-        cell.textLabel.text = qingNiuDevice.name;
-        cell.detailTextLabel.text = qingNiuDevice.macAddress;
-        return cell;
-    } else {
-        static NSString *deviceDataCell = @"DeviceDataCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:deviceDataCell];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:deviceDataCell];
+    }else {
+        static NSString *cellID = @"testCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         }
-        NSDictionary *oneIndex = _deviceData[indexPath.row];
-        cell.textLabel.text = oneIndex[@"name"];
-        cell.detailTextLabel.text = [oneIndex[@"value"] stringByAppendingString:oneIndex[@"unit"]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
+        //cell.textLabel.textColor = RGB_HEX(0x464646, 1.0f);
+        NSString *title = [self.titleArr objectAtIndex:indexPath.row];
+        if ([title hasPrefix:@"* "]) {
+            NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:title];
+            [textStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[[textStr string]rangeOfString:@"* "]];
+            cell.textLabel.attributedText = textStr;
+        } else {
+            cell.textLabel.text = [self.titleArr objectAtIndex:indexPath.row];
+        }
+        
+        switch (indexPath.row) {
+            case 0:
+            {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                [self setupNameTF:cell];
+            }
+                break;
+            case 1:
+            {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                [self setupGenderTF:cell];
+            }
+                break;
+            case 2:
+            {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                [self setupBirthdayTF:cell];
+            }
+                break;
+//            case 3:
+//            {
+//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//                [self setupBirthtimeTF:cell];
+//            }
+//                break;
+//            case 4:
+//            {
+//                cell.accessoryType = UITableViewCellAccessoryNone;
+//                [self setupPhoneTF:cell];
+//            }
+//                break;
+//            case 5:
+//            {
+//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//                [self setupAddressTF:cell];
+//            }
+//                break;
+//            case 6:
+//            {
+//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//                [self setupEducationTF:cell];
+//            }
+//                break;
+//            case 7:
+//            {
+//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//                [self setupOtherTF:cell];
+//            }
+//                break;
+                
+            default:
+                break;
+        }
+        
         return cell;
     }
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50;
+}
 #pragma mark 点击其中一行开始连接
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -290,10 +393,10 @@
     if (_scanFlag) {
         QingNiuDevice *qingNiuDevice = _allScanDevice[indexPath.row];
         QingNiuUser *user = [[QingNiuUser alloc] init];
-        user.userId = _idTextField.textField.text;
-        user.height = [_heightTextField.textField.text intValue];
+        user.userId = _idTextField.text;
+        user.height = [_heightTextField.text intValue];
         user.gender = [_gender intValue];
-        user.birthday = _birthdayTextField.textField.text;
+        user.birthday = _birthdayTextField.text;
         [QingNiuSDK connectDevice:qingNiuDevice user:user connectSuccessBlock:^(NSMutableDictionary *deviceData, QingNiuDeviceConnectState qingNiuDeviceConnectState) {
             if (qingNiuDeviceConnectState == QingNiuDeviceConnectStateConnectedSuccess) {
                 [self scanBle:_scanButton];
@@ -466,6 +569,139 @@
 //    } disconnectSuccessBlock:^(QingNiuDeviceDisconnectState qingNiuDeviceDisconnectState) {
 //        NSLog(@"%ld",(long)qingNiuDeviceDisconnectState);
 //    }];
+}
+
+
+- (BRTextField *)getTextField:(UITableViewCell *)cell {
+    BRTextField *textField = [[BRTextField alloc]initWithFrame:CGRectMake(kScreenWidth - 230, 0, 200, 50)];
+    textField.backgroundColor = [UIColor clearColor];
+    textField.font = [UIFont systemFontOfSize:16.0f];
+    textField.textAlignment = NSTextAlignmentRight;
+    //textField.textColor = RGB_HEX(0x666666, 1.0);
+    textField.delegate = self;
+    [cell.contentView addSubview:textField];
+    return textField;
+}
+
+#pragma mark - 姓名 textField
+- (void)setupNameTF:(UITableViewCell *)cell {
+    if (!_idTextField) {
+        _idTextField = [self getTextField:cell];
+        _idTextField.placeholder = @"请输入";
+        _idTextField.returnKeyType = UIReturnKeyDone;
+        _idTextField.tag = 0;
+    }
+}
+
+#pragma mark - 性别 textField
+- (void)setupGenderTF:(UITableViewCell *)cell {
+    if (!_gender) {
+        _gender = [self getTextField:cell];
+        _gender.placeholder = @"请选择";
+        __weak typeof(self) weakSelf = self;
+        _gender.tapAcitonBlock = ^{
+            [BRStringPickerView showStringPickerWithTitle:@"宝宝性别" dataSource:@[@"男", @"女", @"其他"] defaultSelValue:@"男" isAutoSelect:YES resultBlock:^(id selectValue) {
+                weakSelf.gender.text = selectValue;
+            }];
+        };
+    }
+}
+
+#pragma mark - 出生日期 textField
+- (void)setupBirthdayTF:(UITableViewCell *)cell {
+    if (!_birthdayTextField) {
+        _birthdayTextField = [self getTextField:cell];
+        _birthdayTextField.placeholder = @"请选择";
+        __weak typeof(self) weakSelf = self;
+        _birthdayTextField.tapAcitonBlock = ^{
+            [BRDatePickerView showDatePickerWithTitle:@"出生年月" dateType:UIDatePickerModeDate defaultSelValue:weakSelf.birthdayTextField.text minDateStr:@"" maxDateStr:[NSDate currentDateString] isAutoSelect:YES resultBlock:^(NSString *selectValue) {
+                weakSelf.birthdayTextField.text = selectValue;
+            }];
+        };
+    }
+}
+
+#pragma mark - 出生时刻 textField
+//- (void)setupBirthtimeTF:(UITableViewCell *)cell {
+//    if (!_birthtimeTF) {
+//        _birthtimeTF = [self getTextField:cell];
+//        _birthtimeTF.placeholder = @"请选择";
+//        __weak typeof(self) weakSelf = self;
+//        _birthtimeTF.tapAcitonBlock = ^{
+//            [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:UIDatePickerModeTime defaultSelValue:weakSelf.birthtimeTF.text minDateStr:@"" maxDateStr:@"" isAutoSelect:YES resultBlock:^(NSString *selectValue) {
+//                weakSelf.birthtimeTF.text = selectValue;
+//            }];
+//        };
+//    }
+//}
+
+#pragma mark - 联系方式 textField
+//- (void)setupPhoneTF:(UITableViewCell *)cell {
+//    if (!_phoneTF) {
+//        _phoneTF = [self getTextField:cell];
+//        _phoneTF.placeholder = @"请输入";
+//        _phoneTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+//        _phoneTF.returnKeyType = UIReturnKeyDone;
+//        _phoneTF.tag = 4;
+//    }
+//}
+
+#pragma mark - 地址 textField
+//- (void)setupAddressTF:(UITableViewCell *)cell {
+//    if (!_addressTF) {
+//        _addressTF = [self getTextField:cell];
+//        _addressTF.placeholder = @"请选择";
+//        __weak typeof(self) weakSelf = self;
+//        _addressTF.tapAcitonBlock = ^{
+//            [BRAddressPickerView showAddressPickerWithDefaultSelected:@[@10, @0, @3] isAutoSelect:YES resultBlock:^(NSArray *selectAddressArr) {
+//                weakSelf.addressTF.text = [NSString stringWithFormat:@"%@%@%@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
+//            }];
+//        };
+//    }
+//}
+
+#pragma mark - 学历 textField
+- (void)setupHeightTF:(UITableViewCell *)cell {
+    if (!_heightTextField) {
+        _heightTextField = [self getTextField:cell];
+        _heightTextField.placeholder = @"请选择";
+        __weak typeof(self) weakSelf = self;
+        _heightTextField.tapAcitonBlock = ^{
+            [BRStringPickerView showStringPickerWithTitle:@"" dataSource:@[@"120", @"121", @"122", @"123", @"124", @"125",@"126", @"127", @"128", @"129", @"130", @"131",@"132", @"133", @"134", @"135", @"136", @"137",@"138", @"139", @"140", @"141", @"142", @"143",@"144", @"145", @"146", @"123", @"124", @"125",@"120", @"121", @"122", @"123", @"124", @"125",@"120", @"121", @"122", @"123", @"124", @"125",@"120", @"121", @"122", @"123", @"124", @"125"] defaultSelValue:@"170" isAutoSelect:YES resultBlock:^(id selectValue) {
+                weakSelf.heightTextField.text = selectValue;
+            }];
+        };
+    }
+}
+
+#pragma mark - 其它 textField
+//- (void)setupOtherTF:(UITableViewCell *)cell {
+//    if (!_otherTF) {
+//        _otherTF = [self getTextField:cell];
+//        _otherTF.placeholder = @"请选择";
+//        __weak typeof(self) weakSelf = self;
+//        _otherTF.tapAcitonBlock = ^{
+//            NSArray *dataSources = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
+//            [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSources defaultSelValue:@[@"第3周", @"第3天"] isAutoSelect:YES resultBlock:^(id selectValue) {
+//                weakSelf.otherTF.text = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
+//            }];
+//        };
+//    }
+//}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField.tag == 0 || textField.tag == 4) {
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+
+- (NSArray *)titleArr {
+    if (!_titleArr) {
+        _titleArr = @[@"* 姓名", @"* 性别", @"* 出生年月"];
+    }
+    return _titleArr;
 }
 
 @end

@@ -80,19 +80,19 @@
 			</div>
 			<div class="data" v-cloak>
 				<p class="introduce">{{ProductTitle}}<!--{{specification}}--></p>
-				<p class="price">￥{{sell_price}}</p>
+				<p class="price">会员价：￥{{sell_price}}</p>
 				<p class="scj">市场价：<span>￥{{market_price}}</span></p>
 				<div class="send">
 					<div class="lf">
-						运费：包邮
+						运费：满150元包邮
 					</div>
-					<div class="rf">
+					<!--<div class="rf">
 						默认配送：圆通速递
-					</div>
+					</div>-->
 				</div>
 			</div>
-			<div class="warm_prompt" style="font-size: 0.4rem;">
-				温馨提示：健康商品经常更换包装盒附件，若更新不及时，敬请谅解！
+			<div class="warm_prompt" style="font-size: 0.8rem;color: red;">
+				温馨提示：促销期间，万众会员免扣积分享受优惠价！截止到5月底万众正式启航！
 			</div>
 			<!-- 详情内容 product-content -->
 			<div class="product-content">
@@ -126,7 +126,7 @@
 			<div class="tool_bar">
 				<!--<a class="shangjia" href="javascript:void(0)"></a>-->
 				<a class="shangjia" @click="GoImChat()"></a>
-				<a class="buy_cart" @click="GoShopCar()">
+				<a class="buy_cart" href="javascript:clickedNoHead('ShopCar.html', 'ShopCar.html', 'slide-in-left');">
 					<i class="icon_cart">
             <span class="num">{{calc_num}}</span>
         </i>
@@ -185,7 +185,7 @@
 				<a href="JavaScript:void(0)" class="affirm_ok" @click="AddCar">确定</a>
 			</div>
 		</div>
-		
+		<script src="../js/CarStorage.js"></script>
 		<script src="../js/swiper.min.js"></script>
 		<script src="../js/lib/hui.js" type="text/javascript"></script>
 
@@ -195,67 +195,57 @@
 		<script src="../js/lib/jroll.js" type="text/javascript"></script>
 		<script src="../js/lib/jroll-vue-infinite.js" type="text/javascript"></script>
 		<script src="../js/lib/jroll-pulldown.js" type="text/javascript"></script>
-        <script src="../js/CarStorage.js"></script>
+
 		<script>
+			
+			
+			
+			var ProductId=null;
+			
 
-var ProductId=null;
-var UserName=null;  
-var NickName=null;
-var HeadPic=null;
-var car_num=0;		
-
-var domainUrl = GetMallApiDomain();
-var ImageUrl = GetMallImage();
-
+			var UserName = null;
+			var NickName=null;
+            var HeadPic=null;
+            
+			var domainUrl = GetMallApiDomain();
+			var ImageUrl = GetMallImage();
+			
+			
 function plusReady() { 
+	
+	        var _self = plus.webview.currentWebview();
+			ProductId = _self.ProductId;
+				if(ProductId == null || ProductId == null) {
+				plus.nativeUI.toast("参数错误，请重新操作！");
+				setTimeout(function() {
+					plus.webview.currentWebview().close();
+				}, 1000);
+			} 
+	
 HeadShow();		
 var objuser=JSON.parse(plus.storage.getItem('user'));
 UserName = objuser.UserName;
 NickName = objuser.NickName;
 HeadPic = objuser.HeadPic;
 
-var _self = plus.webview.currentWebview();
-ProductId=_self.ProductId;
-if(ProductId==null || ProductId==''){
-	plus.webview.currentWebview().close();
-}
 
 back();
-car_num = CalcGoodsNum();
-vum.calc_num=CalcGoodsNum();
-vum.GetProductInfo(ProductId);
+
+
 
 }
-
-if(window.plus){  
-plusReady();  
-}else{  
-document.addEventListener("plusready",plusReady,false);  
-} 
-
-
-function CalcGoodsNum() {
-    var num=0;
-	var goods = plus.storage.getItem("goods"); //取回goods变量
-
-	goods = JSON.parse(goods); //把字符串转换成JSON对象
-	if(goods != null && goods != "undefined") {
-		var objs = goods.good;
-		for(var i = 0; i < objs.length; i++) {
-
-
-
-				num = num+parseInt(objs[i].productQuentity);
-
-
-
-		}
-	}
-	
-	return num;
-
-};
-
+			
+			
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}			
+			
+			
+			
+			
+			
 			// vue实例
 			var vum
 			var infOptions = {
@@ -321,7 +311,7 @@ function CalcGoodsNum() {
 
 			}
 
-			
+
 			vum = new Vue({
 				el: '#app',
 				components: {
@@ -342,13 +332,16 @@ function CalcGoodsNum() {
 					sell_price: '0.00',
 					market_price: '0.00',
 					point: '0',
+					pv: '0',
+					reward_point: '0',
 					specification: '--',
 
 					num: 1,
 					nMax: 100,
 					nMin: 1,
 					total_price: 0,
-					calc_num: car_num,
+					calc_num: 0,
+					max_reward_point: '0',
 
 					ItemData: [],
 					ItemList: [],
@@ -358,7 +351,8 @@ function CalcGoodsNum() {
 
 					this.$nextTick(function() {
 
-						
+						this.calc_num=CalcGoodsNum();
+this.GetProductInfo(ProductId);
 						that = this;
 						setTimeout(function() {
 							that.MySwiper();
@@ -367,9 +361,6 @@ function CalcGoodsNum() {
 
 				},
 
-				//						updated() {
-				//							this.MySwiper();
-				//						},
 
 				methods: {
 
@@ -382,6 +373,15 @@ function CalcGoodsNum() {
 								}
 							})
 							.then(function(response) {
+								if (response.data.code=="202"){
+									hui.upToast("产品资料错误，请返回");
+					                  setTimeout(function() {
+						                plus.webview.currentWebview().close();
+					                   }, 1000);
+
+					                    return false;
+								}
+								else{
 								var jsonx = eval(response.data.ListImg);
 								that.imgList = [];
 								each(jsonx, function(i, j) {
@@ -407,11 +407,14 @@ function CalcGoodsNum() {
 								that.sell_price = response.data.sell_price;
 								that.market_price = response.data.market_price;
 								that.point = response.data.point;
+								that.pv = response.data.pv;
+								that.reward_point = response.data.reward_point;
 								that.specification = response.data.specification;
 
 								that.total_price = that.sell_price;
 
 								that.MySwiper();
+								}
 
 							})
 							.catch(function(response) {
@@ -449,6 +452,7 @@ function CalcGoodsNum() {
 							this.num++;
 							this.total_price = this.sell_price * this.num;
 							this.total_price = this.total_price.toFixed(2);
+							this.max_reward_point = this.reward_point * this.num;
 						}
 					},
 					DecNum: function() {
@@ -456,16 +460,17 @@ function CalcGoodsNum() {
 							this.num--;
 							this.total_price = this.sell_price * this.num;
 							this.total_price = this.total_price.toFixed(2);
+							this.max_reward_point = this.reward_point * this.num;
 						}
 					},
 					AddCar: function() {
-						addShoppingCart(ProductId, this.ProductTitle, this.sell_price, this.img_url, this.num);
+						addShoppingCart(ProductId, this.ProductTitle, this.sell_price, this.reward_point, this.img_url, this.num);
 						this.calc_num = CalcGoodsNum();
 					},
 					AddOrder: function() {
 						ClearShoppingOrder();
-						addShoppingOrder(ProductId, this.ProductTitle, this.sell_price, this.img_url, this.num);
-						clicked('OrderSubmit.html','OrderSubmit.html','slide-in-left','订单确认');
+						addShoppingOrder(ProductId, this.ProductTitle, this.sell_price, this.reward_point, this.img_url, this.num);
+						clicked('OrderSubmit.html', 'OrderSubmit.html', 'slide-in-left', '订单提交');
 
 					},
 					MySwiper: function() {
@@ -479,12 +484,11 @@ function CalcGoodsNum() {
 
 					},
 					GoImChat: function() {
-                     location.href = "http://127.0.0.1:8020/webIm/web/mobile.html?UserName="+UserName+"&NickName="+NickName+"&HeadPic="+HeadPic;
-					},
-					GoShopCar: function() {
-					 clickedNoHead('ShopCar.html','ShopCar.html','zoom-fade-out');
+						
+						clicked('webviewUrl.html', 'webviewUrl.html', 'slide-in-left', '在线客服');
 
 					},
+
 				}
 			})
 			//TAB切换

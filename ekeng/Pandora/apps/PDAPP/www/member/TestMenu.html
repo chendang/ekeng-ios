@@ -7,50 +7,166 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+<link rel="stylesheet" href="../css/lib/mui.min.css">
 <link href="../css/style.css" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/lib/huimin.css">
+  <script src="../js/base.js"></script>
     <style type="text/css">
         [v-cloak]{ display: none; }
+        .title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+
+				font-size: 15px;
+			}
+			
+			.mui-badge {
+
+    padding: 3px 6px;
+    font-size: 16px;
+
+}
     </style>
-<title>E康云</title>
+<title>Q博士</title>
 </head>
 
 <body>
-	
-	
-<section id="page-wrapper">
 
 
-  <!--主页start-->
+<div id="bodyinfo">
+<section style="margin-top: 5px;">
 
-    <!--头部start-->
-
-
-    <!--健康计划start-->
-    <div class="p_plan mt15">
+    	
+    	
+    	<div class="p_plan mt15">
 
       <ul class="p_plan-list">
-        <li>
+        <li onclick="clickedNoHead('LifeQN-A1.html','LifeQN-A1.html','slide-in-left');">
           <div class="blist">
-            <div class="m_cell_hd"><img src="../img/5-06.jpg" alt="" /></div>
-            <div class="m_cell_hd m_cell_primary" onclick="clicked('BasicInfoTestList.html','BasicInfoTestList.html','slide-in-left','生活习惯问卷记录')">
-              <h4>生活习惯问卷</h4>
-             <!-- <p>上次问卷时间2016年10月15日</p>-->
+            <div class="m_cell_hd"><span class="mui-badge mui-badge-purple">1</span></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4 style="font-size: 16px;margin-left: 8px;">健康状况</h4>
+             <!--<p>上次问卷时间2016年10月15日</p>-->
             </div>
-            <div class="m_cell_ft" onclick="clicked('BasicInfoTest1.html','BasicInfoTest1.html','slide-in-left','生活习惯问卷');">
-              <i>开始问卷</i>
+             
+           <div class="m_cell_ft">
+              <i v-cloak>{{qLife1}}</i>
             </div>
           </div>
+
         </li>
         
-        <li>
+         <li onclick="clickedNoHead('LifeQN-B1.html','LifeQN-B1.html','slide-in-left');">
+          <div class="blist">
+            <div class="m_cell_hd"><span class="mui-badge mui-badge-purple">2</span></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4 style="font-size: 16px;margin-left: 8px;">膳食习惯</h4>
+            </div>
+             
+           <div class="m_cell_ft">
+              <i v-cloak>{{qLife2}}</i>
+            </div>
+          </div>
+
+        </li>
+        
+        <li onclick="clickedNoHead('LifeQN-C1.html','LifeQN-C1.html','slide-in-left');">
+          <div class="blist">
+            <div class="m_cell_hd"><span class="mui-badge mui-badge-purple">3</span></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4 style="font-size: 16px;margin-left: 8px;">运动状况</h4>
+            </div>
+             
+           <div class="m_cell_ft">
+              <i v-cloak>{{qLife3}}</i>
+            </div>
+          </div>
+
+        </li>
+        
+        
+        <li onclick="clickedNoHead('LifeQN-D1.html','LifeQN-D1.html','slide-in-left');">
+          <div class="blist">
+            <div class="m_cell_hd"><span class="mui-badge mui-badge-purple">4</span></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4 style="font-size: 16px;margin-left: 8px;">睡眠习惯</h4>
+            </div>
+             
+           <div class="m_cell_ft">
+              <i v-cloak>{{qLife4}}</i>
+            </div>
+          </div>
+
+        </li>
+        
+        
+        <li onclick="clickedNoHead('LifeQN-E1.html','LifeQN-E1.html','slide-in-left');">
+          <div class="blist">
+            <div class="m_cell_hd"><span class="mui-badge mui-badge-purple">5</span></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4 style="font-size: 16px;margin-left: 8px;">心理状况</h4>
+            </div>
+             
+           <div class="m_cell_ft">
+              <i v-cloak>{{qLife5}}</i>
+            </div>
+          </div>
+
+        </li>
+        
+        <li onclick="clickedNoHead('LifeQN-F1.html','LifeQN-F1.html','slide-in-left');">
+          <div class="blist">
+            <div class="m_cell_hd"><span class="mui-badge mui-badge-purple">6</span></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4 style="font-size: 16px;margin-left: 8px;">家居环境</h4>
+            </div>
+             
+           <div class="m_cell_ft">
+              <i v-cloak>{{qLife6}}</i>
+            </div>
+          </div>
+
+        </li>
+        
+                
+        <li onclick="clickedNoHead('LifeQN-Y1.html','LifeQN-Y1.html','slide-in-left');">
+          <div class="blist">
+            <div class="m_cell_hd"><span class="mui-badge mui-badge-purple">7</span></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4 style="font-size: 16px;margin-left: 8px;">吸烟人士填写</h4>
+            </div>
+             
+           <div class="m_cell_ft">
+              <i v-cloak>{{qLife7}}</i>
+            </div>
+          </div>
+
+        </li>
+        
+        <li onclick="clickedNoHead('LifeQN-J1.html','LifeQN-J1.html','slide-in-left');">
+          <div class="blist">
+            <div class="m_cell_hd"><span class="mui-badge mui-badge-purple">8</span></div>
+            <div class="m_cell_hd m_cell_primary" >
+              <h4 style="font-size: 16px;margin-left: 8px;">饮酒人士填写</h4>
+            </div>
+             
+           <div class="m_cell_ft">
+              <i v-cloak>{{qLife8}}</i>
+            </div>
+          </div>
+
+        </li>
+
+        
+        <li onclick="clickedNoHead('SF36Index.html','SF36Index.html','slide-in-left','SF-36健康调查简表');">
           <div class="blist">
             <div class="m_cell_hd"><img src="../img/5-07.jpg" alt="" /></div>
-            <div class="m_cell_hd m_cell_primary" onclick="clicked('SF36List.html','SF36List.html','slide-in-left','SF-36健康调查简表');">
+            <div class="m_cell_hd m_cell_primary">
               <h4>SF-36健康调查简表</h4>
-             <p>上次问卷时间2016年10月20日</p>
+             <p v-cloak>{{qSF36}}</p>
             </div>
-            <div class="m_cell_ft" onclick="clicked('GreatTest1.html','GreatTest1.html','slide-in-left','SF-36健康调查简表');">
-              <i>开始问卷</i>
+            <div class="m_cell_ft">
+              <i v-cloak>得分：{{SF36Grade}}</i>
             </div>
           </div>
         </li>
@@ -94,42 +210,215 @@
         </li>
         
       </ul>
-    </div>
+
+   </div>
     <!--健康计划end-->
  
   <!--主页end-->
 </section>
+</div>
 
-<script src="../js/base.js" type="text/javascript"></script>
+<script src="../js/lib/hui.js"></script>
 <script src="../js/public.js" type="text/javascript"></script>
-
-
-<script type="text/javascript" charset="utf-8">
-
-
-
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+<script>
+	
+var username = null;
+var objuser=null;	
 function plusReady() { 
 HeadShow();
 back();
+objuser=JSON.parse(plus.storage.getItem('user'));
+username = objuser.UserName;
+
 }
 
 if(window.plus){  
 plusReady();  
 }else{  
 document.addEventListener("plusready",plusReady,false);  
-}        
-      
+}
+	
+	
+			var domainUrl = GetMvcApiDomain();
+
+			var UserRole = 1;
+			var vum = new Vue({
+				el: '#bodyinfo',
+				data: {
+					qLife1: '',
+					qLife2: '',
+					qLife3: '',
+					qLife4: '',
+					qLife5: '',
+					qLife6: '',
+					qLife7: '',
+					qLife8: '',
+					qSF36: '',
+					SF36Grade: '--'
+
+
+				},
+				created: function() { //在vue初始化时调用
+
+				},
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+
+              this.getQnLifeInfo(username);
+              this.getGrade(username);
+						
+						
+						
+
+					})
+
+				},
+				methods: {
+					
+					getQnLifeInfo: function(UserName) {
+						var that = this;
+						that.axiosGetLoadding();
+						axios.get(domainUrl + 'api/TestBasicInfo/getQnLifeInfo', {
+								params: {
+									UserName: UserName,
+								}
+							})
+							.then(function(response) {
+								if (response.data.LifeARecordTime=='' || response.data.LifeARecordTime==null){
+									that.qLife1='开始测试';
+								}
+								else{
+									//that.qLife1=getDateDiff(getDateTimeStamp(response.data.LifeARecordTime))+'做过问卷';
+									that.qLife1='已完成,重新测试';
+								}
+								
+								if (response.data.LifeBRecordTime=='' || response.data.LifeBRecordTime==null){
+									that.qLife2='开始测试';
+								}
+								else{
+									that.qLife2='已完成,重新测试';
+								}
+								
+								if (response.data.LifeCRecordTime=='' || response.data.LifeCRecordTime==null){
+									that.qLife3='开始测试';
+								}
+								else{
+									that.qLife3='已完成,重新测试';
+								}							
+								
+								if (response.data.LifeDRecordTime=='' || response.data.LifeDRecordTime==null){
+									that.qLife4='开始测试';
+								}
+								else{
+									that.qLife4='已完成,重新测试';
+								}	
+								
+								if (response.data.LifeERecordTime=='' || response.data.LifeERecordTime==null){
+									that.qLife5='开始测试';
+								}
+								else{
+									that.qLife5='已完成,重新测试';
+								}	
+								
+								
+								if (response.data.LifeFRecordTime=='' || response.data.LifeFRecordTime==null){
+									that.qLife6='开始测试';
+								}
+								else{
+									that.qLife6='已完成,重新测试';
+								}	
+								
+								if (response.data.LifeYRecordTime=='' || response.data.LifeYRecordTime==null){
+									that.qLife7='开始测试';
+								}
+								else{
+									that.qLife7='已完成,重新测试';
+								}	
+
+								if (response.data.LifeJRecordTime=='' || response.data.LifeJRecordTime==null){
+									that.qLife8='开始测试';
+								}
+								else{
+									that.qLife8='已完成,重新测试';
+								}	
+
+
+								if (response.data.SF36RecordTime=='' || response.data.SF36RecordTime==null){
+									that.qSF36='您还没有做问卷记录';
+								}
+								else{
+									that.qSF36='上次问卷时间：'+response.data.SF36RecordTime;
+								}
+								
+							})
+							.catch(function(response) {
+								console.log(response);
+
+							});
+
+					},
+
+					getGrade: function(UserName) {
+						var that = this;
+						that.axiosGetLoadding();
+						axios.get(domainUrl + 'api/TestSF36/getNewGrade', {
+								params: {
+									UserName: UserName,
+								}
+							})
+							.then(function(response) {
+	                	      if (response.data.code='200'){
+
+                        that.SF36Grade=response.data.grade;
+                       }
+							})
+							.catch(function(response) {
+								console.log(response);
+
+							});
+
+					},
 
 
 
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+
+				},
+			});
+		</script>
+
+</body>
+</html>
 
 
-
-
-
-
-
-</script>
 
 </body>
 </html>

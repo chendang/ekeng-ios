@@ -102,23 +102,18 @@
 		
 		<!-- end -->
 
-		
+		<script src="../js/CarStorage.js"></script>
 		<script src="../js/public.js" type="text/javascript"></script>
 		<script src="../js/lib/hui.js" type="text/javascript"></script>
 
 		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
-<script src="../js/CarStorage.js"></script>
+
 		<script>
+			var domainUrl = GetMallApiDomain();
 var domainUrl = GetMallApiDomain();
 function plusReady() { 
 
-// 		var _PView=plus.webview.getWebviewById("ProductDetail.html");
-//      if(_PView!=null){
-//      	_PView.close();
-//      	return;
-//      }
-        
-     vum.GetCarInfo();   
+         
 back();
 }
 
@@ -139,8 +134,7 @@ document.addEventListener("plusready",plusReady,false);
 				mounted: function() {
 
 					this.$nextTick(function() {
-
-						
+                      this.GetCarInfo();   
 
 					})
 
@@ -159,6 +153,7 @@ document.addEventListener("plusready",plusReady,false);
 									productId: objs[i].productId,
 									productName: objs[i].productName,
 									productPrice: objs[i].productPrice,
+									rewardPoint: objs[i].rewardPoint,
 									productImage: objs[i].productImage,
 									productQuentity: objs[i].productQuentity,
 									isChecked: false,
@@ -289,7 +284,7 @@ document.addEventListener("plusready",plusReady,false);
 						this.ItemList.forEach(function(good) {
 							if(good.isChecked) {
 								
-								addShoppingOrder(good.productId, good.productName, good.productPrice, good.productImage, good.productQuentity);
+								addShoppingOrder(good.productId, good.productName, good.productPrice, good.rewardPoint, good.productImage, good.productQuentity);
 
 
 							}
@@ -301,7 +296,7 @@ document.addEventListener("plusready",plusReady,false);
 	                        	return;
 	                        }
 	                        else{
-	                        	clicked('OrderSubmit.html','OrderSubmit.html','slide-in-left','订单确认');
+	                        	clicked('OrderSubmit.html', 'OrderSubmit.html', 'slide-in-left', '订单提交');
 	                        }
 	                        
 						

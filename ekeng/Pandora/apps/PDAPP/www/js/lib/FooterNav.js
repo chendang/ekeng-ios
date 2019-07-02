@@ -8,7 +8,7 @@ function _view(){
 		this._view_obj.setStyle({width:'100%',height:'60px',left:'0px',top:_h+'px'});
 		this._view_obj.drawRect('#FFFFFF');
 		this._view_obj.drawRect('#EEEEEE',{width:'100%',height:'1px'});
-		//this._view_obj.show();
+		this._view_obj.show();
 		this._img_up_lst = _a;
 		this._img_dn_lst = _b;
 		this._txt_lst	= _c;
