@@ -1,0 +1,387 @@
+<!doctype html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link rel="stylesheet" href="../css/lib/huimin.css">
+		<link rel="stylesheet" href="../css/lib/CSSRESET.css">
+		<link rel="stylesheet" href="../css/ques.css">
+
+</head>
+<body>	
+	
+	<div id="ques">
+		<div class="title">
+			<h2>SF-36健康调查简表</h2>
+			<p>The MOS item short from health survey SF-36</p>
+		</div>
+		<!-- title -->
+	
+		<article class="wrapper">
+			<div class="main">
+
+				<div class="ques_row">
+					<h4 class="h4_title">
+						<span>3.</span>
+						您的情绪非常不好，什么事都不能使您高兴起来:
+					</h4>
+					
+					<div class="options row_2">
+						<label @click="answer('num1','A');" :class="{ active: res1=='A' }">所有的时间</label>
+						<label @click="answer('num1','B');" :class="{ active: res1=='B' }">大部分时间</label>
+						<label @click="answer('num1','C');" :class="{ active: res1=='C' }">比较多时间</label>
+						<label @click="answer('num1','D');" :class="{ active: res1=='D' }">一部分时间</label>
+						<label @click="answer('num1','E');" :class="{ active: res1=='E' }">小部分时间</label>
+						<label @click="answer('num1','F');" :class="{ active: res1=='F' }">没有这种感觉</label>
+					</div>
+				</div>
+				<!-- ques_row -->
+				<div class="ques_row bg_gray">
+					<h4 class="h4_title">
+						<span>4.</span>
+						您的心理很平静:
+					</h4>
+					
+					<div class="options row_2">
+						<label @click="answer('num2','A');" :class="{ active: res2=='A' }">所有的时间</label>
+						<label @click="answer('num2','B');" :class="{ active: res2=='B' }">大部分时间</label>
+						<label @click="answer('num2','C');" :class="{ active: res2=='C' }">比较多时间</label>
+						<label @click="answer('num2','D');" :class="{ active: res2=='D' }">一部分时间</label>
+						<label @click="answer('num2','E');" :class="{ active: res2=='E' }">小部分时间</label>
+						<label @click="answer('num2','F');" :class="{ active: res2=='F' }">没有这种感觉</label>
+					</div>
+				</div>
+				
+                
+
+
+				<div class="ques_row">
+					<h4 class="h4_title">
+						<span>5.</span>
+						您做事精力充沛：
+					</h4>
+					
+					<div class="options row_2">
+						<label @click="answer('num3','A');" :class="{ active: res3=='A' }">所有的时间</label>
+						<label @click="answer('num3','B');" :class="{ active: res3=='B' }">大部分时间</label>
+						<label @click="answer('num3','C');" :class="{ active: res3=='C' }">比较多时间</label>
+						<label @click="answer('num3','D');" :class="{ active: res3=='D' }">一部分时间</label>
+						<label @click="answer('num3','E');" :class="{ active: res3=='E' }">小部分时间</label>
+						<label @click="answer('num3','F');" :class="{ active: res3=='F' }">没有这种感觉</label>
+					</div>
+				</div>
+				<!-- ques_row -->
+
+				<div class="ques_row bg_gray">
+					<h4 class="h4_title">
+						<span>6.</span>
+						您的情绪低落：
+					</h4>
+					
+					<div class="options row_2">
+						<label @click="answer('num4','A');" :class="{ active: res4=='A' }">所有的时间</label>
+						<label @click="answer('num4','B');" :class="{ active: res4=='B' }">大部分时间</label>
+						<label @click="answer('num4','C');" :class="{ active: res4=='C' }">比较多时间</label>
+						<label @click="answer('num4','D');" :class="{ active: res4=='D' }">一部分时间</label>
+						<label @click="answer('num4','E');" :class="{ active: res4=='E' }">小部分时间</label>
+						<label @click="answer('num4','F');" :class="{ active: res4=='F' }">没有这种感觉</label>
+					</div>
+				</div>
+				<!-- ques_row -->
+                  <div class="ques_row">
+					<h4 class="h4_title">
+						<span>7.</span>
+						您觉得筋疲力尽：
+					</h4>
+					
+					<div class="options row_2">
+						<label @click="answer('num5','A');" :class="{ active: res5=='A' }">所有的时间</label>
+						<label @click="answer('num5','B');" :class="{ active: res5=='B' }">大部分时间</label>
+						<label @click="answer('num5','C');" :class="{ active: res5=='C' }">比较多时间</label>
+						<label @click="answer('num5','D');" :class="{ active: res5=='D' }">一部分时间</label>
+						<label @click="answer('num5','E');" :class="{ active: res5=='E' }">小部分时间</label>
+						<label @click="answer('num5','F');" :class="{ active: res5=='F' }">没有这种感觉</label>
+					</div>
+				</div>
+				<!-- ques_row -->
+
+                  <div class="ques_row bg_gray">
+					<h4 class="h4_title">
+						<span>8.</span>
+						您是个快乐的人：
+					</h4>
+					
+					<div class="options row_2">
+						<label @click="answer('num6','A');" :class="{ active: res6=='A' }">所有的时间</label>
+						<label @click="answer('num6','B');" :class="{ active: res6=='B' }">大部分时间</label>
+						<label @click="answer('num6','C');" :class="{ active: res6=='C' }">比较多时间</label>
+						<label @click="answer('num6','D');" :class="{ active: res6=='D' }">一部分时间</label>
+						<label @click="answer('num6','E');" :class="{ active: res6=='E' }">小部分时间</label>
+						<label @click="answer('num6','F');" :class="{ active: res6=='F' }">没有这种感觉</label>
+					</div>
+				</div>
+				<!-- ques_row -->
+				
+				<a class="a_page" @click="NextQuestion">下一页</a>
+
+			</div>
+		</article>
+		<!-- wrapper End -->
+	</div>
+</body>
+<script src="../js/public.js" type="text/javascript"></script>
+<script src="../js/base.js"></script>
+<script src="../js/lib/hui.js" type="text/javascript"></script>
+<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+
+		
+<script>
+			var domainUrl = GetMvcApiDomain();
+		var username = null;
+        var Item1=null;
+		var Item2=null;
+		var Item3=null;
+		var Item4=null;
+		
+		function plusReady() {
+			var _self = plus.webview.currentWebview();
+			Item1 = _self.Item1;
+			Item2 = _self.Item2;
+			Item3 = _self.Item3;
+            Item4 = _self.Item4;
+            
+			if(Item1 == null || Item2 == null || Item3 == null || Item4 == null) {
+				plus.nativeUI.toast("参数错误，请返回重新选择");
+				setTimeout(function() {
+					plus.webview.currentWebview().close();
+				}, 1000);
+			} 
+			var objuser = JSON.parse(plus.storage.getItem('user'));
+			username = objuser.UserName;
+			back();
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+			var vum = new Vue({
+				el: '#ques',
+				data: {
+					UserName: username,
+					res1: '',
+					res2: '',
+					res3: '',
+					res4: '',
+					res5: '',
+					res6: '',
+					res7: '',
+					res8: ''
+
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+	
+
+					})
+
+				},
+				methods: {
+
+					
+					
+                   NextQuestion: function() {
+					if(this.res1 == '' || this.res2 == '' || this.res3=='' || this.res4=='' || this.res5=='' || this.res6=='') {
+						hui.alert('您有问题没有选择答案哦');
+						return false;
+					}
+					var theKey=this.res1+'-'+this.res2+'-'+this.res3+'-'+this.res4+'-'+this.res5+'-'+this.res6;
+
+					var parm = {
+						"Item1": Item1,
+						"Item2": Item2,
+						"Item3": Item3,
+						"Item4": Item4,
+						"Item5": theKey
+					}
+					clickedNoHeadParm('SF36-6.html', 'SF36-6.html', 'zoom-fade-out', parm);
+
+
+				},
+
+					answer: function(item,res) {
+                        if (item=='num1'){
+						switch(res) {
+							case 'A':
+								this.res1='A';
+								break;
+							case 'B':
+								this.res1='B';
+								break;
+							case 'C':
+								this.res1='C';
+								break;
+							case 'D':
+								this.res1='D';
+								break;	
+							case 'E':
+								this.res1='E';
+								break;	
+							case 'F':
+								this.res1='F';
+								break;	
+						    }
+						}
+                        if (item=='num2'){
+						switch(res) {
+							case 'A':
+								this.res2='A';
+								break;
+							case 'B':
+								this.res2='B';
+								break;
+							case 'C':
+								this.res2='C';
+								break;
+							case 'D':
+								this.res2='D';
+								break;	
+							case 'E':
+								this.res2='E';
+								break;	
+							case 'F':
+								this.res2='F';
+								break;	
+						    }
+						}
+                        if (item=='num3'){
+						switch(res) {
+							case 'A':
+								this.res3='A';
+								break;
+							case 'B':
+								this.res3='B';
+								break;
+							case 'C':
+								this.res3='C';
+								break;
+							case 'D':
+								this.res3='D';
+								break;
+							case 'E':
+								this.res3='E';
+								break;
+							case 'F':
+								this.res3='F';
+								break;								
+						    }
+						}
+                        if (item=='num4'){
+						switch(res) {
+							case 'A':
+								this.res4='A';
+								break;
+							case 'B':
+								this.res4='B';
+								break;
+							case 'C':
+								this.res4='C';
+								break;
+							case 'D':
+								this.res4='D';
+								break;
+							case 'E':
+								this.res4='E';
+								break;
+							case 'F':
+								this.res4='F';
+								break;								
+						    }
+						}
+                        if (item=='num5'){
+						switch(res) {
+							case 'A':
+								this.res5='A';
+								break;
+							case 'B':
+								this.res5='B';
+								break;
+							case 'C':
+								this.res5='C';
+								break;
+                            case 'D':
+								this.res5='D';
+								break;	
+							case 'E':
+								this.res5='E';
+								break;	
+							case 'F':
+								this.res5='F';
+								break;	
+						    }
+						}
+                        if (item=='num6'){
+						switch(res) {
+							case 'A':
+								this.res6='A';
+								break;
+							case 'B':
+								this.res6='B';
+								break;
+							case 'C':
+								this.res6='C';
+								break;
+							case 'D':
+								this.res6='D';
+								break;
+							case 'E':
+								this.res6='E';
+								break;
+							case 'F':
+								this.res6='F';
+								break;
+						    }
+						}
+                        if (item=='num7'){
+						switch(res) {
+							case 'A':
+								this.res7='A';
+								break;
+							case 'B':
+								this.res7='B';
+								break;
+							case 'C':
+								this.res7='C';
+								break;
+
+						    }
+						}
+                        if (item=='num8'){
+						switch(res) {
+							case 'A':
+								this.res8='A';
+								break;
+							case 'B':
+								this.res8='B';
+								break;
+							case 'C':
+								this.res8='C';
+								break;
+
+						    }
+						}
+					},
+
+
+				},
+			});
+		</script>		
+		
+		
+</html>

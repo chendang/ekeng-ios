@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>在线客服</title>
+		<script type="text/javascript" src="../js/lib/common.js"></script>
+		<script src="../js/base.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			var UserName = null;
+			var NickName=null;
+            var HeadPic=null;
+var ws=null,embed=null;
+// 扩展API加载完毕，现在可以正常调用扩展API 
+function plusReady(){
+	HeadShow();	
+	
+	var objuser=JSON.parse(plus.storage.getItem('user'));
+UserName = objuser.UserName;
+NickName = objuser.NickName;
+HeadPic = objuser.HeadPic;
+
+	ws=plus.webview.currentWebview();
+	ws.addEventListener('show',createEmbed,false);
+	
+	back();
+}
+// 判断扩展API是否准备，否则监听"plusready"事件
+if(window.plus){
+	plusReady();
+}else{
+	document.addEventListener("plusready",plusReady,false);
+}
+// 创建子Webview
+function createEmbed(){
+	var topoffset='45px';
+	if(plus.navigator.isImmersedStatusbar()){// 兼容immersed状态栏模式
+		topoffset=(Math.round(plus.navigator.getStatusbarHeight())+45)+'px';
+	}
+	plus.nativeUI.showWaiting('',{style:'black',modal:false,background:'rgba(0,0,0,0)'});
+	embed=plus.webview.create("http://ekim.kzjk360.net/web/mobile.html?UserName="+UserName+"&NickName="+NickName+"&HeadPic="+HeadPic,'embed',{top:topoffset,bottom:'0px',position:'dock',dock:'bottom',bounce:'vertical'});
+	ws.append(embed);
+	embed.addEventListener('loaded',function(){
+		plus.nativeUI.closeWaiting();
+	},false);
+	embed.addEventListener('loading',function(){
+		plus.nativeUI.showWaiting('',{style:'black',modal:false,background:'rgba(0,0,0,0)'});
+	},false);
+}
+
+// 页面跳转完成事件
+
+		</script>
+
+	</head>
+	<body>
+
+	</body>
+	
+</html>

@@ -1,0 +1,46 @@
+/* CSS Document */
+html { font-size: 62.5%;}
+@media only screen and (min-width: 320px){html {font-size: 62.5%!important;}}
+@media only screen and (min-width: 360px){html {font-size: 72.5%!important;}}
+@media only screen and (min-width: 400px){html {font-size: 82.5%!important;}}
+@media only screen and (min-width: 480px){html {font-size: 94%!important;}}
+
+body{ background: #efefef; }
+._container{ margin:0 auto;}
+
+.header{ height:3.8rem; box-sizing:border-box; position:relative; background:#13a0ff; }
+.header h1{ height:100%; line-height:3.8rem; text-align:center; font-weight:normal; color:#fff; font-size:1.6rem; }
+.header a{ width:4.4em; height:3.8rem; line-height:3.8rem; font-size:1.4rem; text-align:center; position:absolute; top:0; color:#666; -webkit-tap-highlight-color:rgba(0,0,0,0.1); }
+.header a.a_back{ width:4.4rem; left:0; background:url(../img/icon_back_w.png) no-repeat center center/auto 1.6rem; }
+/* header 样式 */
+
+.wrapper{ width:100%; top:8rem; bottom:4.2rem; position:absolute; overflow-y:scroll; -webkit-overflow-scrolling:touch;}
+.main{ width:100%; word-break:break-all; overflow:hidden; box-sizing:border-box; position:absolute;}
+.wrapper::-webkit-scrollbar {width:0px; background:rgba(255,255,255);}
+/* wrapper */
+
+.wrapper{ top:3.8rem; bottom: 0; }
+
+.banner { width:100%; height: 100%; position:relative; margin-bottom: 0.5rem; }
+.banner img { width:100%; }
+.banner .swiper-slide { position:relative; overflow-y: scroll;}
+.banner .pagination { width:100%; z-index:20; text-align:center; position:absolute; bottom:2.0rem;  }
+.banner .swiper-pagination-bullet{ width:0.8rem; height:0.8rem; margin:0 0.3rem; border-radius: 50% !important; 
+background:#b5b5b5; opacity:1 !important;}
+.banner .swiper-pagination-bullet-active{ background:#ff8b03 !important; opacity: 1 !important;}
+
+.main{ width:auto; position: absolute; top:1.4rem; right:1.4rem; bottom: 3.4rem; left:1.4rem; background: #fff; border-radius: 0.8rem; 
+box-shadow: 0 0 0.4rem #aaa; }
+
+.svc_main{ padding:2rem 0 4rem;}
+.svc_main > img{ width:50%; display: block; margin:0 auto 1rem;}
+.svc_main h3{ padding:0.4rem 1.5rem 0.4rem 4.2rem; font-size: 1.3rem; font-weight: bold; color:#636362; position: relative;}
+.svc_main h3 img{ width:2.2rem; height: 2.2rem;  margin-right: 0.6rem; position: absolute; left:1.2rem; top:50%; 
+-webkit-transform: translateY(-50%); transform: translateY(-50%);}
+.svc_main p{ padding:0 1.5rem 0 4.2rem; font-size: 1.0rem; text-align: justify; line-height: 1.8rem; color:#838383;
+margin-bottom: 0.6rem;}
+
+.a_start{ padding:0 3.2rem; height:3.2rem; line-height:3.2rem; text-align:center; font-size:1.4rem; border-radius: 1.6rem;
+ background:#ff8b03; color:#fff; left:50%; -webkit-transform: translateX(-50%); transform: translateX(-50%); 
+ position:absolute; bottom:1.6rem; z-index:99999;}
+/* 服务页面 */

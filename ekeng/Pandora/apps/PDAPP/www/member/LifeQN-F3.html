@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+
+	<head>
+
+		<title>家居环境</title>
+		<meta charset="utf-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<link rel="stylesheet" href="../css/lib/CSSRESET.css">
+		<link rel="stylesheet" href="../css/ques.css">
+		<link rel="stylesheet" href="../css/lib/huimin.css">
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/base.js"></script>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+			
+			.ul_choice li:nth-of-type(2n+2) {
+    float: left;
+}
+
+.ul_choice li {
+    width: 86%;
+    margin-left: 12px;
+    /* height: 3.6rem; */
+    line-height: 3.6rem;
+    border: 1px solid #fff;
+    border-radius: 2.1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+
+			
+		</style>
+	</head>
+
+	<body>
+
+
+
+			<div id="choice">
+				<header class="header">
+					<a class="a_back" onclick="CloseCurrentView();"></a>
+				</header>
+				<!-- header -->
+
+				<article class="wrapper">
+					<div class="main">
+						<h2>3. 空气 </h2>
+
+						<div class="choice_wrap" style="margin-top: 75px;">
+							<div class="choice">
+								<ul class="ul_choice">
+
+									<li @click="answer(1);" :class="{ active: key1 }"><i>清新</i></li>
+									<li @click="answer(2);" :class="{ active: key2 }"><i>一般</i></li>
+									<li @click="answer(3);" :class="{ active: key3 }"><i>室内装潢气味较重</i></li>
+									<li @click="answer(4);" :class="{ active: key4 }"><i>附近化工厂气味</i></li>
+								</ul>
+
+								
+							</div>
+							<!-- choice -->
+
+						</div>
+						<div class="choice_wrap" style="margin-top: 375px;">
+						<input type="button" value="保存提交" class="btn_next_title" @click="NextQuestion">
+						</div>
+						<!-- choice_wrap -->
+
+					</div>
+				</article>
+				<!-- wrapper End -->
+			</div>
+		</body>
+
+		<script src="../js/lib/hui.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+		<script>
+			var domainUrl = GetMvcApiDomain();
+		var username = null;
+        var Item1=null;
+		var Item2=null;	
+
+			
+		function plusReady() {
+			var _self = plus.webview.currentWebview();
+			Item1 = _self.Item1;
+			Item2 = _self.Item2;
+
+			if(Item1 == null || Item2 == null) {
+				plus.nativeUI.toast("参数错误，请返回重新选择");
+				setTimeout(function() {
+					plus.webview.currentWebview().close();
+				}, 1000);
+			} 
+			var objuser = JSON.parse(plus.storage.getItem('user'));
+			username = objuser.UserName;
+			back();
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+			var vue = new Vue({
+				el: '#choice',
+				data: {
+					UserName: username,
+					key1: false,
+					key2: false,
+					key3: false,
+					key4: false
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+	
+
+					})
+
+				},
+				methods: {
+					
+
+					
+					
+                   NextQuestion: function() {
+                    var theKey="";
+					if(this.key1 == false && this.key2 == false && this.key3==false && this.key4==false) {
+						hui.alert('请选择答案哦');
+						return false;
+					}
+					if (this.key1==true){
+						theKey='A';
+					}
+					if (this.key2==true){
+						theKey='B';
+					}
+					if (this.key3==true){
+						theKey='C';
+					}
+					if (this.key4==true){
+						theKey='D';
+					}
+
+                    
+					var res=Item1+';'+Item2+';'+theKey;
+					var QnName='LifeF';
+                    this.PostSave(username,QnName,res);
+
+
+				},
+
+
+
+					answer: function(item) {
+
+						switch(item) {
+							case 1:
+								this.key1 = !this.key1;
+								this.key2=false;
+								this.key3=false;
+                                this.key4=false;
+								break;
+							case 2:
+								this.key2 = !this.key2;
+								this.key1=false;
+								this.key3=false;
+                                this.key4=false;
+								break;
+							case 3:
+								this.key3 = !this.key3;
+								this.key1=false;
+								this.key2=false;
+                                this.key4=false;
+								break;
+							case 4:
+								this.key4 = !this.key4;
+								this.key1=false;
+								this.key2=false;
+								this.key3=false;
+								break;	
+						    }
+
+
+					},
+					
+					PostSave: function(UserName,QnName,ResOption) {
+						var that = this;
+
+						axios.post(domainUrl + 'api/TestBasicInfo/PostQnOptionSave', Qs.stringify({
+								UserName: UserName,
+							QnName: QnName,
+							ResOption: ResOption
+							}))
+
+							.then(function(response) {
+								if(response.data.code == '200') {
+									hui.alert('您的问卷成功提交，我们将根据你的答案，评估您的健康需求！谢谢');
+									setTimeout(function () {
+                                        closeOpenView('zoom-fade-out');
+                                }, 2000);
+									
+                                   
+								} else {
+									hui.alert('您的问卷提交失败，请稍后再试或联系客服！');
+									setTimeout(function () {
+                                        closeOpenView('zoom-fade-out');
+                                }, 800);
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					}
+					
+					
+
+				},
+			});
+			
+			
+			
+function closeOpenView(aniView) {　　
+
+	    
+        var _view1=plus.webview.getWebviewById("LifeQN-F1.html");
+        if(_view1!=null){
+        _view1.close('none');
+        }
+        var _view2=plus.webview.getWebviewById("LifeQN-F2.html");
+        if(_view2!=null){
+        _view2.close('none');
+        }
+
+        
+        var ws=plus.webview.getWebviewById("TestMenu.html");
+        ws.evalJS('plusReady()');
+        
+        var self = plus.webview.currentWebview();　　 //当前窗口对象
+	    self.close(aniView);
+
+        
+}				
+			
+			
+		</script>
+
+</html>

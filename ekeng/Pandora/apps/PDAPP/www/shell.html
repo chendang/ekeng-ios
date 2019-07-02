@@ -1,42 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
-	<head>
-		<title>e康云健康管理</title>
-		<meta charset="utf-8">
-		<meta name="format-detection" content="telephone=no" />
-		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-
-		<script>
-		</script>
-		<link href="css/lib/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/lib/huimin.css">
-		<link rel="stylesheet" type="text/css" href="css/lib/CSSRESET.css">
-		<link rel="stylesheet" type="text/css" href="css/common.css">
-		<link rel="stylesheet" type="text/css" href="css/index.css">
-
-		<style type="text/css">
-			[v-cloak] {
-				display: none;
-			}
-		</style>
-	</head>
-
-	<body>
-		<div class="_container clear">
-
-		</div>
-	</body>
-	<script src="js/lib/mui.min.js"></script>
-
-	<script src="js/lib/subViews.js"></script>
-	<script src="js/lib/FooterNav.js"></script>
-	<script src="js/index.js" type="text/javascript"></script>
-
-	<script type="text/javascript">
-		function plusReadyDo() {
-
-			mui.plusReady(function() {
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/lib/mui.min.js"></script>
+    <link href="css/lib/mui.min.css" rel="stylesheet"/>
+    <style>
+    	
+    	body {
+    background-color: #ffffff;
+}
+    	
+    	
+    </style>
+</head>
+<body>
+	<nav class="mui-bar mui-bar-tab" id="nav">
+		<a id="tab_home" class="mui-tab-item mui-active" >
+			<span class="mui-icon mui-icon-home" ></span>
+			<span class="mui-tab-label">首页</span>
+		</a>
+		<a id="tab_message" class="mui-tab-item">
+			<span class="mui-icon mui-icon-bars"></span>
+			<span class="mui-tab-label">设备</span>
+		</a>
+		<a id="tab_contact" class="mui-tab-item">
+			<span class="mui-icon mui-icon-eye"></span>
+			<span class="mui-tab-label">商城</span>
+		</a>
+		<a id="tab_setting" class="mui-tab-item" >
+			<span class="mui-icon mui-icon-person"></span>
+			<span class="mui-tab-label">个人</span>
+		</a>
+	</nav>
+	
+	<script type="text/javascript" charset="utf-8">
+	
+				mui.plusReady(function() {
 				var launchFlag = plus.storage.getItem("launchFlag");
                          // alert(plus.storage.getItem("launchFlag"));
 				if(!launchFlag){
@@ -45,8 +46,7 @@
                     setTimeout(function() {
 					plus.navigator.closeSplashscreen();
 					}, 200);
-				}
-				else{
+				}else{
 
 					mui.os.ios && plus.navigator.setFullscreen(true);
 					var objuser = JSON.parse(plus.storage.getItem('user'));
@@ -58,69 +58,82 @@
 						setTimeout(function() {
 							plus.navigator.closeSplashscreen();
 						}, 200);
-					} else {
-
-						var self = plus.webview.currentWebview();
-
-						var _footer = new plus.nativeObj.View('footer',{bottom: '0px',width: '100%'});
-
-						var _a = ['img/_icon_home.png', 'img/_icon_msg.png', 'img/_icon_restore.png', 'img/_icon_self.png'];
-						var _b = ['img/_icon_home_at.png', 'img/_icon_msg_at.png', 'img/_icon_restore_at.png', 'img/_icon_self_at.png'];
-						var _c = ['首页', '消息', '问答', '我的'];
-						_fbar.setTabInfo(_footer, _a, _b, _c);
-						self.append(_footer);
-						// 创建子webview窗口 并初始化
-						var aniShow = {};
-						util.initSubpage(aniShow);
-
-						var nview = plus.nativeObj.View.getViewById('footer'),
-							activePage = plus.webview.currentWebview(),
-							targetPage,
-							subpages = util.options.subpages,
-							pageW = window.innerWidth;
-
-						targetPage = plus.webview.getWebviewById(subpages[0]);
-						util.changeSubpage(targetPage, activePage, aniShow);
-
-						_fbar.setCB(function(tab) {
-							console.log('切换选夹>>' + tab);
-
-							// 子页面切换
-							if(tab >= 0) {
-								targetPage = plus.webview.getWebviewById(subpages[tab]);
-							}
-
-							if(targetPage == activePage) {
-								return;
-							}
-
-							if(tab == 1) {
-								targetPage.evalJS("getFamilyJionMeBox('" + objuser.UserName + "','10');");
-							}
-							if(tab == 2) {
-								targetPage.evalJS('getTopicList(20)');
-							}
-							if(tab == 3) {
-								targetPage.evalJS('isPlusReady()');
-							}
-
-							util.changeSubpage(targetPage, activePage, aniShow);
-							//更新当前活跃的页面
-							activePage = targetPage;
-							console.log('当前>>' + targetPage);
-							//                          console.log('当前>>'+urlId);
-
-						});
-
-						plus.navigator.closeSplashscreen();
+					}else {
+						goIndex();
 					}
-				}
+					}
+				});
+					
+					
 
-			});
 
-		}
-
-		plusReadyDo();
-	</script>
-
+	function goIndex() {
+      	mui.init({
+      		subpages:[//首先加载首页  
+                        {  
+                            url:'Index_sub.html',  
+                            id:'tab_home',  
+                            styles:{  
+                                top:'0px',  
+                                bottom:'60px'  
+                            }  
+                        }  
+                    ],  
+            preloadPages:[//预加载其他页面  
+                {  
+                    url:'member/DeviceList.html',  
+                    id:'tab_message',  
+                    styles:{
+	                top:'0px',
+	                bottom:'60px'  
+                    }  
+                },  
+                {  
+	                url:'mall/MallIndex.html',  
+	                id:'tab_contact',  
+	                styles:{  
+	                    top:'0px',  
+	                    bottom:'60px'  
+	                }  
+                },
+                {
+                	url:'member/Person.html',
+                	id:'tab_setting',
+                	styles:{
+                		top:'0px',
+                		bottom:'60px'
+                	}
+                }
+            ] 
+      	});
+      	mui.plusReady(function(){
+      		
+      		var tab_home,tab_message,tab_contact  
+                mui("#nav").on("tap","#tab_home",function(){//点击触发   
+                    tab_home=plus.webview.getWebviewById("tab_home");  
+                    tab_home.show()  
+                    tab_message.hide()
+                    tab_contact.hide()
+                    tab_setting.hide()
+                })  
+                mui("#nav").on("tap","#tab_message",function(){//点击触发  
+                    tab_message=plus.webview.getWebviewById("tab_message");  
+                    tab_message.show()  
+                      
+                })  
+                mui("#nav").on("tap","#tab_contact",function(){//点击触发  
+                    tab_contact=plus.webview.getWebviewById("tab_contact");  
+                    tab_contact.show()  
+                      
+                })  
+                mui("#nav").on("tap","#tab_setting",function(){//点击触发  
+                	tab_setting=plus.webview.getWebviewById("tab_setting");
+                	tab_setting.show()
+                })
+      	})
+      }
+      	
+    </script>
+	
+</body>
 </html>

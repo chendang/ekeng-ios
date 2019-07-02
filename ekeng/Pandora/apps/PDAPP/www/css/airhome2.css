@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+
+
+
+/* reset webkit search input styles */
+/* 在写样式的时候，iphone会有一些默认样式，比如 <input type="submit" style="background:#000″ value="提交" /> 背景竟然是比较灰，并不黑。使用-webkit-appearance:none可去除系统默认的样式 */
+/* outline: none;定义无轮廓样式*/
+input[type=search] {-webkit-appearance: none;outline: none;}
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button {display: none;}
+/*家具环境*/
+.environment_id{text-align:center; color:#969696; font-size:20px; margin-top:5px; overflow:hidden;}
+.size{ font-size:14px;}
+.green{ color:#79c34b; font-size:100px; font-weight:bold; margin-top:10px;}
+.zhishu{ margin:5px 20% 0 20%; overflow:hidden;}
+.zhishu_jt{ width:100%; height:50px; line-height:50px; text-align:center; color:#fff; background:#79c34b; border-radius:25px;}
+.tianqi{ margin-top:20px; text-align:center; font-size:35px; color:#79c34b;}
+.huise{ color:#969696; font-size:20px; margin-left:15px;}
+.xiyan{ margin-top:20px; overflow:hidden;}
+.xiyan_left{ width:56%; float:left; text-align:right; color:#79c34b; font-size:20px; margin-top:15px; height:30px; line-height:30px;}
+.xiyan_right{ width:43%; float:right; text-align:left; height:30px; margin-top:15px;}
+.chk_1 + label {
+	background-color: #79c34b;
+	padding: 15px;
+	border-radius: 45px;
+	display: inline-block;
+	position: relative;
+	margin-right: 30px;
+}
+.chk_1:checked + label {
+	background-color: #cccccc;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+	color: #243441;
+}
+
+.chk_1:checked + label:after {
+	content: '\2713';
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	color: #fff;
+	width: 100%;
+	text-align: center;
+	font-size: 1.4em;
+	padding: 1px 0 0 0;
+	vertical-align: text-top;
+}
+.chk_1 + label:after {
+	content: '\2713';
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	color: #fff;
+	width: 100%;
+	text-align: center;
+	font-size: 1.4em;
+	padding: 1px 0 0 0;
+	vertical-align: text-top;
+}
+.chk_1{display: none;}
+.title{ color:#fff; text-align:center; font-size:1.2rem; padding:8px 0; overflow:hidden;} 
+

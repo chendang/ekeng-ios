@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+		<link rel="stylesheet" href="../css/lib/CSSRESET.css">
+		<link rel="stylesheet" href="../css/ques.css">
+<link rel="stylesheet" href="../css/lib/huimin.css">
+<script src="../js/base.js"></script>
+</head>
+<body>
+
+	<article class="wrapper" id="welcome">
+		<div class="main">
+			
+			<div class="welcome">
+				<img src="../img/welcome_pic.png" alt="">
+				<p>人之所以活着，不仅仅是为了生存，更 <br> 是为了生活，即有质量地活着。</p>
+				<p>人之生命的质量，全在于身体之康健，<br>无论是常人，还是三高慢病人群。</p>
+				<p>因此，积极健康的生活方式，<br>是我们应当追求的生活状态。</p>
+
+				<h5>
+					请认真如实选择答卷<br>
+					将有助于我们给予更好的健康指导
+				</h5>
+
+				<a class="a_go" href="javascript:clickedNoHead('SF36-1.html','SF36-1.html','slide-in-right');">开始答题</a>
+				<a onclick="CloseCurrentView();" class="a_go" style="margin-top: -28px;">返回</a>
+			</div>
+			<!-- welcome -->
+
+		</div>
+	</article>
+</div>
+	<!-- wrapper End -->
+</body>
+
+<script>
+
+		var username = null;
+
+
+			
+		function plusReady() {
+
+
+			var objuser = JSON.parse(plus.storage.getItem('user'));
+			username = objuser.UserName;
+			back();
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+		
+			
+		</script>
+
+
+
+
+</html>
