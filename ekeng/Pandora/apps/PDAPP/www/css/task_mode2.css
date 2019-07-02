@@ -1,0 +1,31 @@
+.model_tasks{ width:100%; height: 100%; position: absolute; top:0; left:0; 
+background: rgba(0,0,0,0.6); z-index: 9999; display: none; }
+.tasks{ background: #fff; position: absolute; top:2rem; bottom:2rem; left:1.6rem; 
+right:1.6rem;  border-radius:1.6rem; }
+.tasks h3{ height: 3.4rem; line-height: 2.6rem; color:#fff; text-align: center; font-size: 1.2rem; 
+background: url(../img/tasks_header.png) no-repeat center center/100% 100%;}
+.tasks h3 .i_task_close{ width:1.2rem; height: 1.2rem; position: absolute; right:0.6rem; top:0.6rem; background: url(../img/icon_close_task.png) no-repeat center center/auto 100%; }
+
+.tasks span{ height: 4.4rem; line-height: 3.6rem; color:#fff; text-align: center; font-size: 2.0rem; 
+background: url(../img/tasks_header.png) no-repeat center center/100% 100%;}
+.tasks span .i_task_close{ width:2.2rem; height: 2.2rem; position: absolute; right:1rem; top:0.6rem; background: url(../img/icon_close_task.png) no-repeat center center/auto 100%; }
+
+.tasks_main{ width:100%; padding:0 1.0rem; box-sizing: border-box; position: absolute; top:3.4rem; bottom:1.0rem;
+ overflow-y:scroll; -webkit-overflow-scrolling:touch; }
+.tasks_main::-webkit-scrollbar {width:0px; background:rgba(255,255,255);}
+.ul_tasks li{ background: linear-gradient(to bottom,#efeeee,#f8f8f8); 
+border-radius: 0.8rem; padding:0.3rem; margin-bottom: 0.3rem; position: relative;}
+.ul_tasks li .i_go_recode{ padding:0.1rem 0.65rem; font-size: 0.6rem; color:#fff; border-radius: 0.8rem;
+background: linear-gradient(to right,#7f6aff,#53b4ff); position: absolute; top:0.5rem; right:0.5rem; }
+.ul_tasks h5{ font-size: 0.7rem; padding-left:1.4rem; background: url(../img/icon_tasks_circle.png) no-repeat 0.2rem center/auto 1.0rem;}
+.ul_tasks p{ font-size: 0.6rem; padding-left:1.1rem; color:#bfbfbf; }
+.ul_tasks .switch{ width:2.6rem; height: 1.3rem; position: absolute; right:0.3rem; top:0.2rem; 
+box-shadow: inset 3px 3px 6px #999; border-radius: 1.0rem; background: #ddd;}
+.ul_tasks .switch div{ width:100%; height: 2.0rem; position: relative;}
+.ul_tasks .switch i{ width:1.2rem; height: 1.1rem; position: absolute; top:0.1rem;
+ position: absolute; border-radius: 50%; }
+.ul_tasks .on  i{ background: url(../img/icon_switch_yes.png) no-repeat center center/100% auto; left:0.1rem; }
+.ul_tasks .off i{ background: #fff; right:0.1rem; }
+.task_tips{ height: 1.6rem; line-height: 1.6rem; text-align: center; font-size: 0.65rem; color:#333; }
+.ul_tasks li.disabled{ -webkit-filter: grayscale(100%); filter: grayscale(100%); }
+.ul_tasks li.disabled h5{ color:#999; }
