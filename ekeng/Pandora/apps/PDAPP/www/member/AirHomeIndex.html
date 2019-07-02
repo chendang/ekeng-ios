@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>环境状态</title>
+
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Mobile Devices Support @end -->
+    <link type="text/css" href="../css/lib/huimin.css" rel="stylesheet" />
+
+    <link type="text/css" rel="stylesheet" href="../css/airhome2.css" />
+		<link rel="stylesheet" href="../css/my.css">
+		<link rel="stylesheet" href="../css/Monitor.css">
+		<link rel="stylesheet" href="../css/calendar.css">
+
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+			
+			.bar-nav-mt1 {
+            margin-top: 0.75rem;
+            margin-left: 0.55rem;
+              }
+              
+              .color-white {
+    color: #ffffff;
+    font-size: 1rem;
+    width: 30%;
+    margin-left: 4%;
+}
+			
+		</style>
+	</head>
+	<body>
+
+        <div id="bodyinfo">
+			<header class="bar bar-nav">
+				<a class="left bar-nav-mt1 back" onclick="CloseCurrentView();">
+					<img src="../img/5-13.png" alt="">
+				</a>
+				<h2 class="title color-white">环境记录日志</h2>
+				<!--<a class="right bar-nav-mt2 right-more" @click="GoRecord();">
+					<h4><font color="#FFFFFF" style="margin-right: 8px;">记录</font></h4>
+				</a>-->
+			</header>
+
+			<div class="content">
+				<div class="databg">
+					<div class="databg-showall" v-cloak>
+						<div class="databg-showdata" v-cloak>
+							{{day}}
+						</div>
+						<div class="databg-showinfo">
+							<p class="databg-showinfo-week" v-cloak>{{curweekday}}</p>
+							<p class="databg-showinfo-yearmonth" v-cloak>{{year}}年{{month}}月</p>
+							<span class="databg-showinfo-text" v-cloak>
+                            {{recordStatus}}
+                        </span>
+						</div>
+					</div>
+				</div>
+				
+				
+		<div class="xiyan">
+        <div class="xiyan_left">自己吸烟</div>
+        <div class="xiyan_right"><input type="checkbox" id="checkbox_a1" class="chk_1" value="mySmork" @click="CheckItem('mySmork');" :checked="mySmork"/><label for="checkbox_a1"></label></div>
+         <div class="xiyan_left">二手烟</div>
+        <div class="xiyan_right"><input type="checkbox" id="checkbox_a2"  class="chk_1" value="secSmork" @click="CheckItem('secSmork');" :checked="secSmork"><label for="checkbox_a2"></label></div>
+         <div class="xiyan_left">净水器</div>
+        <div class="xiyan_right"><input type="checkbox"  id="checkbox_a3"  class="chk_1" value="waterClear" @click="CheckItem('waterClear');" :checked="waterClear"><label for="checkbox_a3"></label></div>
+        <div class="xiyan_left">空气净化器</div>
+        <div class="xiyan_right"><input type="checkbox"  id="checkbox_a4"  class="chk_1" value="airClear" @click="CheckItem('airClear');" :checked="airClear"><label for="checkbox_a4"></label></div>
+        </div>
+        
+        <div class="m_cell_hd m_cell_primary" style="left: 40%;margin-top:182px;">
+									<button type="button" class="hui-button hui-button-large hui-primary" @click="PostData">确定提交</button>
+
+								</div>
+				
+				
+				
+				
+			</div>
+			
+
+        
+		</div>
+
+
+        
+<script src="../js/base.js"></script>        
+       
+
+<script src="../js/lib/jquery-2.1.3.min.js"></script>
+		<script src="../js/lib/hui.js"></script>
+
+		<script src="../js/lib/hui-star.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+		<script>
+		var domainUrl = GetMvcApiDomain();
+		var username = null;
+
+			
+		function plusReady() {
+
+			var objuser = JSON.parse(plus.storage.getItem('user'));
+			username = objuser.UserName;
+			
+			
+
+			
+			back();
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+
+
+			vum = new Vue({
+				el: '#bodyinfo',
+				data: function() {
+					return {
+
+						year: '2018',
+						month: "09",
+						day: '01',
+						curDate: "20180901",
+						curweekday: '星期一',
+						mySmork: true,
+						secSmork: true,
+						waterClear: true,
+						airClear: true,
+						recordStatus: '未完成'
+					}
+				},
+
+				mounted: function() {
+
+					this.$nextTick(function() {
+
+				this.getToDayDate();
+				this.GetIsDayRecord(username);
+
+					})
+
+				},
+
+				methods: {
+                   CheckItem:function(item){
+                   	if (item=='mySmork'){
+                   	this.mySmork=!this.mySmork;
+                   	}
+                   	if (item=='secSmork'){
+                   	this.secSmork=!this.secSmork;
+                   	}
+                   	if (item=='waterClear'){
+                   	this.waterClear=!this.waterClear;
+                   	}
+                    if (item=='airClear'){
+                   	this.airClear=!this.airClear;
+                   	}
+                     
+                   },
+					getToDayDate: function() {
+						var now = new Date();
+						this.year = now.getFullYear(); //年
+						this.month = now.getMonth() + 1; //月
+						this.day = now.getDate(); //日
+
+						if(this.month < 10)
+							this.month = "0" + this.month;
+
+						if(this.day < 10)
+							this.day = "0" + this.day;
+
+						this.curDate = this.year.toString() + this.month.toString() + this.day.toString()
+
+						var myddy = now.getDay(); //获取存储当前日期
+						var weekday = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+						this.curweekday = weekday[myddy];
+					},
+
+
+
+					PostData: function() {
+						var that = this;
+//					    if(mySmork == true && secSmork == true && waterClear == true && airClear == true) {
+//						hui.alert('请选择答案哦');
+//						return false;
+//					    }
+						axios.post(domainUrl + 'api/AirHome/TaskAirHomeAdd', Qs.stringify({
+								UserName: username,
+							    is_smoke: that.mySmork,
+							    is_secSmoke: that.secSmork,
+							    is_waterClear: that.waterClear,
+							    is_airClear: that.airClear
+							}))
+
+							.then(function(response) {
+								if(response.data.code == '200') {
+									that.recordStatus = '已完成';
+									hui.upToast('操作成功');
+
+								} else {
+									hui.upToast(response.data.msg)
+									return false;
+								}
+
+							})
+							.catch(function(response) {
+								console.log(response);
+							});
+
+					},
+					
+					
+					GetIsDayRecord: function(UserName) {
+					var that = this;
+
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/AirHome/GetTodayIsRecord', {
+							params: {
+								UserName: UserName
+							}
+						})
+						.then(function(response) {
+							if(response.data.IsRecord >= 1) {
+								that.recordStatus = '已完成';
+							}
+							else{
+								that.recordStatus = '未完成';
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+
+				},
+
+					axiosSetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('正在操作中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("操作失败");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("操作失败");
+							return Promise.reject(error)
+						})
+					},
+
+					axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+
+
+				}
+			})
+		</script>
+
+
+        
+        
+	</body>
+</html>

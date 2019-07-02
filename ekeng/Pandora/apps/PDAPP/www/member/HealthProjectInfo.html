@@ -1,0 +1,461 @@
+﻿<!doctype html>
+<html>
+<head>
+<title>健康管理方案</title>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />  
+<link rel="stylesheet" type="text/css" href="../css/lib/CSSRESET.css">
+<link rel="stylesheet" type="text/css" href="../css/common3.css">
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+			.log {
+    padding: 1rem 5rem 1rem 3rem;
+    margin-left: -15px;
+    background: linear-gradient(to bottom,#a475f7,#7b64f0);
+}
+		</style>	
+
+</head>
+<body>
+	<div class="_container clear" id="bodyinfo">
+		<header class="header">
+			<a href="javascript:;" class="a_back" onclick="CloseCurrentView();"></a>
+			<h1>个人健康管理方案</h1>
+			<!--<a href="javascript:;" class="a_shared"></a>-->
+		</header>
+		<!-- header -->
+
+		<article class="wrapper">
+			<div class="main">
+
+				<div class="log">
+
+
+					<h6 v-cloak>档案号：{{PlanNum}}</h6>
+				</div>
+				<!-- log_title -->
+				
+				<div class="records">
+					<ul class="ul_records">
+						<li>
+							<div class="record_header">
+								<h3>
+									个人基本信息
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak>姓名：{{RName}}</p>
+								<p v-cloak>性别：{{Sex}}</p>
+                                <p v-cloak>年龄：{{Birthday}}</p>
+							</div>
+						</li>
+
+						<li>
+							<div class="record_header">
+								<h3>
+									健康评估要点
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak v-html="ItemKeyPoint"></p>
+								
+
+							</div>
+						</li>
+
+						<li>
+							<div class="record_header">
+								<h3>
+									健康干预策略
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak>{{ItemHealthDanger}}</p>
+								
+							</div>
+						</li>
+
+						<li>
+							<div class="record_header">
+								<h3>
+									营养素管理
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-show="ItemMedArr.indexOf('001')>=0">哈福牌蓓春胶囊</p>
+								<p v-show="ItemMedArr.indexOf('002')>=0">蓓强参杞片</p>
+								<p v-show="ItemMedArr.indexOf('003')>=0">甘青素荷精片</p>
+								<p v-show="ItemMedArr.indexOf('004')>=0">博才素多烯片</p>
+								<p v-show="ItemMedArr.indexOf('005')>=0">植复佳葡萄红片</p>
+								<p v-show="ItemMedArr.indexOf('006')>=0">槐莱片</p>
+								<p v-show="ItemMedArr.indexOf('007')>=0">桑桂片</p>
+								<p v-show="ItemMedArr.indexOf('008')>=0">山荷片</p>
+								<p v-show="ItemMedArr.indexOf('009')>=0">薤葡片</p>
+								<p v-show="ItemMedArr.indexOf('010')>=0">纳豆片</p>
+								<p v-show="ItemMedArr.indexOf('011')>=0">莱普藤果之纤片</p>
+								<p v-show="ItemMedArr.indexOf('012')>=0">葛豆片</p>
+								<p v-show="ItemMedArr.indexOf('013')>=0">木瓜胶原蛋白片</p>
+								<p v-show="ItemMedArr.indexOf('014')>=0">覆杞片</p>
+								<p v-show="ItemMedArr.indexOf('015')>=0">橘苓片</p>
+								<p v-show="ItemMedArr.indexOf('016')>=0">复合维矿片</p>
+								<p v-show="ItemMedArr.indexOf('017')>=0">五色植物茶</p>
+								<p v-show="ItemMedArr.indexOf('018')>=0">免疫力风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('019')>=0">内分泌风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('020')>=0">血压风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('021')>=0">血糖风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('022')>=0">血脂风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('023')>=0">肥胖风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('024')>=0">脂肪肝风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('025')>=0">冠心病风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('026')>=0">脑梗塞风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('027')>=0">骨骼风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('028')>=0">性能力风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('029')>=0">胃肠功能风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('030')>=0">银草片</p>
+								<p v-show="ItemMedArr.indexOf('031')>=0">火李片</p>
+								<p v-show="ItemMedArr.indexOf('032')>=0">合桔片</p>
+								<p v-show="ItemMedArr.indexOf('033')>=0">便秘风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('034')>=0">肺功能风险套餐</p>
+								<p v-show="ItemMedArr.indexOf('035')>=0">感冒风险套餐</p>
+							</div>
+						</li>
+						
+						<li>
+							<div class="record_header">
+								<h3>
+									膳食管理
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak v-html="ItemFoodInfo"></p>
+							</div>
+						</li>
+
+                        <li>
+							<div class="record_header">
+								<h3>
+									运动管理
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak v-html="ItemSportInfo"></p>
+								
+
+							</div>
+						</li>
+						
+						<li>
+							<div class="record_header">
+								<h3>
+									睡眠管理
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak>{{ItemSleepInfo}}</p>
+								
+
+							</div>
+						</li>
+						
+						<li>
+							<div class="record_header">
+								<h3>
+									心态管理
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak>{{ItemFeelingInfo}}</p>
+								
+
+							</div>
+						</li>
+						
+						<li>
+							<div class="record_header">
+								<h3>
+									家居健康
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak>{{ItemLiveInfo}}</p>
+								
+
+							</div>
+						</li>
+						
+						<li>
+							<div class="record_header">
+								<h3>
+									健康教育
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak>{{ItemEduInfo}}</p>
+								
+
+							</div>
+						</li>
+						
+						<li v-show="ItemCustomInfoTitle!=''">
+							
+                            <div class="record_header" v-show="ItemCustomInfoTitle!=''">
+								<h3>
+									{{ItemCustomInfoTitle}}
+									
+								</h3>
+								
+							</div>
+							<div class="record_main" v-show="ItemCustomInfoContent!=''" >
+								<p v-cloak>{{ItemCustomInfoContent}}</p>
+							</div>
+							
+						</li>
+						
+						
+						
+						<li>
+							<div class="record_header">
+								<h3>
+									健康跟踪服务与随访建议
+									
+								</h3>
+								
+							</div>
+
+							<div class="record_main">
+								<p v-cloak>1个小时的运动;</p>
+								<p v-cloak>2两鱼,2两肉(蛋),200毫升牛奶;</p>
+                                <p v-cloak>3两主食;</p>
+                                <p v-cloak>4两水果;</p>
+                                <p v-cloak>5两蔬菜;</p>
+                                <p v-cloak>6克盐;</p>
+                                <p v-cloak>7个小时高质量睡眠;</p>
+                                <p v-cloak>建议一个月复查一次相关指标,每个月做一次综合评价.</p>
+							</div>
+						</li>
+						
+						
+					</ul>
+				</div>
+				<!-- records -->
+
+			</div>
+		</article>
+		<!-- wrapper End -->
+
+		<!-- _model -->
+
+	</div>
+</body>
+        <script src="../js/lib/jquery-2.1.3.min.js"></script>
+		<script src="../js/lib/hui.js"></script>
+		<script src="../js/base.js"></script>
+				<script src="../js/public.js" type="text/javascript"></script>
+		<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+		<script src="../js/lib/axios.min.js"></script>
+		<script src="../js/lib/qs.js"></script>
+
+
+<script>
+	
+
+		var domainUrl = GetMvcApiDomain();
+		var username = null;
+        var PlanNum=null;
+			
+		function plusReady() {
+			var _self = plus.webview.currentWebview();
+			PlanNum = _self.PlanNum;
+
+			if(PlanNum == null || PlanNum == '' || PlanNum == undefined) {
+				plus.nativeUI.toast("参数错误，请返回重新选择");
+				setTimeout(function() {
+					plus.webview.currentWebview().close();
+				}, 1000);
+			} 
+			var objuser = JSON.parse(plus.storage.getItem('user'));
+			username = objuser.UserName;
+			
+			back();
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+			vum=new Vue({
+               el: '#bodyinfo',
+               data: function(){
+                   return {
+                       UserName:username,
+                       PlanNum:PlanNum,
+                       CreateTime:"--",
+                       RName:"未填写",
+                       Sex:"男",
+                       Birthday:"未填写",
+                       ItemKeyPoint:"",
+                       ItemHealthDanger:"",
+                       ItemMedArr:"",
+                       ItemFoodInfo:"",
+                       ItemSportInfo:"",
+                       ItemSleepInfo:"",
+                       ItemFeelingInfo:"",
+                       ItemLiveInfo:"",
+                       ItemEduInfo:"",
+                       ItemCustomInfoTitle:"",
+                       ItemCustomInfoContent:"",
+                       ServiceIsShow:true,
+                       SuggestInfo:"3",
+                       ShopUser:"",
+                       DoctorUser:"",
+                       DoctorName:""
+
+                   }
+
+               },
+
+               mounted: function () {
+
+                   this.$nextTick(function () {
+
+                     this.getPlanInfo(username,PlanNum);
+
+                 })
+
+               },
+
+               methods: {
+                   getPlanInfo: function (username,plannum) {
+                       var that = this;
+                       $.ajax({
+                           url: domainUrl + "api/PerPlan/getPerPlanInfo",
+                           type: 'get',
+                           dataType: "json",
+                           data: { UserName: username,PlanNum:plannum },
+                           success: function (data) {
+                               that.RName = data.ReallyName;
+                               if(data.Sex=='1'){
+                                   that.Sex = "男";
+                               }else if(data.Sex=='2') {
+                                   that.Sex = "女";
+                               }
+                               else
+                               {
+                                   that.Sex = "--";
+                               }
+                               that.Birthday = jsGetAge(data.Birthday);
+
+                               that.CreateTime = data.CreateTime.substring(0,10);
+                               that.ItemKeyPoint = data.KeyPointInfo.replace(/<br\s*\/?>/gi,"<br/>");
+                               that.ItemHealthDanger = data.HealthDanger;
+                               that.ItemMedArr = data.MedInfo;
+                               that.ItemFoodInfo = data.FoodInfo.replace(/<br\s*\/?>/gi,"<br/>");
+                               that.ItemSportInfo = data.SportInfo.replace(/<br\s*\/?>/gi,"<br/>");
+                               that.ItemSleepInfo = data.SleepInfo;
+                               that.ItemFeelingInfo = data.FeelingInfo;
+                               that.ItemLiveInfo = data.LiveInfo;
+                               that.ItemEduInfo = data.EduInfo;
+                               that.ItemCustomInfoTitle = data.CustomInfoTitle;
+                               that.ItemCustomInfoContent = data.CustomInfoContent;
+
+                               that.ServiceIsShow =data.ServiceIsShow;
+                               if(data.ServiceIsShow=='False'){
+                                   that.ServiceIsShow =false;
+                               }else{
+                                   that.ServiceIsShow =true;
+                               }
+                               that.SuggestInfo = data.SuggestInfo;
+
+                               that.ShopUser=data.ShopUser;
+                               that.DoctorUser=data.DoctorUser;
+                               that.DoctorName=data.DoctorName;
+
+                           },
+                           error: function () {
+                               hui.toast("网络错误，请稍后再试");
+                           }
+                       })
+                   },
+                   
+                   
+                   axiosGetLoadding: function() {
+						axios.interceptors.request.use(function(config) {
+							console.log('开始请求')
+							config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+							hui.loading('数据加载中');
+							return config
+						}, function(error) {
+							console.log('请求失败')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+						axios.interceptors.response.use(function(config) {
+							hui.closeLoading();
+
+							console.log('接收响应')
+							return config
+						}, function(error) {
+							console.log('响应出错')
+							hui.closeLoading();
+							hui.toast("数据加载失败,请检查网络");
+							return Promise.reject(error)
+						})
+					},
+
+                   
+
+               }
+
+
+           })
+
+           function html2Escape(sHtml) {
+               return sHtml.replace(/[<>&"]/g,function(c){return {'<':'<','>':'>','&':'&','"':'"'}[c];});
+           }
+
+
+
+
+
+		</script>
+
+
+
+
+
+</html>

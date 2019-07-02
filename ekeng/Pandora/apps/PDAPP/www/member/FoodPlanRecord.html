@@ -1,0 +1,654 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+		<meta name="format-detection" content="telephone=no" />
+		<link type="text/css" href="../css/lib/huimin.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/lib/frozen.css">
+		<link rel="stylesheet" href="../css/toolstips.css">
+		<link type="text/css" href="../css/style_task.css" rel="stylesheet" />
+		<link type="text/css" href="../css/style_timeline.css" rel="stylesheet" />
+
+		<link type="text/css" href="../css/food_plan.css" rel="stylesheet" />
+		<script src="../js/lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+		<title>我的健康营养配餐</title>
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+			
+			* {
+				box-sizing: border-box;
+			}
+			
+			ul {
+				list-style-type: none;
+			}
+			
+			#calendar {
+				width: 100%;
+				margin: 0 auto;
+				box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+			}
+			
+			.month {
+				width: 100%;
+				background: #F0F2F5;
+			}
+			
+			.month ul {
+				margin: 0;
+				padding: 0;
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.year-month {
+				display: flex;
+				/*				flex-direction: column;*/
+				align-items: center;
+				justify-content: space-around;
+			}
+			
+			.year-month:hover {
+				background: rgba(150, 2, 12, 0.1);
+			}
+			/*.choose-year {
+				padding-left: 20px;
+				padding-right: 20px;
+			}*/
+			
+			.choose-month {
+				text-align: center;
+				font-size: 1.5rem;
+			}
+			
+			.arrow {
+				padding: 30px;
+			}
+			
+			.arrow:hover {
+				background: rgba(100, 2, 12, 0.1);
+			}
+			
+			.month ul li {
+				color: #4e0f0f;
+				font-size: 20px;
+				text-transform: uppercase;
+				letter-spacing: 3px;
+			}
+			
+			.weekdays {
+				margin: 0;
+				padding: 10px 0;
+				background-color: #E92F2F;
+				display: flex;
+				flex-wrap: wrap;
+				color: #FFFFFF;
+				justify-content: space-around;
+			}
+			
+			.weekdays li {
+				display: inline-block;
+				width: 13.6%;
+				text-align: center;
+			}
+			
+			.days {
+				padding: 0;
+				background: #FFFFFF;
+				margin: 0;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+			}
+			
+			.days li {
+				list-style-type: none;
+				display: inline-block;
+				width: 13.4%;
+				text-align: center;
+				padding-bottom: 15px;
+				padding-top: 15px;
+				font-size: 1.5rem;
+				color: #000;
+			}
+			
+			.days li .active {
+				padding: 6px 10px;
+				border-radius: 50%;
+				background: #00B8EC;
+				color: #fff;
+			}
+			
+			.days li .focus {
+				padding: 4px 8px;
+				border-radius: 40%;
+				background: #EFEFF4;
+				color: #fff;
+			}
+			
+			.days li .other-month {
+				padding: 5px;
+				color: gainsboro;
+			}
+			
+			.days li:hover {
+				background: #e1e1e1;
+			}
+			
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+				font: 12px/1 'Roboto', sans-serif;
+				color: #555;
+				background-color: #fff;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			#bg {
+				display: none;
+				position: absolute;
+				top: 0%;
+				left: 0%;
+				width: 100%;
+				height: 100%;
+				background-color: black;
+				z-index: 1001;
+				-moz-opacity: 0.7;
+				opacity: .70;
+				filter: alpha(opacity=70);
+			}
+			
+			#show {
+				display: none;
+				position: absolute;
+				top: 25%;
+				left: 12%;
+				width: 75%;
+				height: 49%;
+				padding: 8px;
+				border: 8px solid #E8E9F7;
+				background-color: white;
+				z-index: 1002;
+				overflow: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--头部start-->
+		<div id="bodyinfo">
+			<div class="header header-bg">
+				<ul>
+					<h1 v-cloak>膳食方案</h1>
+					<a title="" class="back" onclick="CloseCurrentView();"><img src="../img/task10.png" alt="" /></a>
+				</ul>
+			</div>
+			<!--头部end-->
+
+			<!--日历start-->
+			<div id="calendar">
+				<!-- 年份 月份 -->
+				<div class="month" v-cloak style="height: 60px;">
+					<ul v-cloak>
+						<!--点击会触发pickpre函数，重新刷新当前日期 @click(vue v-on:click缩写) -->
+						<li class="arrow" @click="pickPre(currentYear,currentMonth)">❮</li>
+						<li class="year-month" @click="pickYear(currentYear,currentMonth)">
+							<span class="choose-year">{{ currentYear }}年</span>
+							<span class="choose-month">{{ currentMonth }}月</span>
+						</li>
+						<li class="arrow" @click="pickNext(currentYear,currentMonth)">❯</li>
+					</ul>
+				</div>
+				<!-- 星期 -->
+				<ul class="weekdays" v-cloak>
+					<li>一</li>
+					<li>二</li>
+					<li>三</li>
+					<li>四</li>
+					<li>五</li>
+					<li style="color:yellow">六</li>
+					<li style="color:yellow">日</li>
+				</ul>
+				<!-- 日期 -->
+				<ul class="days" v-cloak>
+					<!-- v-for循环 每一次循环用<li>标签创建一天 -->
+					<li v-cloak v-for="dayobject in days" style="height: 45px;">
+						<!--本月-->
+						<!--如果不是本月  改变类名加灰色-->
+
+						<span v-cloak v-if="dayobject.day.getMonth()+1 != currentMonth" class="other-month">{{ dayobject.day.getDate() }}</span>
+
+						<!--如果是本月  还需要判断是不是这一天-->
+						<span v-else>
+          <!--今天  同年同月同日-->
+						<span v-cloak v-if="dayobject.day.getFullYear() == new Date().getFullYear() && dayobject.day.getMonth() == new Date().getMonth() && dayobject.day.getDate() == new Date().getDate()" class="active">{{ dayobject.day.getDate() }}</span>
+						<span v-cloak v-else-if="dayobject.EventDesc == '已配餐'" class="focus">{{ dayobject.day.getDate() }}</span>
+						<span v-cloak v-else>{{ dayobject.day.getDate() }}</span>
+						</span>
+						<!--显示剩余多少数量-->
+						<!--<p v-cloak v-if="dayobject.EventDesc == '已配餐'"><span style="color: red;white-space: pre-wrap;word-wrap: break-word;font-size: 12px;">配餐</span></p>-->
+
+						<!---->
+
+					</li>
+				</ul>
+
+			</div>
+			<!--日历end-->
+
+			<div id="cd-timeline" class="cd-container" style="margin-top: 0px;" v-show="FoodList.length>0">
+				<div class="cd-timeline-block" v-for="(Item,index) in FoodList" v-cloak>
+					<div class="cd-timeline-img cd-picture">
+						<div style="color: #00498B;font-size: 26px;font-weight: 800;margin-left: 12px;padding-top: 8px;">{{index+1}}</div>
+					</div>
+					<div class="cd-timeline-content">
+						<span class="cd-date" style="margin-top: -15px;color: #00498B;font-size: 16px;font-weight: 800;" v-cloak>第{{index+1}}天</span>
+						<div class="ui-tooltips ui-tooltips-guide">
+							<div class="recipe-history">
+								<!--早餐start-->
+								<div v-show="Item.AmList.length>0">
+									<h2 class="ico05">早餐</h2>
+									<ul class="info02">
+										<li v-for="ItemAm in Item.AmList" v-cloak>
+											<div class="m_cell_hd m_cell_primary">
+												<h4 v-cloak>{{ItemAm.FoodName}}（{{ItemAm.TakeAmount}}{{ItemAm.TakeUnit}}）</h4></div>
+											<div class="m_cell_ft"><span v-cloak>{{ItemAm.HaveKcal}}卡</span></div>
+											<div class="m_cell_ft"><img src="../img/7.png" alt="" /></div>
+										</li>
+									</ul>
+
+								</div>
+								<!--早餐end-->
+								<!--中餐start-->
+								<div v-show="Item.NmList.length>0">
+									<h2 class="ico06">中餐</h2>
+									<ul class="info02">
+										<li v-for="ItemNm in Item.NmList" v-cloak>
+											<div class="m_cell_hd m_cell_primary">
+												<h4 v-cloak>{{ItemNm.FoodName}}（{{ItemNm.TakeAmount}}{{ItemNm.TakeUnit}}）</h4></div>
+											<div class="m_cell_ft"><span v-cloak>{{ItemNm.HaveKcal}}卡</span></div>
+											<div class="m_cell_ft"><img src="../img/7.png" alt="" /></div>
+										</li>
+
+									</ul>
+
+								</div>
+								<!--中餐end-->
+								<!--晚餐start-->
+								<div v-show="Item.PmList.length>0">
+									<h2 class="ico07">晚餐</h2>
+									<ul class="info02">
+										<li v-for="ItemPm in Item.PmList" v-cloak>
+											<div class="m_cell_hd m_cell_primary">
+												<h4 v-cloak>{{ItemPm.FoodName}}（{{ItemPm.TakeAmount}}{{ItemPm.TakeUnit}}）</h4></div>
+											<div class="m_cell_ft"><span v-cloak>{{ItemPm.HaveKcal}}卡</span></div>
+											<div class="m_cell_ft"><img src="../img/7.png" alt="" /></div>
+										</li>
+
+								</div>
+								<!--晚餐end-->
+								<!--加餐start-->
+								<div v-show="Item.XmList.length>0">
+									<h2 class="ico08">加餐</h2>
+
+									<ul class="info02">
+										<li v-for="ItemXm in Item.XmList" v-cloak>
+											<div class="m_cell_hd m_cell_primary">
+												<h4 v-cloak>{{ItemXm.FoodName}}（{{ItemXm.TakeAmount}}{{ItemXm.TakeUnit}}）</h4></div>
+											<div class="m_cell_ft"><span v-cloak>{{ItemXm.HaveKcal}}卡</span></div>
+											<div class="m_cell_ft"><img src="../img/7.png" alt="" /></div>
+										</li>
+
+								</div>
+								<!--加餐end-->
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+
+			</div>
+
+		</div>
+	</body>
+	<script src="../js/base.js"></script>
+	<script src="../js/lib/hui.js" type="text/javascript"></script>
+	<script src="../js/public.js" type="text/javascript"></script>
+	<script src="../js/lib/vue20.min.js" type="text/javascript"></script>
+	<script src="../js/lib/axios.min.js"></script>
+	<script src="../js/lib/qs.js"></script>
+
+	<script>
+
+
+		var domainUrl = GetMvcApiDomain();
+		var username = null;
+
+
+		
+		function plusReady() {
+
+			var objuser = JSON.parse(plus.storage.getItem('user'));
+			username = objuser.UserName;
+
+
+			back();
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+		var vum = new Vue({
+			el: '#bodyinfo',
+			data: {
+				currentDay: 1,
+				currentMonth: 1,
+				currentYear: 1970,
+				currentWeek: 1,
+				days: [],
+				events: [],
+				setTips: "",
+				setDay: "",
+				setEvent: "",
+				
+				FoodList: []
+			},
+
+			mounted: function() {
+
+				this.$nextTick(function() {
+
+                 this.GetEventsList(username, 1, 2000);
+			     this.GetFoodPlanList(username);
+
+				})
+
+			},
+			methods: {
+
+				initData: function(cur) {
+
+					//var leftcount=0; //存放剩余数量
+					var date;
+					//var index=0;   //控制显示预定的天数 ，比如下面设置只能预定三天的
+					//this.initleftcount(); 每次初始化更新数量
+					//有两种方案  一种是每次翻页 ajax获取数据初始化   http请求过多会导致资源浪费
+					// 一种是每次请求 ajax获取数据初始化    数据更新过慢会导致缺少实时性
+					//还可以setTimeout 定时请求更新数据  实现数据刷新（可能会更好）
+
+					if(cur) {
+						date = new Date(cur);
+					} else {
+						var now = new Date();
+						var d = new Date(this.formatDate(now.getFullYear(), now.getMonth(), 1));
+						d.setDate(35);
+						date = new Date(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+					}
+					this.currentDay = date.getDate();
+					this.currentYear = date.getFullYear();
+					this.currentMonth = date.getMonth() + 1;
+
+					this.currentWeek = date.getDay(); // 1...6,0
+					if(this.currentWeek == 0) {
+						this.currentWeek = 7;
+					}
+					var str = this.formatDate(this.currentYear, this.currentMonth, this.currentDay);
+					this.days.length = 0;
+					// 今天是周日，放在第一行第7个位置，前面6个
+					//初始化本周
+					for(var i = this.currentWeek - 1; i >= 0; i--) {
+						var d = new Date(str);
+						d.setDate(d.getDate() - i);
+
+						var dayobject = {};
+						dayobject.day = d;
+
+						var xDate = formatDate(d);
+						this.events.filter(function(item) {
+
+							if(item.EventDate == xDate) {
+								dayobject.EventTips = item.EventTips;
+								dayobject.EventDesc = item.EventDesc;
+							}
+						});
+
+						var now = new Date();
+						if(d.getDate() === (now.getDate()) && d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) {
+
+						}
+
+						this.days.push(dayobject); //将日期放入data 中的days数组 供页面渲染使用
+
+					}
+					//其他周
+					for(var i = 1; i <= 35 - this.currentWeek; i++) {
+						var d = new Date(str);
+						d.setDate(d.getDate() + i);
+
+						var dayobject = {};
+						dayobject.day = d;
+
+						//var xDate=this.formatDate(d.getFullYear(),d.getMonth(),d.getDate());
+						var xDate = formatDate(d);
+						this.events.filter(function(item) {
+
+							if(item.EventDate == xDate) {
+								dayobject.EventTips = item.EventTips;
+								dayobject.EventDesc = item.EventDesc;
+							}
+						});
+
+						var now = new Date();
+
+						if(d.getDate() === (now.getDate()) && d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) {
+
+						}
+
+						this.days.push(dayobject);
+					}
+
+				},
+				pickPre: function(year, month) {
+
+					// setDate(0); 上月最后一天
+					// setDate(-1); 上月倒数第二天
+					// setDate(dx) 参数dx为 上月最后一天的前后dx天
+					var d = new Date(this.formatDate(year, month, 1));
+					d.setDate(0);
+					this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+				},
+				pickNext: function(year, month) {
+					var d = new Date(this.formatDate(year, month, 1));
+					d.setDate(35);
+					this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+				},
+				pickYear: function(year, month) {
+					alert(year + "," + month);
+				},
+
+				// 返回 类似 2018-01-02 格式的字符串
+				formatDate: function(year, month, day) {
+					var y = year;
+					var m = month;
+					if(m < 10) m = "0" + m;
+					var d = day;
+					if(d < 10) d = "0" + d;
+					return y + "-" + m + "-" + d
+				},
+
+				GetEventsList: function(UserName, pageIndex, pageSize) {
+					var that = this;
+
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/Food/getFoodEventsList', {
+							params: {
+								UserName: UserName,
+								pageIndex: pageIndex,
+								pageSize: pageSize
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.RecordList);
+							that.events = [];
+							each(jsonx, function(i, j) {
+
+								that.events.push({
+									EventDate: j.EventDate,
+									EventDesc: j.EventDesc
+								});
+
+							});
+
+							//that.initData('2017-10');
+							that.initData();
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+
+				},
+
+				axiosGetLoadding: function() {
+					axios.interceptors.request.use(function(config) {
+						console.log('开始请求')
+						config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+						hui.loading('数据加载中');
+						return config
+					}, function(error) {
+						console.log('请求失败')
+						hui.closeLoading();
+						hui.toast("数据加载失败,请检查网络");
+						return Promise.reject(error)
+					})
+					axios.interceptors.response.use(function(config) {
+						hui.closeLoading();
+
+						console.log('接收响应')
+						return config
+					}, function(error) {
+						console.log('响应出错')
+						hui.closeLoading();
+						hui.toast("数据加载失败,请检查网络");
+						return Promise.reject(error)
+					})
+				},
+
+				GetFoodPlanList: function(UserName) {
+					var that = this;
+					that.axiosGetLoadding();
+					axios.get(domainUrl + 'api/Food/getPersonFoodPlanList', {
+							params: {
+								UserName: UserName
+							}
+						})
+						.then(function(response) {
+							var jsonx = eval(response.data.Data);
+							that.FoodList = [];
+							each(jsonx, function(i, j) {
+
+								var AmList = [];
+								var NmList = [];
+								var PmList = [];
+								var XmList = [];
+
+								each(jsonx[i].Amlist, function(m, n) {
+									AmList.push({
+										number: (m + 1),
+										FoodId: n.Id,
+										FoodCode: n.FoodCode,
+										FoodName: n.FoodName,
+										TakeAmount: n.TakeAmount,
+										TakeUnit: n.TakeUnit,
+										HaveKcal: n.HaveKcal
+									});
+								});
+								
+								each(jsonx[i].Nmlist, function(p, q) {
+									NmList.push({
+										number: (p + 1),
+										FoodId: q.Id,
+										FoodCode: q.FoodCode,
+										FoodName: q.FoodName,
+										TakeAmount: q.TakeAmount,
+										TakeUnit: q.TakeUnit,
+										HaveKcal: q.HaveKcal
+									});
+								});
+								
+								
+								each(jsonx[i].Pmlist, function(e, u) {
+									PmList.push({
+										number: (e + 1),
+										FoodId: u.Id,
+										FoodCode: u.FoodCode,
+										FoodName: u.FoodName,
+										TakeAmount: u.TakeAmount,
+										TakeUnit: u.TakeUnit,
+										HaveKcal: u.HaveKcal
+									});
+								});
+								
+								each(jsonx[i].Xmlist, function(c, v) {
+									XmList.push({
+										number: (c + 1),
+										FoodId: v.Id,
+										FoodCode: v.FoodCode,
+										FoodName: v.FoodName,
+										TakeAmount: v.TakeAmount,
+										TakeUnit: v.TakeUnit,
+										HaveKcal: v.HaveKcal
+									});
+								});
+								
+
+								that.FoodList.push({
+									number: (i + 1),
+									ToDate: j.ToDate,
+									AmList: AmList,
+									NmList: NmList,
+									PmList: PmList,
+									XmList: XmList
+								});
+
+							});
+							
+							if (that.FoodList.length==0 || that.FoodList==''){
+								hui.alert('您没有配餐,请联系营养师为您设置！','好的', function()
+								{
+
+					                  plus.webview.currentWebview().close();
+
+								});
+							}
+
+						})
+						.catch(function(response) {
+							console.log(response);
+
+						});
+
+				},
+
+			},
+		});
+	</script>
+
+</html>
